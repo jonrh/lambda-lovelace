@@ -1,2 +1,8 @@
-# LambdaLovelace-Team
-Helgason Jon Runar; Laffan Marc; Li Xinqi; Ma Junyang; Manivannan Eazhilarasi
+# λ Lovelace
+
+Team members:
+* Jón Rúnar Helgason
+* Marc Laffan
+* Xinqi Li
+* Junyang Ma
+* Eazhilarasi Manivannan
