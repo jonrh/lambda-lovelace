@@ -20,11 +20,15 @@ def authentication(ckey, csecret, atoken, atokensecret):
  api = tweepy.API(auth)
  my_tweets = api.user_timeline()
  my_first_tweet = my_tweets[0].text
- following = api.followers()
+ following = api.friends()
+ dict_of_followed_tweets = {}
+ for friend in following:
+   follow_acc = api.get_user(friend.screen_name)
+   dict_of_followed_tweets[friend.screen_name] = friend.timeline()
 
  recommenderObj = Recommender()
- generatedTweet = recommenderObj.generate(my_tweets, 1, following, 2)
+ generatedTweet = recommenderObj.generate(my_tweets, 1, following, 2, dict_of_followed_tweets)
 
- return template('My first Tweet was: {{my_first_tweet_here}}, my generated text is {{generatedTweetHere}}', my_first_tweet_here = my_first_tweet, generatedTweetHere =generatedTweet)
+ return template('Result: {{generatedTweetHere}}',generatedTweetHere =generatedTweet)
 
 run(host='localhost', port=8088, debug=True)
