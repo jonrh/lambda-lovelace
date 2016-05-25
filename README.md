@@ -2,13 +2,11 @@
 A collaborative recommender system for tweets; a personalised tweet stream. Module: COMP47250, a 30 ECTS group project, summer 2016 at University College Dublin.
 
 ## Project
-
 **Summary**: A collaborative recommender system for tweets; a personalised tweet stream.
 
 The theme of 2016 for the group project module is *Future Of News*. The premise for our project is the asumption (or observation) that people are experiencing an information overload. Years or decades ago news or content creators were few (print, television, radio) compared to today. Now everyone with a computer or a smartphone can be a content creator. We believe that the future of news is going to be filtering and delivering personalised news to people. We see our project to be a stepping stone in that direction, starting with Twitter.
 
 ### Scope
-
 On a very high level there are two main components to the project:
 
 * **Front-end**: iOS Twitter mobile app
@@ -29,7 +27,6 @@ These are ordered by priority, that is we will first strive to implement tweet f
 In the beginning our project scope was to create a general recommendation system for all sorts of media: news, tweets, blogs, videos, etc. However given professor's feedback we decided to focus the idea on Twitter. We believe that doing so will allow us to deliver a more refined and complete solution. However if things go exceedingly well we may revisit this idea for further expansion.
 
 ## Minimum Viable Product
-
 Given the description we gave for the Personalised News project a minimum viable product would be a recommender system + mobile client for Twitter. I guess we’d have to detail a bit further what exactly that is.
 
 A recommender system 
@@ -76,41 +73,58 @@ For issues we use the following story point estimations:
 
 ### Schedule & Deliverables
 
-2016-05-17	Lecture 1 (10:00 - 16:00)
-2016-05-24	Lecture 2 (13:00 - 16:00)
-2016-05-31	Week 3 Lab (13:00 - 16:00)
-**2016-06-10	Week 4: Project Plan**
-2016-06-14	Week 5 Lab (13:00 - 16:00)
-**2016-06-21	Mid-term presentations** (10:00 - 17:00)
-**2016-06-24	Mid-term report**
-2016-07-05	Week 7 Lab (13:00 - 16:00)
-**2016-07-15	User evaluation report**
-2016-07-19	Week 8 Lab (13:00 - 16:00)
-2016-08-02	Week 9 Lab (13:00 - 16:00)
-**2016-08-09	Final presentations** (10:00 - 17:00)
-**2016-08-19	Final Report & Code**
+2016-05-17		Lecture 1 (10:00 - 16:00)  
+2016-05-24		Lecture 2 (13:00 - 16:00)  
+2016-05-31		Week 3 Lab (13:00 - 16:00)  
+**2016-06-10	Week 4: Project Plan**  
+2016-06-14		Week 5 Lab (13:00 - 16:00)  
+**2016-06-21	Mid-term presentations** (10:00 - 17:00)  
+**2016-06-24	Mid-term report**  
+2016-07-05		Week 7 Lab (13:00 - 16:00)  
+**2016-07-15	User evaluation report**  
+2016-07-19		Week 8 Lab (13:00 - 16:00)  
+2016-08-02		Week 9 Lab (13:00 - 16:00)  
+**2016-08-09	Final presentations** (10:00 - 17:00)  
+**2016-08-19	Final Report & Code**  
 
 
+|             |    M    |    T    |    W    |    T    |    F    |    S    |    S    | Month     |
+|------------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:----------|
+| **Week 1**  | 16      | 17      | 18      | 19      | 20      | 21      | 22      | May       |
+| **Week 2**  | 23      | 24      | 25      | 26      | 27      | 28      | 29      | May       |
+| **Week 3**  | 30      |<u>31</u>| 1       | 2       | 3       | 4       | 5       | May/June  |
+| **Week 4**  | 6       |<u>7</u> | 8       | 9       | **10**  | 11      | 12      | June      |
+| **Week 5**  | 13      |<u>14</u>| 15      | 16      | 17      | 18      | 19      | June      |
+| **Week 6**  | 20      | **21**  | 22      | 23      | **24**  | 25      | 26      | June      |
+| **Week 7**  | 27      |<u>28</u>| 29      | 30      | 1       | 2       | 3       | June/July |
+| **Week 8**  | 4       |<u>5</u> | 6       | 7       | 8       | 9       | 10      | July      |
+| **Week 9**  | 11      |<u>12</u>| 13      | 14      | **15**  | 16      | 17      | July      |
+| **Week 10** | 18      |<u>19</u>| 20      | 21      | 22      | 23      | 24      | July      |
+| **Week 11** | 25      |<u>26</u>| 27      | 28      | 29      | 30      | 31      | July      |
+| **Week 12** | 1       |<u>2</u> | 3       | 4       | 5       | 6       | 7       | August    |
+| **Week 13** | 8       | **9**   | 10      | 11      | 12      | 13      | 14      | August    |
+| **Week 14** | 15      | 16      | 17      | 18      | 19      | 20      | 21      | August    |
 
-​			**M	T	W	T	F	S	S**
-**Week 1**		16	17	18	19	20	*21	22*	May
-**Week 2**		23	24	25	26	27	*28	29*	May
-**Week 3**		30	<u>31</u>	01	02	03	*04	05*	May/June
-**Week 4**		06	<u>07</u>	08	09	**10**	*11	12*	June
-**Week 5**		13	<u>14</u>	15	16	17	*18	19*	June
-**Week 6**		20	**<u>21</u>**	22	23	**24**	*25	26*	June
-**Week 7**		27	<u>28</u>	29	30	01	*02	03*	June/July
-**Week 8**		04	<u>05</u>	06	07	08	*09	10*	July
-**Week 9**		11	<u>12</u>	13	14	**15**	*16	17*	July
-**Week 10**	18	<u>19</u>	20	21	22	*23	24*	July
-**Week 11**	25	<u>26</u>	27	28	29	*30	31*	July
-**Week 12**	01	<u>02</u>	03	04	05	*06	07*	August
-**Week 13**	08	**09**	10	11	12	*13	14*	August
-**Week 14**	15	16	17	18	**19**	*20	21*	August
-
-*Italic*: Weekend
-**Bold**: Deliverable or presentation
+**Bold**: Deliverable or presentation  
 <u>Underscore</u>: Blog and show'n'tell
+
+​**M	T	W	T	F	S	S**  
+**Week 1**		16	17	18	19	20	*21	22*	May  
+**Week 2**		23	24	25	26	27	*28	29*	May  
+**Week 3**		30	<u>31</u>	01	02	03	*04	05*	May/June  
+**Week 4**		06	<u>07</u>	08	09	**10**	*11	12*	June  
+**Week 5**		13	<u>14</u>	15	16	17	*18	19*	June  
+**Week 6**		20	**<u>21</u>**	22	23	**24**	*25	26*	June  
+**Week 7**		27	<u>28</u>	29	30	01	*02	03*	June/July  
+**Week 8**		04	<u>05</u>	06	07	08	*09	10*	July  
+**Week 9**		11	<u>12</u>	13	14	**15**	*16	17*	July  
+**Week 10**	18	<u>19</u>	20	21	22	*23	24*	July  
+**Week 11**	25	<u>26</u>	27	28	29	*30	31*	July  
+**Week 12**	01	<u>02</u>	03	04	05	*06	07*	August  
+**Week 13**	08	**09**	10	11	12	*13	14*	August  
+**Week 14**	15	16	17	18	**19**	*20	21*	August  
+
+
 
 ## Team members
 
