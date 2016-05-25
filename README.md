@@ -27,9 +27,8 @@ These are ordered by priority, that is we will first strive to implement tweet f
 In the beginning our project scope was to create a general recommendation system for all sorts of media: news, tweets, blogs, videos, etc. However given professor's feedback we decided to focus the idea on Twitter. We believe that doing so will allow us to deliver a more refined and complete solution. However if things go exceedingly well we may revisit this idea for further expansion.
 
 ## Minimum Viable Product
-Given the description we gave for the Personalised News project a minimum viable product would be a recommender system + mobile client for Twitter. I guess we’d have to detail a bit further what exactly that is.
+The minimum viable product we set ourselves out to achieve is a recommender system to filter out tweets from the timeline that are not of interest. That is, it will only include the back-end, no mobile app. The aim is to have a tweet timeline where a user would rate our version better than the default one provided by Twitter. We will see how deep we will get but the aim is to be able to have an objective evaluation that shows a statistically significant difference in user preference.
 
-A recommender system 
 
 ## Evaluation Method
 
@@ -38,15 +37,15 @@ There are two evaluations that come to mind:
 - Quality / Accuracy of recommender system
 - Usability of mobile client
 
-A cornerstone of the project will be to recommend something the user finds relevant. The recommender system can be evaluated in two ways:
+A cornerstone of the project will be to filter and order tweets to the user in a personalised way superior to the default Twitter timeline (all tweets from followers). The recommender system can be evaluated in two ways:
 
 - **Evaluation on a static dataset**. Static datasets constructed from existing Twitter accounts. Something we can test over and over to benchmark ourselves. Sort of like unit tests. Try to predict likes for example. This evaluation is more intended to aid us during development.
-- **User evaluation**.  One idea we had though was to present to the user pairs of unseen tweets and have the user select which tweet is more interesting or relevant.
-  - Present pairs of unseen tweets from a users timeline. User selects which tweet is more interesting or relevant. With t
-  - v
-  - True evaluations from live users. This is more fuzzy, we have users try our system with their Twitter account and report how accurate the predictions are.
+- **User evaluation**. Here are some ideas for user evaluations:
+  - Present pairs of unseen tweets from a users timeline. User selects which tweet is more interesting or relevant. Our recommender system would make it's prediction behind the scenes. We would then compare and see if the guess by the recommender system is correct or not.
+  - A user is presented 10 (or X number) unseen tweets from her or his timeline. The user is asked to place the tweets in order of interest. This order would be compared to the order the recommender system predicted.
+  - True evaluations from live users. This is more fuzzy, we have users try our system with their Twitter account and report how accurate the predictions are. A full user run so to speak.
 
-Not sure how we would test the usability of the mobile app, but there are probably well known ways to do it : )
+Not sure how (or if at all) we would test the usability of the mobile app, but there are probably well known ways to do it : )
 
 ## Technical Decisions
 Here below are some of the technical descisions we've made so far. Please note that we do not consider them binding. That is, we are fully prepared to switch languages, stacks mid project if we believe it will suit us better.
@@ -54,9 +53,12 @@ Here below are some of the technical descisions we've made so far. Please note t
 - **Mobile**: iOS 9 + Swift 2.2
 - **Recommender System**: Python 3
 - **Back-end web service**: Python 3 or 2, [Flask](http://flask.pocoo.org/) (or [Bottle](http://bottlepy.org/docs/dev/index.html))
-- **Database**: *undecided*
+- **Database**: Undecided. Maybe [PostGres](https://www.postgresql.org/), [Redis](http://redis.io/), or [RethinkDB](http://rethinkdb.com/).
 
 For the backend we'll strive to use Python 3 as much as we can but for some parts it may be nescisary to use Python 2.7. For the recommender system we aim to use Python 3 data scicence libraries as much as we can. However Python is not the fastest language on the block so we've pondered the possibility to dip into [Rust](https://www.rust-lang.org/) for performance critical parts, but we'll see.
+
+As for the database we have not entirely made up our mind. What comes to mind is PostGres for general storage. The Twitter API has pretty restrictive rate limits so it looks like we might need to store tweets ourselves. What comes to mind are some document databases like Redis or RethinkDb.
+
 
 ## Project Managment
 
@@ -64,12 +66,15 @@ For project managment we keep it loose & lean. We use [ZenHub](https://www.zenhu
 
 For issues we use the following story point estimations:
 
-* **1**:    ~30m easy work, e.g. testing for the other team
-* **2**:    1 - 2 hours of work, simple but requires effort
-* **3**:    half a day of work
-* **5**:    full day of work
-* **8**:    2 days of work, not easy
-* **13**:   3 - 5 days of work, very complex may require multiple people
+| Story Points | Description |
+|:------------:|:------------|
+| **1**        | ~30m easy work, e.g. testing for the other team |
+| **2**        | 1 - 2 hours of work, simple but requires effort |
+| **3**        | half a day of work |
+| **5**        | full day of work |
+| **8**        | 2 days of work, not easy |
+| **13**       | 3 - 5 days of work, very complex may require multiple people | 
+
 
 ### Schedule & Deliverables
 
@@ -108,23 +113,6 @@ For issues we use the following story point estimations:
 **Bold**: Deliverable or presentation  
 <u>Underscore</u>: Blog and show'n'tell
 
-​**M	T	W	T	F	S	S**  
-**Week 1**		16	17	18	19	20	*21	22*	May  
-**Week 2**		23	24	25	26	27	*28	29*	May  
-**Week 3**		30	<u>31</u>	01	02	03	*04	05*	May/June  
-**Week 4**		06	<u>07</u>	08	09	**10**	*11	12*	June  
-**Week 5**		13	<u>14</u>	15	16	17	*18	19*	June  
-**Week 6**		20	**<u>21</u>**	22	23	**24**	*25	26*	June  
-**Week 7**		27	<u>28</u>	29	30	01	*02	03*	June/July  
-**Week 8**		04	<u>05</u>	06	07	08	*09	10*	July  
-**Week 9**		11	<u>12</u>	13	14	**15**	*16	17*	July  
-**Week 10**	18	<u>19</u>	20	21	22	*23	24*	July  
-**Week 11**	25	<u>26</u>	27	28	29	*30	31*	July  
-**Week 12**	01	<u>02</u>	03	04	05	*06	07*	August  
-**Week 13**	08	**09**	10	11	12	*13	14*	August  
-**Week 14**	15	16	17	18	**19**	*20	21*	August  
-
-
 
 ## Team members
 
@@ -138,7 +126,7 @@ For issues we use the following story point estimations:
 
 Project roles:
 
+* **User Experience**: Eazhil
 * **Project Managment**: Marc
 * **Software Development**: Specter & Xinxqi
-* **User Experience**: Eazhil
 * **Evaluation & Communications**: Jón Rúnar
