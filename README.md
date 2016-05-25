@@ -1,8 +1,5 @@
 # λ Lovelace
-
 A collaborative recommender system for tweets. A 30 ECTS group project, summer 2016 at University College Dublin.
-
-
 
 ## Project Scope
 
@@ -12,17 +9,11 @@ Earlier our project scope was to create a general recommendation system for all 
 
 For the 
 
-
-
-
-
 ## Minimum Viable Product
 
 Given the description we gave for the Personalised News project a minimum viable product would be a recommender system + mobile client for Twitter. I guess we’d have to detail a bit further what exactly that is.
 
 A recommender system 
-
-
 
 ## Evaluation Method
 
@@ -41,10 +32,7 @@ A cornerstone of the project will be to recommend something the user finds relev
 
 Not sure how we would test the usability of the mobile app, but there are probably well known ways to do it : )
 
-
-
 ## Technical Decisions
-
 Here below are some of the technical descisions we've made so far. Please note that we do not consider them binding. That is, we are fully prepared to switch languages, stacks mid project if we believe it will suit us better.
 
 - **Mobile**: iOS 9 + Swift 2.2
@@ -54,16 +42,18 @@ Here below are some of the technical descisions we've made so far. Please note t
 
 For the backend we'll strive to use Python 3 as much as we can but for some parts it may be nescisary to use Python 2.7. For the recommender system we aim to use Python 3 data scicence libraries as much as we can. However Python is not the fastest language on the block so we've pondered the possibility to dip into [Rust](https://www.rust-lang.org/) for performance critical parts, but we'll see.
 
-### Story Points
+## Project Managment
 
-**1**:    ~30m easy work, e.g. testing for the other team
-**2**:    1 - 2 hours of work, simple but requires effort
-**3**:    half a day of work
-**5**:    full day of work
-**8**:    2 days of work, not easy
-**13**:  3 - 5 days of work, very complex may require multiple people
+For project managment we keep it loose & lean. We use [ZenHub](https://www.zenhub.io/) to augment GitHub so we get a Kanban style board for issues and burndown graphs to track milestone progresses.
 
+For issues we use the following story point estimations:
 
+* **1**:    ~30m easy work, e.g. testing for the other team
+* **2**:    1 - 2 hours of work, simple but requires effort
+* **3**:    half a day of work
+* **5**:    full day of work
+* **8**:    2 days of work, not easy
+* **13**:   3 - 5 days of work, very complex may require multiple people
 
 ## Team members
 
