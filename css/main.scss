@@ -4,18 +4,18 @@
 @charset "utf-8";
 
 
-
 // Our variables
-$base-font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$base-font-family: "Cutive Mono", "Courier New", "Helvetica Neue", Helvetica, FangSong, STFangsong, sans-serif;
+$code-font-family: "Courier New", Consolas, monopace, FangSong, STFangsong;
 $base-font-size:   16px;
 $base-font-weight: 400;
-$small-font-size:  $base-font-size * 0.875;
+$small-font-size:  0.875rem;
 $base-line-height: 1.5;
 
-$spacing-unit:     30px;
+$spacing-unit:     2rem;
 
 $text-color:       #111;
-$background-color: #fdfdfd;
+$background-color: #fff;
 $brand-color:      #2a7ae2;
 
 $grey-color:       #828282;
@@ -23,8 +23,6 @@ $grey-color-light: lighten($grey-color, 40%);
 $grey-color-dark:  darken($grey-color, 25%);
 
 // Width of the content area
-$content-width:    800px;
-
 $on-palm:          600px;
 $on-laptop:        800px;
 
@@ -47,6 +45,7 @@ $on-laptop:        800px;
 
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
+		url(https://fonts.googleapis.com/css?family=Cutive+Mono),
         "base",
         "layout",
         "syntax-highlighting"
