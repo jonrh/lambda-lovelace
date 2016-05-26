@@ -7,40 +7,36 @@ layout: default
 		<p>
 			λ Lovelace is a group of 5 computer science <a href="https://www.cs.ucd.ie/PostgraduateProgrammes/MSc_Negotiated_Learning/">MSc</a> students in the module COMP47250 taught at <a href="http://www.ucd.ie/">University College Dublin</a>. The module is 30 ECTS credits and spans the summer of 2016. As of now our GitHub repository is private but may be made public later.
 		</p>
+		
+		<h3>The Project</h3>
 		<p>
-			Team members:
-			<ul>				
-				<li>Xinqi Li, <a href="https://github.com/XinqiLi1992">XinqiLi1992</a></li>
-				<li>Marc Laffan, <a href="https://github.com/Marc5690">Marc5690</a></li>
-				<li>Junyang Ma, <a href="https://github.com/specter4mjy">specter4mjy</a></li>
-				<li>Jón Rúnar Helgason, <a href="https://github.com/jonrh">jonrh</a></li>
-				<li>Eazhilarasi Manivannan, <a href="https://github.com/Eazhilarasi">Eazhilarasi</a></li>		
+			The project we are doing is a collaborative recommender system for tweets; a personalised tweet stream. On a very high level there are two main components:
+
+			<ul>
+				<li><strong>Front-end</strong>: iOS Twitter mobile app</li>
+				<li><strong>Back-end</strong>: Collaborative recommender system</li>
 			</ul>
-		</p>
-	</section>
-	<section>
-		<h2 class="smallcaps">Project</h2>
-		<p>
-			The project we are doing is a collaborative recommender system for tweets; a personalised tweet stream.
 		</p>
 
 		<p>
 			A Twitter user signs up to our services and uses our iOS mobile client. Uninteresting tweets are filtered out (or deferred to later) while interesting tweets are prioritised in the timeline. Tweets from non-followers may be suggested as well. Essentially we hope to create a better, more personalised timeline of tweets than what Twitter provides by default. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
 		</p>
 
-		<p>
-			On a very high level there are two main components to the project:
+		<h3>Team Members</h3>
+		<ul>				
+			<li>Xinqi Li, <a href="https://github.com/XinqiLi1992">XinqiLi1992</a></li>
+			<li>Marc Laffan, <a href="https://github.com/Marc5690">Marc5690</a></li>
+			<li>Junyang Ma, <a href="https://github.com/specter4mjy">specter4mjy</a></li>
+			<li>Jón Rúnar Helgason, <a href="https://github.com/jonrh">jonrh</a></li>
+			<li>Eazhilarasi Manivannan, <a href="https://github.com/Eazhilarasi">Eazhilarasi</a></li>
+		</ul>
 
-			<ul>
-				<li><strong>Front-end</strong>: iOS Twitter mobile app</li>
-				<li><strong>Back-end</strong>: Collaborative recommender system</li>
-			</ul>				
-		</p>
 	</section>
+
 	<section>
 		<h2 class="smallcap">posts</h2>
 		<ul class="post-list">
-			{% for post in site.posts limit:5 %}
+			{% for post in site.posts limit:1337 %}
 			<li>
 				<span>{{ post.date | date: "%b %d, %Y" }}</span>
 				<a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>

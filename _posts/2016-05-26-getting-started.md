@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  Styles for slim
-date:   2015-11-16  00:00:00
+title:  Gettings Started
+date:   2016-05-26 13:37:00 +0100
 ---
 
 slim is a simple and beautiful jekyll theme, it has only the essential functions
