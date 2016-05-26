@@ -5,18 +5,20 @@
 
 
 // Our variables
-$base-font-family: "Cutive Mono", "Courier New", "Helvetica Neue", Helvetica, FangSong, STFangsong, sans-serif;
+// Below line is the original fotn family by the Slim theme
+//$base-font-family: "Cutive Mono", "Courier New", "Helvetica Neue", Helvetica, FangSong, STFangsong, sans-serif;
+$base-font-family: "Lato",sans-serif;
 $code-font-family: "Courier New", Consolas, monopace, FangSong, STFangsong;
-$base-font-size:   16px;
+$base-font-size:   15px; // org: 16px
 $base-font-weight: 400;
 $small-font-size:  0.875rem;
 $base-line-height: 1.5;
 
 $spacing-unit:     2rem;
 
-$text-color:       #111;
+$text-color:       #7a7a7a; // org: #111
 $background-color: #fff;
-$brand-color:      #2a7ae2;
+$brand-color:      #ff5000; // org: #2a7ae2
 
 $grey-color:       #828282;
 $grey-color-light: lighten($grey-color, 40%);
