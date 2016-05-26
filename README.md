@@ -108,7 +108,7 @@ For issues we use the following story point estimations:
 | **Week 11** | 25      | *26*    | 27      | 28      | 29      | 30      | 31      | July      |
 | **Week 12** | 1       | *2*     | 3       | 4       | 5       | 6       | 7       | August    |
 | **Week 13** | 8       | **9**   | 10      | 11      | 12      | 13      | 14      | August    |
-| **Week 14** | 15      | 16      | 17      | 18      | 19      | 20      | 21      | August    |
+| **Week 14** | 15      | 16      | 17      | 18      | **19**  | 20      | 21      | August    |
 
 **Bold**: Deliverable or presentation  
 *Italic*: Blog and show'n'tell
