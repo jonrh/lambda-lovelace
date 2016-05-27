@@ -1,6 +1,8 @@
 # λ Lovelace
 A collaborative recommender system for tweets; a personalised tweet stream. Module: COMP47250, a 30 ECTS group project, summer 2016 at University College Dublin.
 
+**Blog**: [http://jonrh.github.io/lambda-lovelace/](http://jonrh.github.io/lambda-lovelace/)
+
 ## Project
 **Summary**: A collaborative recommender system for tweets; a personalised tweet stream.
 
@@ -12,7 +14,7 @@ On a very high level there are two main components to the project:
 * **Front-end**: iOS Twitter mobile app
 * **Back-end**: Collaborative recommender system
 
-A user with a Twitter account signs up to our services and uses our iOS mobile client. Tweets from followers not of interest (e.g. political rants) are filtered out (or deferred to later) while interesting tweets are prioritised in the timeline. Tweets from non-followers may be suggested as well. Essentially we hope to create a better, more personalised timeline of tweets than what Twitter provides by default. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
+A Twitter user uses our iOS mobile client and grants us API access. Uninteresting tweets are filtered out (or deferred to later) while interesting tweets are prioritised in the timeline. Tweets from non-followers may be suggested as well. Essentially we hope to create a better, more personalised timeline of tweets than what Twitter provides by default. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
 
 The mobile app is required in order to collect additional user preference information to refine the recommendations. For example, if a user clicks a link in a tweet, likes a tweet, retweets, or engages in conversations. Another potential passive observation mechanishm would be to have the client measure the amount of time a tweet is visible. Thinking being if a tweet is in focus for longer it might be of more interest than a tweet that is scrolled past quickly.
 
