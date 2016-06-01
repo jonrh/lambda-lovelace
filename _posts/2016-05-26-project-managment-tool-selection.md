@@ -28,4 +28,6 @@ Next up was *ZenHub*. This is the solution we are evaluating when this post was 
 
 ![]({{site.baseurl}}/images/kanban_board1.png)  
 
-\- *Team λ Lovelace*
+
+On behalf of λ Lovelace  
+\- *Jón Rúnar Helgason*
