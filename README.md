@@ -3,6 +3,33 @@ A collaborative recommender system for tweets; a personalised tweet stream. Modu
 
 **Blog**: [http://jonrh.github.io/lambda-lovelace/](http://jonrh.github.io/lambda-lovelace/)
 
+
+## Getting Started
+Here are instructions on how to get started developing for the project.
+
+**Quick Start**:
+
+1. Install the [ZenHub Chrome extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). See [Project Managment](#project-managmnent) for more details.
+2. Clone `master` and `gh-pages` brances into seperate local repositories (folders)
+
+There are two main branches: `master` (code & docs) and `gh-pages` (blog). It's best to clone both branches in a seperate folder because they do not share any common code.
+
+```
+// Go to the folder you want to keep the GitHubCode/ folder
+
+mkdir GitHubCode
+cd GitHubCode/
+
+// Clone the master branch into the folder lambda-lovelace/
+git clone https://github.com/jonrh/lambda-lovelace.git
+
+// If you're not going to be working with the blow the blow can be skipped
+// Clone the gh-pages branch into the folder ll-blog/
+git clone https://github.com/jonrh/lambda-lovelace.git ll-blog/
+cd ll-blog
+git checkout -b gh-pages origin/gh-pages
+```
+
 ## Project
 **Summary**: A collaborative recommender system for tweets; a personalised tweet stream.
 
@@ -64,7 +91,7 @@ As for the database we have not entirely made up our mind. What comes to mind is
 
 ## Project Managment
 
-For project managment we keep it loose & lean. We use [ZenHub](https://www.zenhub.io/) to augment GitHub so we get a Kanban style board for issues and burndown graphs to track milestone progresses.
+For project managment we keep it loose & lean. We use [ZenHub](https://www.zenhub.io/) to augment GitHub so we get a Kanban style board for issues and burndown charts to track milestone progresses. To use it you will have to install a [Chrome extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). After the extension is installed you simply go to the GitHub [repository](https://github.com/jonrh/lambda-lovelace) and the extra features will be there on the page.
 
 For issues we use the following story point estimations:
 
