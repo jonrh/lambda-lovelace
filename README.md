@@ -107,55 +107,85 @@ For issues we use the following story point estimations:
 
 ### Schedule & Deliverables
 
-2016-05-17		Lecture 1 (10:00 - 16:00)  
-2016-05-24		Lecture 2 (13:00 - 16:00)  
-2016-05-31		Week 3 Lab (13:00 - 16:00)  
-**2016-06-10	Week 4: Project Plan**  
+~~2016-05-17		Lecture 1 (10:00 - 16:00)~~  
+~~2016-05-24		Lecture 2 (13:00 - 16:00)~~  
+~~2016-05-31		Week 3 Lab (13:00 - 16:00)~~  
+**2016-06-10		Week 4: Project Plan** (17:00)  
 2016-06-14		Week 5 Lab (13:00 - 16:00)  
-**2016-06-21	Mid-term presentations** (10:00 - 17:00)  
-**2016-06-24	Mid-term report**  
+**2016-06-21		Mid-term presentations** (10:00 - 17:00)  
+**2016-06-24		Mid-term report**  
 2016-07-05		Week 7 Lab (13:00 - 16:00)  
-**2016-07-15	User evaluation report**  
+**2016-07-15		User evaluation report**  
 2016-07-19		Week 8 Lab (13:00 - 16:00)  
 2016-08-02		Week 9 Lab (13:00 - 16:00)  
-**2016-08-09	Final presentations** (10:00 - 17:00)  
-**2016-08-19	Final Report & Code**  
+**2016-08-09		Final presentations** (10:00 - 17:00)  
+**2016-08-19		Final Report & Code**  
 
+### Blog and Show'n'tell
+
+Moodle Deadlines:
+
+* **Blog post**: 17:00 on the Monday before
+* **Show & Tell slides**: 12:00 on Tuesday
+
+|             |     Blog    |    Show & Tell    |
+|------------:|:------------|:------------------|
+| **Week 3**  | Jón Rúnar   | Jón Rúnar         |
+| **Week 4**  | Xinqi       |                   |
+| **Week 5**  | Marc        | Marc              |
+| **Week 6**  | ?           |                   |
+| **Week 7**  | Eazhilarasi |                   |
+| **Week 8**  | Junyang     | Junyang           |
+| **Week 9**  | ?           |                   |
+| **Week 10** | ?           | ?                 |
+| **Week 11** | ?           |                   |
+| **Week 12** | ?           | ?                 |
+
+A tally of past jobs as well as scheduled ones:
+
+|             | Blog posts | Show & Tell |
+|:-----------:|:----------:|:-----------:|
+| Xinqi       | 1          | 0           |
+| Marc        | 1          | 1           |
+| Junyang     | 1          | 1           |
+| Jón Rúnar   | 1          | 1           |
+| Eazhilarasi | 1          | 0           |
+
+
+### Week Calendar
 
 |             |    M    |    T    |    W    |    T    |    F    |    S    |    S    | Month     |
 |------------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:----------|
 | **Week 1**  | 16      | 17      | 18      | 19      | 20      | 21      | 22      | May       |
 | **Week 2**  | 23      | 24      | 25      | 26      | 27      | 28      | 29      | May       |
 | **Week 3**  | 30      | *31*    | 1       | 2       | 3       | 4       | 5       | May/June  |
-| **Week 4**  | 6       | *7*     | 8       | 9       | **10**  | 11      | 12      | June      |
+| **Week 4**  | 6       | 7       | 8       | 9       | **10**  | 11      | 12      | June      |
 | **Week 5**  | 13      | *14*    | 15      | 16      | 17      | 18      | 19      | June      |
 | **Week 6**  | 20      | **21**  | 22      | 23      | **24**  | 25      | 26      | June      |
-| **Week 7**  | 27      | *28*    | 29      | 30      | 1       | 2       | 3       | June/July |
+| **Week 7**  | 27      | 28      | 29      | 30      | 1       | 2       | 3       | June/July |
 | **Week 8**  | 4       | *5*     | 6       | 7       | 8       | 9       | 10      | July      |
-| **Week 9**  | 11      | *12*    | 13      | 14      | **15**  | 16      | 17      | July      |
+| **Week 9**  | 11      | 12      | 13      | 14      | **15**  | 16      | 17      | July      |
 | **Week 10** | 18      | *19*    | 20      | 21      | 22      | 23      | 24      | July      |
-| **Week 11** | 25      | *26*    | 27      | 28      | 29      | 30      | 31      | July      |
+| **Week 11** | 25      | 26      | 27      | 28      | 29      | 30      | 31      | July      |
 | **Week 12** | 1       | *2*     | 3       | 4       | 5       | 6       | 7       | August    |
 | **Week 13** | 8       | **9**   | 10      | 11      | 12      | 13      | 14      | August    |
 | **Week 14** | 15      | 16      | 17      | 18      | **19**  | 20      | 21      | August    |
 
 **Bold**: Deliverable or presentation  
-*Italic*: Blog and show'n'tell
+*Italic*: Show & Tell
 
 
 ## Team members
 
 - Jón Rúnar Helgason, [jonrh](https://github.com/jonrh), [jonrh@jonrh.is](jonrh@jonrh.is)
 - Xinqi Li, [XinqiLi1992](https://github.com/XinqiLi1992), [xinqi.li@ucdconnect.ie](xinqi.li@ucdconnect.ie)
-- Marc Laffan, [Marc5690](https://github.com/Marc5690), marclaffan@gmail.com
-- Junyang Ma, [specter4mjy](https://github.com/specter4mjy), specter4mjy@gmail.com
+- Marc Laffan, [Marc5690](https://github.com/Marc5690), [marclaffan@gmail.com](marclaffan@gmail.com)
+- Junyang Ma, [specter4mjy](https://github.com/specter4mjy), [specter4mjy@gmail.com](specter4mjy@gmail.com)
 - Eazhilarasi Manivannan, [Eazhilarasi](https://github.com/Eazhilarasi), [eazhilarasi.manivannan@ucdconnect.ie](eazhilarasi.manivannan@ucdconnect.ie)
-
-
 
 Project roles:
 
-* **User Experience**: Eazhil
 * **Project Managment**: Marc
+* **User Experience**: Eazhilarasi
 * **Software Development**: Specter & Xinxqi
 * **Evaluation & Communications**: Jón Rúnar
