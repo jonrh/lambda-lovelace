@@ -1,0 +1,1 @@
+web: gunicorn Lovelace:app --log-file -
