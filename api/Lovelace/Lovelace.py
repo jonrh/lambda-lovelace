@@ -1,4 +1,4 @@
-from flask import Flask, redirect
+from flask import Flask, redirect,request
 from flask_restful import Resource, Api
 
 app = Flask(__name__)
@@ -15,19 +15,21 @@ class Tweets(Resource):
     def get(self):
         return tweets
 
-# class IOSAppRedirectHelper(Resource):
-#     def get(self):
-#         return redirect('lovelace://oauth-callback/')
+class IOSAppRedirectHelper(Resource):
+    def get(self):
+        oauth_token = request.args.get('oauth_token')
+        oauth_verifier = request.args.get('oauth_verifier')
 
-@app.route('/oauth-callback/<params>')
-def show_user_profile(params):
-    # show the user profile for that user
-    redirectUrl = 'lovelace://oauth-callback/' + params
-    return redirect(redirectUrl)
+        location = 'lovelace://oauth-callback?oauth_token='
+        location += oauth_token
+        location += '&oauth_verifier='
+        location += oauth_verifier
+        return redirect(location)
+
 
 
 # ios twitter authentication callback url redirect helper
-# api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
+api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
 
 api.add_resource(Tweets, '/tweets')
 

@@ -15,7 +15,7 @@ struct APIConstent{
     static let requestTokenUrl = "https://api.twitter.com/oauth/request_token"
     static let authorizeUrl = "https://api.twitter.com/oauth/authenticate"
     static let accessTokenUrl = "https://api.twitter.com/oauth/access_token"
-    static let callbackUrl = "https://lovelance.herokuapp.com/oauth-callback"
+    static let callbackUrl = "https://lovelance.herokuapp.com/oauth-callback/"
 }
 
 class APIManager {
