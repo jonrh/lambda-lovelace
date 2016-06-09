@@ -15,13 +15,19 @@ class Tweets(Resource):
     def get(self):
         return tweets
 
-class IOSAppRedirectHelper(Resource):
-    def get(self):
-        return redirect('lovelace://oauth-callback/')
+# class IOSAppRedirectHelper(Resource):
+#     def get(self):
+#         return redirect('lovelace://oauth-callback/')
+
+@app.route('/oauth-callback/<params>')
+def show_user_profile(params):
+    # show the user profile for that user
+    redirectUrl = 'lovelace://oauth-callback/' + params
+    return redirect(redirectUrl)
 
 
 # ios twitter authentication callback url redirect helper
-api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
+# api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
 
 api.add_resource(Tweets, '/tweets')
 
