@@ -15,7 +15,7 @@ class Tweets(Resource):
     def get(self):
         return tweets
 
-class IOSAppRedirectHelper:
+class IOSAppRedirectHelper(Resource):
     def get(self):
         return redirect('lovelace://oauth-callback/')
 
