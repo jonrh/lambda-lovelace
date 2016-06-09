@@ -29,15 +29,17 @@ class ViewController: UIViewController {
 //                    }
 //                }
 //        }
-        let callbackUrl = NSURL(string: APIConstent.callbackUrl)!
         
-        APIManager.oauthSwift.authorizeWithCallbackURL(callbackUrl, success: {
-            (credential, response, parameters) in
+        APIManager.authorize(self,
+             success: { (credential, response, parameters) in
                 print("success")
                 print(credential.oauth_token)
-            }) { (error) in
+            },
+             failure: { (error) in
+                print("error")
                 print(error.localizedDescription)
-        }
+            }
+        )
     }
 
     override func didReceiveMemoryWarning() {

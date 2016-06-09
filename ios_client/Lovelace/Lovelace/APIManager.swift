@@ -8,6 +8,7 @@
 
 import Foundation
 import OAuthSwift
+import SafariServices
 
 struct APIConstent{
     static let consumerKey = "BbTvs8T7CZguiloHMIVeRdKUO"
@@ -15,11 +16,21 @@ struct APIConstent{
     static let requestTokenUrl = "https://api.twitter.com/oauth/request_token"
     static let authorizeUrl = "https://api.twitter.com/oauth/authenticate"
     static let accessTokenUrl = "https://api.twitter.com/oauth/access_token"
-    static let callbackUrl = "https://lovelance.herokuapp.com/oauth-callback/"
+    static let callbackUrl = NSURL(string:"https://lovelance.herokuapp.com/oauth-callback")!
 }
 
 class APIManager {
     
-    static let oauthSwift = OAuth1Swift(
-        consumerKey: APIConstent.consumerKey, consumerSecret: APIConstent.consumerSecret ,requestTokenUrl: APIConstent.requestTokenUrl, authorizeUrl: APIConstent.authorizeUrl, accessTokenUrl: APIConstent.accessTokenUrl)
+    class func authorize(sender: ViewController, success: OAuthSwift.TokenSuccessHandler, failure: OAuthSwift.FailureHandler?) {
+        let oauthSwift = OAuth1Swift(
+            consumerKey: APIConstent.consumerKey,
+            consumerSecret: APIConstent.consumerSecret,
+            requestTokenUrl: APIConstent.requestTokenUrl,
+            authorizeUrl: APIConstent.authorizeUrl,
+            accessTokenUrl: APIConstent.accessTokenUrl)
+        oauthSwift.authorize_url_handler = SafariURLHandler(viewController: sender)
+        oauthSwift.authorizeWithCallbackURL(APIConstent.callbackUrl, success: success, failure: failure)
+    }
+    
+    
 }
