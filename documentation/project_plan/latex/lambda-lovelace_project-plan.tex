@@ -38,8 +38,16 @@
 \vspace{0.5em}
 % - - - - Header Ends - - - -
 
+% Executive summary
+%\renewcommand{\abstractname}{Executive Summary}
+%\begin{abstract}
+%\noindent A collaborative recommender system for tweets; a more personalised tweet stream.
+%\end{abstract}
 
-\noindent This is a project plan for the team $\lambda$ Lovelace, summer 2016. The module formally started 2016.05.16 and will end in a final submission 2016.08.19. Four weeks have passed when this document was submitted. 
+
+\noindent This is a project plan for the team $\lambda$ Lovelace\footnote{pronounced: Lambda Lovelace}, summer 2016. The module formally started 2016.05.16 and will end in a final code \& report submission 2016.08.19. Four weeks have passed when this document was submitted.
+
+It is assumed the reader is familiar with Twitter. If not there is a short appendix at the end of this document detailing few of the main features.
 
 
 \section{Vision}
@@ -51,7 +59,20 @@
 % Who will use it?
 % How will they use it?
 
-Our project is to create a collaborative recommender system for tweets; a more personalised tweet stream.
+Our project is about creating a collaborative recommender system for tweets or in other words: a personalised stream of tweets.
+
+\subsection{Why?}
+The premise for our project is the assumption (or observation) that people are experiencing an information overload on Twitter. When a user follows another user on Twitter they subscribe to all their tweets and re-tweets\footnote{Twitter offers the option to turn off re-tweets for a particular followee}
+\\\\
+The theme for the summer 2016 practicum is \textit{Future Of News}. We believe that the future of news is going to be filtering and delivering personalised content to people. We see personalised tweet streams to be a stepping stone in that direction.
+
+\subsection{Who?}
+Our target users are Twitter power users. Such user follows roughly more than 100 people and has been using Twitter for few weeks or months. More importantly, the user is seeing on a regular basis tweets in his or her timeline that are of low relevance. For example 
+
+\subsection{How?}
+A Twitter user uses our iOS mobile client and grants us API access. Uninteresting tweets are filtered out (or deferred to later) while interesting tweets are prioritised in the timeline. Tweets from non-followers may be suggested as well. Essentially we hope to create a better, more personalised timeline of tweets than what Twitter provides by default. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
+\\\\
+The mobile app is required in order to collect additional user preference information to refine the recommendations. For example, if a user clicks a link in a tweet, likes a tweet, retweets, or engages in conversations. Another potential passive observation mechanishm would be to have the client measure the amount of time a tweet is visible. Thinking being if a tweet is in focus for longer it might be of more interest than a tweet that is scrolled past quickly.
 
 
 \section{Minimum Viable Product}
@@ -70,13 +91,13 @@ Text
 \section{Project Management}
 % 200 words approx.
 % How will you run your project?
-From the start we have been working together around a ring table in room B1.06 in the computer science building at UCD. We follow a flexitime schedule but aim to work together from 10:00 - 18:00 every week day. We do not work over weekends but if a team member needs to take a weekday off he or she tries to catch up on weekends so we all put in roughly the same amount of hours.
+From the start we have been working together around a ring table in room B1.06 in the computer science building at UCD. We follow a flexitime schedule with main working hours 10:00 - 18:00 every week day. We do not work over weekends but if a team member needs to take a weekday off he or she tries to catch up on weekends so we all put in roughly the same amount of hours.
 \\\\
 For source control we use Git in a private repository on GitHub. It should be noted that each team was allocated a repository in the organisation \linebreak \mbox{\textit{ucd-nlmsc-teamproject}} \cite{ucdgithub}. We however created our own repository \cite{gitrepo} so we could have unrestrained access to third party tools that required \textit{owner} rights\footnote{we were granted \textit{admin} rights but for some tools it's not enough}.
 \\\\
 For external communication we use a group conversation on Facebook Messenger. We tried chat with Slack  but favoured Messenger for simplicity. Slack now serves mostly as a notification hub for GitHub issues, commits, pull requests, etc.
 \\\\
-For project management we use ZenHub \cite{zenhub}. It's a Chrome browser extension that `hijacks' the GitHub website and augments it with extra features. The features we primarily use:
+For project management we use ZenHub \cite{zenhub}. It's a Chrome browser extension that `hijacks' the GitHub website and augments it with extra features. The features we primarily use are:
 
 \begin{samepage}
 \begin{itemize*}
@@ -100,7 +121,17 @@ For project management we use ZenHub \cite{zenhub}. It's a Chrome browser extens
 \end{figure}
 
 
-\section*{Other}
+\newpage
+
+
+\section{Appenix}
+This appendix contains information for a historical perspective such as what Twitter is and who the students and professors are. 
+
+\subsection{Twitter}
+Twitter is a microblogging social network where each post or \textit{tweet} is no more than 140 characters in length. A typical Twitter user \textit{follows} multiple other users (followees) and get followed by other users (followers). By following other users they subscribe to all of their tweets and re-tweets (rebroadcast of other user's tweets). The \textit{timeline} is a chronological feed of those tweets.
+
+\subsection{Students \& Professors}
+The group project is the third and final semester of the Negotiated Learning MSc in Computer Science at University College Dublin. Here are the students and professors involved:
 
 \begin{samepage}
 \begin{center}
@@ -118,9 +149,9 @@ For project management we use ZenHub \cite{zenhub}. It's a Chrome browser extens
 \begin{minipage}[t]{.4\textwidth}
 	\textbf{Module co-ordinators}:
 	\begin{itemize*}
-		\item Georgiana Ifrim
-		\item Brian Mac Namee
-		\item Derek Greene
+		\item Dr. Georgiana Ifrim
+		\item Dr. Brian Mac Namee
+		\item Dr. Derek Greene
 	\end{itemize*}
 \end{minipage}
 \end{center}
