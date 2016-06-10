@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>OAuthSwift.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Lovelace.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>3BBFB3E73F5DBD117CADC5D115A67E1E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>45935B91DF0442390E2CA6DEEF68AE99</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CB7E4DFD4B71F352DBCE3E0524460486</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FA82F9C5FF2719F6FB5C558D53BBDE64</key>
+		<key>CB8ADB5F6C2B3EC792B09EE78E569829</key>
 		<dict>
 			<key>primary</key>
 			<true/>
