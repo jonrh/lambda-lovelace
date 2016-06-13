@@ -61,6 +61,7 @@ class APIManager {
                     return
                 }
                 if let value = response.result.value {
+                    print(value)
                     let tweets = JSON(value)
                     for tweet in tweets {
                         print( tweet)

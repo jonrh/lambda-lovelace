@@ -34,28 +34,13 @@ enum Router: URLRequestConvertible {
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
         
-//        if APIManager.hasOAuthToken {
-//            let oauthToken = APIManager.getOAuthTokenAndTokenSecret()
-//            print(oauthToken)
-//            mutableURLRequest.setValue(oauthToken.oauth_token, forHTTPHeaderField: "oauth_token")
-//            mutableURLRequest.setValue(oauthToken.oauth_token_secret, forHTTPHeaderField: "oauth_token_secret")
-//        }
-        
-//        if APIManager.hasOAuthToken {
+        if APIManager.hasOAuthToken {
             let oauthToken = APIManager.getOAuthTokenAndTokenSecret()
             print(oauthToken)
-            let parameters = [ "oauth_token" : oauthToken.oauth_token ,
-                               "oauth_token_secret" : oauthToken.oauth_token_secret ]
-//            return Alamofire.ParameterEncoding.URL.encode(mutableURLRequest, parameters: parameters).0
-//            
-//        }else{
-//            return mutableURLRequest
-//        }
-        let encoding = Alamofire.ParameterEncoding.URL
+            mutableURLRequest.setValue(oauthToken.oauth_token, forHTTPHeaderField: "oauth_token")
+            mutableURLRequest.setValue(oauthToken.oauth_token_secret, forHTTPHeaderField: "oauth_token_secret")
+        }
         
-        let request = encoding.encode(mutableURLRequest, parameters: parameters).0
-        
-        print( "request is  \n \(request)")
-        return request
+        return mutableURLRequest
     }
 }
