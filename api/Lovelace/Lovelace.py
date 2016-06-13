@@ -1,6 +1,7 @@
 from flask import Flask, redirect, request
 from flask_restful import Resource, Api
 import tweepy
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -26,9 +27,11 @@ class Tweets(Resource):
         api = tweepy.API(auth)
 
         public_tweets = api.home_timeline()
+        jsonString = ""
         for tweet in public_tweets:
-            print(tweet.text)
-        return public_tweets
+            # print(tweet._json)
+            jsonString += json.dumps(tweet._json)
+        return jsonString
 
 class IOSAppRedirectHelper(Resource):
     def get(self):
