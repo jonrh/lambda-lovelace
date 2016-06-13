@@ -59,19 +59,26 @@ It is assumed the reader is familiar with Twitter. If not there is a short appen
 % Who will use it?
 % How will they use it?
 
-Our project is about creating a collaborative recommender system for tweets or in other words: a personalised stream of tweets. Tweets we think are more important or interesting would be shown first while uninteresting ones would be deferred to later. Tweets from non-followers may be suggested as well.
+Our project is about creating a collaborative recommender system for tweets or in other words: a personalised stream of tweets. Tweets that are more relevant or interesting would be shown first while unrelevant ones would be deferred to later. Tweets from non-followers may be suggested as well.
 \\\\
-On a very high level there are two main components to the project:
+On a high level there are two main components to the project:
 
 \begin{itemize*}
 	\item \textbf{Front-end}: iOS Twitter mobile app
 	\item \textbf{Back-end}: Collaborative recommender system
 \end{itemize*}
 
-\noindent It should be noted that after the project started and we did a more thorough review we found out that Twitter already does provide their own tweet feed personalisation. It was admittedly a bit awkward for us and Twitter because none of the team members noticed any improvements. The objective of the project is therefore to provide better recommendations that Twitter already does. 
+\noindent It should be noted that after the project started and we did a more thorough review we found out that Twitter already does provide their own feed personalisation. Therefore the project goal was pivoted to provide better recommendations than Twitter already provides.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{tp}  
+    \caption{Screenshot from the official iOS Twitter app}
+\end{figure}
+
 
 \subsection{Why?}
-The premise for our project is the assumption (or observation) that people are experiencing an information overload on Twitter. When a user follows another user on Twitter they subscribe to all their tweets and re-tweets\footnote{Twitter offers the option to turn off re-tweets for a particular followee}. Some may be unrelevant.
+The premise for our project is the assumption (or observation) that people are experiencing an information overload on Twitter. When a user follows another user on Twitter they subscribe to all their tweets and re-tweets\footnote{Twitter offers the option to turn off re-tweets for a particular followee}. A user may hold interest in programming but dislikes political discussions (or \textit{vice versa}).
 
 \begin{figure}[H]
     \centering
@@ -82,12 +89,13 @@ The premise for our project is the assumption (or observation) that people are e
 The theme for the summer 2016 practicum is \textit{Future Of News}. We believe that the future of news is going to be filtering and delivering personalised content to people. We see personalised tweet streams to be a stepping stone in that direction.
 
 \subsection{Who?}
-Our target users are Twitter power users. Such user follows roughly more than 100 people and has been using Twitter for few weeks or months. More importantly, the user is seeing on a regular basis tweets in his or her timeline that are of low relevance.
+Our target users are Twitter power users. Such a user follows roughly more than 100 Twitter accounts and has been using Twitter for few weeks or months. More importantly, the user is seeing on a regular basis tweets in his or her feed that are of low relevance.
 
 \subsection{How?}
-A Twitter user uses our iOS mobile client and grants us API access. Uninteresting tweets are filtered out (or deferred to later) while interesting tweets are prioritised in the timeline. Tweets from non-followers may be suggested as well. Essentially we hope to create a better, more personalised timeline of tweets than what Twitter provides by default. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
+A Twitter user uses our iOS mobile client and grants us API access. Uninteresting tweets are filtered out (or deferred to later) while interesting tweets are prioritised. Tweets from non-followers may be suggested as well. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
 \\\\
-The mobile app is required in order to collect additional user preference information to refine the recommendations. For example, if a user clicks a link in a tweet, likes a tweet, retweets, or engages in conversations. Another potential passive observation mechanishm would be to have the client measure the amount of time a tweet is visible. Thinking being if a tweet is in focus for longer it might be of more interest than a tweet that is scrolled past quickly.
+The mobile app is required in order to collect additional user preference information to refine the recommendations. For example, if a user clicks a link in a tweet, likes a tweet, retweets, or engages in conversations. Another potential passive observation mechanism would be to have the client measure the amount of time a tweet is visible. Thinking being if a tweet is in focus for longer it might be of more interest than a tweet that is scrolled past quickly.
+
 
 
 \section{Minimum Viable Product}
@@ -99,16 +107,21 @@ The mobile app is required in order to collect additional user preference inform
 %		- Back-end technical components
 %		- Data sources: What data will you use and how will you access it?
 %	+ How will you evaluate your system? (Initial ideas)
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{system_overview}  
+    \caption{System overview}
+\end{figure}
 
 \subsection{Front-End: iOS}
-Our Twitter App client App, acts a medium to showcase:
+Our Twitter client acts as a medium to showcase:
 
 \begin{itemize*}
 	\item The personalised tweets to the users.
 	\item Provide information to the Recommender System some useful data about user interactions with the App, that could potentially help in analysing the user's likes.
 \end{itemize*}
 
-For the MVP we have decided to concentrate in showing the personalised tweets.
+\noindent For the MVP we have decided to concentrate in showing the personalised tweets.
 The App provides the ‘Sign in’ functionality to have the users permission to access their 
 Twitter data. We have used the Fabric - Twitter’s Mobile Development Platform to perform the OAuth Authentication process. After the user has logged in, they can see the personalised tweets with colour code indicating the relevance of tweets to the user's interest. 
 
@@ -118,7 +131,27 @@ Twitter data. We have used the Fabric - Twitter’s Mobile Development Platform 
 The Recommender System should be capable of producing a slightly more relevant selection of tweets than the default Twitter recommendation algorithm. This approach should use case-based recommendation in order to provide recommendations. Beyond the Minimal Viable Product, it should recommender vastly more relevant tweets for the user and some variety using case-based recommendation, augmented with the bounded greedy algorithm. Evaluation of the Recommender System should be largely manual, but it may be possible to automate some of the results using a bag-of-words approach to testing.
 
 \subsubsection*{Flask}
-When Flask server receives iOS API request, it will get the access token from that request. And Flask server will use this token to communicate with Twitter REST API and fetch the homeline data from Twitter server. Then Flask server will pass the raw tweets data to Recommender System for data processing. Finally, Flask server will return the personalised data which yield by Recommender System to iOS client.
+When Flask server receives an iOS API request, it will get the access token from that request. And Flask server will use this token to communicate with Twitter REST API and fetch the homeline data from Twitter server. Then the Flask server will pass the raw tweets data to Recommender System for data processing. Finally, Flask server will return the personalised data yielded by the Recommender System to the iOS client.
+
+\subsection{Evaluation}
+
+There are two evaluations that come to mind:
+
+\begin{itemize*}
+	\item Quality / Accuracy of recommender system
+	\item Usability of mobile client
+\end{itemize*}
+
+A cornerstone of the project will be to filter and order tweets to the user in a personalised way superior to the default Twitter feed. After the evaluation lecture by Dr. Brian Mac Namee we have decided to focus on the recommender system. The recommender system can be evaluated in few ways:
+
+\begin{itemize*}
+	\item Evaluation on a static dataset. Constructed from existing Twitter accounts. Something we can test over and over to benchmark ourselves. Sort of like unit tests. Intended to aid us during development.
+	\item Present pairs of unseen tweets from a users timeline. User selects which tweet is more interesting or relevant. Our recommender system would make it's prediction behind the scenes. We would then compare and see if the guess by the recommender system is correct or not.
+	\item A user is presented 10 (or X number) unseen tweets from her or his timeline. The user is asked to place the tweets in order of interest. This order would be compared to the order the recommender system predicted.
+\end{itemize*}
+
+
+\newpage
 
 
 \section{Project Management}
