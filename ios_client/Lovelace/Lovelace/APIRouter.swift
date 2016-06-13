@@ -37,10 +37,11 @@ enum Router: URLRequestConvertible {
         if APIManager.hasOAuthToken {
             let oauthToken = APIManager.getOAuthTokenAndTokenSecret()
             print(oauthToken)
-            mutableURLRequest.setValue(oauthToken.oauth_token, forHTTPHeaderField: "oauth_token")
-            mutableURLRequest.setValue(oauthToken.oauth_token_secret, forHTTPHeaderField: "oauth_token_secret")
+            let parameters = ["oauth_token" : oauthToken.oauth_token,
+                              "oauth_token_secret" : oauthToken.oauth_token_secret]
+            let encodeing = Alamofire.ParameterEncoding.URL
+            return encodeing.encode(mutableURLRequest, parameters: parameters).0
         }
-        
         return mutableURLRequest
     }
 }

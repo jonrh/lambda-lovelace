@@ -1,7 +1,6 @@
-from flask import Flask, redirect, request
+from flask import Flask, redirect, request, Response, jsonify
 from flask_restful import Resource, Api
 import tweepy
-import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -11,27 +10,22 @@ consumer_secret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 
-tweets = {
-    'tweet1': {'content': 'this is test tweet'},
-    'tweet2': {'content': 'this is test tweet'},
-    'tweet3': {'content': 'this is test tweet'},
-}
-
 class Tweets(Resource):
     def get(self):
-        access_token = request.headers['oauth_token']
-        access_token_secret = request.headers['oauth_token_secret']
+        # access_token = request.headers['oauth_token']
+        # access_token_secret = request.headers['oauth_token_secret']
+        access_token = request.args.get('oauth_token')
+        access_token_secret = request.args.get('oauth_token_secret')
 
         auth.set_access_token(access_token, access_token_secret)
-
         api = tweepy.API(auth)
 
         public_tweets = api.home_timeline()
-        jsonString = ""
+        tweets = []
         for tweet in public_tweets:
-            # print(tweet._json)
-            jsonString += json.dumps(tweet._json)
-        return jsonString
+            tweets.append(tweet._json)
+        #     print(tweet)
+        return jsonify(tweets)
 
 class IOSAppRedirectHelper(Resource):
     def get(self):
