@@ -34,6 +34,13 @@ enum Router: URLRequestConvertible {
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
         
+        if APIManager.hasOAuthToken {
+            let oauthToken = APIManager.getOAuthTokenAndTokenSecret()
+            print(oauthToken)
+            mutableURLRequest.setValue(oauthToken.oauth_token, forHTTPHeaderField: "oauth_token")
+            mutableURLRequest.setValue(oauthToken.oauth_token_secret, forHTTPHeaderField: "oauth_token_secret")
+        }
+        
         return mutableURLRequest
     }
 }
