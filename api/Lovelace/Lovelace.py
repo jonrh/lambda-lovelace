@@ -18,8 +18,8 @@ tweets = {
 
 class Tweets(Resource):
     def get(self):
-        access_token = request.headers["oauth_token"]
-        access_token_secret = request.headers["oauth_token_secret"]
+        access_token = request.args.get('oauth_token')
+        access_token_secret = request.args.get('oauth_token_secret')
 
         auth.set_access_token(access_token, access_token_secret)
 
