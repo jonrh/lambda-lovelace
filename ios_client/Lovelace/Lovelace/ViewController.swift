@@ -23,7 +23,12 @@ class ViewController: UIViewController {
     }
     
     @IBAction func buttonClicked(sender: UIButton) {
-        APIManager.getHomeLine()
+        APIManager.getHomeLine { homeLineTweets in
+            for (_, tweet) in homeLineTweets {
+                
+                print( tweet["text"] )
+            }
+        }
     }
 
 

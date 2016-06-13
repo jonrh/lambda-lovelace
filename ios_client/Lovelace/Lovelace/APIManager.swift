@@ -53,7 +53,7 @@ class APIManager {
         )
     }
     
-    class func getHomeLine(){
+    class func getHomeLine(callback: (JSON)->Void) {
         Alamofire.request(Router.Tweets)
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -61,11 +61,11 @@ class APIManager {
                     return
                 }
                 if let value = response.result.value {
-                    print(value)
                     let tweets = JSON(value)
-                    for tweet in tweets {
-                        print( tweet)
-                    }
+//                    for tweet in tweets {
+//                        print( tweet)
+//                    }
+                    callback(tweets)
                 }
         }
     }
