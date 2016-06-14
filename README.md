@@ -110,7 +110,7 @@ For issues we use the following story point estimations:
 ~~2016-05-17		Lecture 1 (10:00 - 16:00)~~  
 ~~2016-05-24		Lecture 2 (13:00 - 16:00)~~  
 ~~2016-05-31		Week 3 Lab (13:00 - 16:00)~~  
-**2016-06-10		Week 4: Project Plan** (17:00)  
+~~**2016-06-10		Week 4: Project Plan** (17:00)~~  
 2016-06-14		Week 5 Lab (13:00 - 16:00)  
 **2016-06-21		Mid-term presentations** (10:00 - 17:00)  
 **2016-06-24		Mid-term report**  
@@ -133,7 +133,7 @@ Moodle Deadlines:
 | **Week 3**  | Jón Rúnar   | Jón Rúnar         |
 | **Week 4**  | Xinqi       |                   |
 | **Week 5**  | Marc        | Marc              |
-| **Week 6**  | ?           |                   |
+| **Week 6**  |             |                   |
 | **Week 7**  | Eazhilarasi |                   |
 | **Week 8**  | Junyang     | Junyang           |
 | **Week 9**  | ?           |                   |
