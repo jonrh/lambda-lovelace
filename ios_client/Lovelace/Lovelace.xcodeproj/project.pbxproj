@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		75A376121D1010DA0054072F /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A376111D1010DA0054072F /* Tweet.swift */; };
 		9F3EBF2E1D0714E1003B7115 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EBF2D1D0714E1003B7115 /* APIRouter.swift */; };
 		9F73BE6D1D071127003050BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F73BE6C1D071127003050BB /* AppDelegate.swift */; };
 		9F73BE6F1D071127003050BB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F73BE6E1D071127003050BB /* ViewController.swift */; };
@@ -19,6 +20,7 @@
 
 /* Begin PBXFileReference section */
 		50C136E07E5DFD4B7CD29363 /* Pods-Lovelace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lovelace.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lovelace/Pods-Lovelace.release.xcconfig"; sourceTree = "<group>"; };
+		75A376111D1010DA0054072F /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		88FB6092F9184660030B3E21 /* Pods-Lovelace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lovelace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lovelace/Pods-Lovelace.debug.xcconfig"; sourceTree = "<group>"; };
 		9F3EBF2D1D0714E1003B7115 /* APIRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		9F73BE691D071127003050BB /* Lovelace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lovelace.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +75,7 @@
 				9F73BE731D071127003050BB /* Assets.xcassets */,
 				9F73BE751D071127003050BB /* LaunchScreen.storyboard */,
 				9F73BE781D071127003050BB /* Info.plist */,
+				75A376111D1010DA0054072F /* Tweet.swift */,
 			);
 			path = Lovelace;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FA72B0D1D09A4B500863058 /* APIManager.swift in Sources */,
+				75A376121D1010DA0054072F /* Tweet.swift in Sources */,
 				9F73BE6F1D071127003050BB /* ViewController.swift in Sources */,
 				9F3EBF2E1D0714E1003B7115 /* APIRouter.swift in Sources */,
 				9F73BE6D1D071127003050BB /* AppDelegate.swift in Sources */,
