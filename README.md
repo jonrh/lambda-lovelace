@@ -111,7 +111,7 @@ For issues we use the following story point estimations:
 ~~2016-05-24		Lecture 2 (13:00 - 16:00)~~  
 ~~2016-05-31		Week 3 Lab (13:00 - 16:00)~~  
 ~~**2016-06-10		Week 4: Project Plan** (17:00)~~  
-2016-06-14		Week 5 Lab (13:00 - 16:00)  
+~~2016-06-14		Week 5 Lab (13:00 - 16:00)~~  
 **2016-06-21		Mid-term presentations** (10:00 - 17:00)  
 **2016-06-24		Mid-term report**  
 2016-07-05		Week 7 Lab (13:00 - 16:00)  
