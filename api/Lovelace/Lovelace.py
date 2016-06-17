@@ -45,7 +45,7 @@ class UserTimeline(Resource):
         word_counts[:5]
         
         #search for 100 tweets from the account that the user is not following
-        unfollowed_tweets = [tweet._json['text'] for tweet in tweepy.Cursor(api.search, q=word_counts[0][0], count=200).items(100)]
+        unfollowed_tweets = [tweet._json['text'] for tweet in tweepy.Cursor(api.search, q=word_counts[0][0], count=200,lang='en').items(100)]
         
         #return results
         results = {}
