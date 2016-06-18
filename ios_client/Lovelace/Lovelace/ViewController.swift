@@ -32,7 +32,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 let userName = tweet["user"]["name"].stringValue
                 let userScreenName = tweet["user"]["screen_name"].stringValue
                 let userImageUrl = tweet["user"]["profile_image_url_https"].stringValue
-                let tweetObj = Tweet(tweet: tweetText, userName: userName, userDisplayName: userScreenName, userImageUrl: userImageUrl)
+                let tweetDateTime = tweet["created_at"].stringValue
+                let tweetImageUrl = tweet["media"]["media_url_https"].stringValue
+                let tweetObj = Tweet(tweet: tweetText, userName: userName, userDisplayName: userScreenName, userImageUrl: userImageUrl, tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
                 self.tweetList.append(tweetObj)
                 print( tweet["text"] )
             }
@@ -56,6 +58,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tweetCell.tweetUserName.text = tweetList[indexPath.row].userName
         tweetCell.tweetText.text = tweetList[indexPath.row].tweet
         tweetCell.tweetUserDisplayName.text = tweetList[indexPath.row].userDisplayName
+        tweetCell.tweetDateTime.text = tweetList[indexPath.row].tweetDateTime
         if let url = NSURL(string: tweetList[indexPath.row].userImageUrl) {
             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
             dispatch_async(dispatch_get_global_queue(qos,0)) { () -> Void in
@@ -68,7 +71,5 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         return tweetCell
     }
-    
-    
 }
 
