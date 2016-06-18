@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "17FFF812E22C2C03D571E747AC6BEAB005D68574",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "17FFF812E22C2C03D571E747AC6BEAB005D68574" : 0,
+    "89EF108F6717B9F7C36AF3CB2405EFA25260146A" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F4873AF5-F2C0-4679-8F25-B93853237671",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "17FFF812E22C2C03D571E747AC6BEAB005D68574" : "lambda-lovelace\/",
+    "89EF108F6717B9F7C36AF3CB2405EFA25260146A" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Lovelace",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ios_client\/Lovelace\/Lovelace.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/jonrh\/lambda-lovelace",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "17FFF812E22C2C03D571E747AC6BEAB005D68574"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/specter4mjy\/twitter_finalProject.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "89EF108F6717B9F7C36AF3CB2405EFA25260146A"
+    }
+  ]
+}

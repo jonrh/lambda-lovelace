@@ -1,0 +1,8 @@
+# Ignores a folder that is created for each user when running the project. We 
+# don't want to commit these changes to the repository. Here are links to other 
+# frequently used .gitignore settings for Swift & Xcode projects:
+#
+#	https://github.com/github/gitignore/blob/master/Global/Xcode.gitignore
+#	https://github.com/github/gitignore/blob/master/Swift.gitignore
+# 
+xcuserdata/
