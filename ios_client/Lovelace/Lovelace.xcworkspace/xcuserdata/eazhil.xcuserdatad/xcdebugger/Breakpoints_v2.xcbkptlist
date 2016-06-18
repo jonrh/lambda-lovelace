@@ -10,13 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Lovelace/ViewController.swift"
-            timestampString = "487598223.876698"
+            timestampString = "487945489.901115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "5">
+            startingLineNumber = "109"
+            endingLineNumber = "109">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,13 +24,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Lovelace/ViewController.swift"
-            timestampString = "487598223.876698"
+            timestampString = "487945489.901115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "getHomeTimeline(_:)"
-            landmarkType = "5">
+            startingLineNumber = "100"
+            endingLineNumber = "100">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -42,29 +38,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Lovelace/ViewController.swift"
-            timestampString = "487597430.081899"
+            timestampString = "487945489.901115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "getHomeTimeline(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Lovelace/ViewController.swift"
-            timestampString = "487598223.876698"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
-            landmarkName = "getHomeTimeline(_:)"
-            landmarkType = "5">
+            startingLineNumber = "104"
+            endingLineNumber = "104">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -106,13 +84,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Lovelace/ViewController.swift"
-            timestampString = "487597476.956083"
+            timestampString = "487945489.901115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "getHomeTimeline(_:)"
-            landmarkType = "5">
+            startingLineNumber = "95"
+            endingLineNumber = "95">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -122,13 +98,25 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Lovelace/ViewController.swift"
-            timestampString = "487598223.876698"
+            timestampString = "487945489.901115"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "5">
+            startingLineNumber = "111"
+            endingLineNumber = "111">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Lovelace/ViewController.swift"
+            timestampString = "487945489.901115"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "133"
+            endingLineNumber = "133">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -12,10 +12,14 @@ public class Tweet
 {
     var tweet: String
     var userName: String
+    var userDisplayName:String
+    var userImageUrl: String
     
-    init(tweet: String, userName: String) {
+    init(tweet: String, userName: String, userDisplayName: String, userImageUrl:String) {
         self.tweet = tweet
         self.userName = userName
+        self.userDisplayName = userDisplayName
+        self.userImageUrl = userImageUrl
     }
     
 }
