@@ -10,6 +10,15 @@ Articles:
 	* https://support.twitter.com/articles/164083?lang=en
 	* https://www.seoinc.com/seo-blog/new-twitter-timeline/
 	* http://www.digitaltrends.com/social-media/twitter-new-home-timeline/#:ipT26f7o2pkQDA
+	
+	* Twitter open sourced a recommendation algorithm for massive datasets  
+	https://gigaom.com/2014/09/24/twitter-open-sourced-a-recommendation-algorithm-for-massive-datasets/
+	* All-pairs similarity via DIMSUM  
+	https://blog.twitter.com/2014/all-pairs-similarity-via-dimsum
+	* Introducing Omnisearch  
+	https://blog.twitter.com/2016/introducing-omnisearch
+	* Never miss important Tweets from people you follow  
+	https://blog.twitter.com/2016/never-miss-important-tweets-from-people-you-follow
 
 How to turn off personalisation:
 
