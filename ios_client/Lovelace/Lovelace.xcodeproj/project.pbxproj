@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		75A376121D1010DA0054072F /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A376111D1010DA0054072F /* Tweet.swift */; };
 		75A376141D117D9D0054072F /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A376131D117D9D0054072F /* FeedTableViewCell.swift */; };
+		75B14E1D1D16F50F00D1CB83 /* TweetDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B14E1C1D16F50F00D1CB83 /* TweetDetailVC.swift */; };
 		75B372F91D15749600CBB15D /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B372F81D15749600CBB15D /* FeedVC.swift */; };
 		9F3EBF2E1D0714E1003B7115 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EBF2D1D0714E1003B7115 /* APIRouter.swift */; };
 		9F73BE6D1D071127003050BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F73BE6C1D071127003050BB /* AppDelegate.swift */; };
@@ -23,6 +24,7 @@
 		50C136E07E5DFD4B7CD29363 /* Pods-Lovelace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lovelace.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lovelace/Pods-Lovelace.release.xcconfig"; sourceTree = "<group>"; };
 		75A376111D1010DA0054072F /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
 		75A376131D117D9D0054072F /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
+		75B14E1C1D16F50F00D1CB83 /* TweetDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetDetailVC.swift; sourceTree = "<group>"; };
 		75B372F81D15749600CBB15D /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		88FB6092F9184660030B3E21 /* Pods-Lovelace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lovelace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lovelace/Pods-Lovelace.debug.xcconfig"; sourceTree = "<group>"; };
 		9F3EBF2D1D0714E1003B7115 /* APIRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 			children = (
 				75B372F81D15749600CBB15D /* FeedVC.swift */,
 				75A376131D117D9D0054072F /* FeedTableViewCell.swift */,
+				75B14E1C1D16F50F00D1CB83 /* TweetDetailVC.swift */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				9F3EBF2E1D0714E1003B7115 /* APIRouter.swift in Sources */,
 				75B372F91D15749600CBB15D /* FeedVC.swift in Sources */,
 				75A376141D117D9D0054072F /* FeedTableViewCell.swift in Sources */,
+				75B14E1D1D16F50F00D1CB83 /* TweetDetailVC.swift in Sources */,
 				9F73BE6D1D071127003050BB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

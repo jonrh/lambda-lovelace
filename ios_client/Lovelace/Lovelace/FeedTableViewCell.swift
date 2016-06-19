@@ -10,6 +10,13 @@ import UIKit
 
 class FeedTableViewCell: UITableViewCell {
     
+    var tweet: Tweet? {
+        didSet {
+            updateCell()
+        }
+    }
+    
+   
 
     @IBOutlet weak var tweetUserImage: UIImageView! {
         didSet{
@@ -29,5 +36,16 @@ class FeedTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var tweetText: UILabel!
+    
+    func updateCell()
+    {
+        tweetUserName.text = tweet?.userName
+        tweetUserDisplayName.text = tweet?.userDisplayName
+        tweetText.text = tweet?.tweet
+        let url = NSURL(string: (tweet?.userImageUrl)!)
+        let avatar = NSData(contentsOfURL: url!)
+        tweetUserImage.image = UIImage(data: avatar!)
+        tweetDateTime.text = tweet?.tweetDateTime
+    }
     
 }

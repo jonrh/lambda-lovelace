@@ -17,12 +17,7 @@ struct FeedTableViewConstants {
 
 class FeedViewController: UIViewController  {
     
-    @IBOutlet weak var feedTableView: UITableView! {
-        didSet{
-            feedTableView.allowsSelection = false
-        }
-    }
-    
+    @IBOutlet weak var feedTableView: UITableView!
     var tweetList = [Tweet]()
     
     let feedTableViewRefreshControl = UIRefreshControl()
@@ -86,7 +81,6 @@ class FeedViewController: UIViewController  {
         feedPage = 0
         loadTweetWithPage(0)
     }
-    
 }
 
 
@@ -96,8 +90,6 @@ extension FeedViewController: APIDataRefreshDelegate {
         refreshFeedTableView()
     }
 }
-
-
 
 
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
@@ -115,7 +107,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         
         // Even if the prototype cell has not visible label in designer, it has the textLabel label by default
         
-        tweetCell.tweetUserName.text = tweetList[indexPath.row].userName
+       /* tweetCell.tweetUserName.text = tweetList[indexPath.row].userName
         tweetCell.tweetText.text = tweetList[indexPath.row].tweet
         tweetCell.tweetUserDisplayName.text = tweetList[indexPath.row].userDisplayName
         tweetCell.tweetDateTime.text = tweetList[indexPath.row].tweetDateTime
@@ -129,7 +121,8 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
                     }
                 }
             }
-        }
+        }*/
+        tweetCell.tweet = tweetList[indexPath.row]
         
         
         if !isLoadingNewPage {
@@ -144,6 +137,13 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         return tweetCell
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let tweet = sender as? FeedTableViewCell
+        {
+            let tweetDetailTVC = segue.destinationViewController as? TweetDetailVC
+            tweetDetailTVC?.tweetObj = tweet.tweet
+        }
+    }
     
 }
 
