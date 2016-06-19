@@ -34,12 +34,13 @@ class APIManager {
     
     weak static var dataRefreshDelegate: APIDataRefreshDelegate?
     
-    static private var oauth_token: String? {
+    static private var oauth_token: String?
+    
+    static private var oauth_token_secret: String?{
         didSet{
            dataRefreshDelegate?.apiDataRefresh()
         }
     }
-    static private var oauth_token_secret: String?;
     
     static var reqestingAccessToken = false
     

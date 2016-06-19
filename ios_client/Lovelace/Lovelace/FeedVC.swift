@@ -13,9 +13,21 @@ import SwiftyJSON
 
 class FeedViewController: UIViewController  {
     
-    @IBOutlet weak var feedTableView: UITableView!
+    @IBOutlet weak var feedTableView: UITableView! {
+        didSet{
+            feedTableView.allowsSelection = false
+        }
+    }
     
     var tweetList = [Tweet]()
+    
+    let feedTableViewRefreshControl = UIRefreshControl()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    
+        initRefreshControl()
+    }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -32,9 +44,8 @@ class FeedViewController: UIViewController  {
     }
     
     private func initRefreshControl(){
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action:#selector(refreshFeedTableView) , forControlEvents: .ValueChanged)
-        feedTableView.addSubview(refreshControl)
+        feedTableViewRefreshControl.addTarget(self, action:#selector(refreshFeedTableView) , forControlEvents: .ValueChanged)
+        feedTableView.addSubview(feedTableViewRefreshControl)
     }
     
     
@@ -52,6 +63,8 @@ class FeedViewController: UIViewController  {
                 print( tweet["text"] )
             }
             self.feedTableView.reloadData()
+            self.feedTableViewRefreshControl.endRefreshing()
+            
         }
     }
     
