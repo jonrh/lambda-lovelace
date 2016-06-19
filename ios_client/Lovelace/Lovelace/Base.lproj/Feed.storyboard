@@ -8,10 +8,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Home-->
+        <!--Feed-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Lovelace" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" userLabel="Feed" customClass="FeedViewController" customModule="Lovelace" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="tweetPrototypeCell" rowHeight="75" id="zcZ-cO-vCM" customClass="TweetViewCell" customModule="Lovelace" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="tweetPrototypeCell" rowHeight="75" id="zcZ-cO-vCM" customClass="FeedTableViewCell" customModule="Lovelace" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="92" width="600" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zcZ-cO-vCM" id="9CP-Yh-aPd">
@@ -108,15 +108,9 @@
                             <constraint firstItem="c4T-J5-I22" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" symbolic="YES" id="syd-JT-nI4"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="vE7-vE-F9B">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="TEq-HR-Viz">
-                            <connections>
-                                <action selector="getHomeTimeline:" destination="BYZ-38-t0r" id="gF8-wG-unZ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="vE7-vE-F9B"/>
                     <connections>
-                        <outlet property="tweetsListTableView" destination="c4T-J5-I22" id="tbj-00-uJq"/>
+                        <outlet property="feedTableView" destination="c4T-J5-I22" id="sg3-c3-tUv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

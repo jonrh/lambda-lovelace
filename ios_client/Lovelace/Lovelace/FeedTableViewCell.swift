@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetViewCell: UITableViewCell {
+class FeedTableViewCell: UITableViewCell {
     
 
     @IBOutlet weak var tweetUserImage: UIImageView!

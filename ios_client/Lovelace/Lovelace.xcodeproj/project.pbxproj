@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		75A376121D1010DA0054072F /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A376111D1010DA0054072F /* Tweet.swift */; };
-		75A376141D117D9D0054072F /* TweetViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A376131D117D9D0054072F /* TweetViewCell.swift */; };
-		75B372F91D15749600CBB15D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B372F81D15749600CBB15D /* ViewController.swift */; };
+		75A376141D117D9D0054072F /* FeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A376131D117D9D0054072F /* FeedTableViewCell.swift */; };
+		75B372F91D15749600CBB15D /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B372F81D15749600CBB15D /* FeedVC.swift */; };
 		9F3EBF2E1D0714E1003B7115 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F3EBF2D1D0714E1003B7115 /* APIRouter.swift */; };
 		9F73BE6D1D071127003050BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F73BE6C1D071127003050BB /* AppDelegate.swift */; };
-		9F73BE721D071127003050BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F73BE701D071127003050BB /* Main.storyboard */; };
+		9F73BE721D071127003050BB /* Feed.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F73BE701D071127003050BB /* Feed.storyboard */; };
 		9F73BE741D071127003050BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F73BE731D071127003050BB /* Assets.xcassets */; };
 		9F73BE771D071127003050BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F73BE751D071127003050BB /* LaunchScreen.storyboard */; };
 		9FA72B0D1D09A4B500863058 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA72B0C1D09A4B500863058 /* APIManager.swift */; };
@@ -22,13 +22,13 @@
 /* Begin PBXFileReference section */
 		50C136E07E5DFD4B7CD29363 /* Pods-Lovelace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lovelace.release.xcconfig"; path = "Pods/Target Support Files/Pods-Lovelace/Pods-Lovelace.release.xcconfig"; sourceTree = "<group>"; };
 		75A376111D1010DA0054072F /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tweet.swift; sourceTree = "<group>"; };
-		75A376131D117D9D0054072F /* TweetViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetViewCell.swift; sourceTree = "<group>"; };
-		75B372F81D15749600CBB15D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		75A376131D117D9D0054072F /* FeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewCell.swift; sourceTree = "<group>"; };
+		75B372F81D15749600CBB15D /* FeedVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		88FB6092F9184660030B3E21 /* Pods-Lovelace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Lovelace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Lovelace/Pods-Lovelace.debug.xcconfig"; sourceTree = "<group>"; };
 		9F3EBF2D1D0714E1003B7115 /* APIRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		9F73BE691D071127003050BB /* Lovelace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lovelace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F73BE6C1D071127003050BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9F73BE711D071127003050BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9F73BE711D071127003050BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Feed.storyboard; sourceTree = "<group>"; };
 		9F73BE731D071127003050BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9F73BE761D071127003050BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F73BE781D071127003050BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -69,18 +69,50 @@
 		9F73BE6B1D071127003050BB /* Lovelace */ = {
 			isa = PBXGroup;
 			children = (
-				9F73BE6C1D071127003050BB /* AppDelegate.swift */,
-				9F3EBF2D1D0714E1003B7115 /* APIRouter.swift */,
-				9FA72B0C1D09A4B500863058 /* APIManager.swift */,
-				9F73BE701D071127003050BB /* Main.storyboard */,
+				9F96783A1D16034100D81833 /* Controller */,
+				9F9678391D16030B00D81833 /* Model */,
+				9F9678371D16024A00D81833 /* API */,
+				9F73BE701D071127003050BB /* Feed.storyboard */,
 				9F73BE731D071127003050BB /* Assets.xcassets */,
 				9F73BE751D071127003050BB /* LaunchScreen.storyboard */,
+				9F73BE6C1D071127003050BB /* AppDelegate.swift */,
 				9F73BE781D071127003050BB /* Info.plist */,
-				75A376111D1010DA0054072F /* Tweet.swift */,
-				75A376131D117D9D0054072F /* TweetViewCell.swift */,
-				75B372F81D15749600CBB15D /* ViewController.swift */,
 			);
 			path = Lovelace;
+			sourceTree = "<group>";
+		};
+		9F9678371D16024A00D81833 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				9F3EBF2D1D0714E1003B7115 /* APIRouter.swift */,
+				9FA72B0C1D09A4B500863058 /* APIManager.swift */,
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		9F9678381D1602D200D81833 /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				75B372F81D15749600CBB15D /* FeedVC.swift */,
+				75A376131D117D9D0054072F /* FeedTableViewCell.swift */,
+			);
+			name = Feed;
+			sourceTree = "<group>";
+		};
+		9F9678391D16030B00D81833 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				75A376111D1010DA0054072F /* Tweet.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9F96783A1D16034100D81833 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9F9678381D1602D200D81833 /* Feed */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		BA1A5FE5DF906A0E5CDE2714 /* Frameworks */ = {
@@ -164,7 +196,7 @@
 			files = (
 				9F73BE771D071127003050BB /* LaunchScreen.storyboard in Resources */,
 				9F73BE741D071127003050BB /* Assets.xcassets in Resources */,
-				9F73BE721D071127003050BB /* Main.storyboard in Resources */,
+				9F73BE721D071127003050BB /* Feed.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,8 +258,8 @@
 				9FA72B0D1D09A4B500863058 /* APIManager.swift in Sources */,
 				75A376121D1010DA0054072F /* Tweet.swift in Sources */,
 				9F3EBF2E1D0714E1003B7115 /* APIRouter.swift in Sources */,
-				75B372F91D15749600CBB15D /* ViewController.swift in Sources */,
-				75A376141D117D9D0054072F /* TweetViewCell.swift in Sources */,
+				75B372F91D15749600CBB15D /* FeedVC.swift in Sources */,
+				75A376141D117D9D0054072F /* FeedTableViewCell.swift in Sources */,
 				9F73BE6D1D071127003050BB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,12 +267,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9F73BE701D071127003050BB /* Main.storyboard */ = {
+		9F73BE701D071127003050BB /* Feed.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				9F73BE711D071127003050BB /* Base */,
 			);
-			name = Main.storyboard;
+			name = Feed.storyboard;
 			sourceTree = "<group>";
 		};
 		9F73BE751D071127003050BB /* LaunchScreen.storyboard */ = {
