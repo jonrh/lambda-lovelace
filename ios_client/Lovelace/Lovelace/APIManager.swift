@@ -12,7 +12,7 @@ import SwiftyJSON
 import OAuthSwift
 import SafariServices
 
-struct APIConstent{
+struct APIConstents{
     static let consumerKey = "BbTvs8T7CZguiloHMIVeRdKUO"
     static let consumerSecret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
     static let requestTokenUrl = "https://api.twitter.com/oauth/request_token"
@@ -21,36 +21,81 @@ struct APIConstent{
     static let callbackUrl = NSURL(string:"https://lovelance.herokuapp.com/oauth-callback")!
 }
 
+struct NSUserDefaultKeys{
+    static let oauthTokenKey = "oauthToken"
+    static let oauthTokenSecretKey = "oauthSecretToken"
+}
+
+protocol APIDataRefreshDelegate: class {
+    func apiDataRefresh()
+}
+
 class APIManager {
     
+    weak static var dataRefreshDelegate: APIDataRefreshDelegate?
     
+    static private var oauth_token: String?
     
-    static private var oauth_token: String?;
-    static private var oauth_token_secret: String?;
+    static private var oauth_token_secret: String?{
+        didSet{
+           dataRefreshDelegate?.apiDataRefresh()
+        }
+    }
+    
+    static var reqestingAccessToken = false
     
     class var hasOAuthToken: Bool {
         return oauth_token != nil && oauth_token_secret != nil
     }
     
     static let oauthSwift = OAuth1Swift(
-            consumerKey: APIConstent.consumerKey,
-            consumerSecret: APIConstent.consumerSecret,
-            requestTokenUrl: APIConstent.requestTokenUrl,
-            authorizeUrl: APIConstent.authorizeUrl,
-            accessTokenUrl: APIConstent.accessTokenUrl)
+            consumerKey: APIConstents.consumerKey,
+            consumerSecret: APIConstents.consumerSecret,
+            requestTokenUrl: APIConstents.requestTokenUrl,
+            authorizeUrl: APIConstents.authorizeUrl,
+            accessTokenUrl: APIConstents.accessTokenUrl)
     
-    class func authorize(viewControllerForOpeningWebView viewControllerForOpeningWebView: ViewController) {
+    class func initOAuthTokenAndSecret(viewControllerForOpeningWebView viewControllerForOpeningWebView: UIViewController, dataRefreshDelegate: APIDataRefreshDelegate){
+        self.dataRefreshDelegate = dataRefreshDelegate
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if let oauthToken = defaults.stringForKey(NSUserDefaultKeys.oauthTokenKey){
+            if let oauthTokenSecret = defaults.stringForKey(NSUserDefaultKeys.oauthTokenSecretKey){
+                oauth_token = oauthToken
+                oauth_token_secret = oauthTokenSecret
+            }
+        } else {
+            // user first loggin will direct to twitter loggin website
+            authorize(viewControllerForOpeningWebView: viewControllerForOpeningWebView)
+        }
+        
+    }
+    
+    class func authorize(viewControllerForOpeningWebView viewControllerForOpeningWebView: UIViewController) {
+        reqestingAccessToken = true
         oauthSwift.authorize_url_handler = SafariURLHandler(viewController: viewControllerForOpeningWebView)
-        oauthSwift.authorizeWithCallbackURL(APIConstent.callbackUrl,
+        oauthSwift.authorizeWithCallbackURL(APIConstents.callbackUrl,
                                             success: { (credential, response, parameters) in
-                                                oauth_token = credential.oauth_token
-                                                oauth_token_secret = credential.oauth_token_secret
+                                                successfullyReceiveAccessToken(credential)
             },
                                             failure: { (error) in
                                                 print("error")
                                                 print(error.localizedDescription)
+                                                reqestingAccessToken = false
             }
         )
+    }
+    
+    private class func successfullyReceiveAccessToken(credential: OAuthSwiftCredential){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(credential.oauth_token, forKey: NSUserDefaultKeys.oauthTokenKey)
+        defaults.setObject(credential.oauth_token_secret, forKey: NSUserDefaultKeys.oauthTokenSecretKey)
+        
+        oauth_token = credential.oauth_token
+        oauth_token_secret = credential.oauth_token_secret
+        
+        reqestingAccessToken = false
     }
     
     class func getHomeLine(callback: (JSON)->Void) {
@@ -62,9 +107,7 @@ class APIManager {
                 }
                 if let value = response.result.value {
                     let tweets = JSON(value)
-//                    for tweet in tweets {
-//                        print( tweet)
-//                    }
+                    // get response data
                     callback(tweets)
                 }
         }

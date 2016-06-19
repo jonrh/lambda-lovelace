@@ -10,22 +10,46 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+
+class FeedViewController: UIViewController  {
     
-    @IBOutlet weak var tweetsListTableView: UITableView!
-    var tweetList = [Tweet]()
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        
-        
-        APIManager.authorize(viewControllerForOpeningWebView: self)
-        
-        
+    @IBOutlet weak var feedTableView: UITableView! {
+        didSet{
+            feedTableView.allowsSelection = false
+        }
     }
     
-    @IBAction func getHomeTimeline(sender: AnyObject) {
+    var tweetList = [Tweet]()
+    
+    let feedTableViewRefreshControl = UIRefreshControl()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    
+        initRefreshControl()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
+        if APIManager.hasOAuthToken {
+            refreshFeedTableView()
+        }
+        else {
+            if !APIManager.reqestingAccessToken {
+                APIManager.initOAuthTokenAndSecret(viewControllerForOpeningWebView: self, dataRefreshDelegate: self)
+            }
+        }
+    }
+    
+    private func initRefreshControl(){
+        feedTableViewRefreshControl.addTarget(self, action:#selector(refreshFeedTableView) , forControlEvents: .ValueChanged)
+        feedTableView.addSubview(feedTableViewRefreshControl)
+    }
+    
+    
+    @objc private func refreshFeedTableView(){
         APIManager.getHomeLine { homeLineTweets in
             for (_, tweet) in homeLineTweets {
                 let tweetText = tweet["text"].stringValue
@@ -38,10 +62,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 self.tweetList.append(tweetObj)
                 print( tweet["text"] )
             }
-            self.tweetsListTableView.reloadData()
+            self.feedTableView.reloadData()
+            self.feedTableViewRefreshControl.endRefreshing()
             
         }
     }
+    
+}
+
+extension FeedViewController: APIDataRefreshDelegate {
+    func apiDataRefresh(){
+        refreshFeedTableView()
+    }
+}
+
+
+extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) ->
         Int
@@ -51,7 +87,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let tweetCell = tableView.dequeueReusableCellWithIdentifier("tweetPrototypeCell", forIndexPath: indexPath) as! TweetViewCell
+        let tweetCell = tableView.dequeueReusableCellWithIdentifier("tweetPrototypeCell", forIndexPath: indexPath) as! FeedTableViewCell
         
         // Even if the prototype cell has not visible label in designer, it has the textLabel label by default
         
@@ -71,5 +107,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         return tweetCell
     }
+    
 }
+
+
+
+
 
