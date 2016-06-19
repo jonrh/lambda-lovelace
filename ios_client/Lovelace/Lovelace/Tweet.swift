@@ -32,7 +32,11 @@ public class Tweet
         dataFormatter.dateFormat = "EEE MMM dd HH:mm:ss Z yyyy"
         let tweetDate = dataFormatter.dateFromString(rawDate)
         dataFormatter.dateFormat = "HH:SS"
-        let readableDate = dataFormatter.stringFromDate(tweetDate!)
+        
+        var readableDate = ""
+        if let date = tweetDate{
+            readableDate = dataFormatter.stringFromDate(date)
+        }
         return readableDate
     }
     

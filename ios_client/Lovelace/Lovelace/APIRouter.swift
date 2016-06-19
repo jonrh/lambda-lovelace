@@ -13,7 +13,7 @@ enum Router: URLRequestConvertible {
     
     static let baseURLString = "https://lovelance.herokuapp.com"
     
-    case Tweets
+    case Tweets(Int)
     
     var method: Alamofire.Method {
         switch self {
@@ -36,9 +36,13 @@ enum Router: URLRequestConvertible {
         
         if APIManager.hasOAuthToken {
             let oauthToken = APIManager.getOAuthTokenAndTokenSecret()
-            print(oauthToken)
-            let parameters = ["oauth_token" : oauthToken.oauth_token,
+            var parameters = ["oauth_token" : oauthToken.oauth_token,
                               "oauth_token_secret" : oauthToken.oauth_token_secret]
+            switch self {
+            case .Tweets(let page):
+                parameters["page"] = String(page)
+            }
+            
             let encodeing = Alamofire.ParameterEncoding.URL
             return encodeing.encode(mutableURLRequest, parameters: parameters).0
         }

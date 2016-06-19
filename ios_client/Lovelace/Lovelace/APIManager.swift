@@ -98,8 +98,8 @@ class APIManager {
         reqestingAccessToken = false
     }
     
-    class func getHomeLine(callback: (JSON)->Void) {
-        Alamofire.request(Router.Tweets)
+    class func getHomeLineWithPage(page: Int, callback: (JSON)->Void) {
+        Alamofire.request(Router.Tweets((page)))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     print(response.result.error)
