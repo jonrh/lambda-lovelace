@@ -13,7 +13,7 @@ class FeedTableViewCell: UITableViewCell {
 
     @IBOutlet weak var tweetUserImage: UIImageView! {
         didSet{
-            tweetUserImage.layer.cornerRadius = 10
+            tweetUserImage.layer.cornerRadius = 8
             tweetUserImage.clipsToBounds = true
         }
     }
