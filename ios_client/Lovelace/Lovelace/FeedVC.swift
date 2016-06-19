@@ -53,15 +53,15 @@ class FeedViewController: UIViewController  {
     }
     
     private func initRefreshControl(){
-        feedTableViewRefreshControl.addTarget(self, action:#selector(loadTweetWithPage) ,
+        feedTableViewRefreshControl.addTarget(self, action:#selector(refreshFeedTableView) ,
                                               forControlEvents: .ValueChanged)
         feedTableView.addSubview(feedTableViewRefreshControl)
     }
     
     
-    @objc private func loadTweetWithPage(page: Int = 0){
+    private func loadTweetWithPage(page: Int = 0){
         APIManager.getHomeLineWithPage(page)
-        {result in
+        {   result in
             let recommendedTweeets = result["recommended_tweets"]
             for (_, tweet) in recommendedTweeets {
                 let tweetText = tweet["text"].stringValue
@@ -74,7 +74,6 @@ class FeedViewController: UIViewController  {
                                      userDisplayName: userScreenName, userImageUrl: userImageUrl,
                                      tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
                 self.tweetList.append(tweetObj)
-                print( tweet["text"] )
             }
             
             for (_,count) in result["counts"]{
@@ -87,7 +86,7 @@ class FeedViewController: UIViewController  {
         }
     }
     
-    private func refreshFeedTableView(){
+    @objc private func refreshFeedTableView(){
         tweetList.removeAll()
         countList.removeAll()
         feedPage = 0
@@ -103,7 +102,6 @@ extension FeedViewController: APIDataRefreshDelegate {
         refreshFeedTableView()
     }
 }
-
 
 
 
