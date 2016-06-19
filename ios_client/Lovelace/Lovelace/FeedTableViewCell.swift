@@ -11,7 +11,12 @@ import UIKit
 class FeedTableViewCell: UITableViewCell {
     
 
-    @IBOutlet weak var tweetUserImage: UIImageView!
+    @IBOutlet weak var tweetUserImage: UIImageView! {
+        didSet{
+            tweetUserImage.layer.cornerRadius = 10
+            tweetUserImage.clipsToBounds = true
+        }
+    }
     
     
     @IBOutlet weak var tweetUserName: UILabel!
