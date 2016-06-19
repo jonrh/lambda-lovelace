@@ -22,7 +22,7 @@ public class Tweet
     init(tweet: String, userName: String, userDisplayName: String, userImageUrl:String, tweetDateTime:String, tweetImageUrl: String) {
         self.tweet = tweet
         self.userName = userName
-        self.userDisplayName = userDisplayName
+        self.userDisplayName = "@" + userDisplayName
         self.userImageUrl = userImageUrl
         self.tweetDateTime = Tweet.getReadableDate(tweetDateTime)
         self.tweetImageUrl = tweetImageUrl
