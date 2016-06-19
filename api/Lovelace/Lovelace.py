@@ -78,12 +78,13 @@ class Tweets(Resource):
 
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
+        page = request.args.get('page')
         
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth)
 
         # tweets = [tweet._json for tweet in tweepy.Cursor(api.home_timeline, count=200).items()]
-        tweets = [tweet._json for tweet in api.home_timeline()]
+        tweets = [tweet._json for tweet in api.home_timeline(page=page)]
 
         return jsonify(tweets)
 
