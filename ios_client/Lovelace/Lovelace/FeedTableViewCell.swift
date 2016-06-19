@@ -30,4 +30,12 @@ class FeedTableViewCell: UITableViewCell {
     
     @IBOutlet weak var tweetText: UILabel!
     
+    @IBOutlet weak var weightBar: UIView!
+    
+    var weight: Int = 0 {
+        didSet{
+            let weightBarColor = UIColor(hue: 0.725 + CGFloat(weight)/10, saturation: 1, brightness: 0.98, alpha: 1.0) /* #5700f9 */
+            weightBar.backgroundColor = weightBarColor
+        }
+    }
 }

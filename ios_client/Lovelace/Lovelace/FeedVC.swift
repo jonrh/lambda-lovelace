@@ -24,6 +24,7 @@ class FeedViewController: UIViewController  {
     }
     
     var tweetList = [Tweet]()
+    var countList = [Int]()
     
     let feedTableViewRefreshControl = UIRefreshControl()
     
@@ -60,8 +61,9 @@ class FeedViewController: UIViewController  {
     
     @objc private func loadTweetWithPage(page: Int = 0){
         APIManager.getHomeLineWithPage(page)
-        {homeLineTweets in
-            for (_, tweet) in homeLineTweets {
+        {result in
+            let recommendedTweeets = result["recommended_tweets"]
+            for (_, tweet) in recommendedTweeets {
                 let tweetText = tweet["text"].stringValue
                 let userName = tweet["user"]["name"].stringValue
                 let userScreenName = tweet["user"]["screen_name"].stringValue
@@ -75,6 +77,10 @@ class FeedViewController: UIViewController  {
                 print( tweet["text"] )
             }
             
+            for (_,count) in result["counts"]{
+                self.countList.append(count.intValue)
+            }
+            
             self.feedTableView.reloadData()
             self.feedTableViewRefreshControl.endRefreshing()
             self.isLoadingNewPage = false
@@ -83,6 +89,7 @@ class FeedViewController: UIViewController  {
     
     private func refreshFeedTableView(){
         tweetList.removeAll()
+        countList.removeAll()
         feedPage = 0
         loadTweetWithPage(0)
     }
@@ -119,6 +126,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         tweetCell.tweetText.text = tweetList[indexPath.row].tweet
         tweetCell.tweetUserDisplayName.text = tweetList[indexPath.row].userDisplayName
         tweetCell.tweetDateTime.text = tweetList[indexPath.row].tweetDateTime
+        tweetCell.weight = countList[indexPath.row]
         
         if let url = NSURL(string: tweetList[indexPath.row].userImageUrl) {
             let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
