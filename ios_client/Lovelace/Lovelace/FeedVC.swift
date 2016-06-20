@@ -55,7 +55,12 @@ class FeedViewController: UIViewController  {
                 let userScreenName = tweet["user"]["screen_name"].stringValue
                 let userImageUrl = tweet["user"]["profile_image_url_https"].stringValue
                 let tweetDateTime = tweet["created_at"].stringValue
-                let tweetImageUrl = tweet["media"]["media_url_https"].stringValue
+                var tweetImageUrl = ""
+                if let items = tweet["entities"]["media"].array {
+                    for item in items {
+                        tweetImageUrl = item["media_url_https"].stringValue
+                    }
+                }
                 let tweetObj = Tweet(tweet: tweetText, userName: userName,
                                      userDisplayName: userScreenName, userImageUrl: userImageUrl,
                                      tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
@@ -100,24 +105,8 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         let tweetCell = tableView.dequeueReusableCellWithIdentifier("tweetPrototypeCell",
                                                                     forIndexPath: indexPath) as! FeedTableViewCell
         
-        // Even if the prototype cell has not visible label in designer, it has the textLabel label by default
         
-       /* tweetCell.tweetUserName.text = tweetList[indexPath.row].userName
-        tweetCell.tweetText.text = tweetList[indexPath.row].tweet
-        tweetCell.tweetUserDisplayName.text = tweetList[indexPath.row].userDisplayName
-        tweetCell.tweetDateTime.text = tweetList[indexPath.row].tweetDateTime
         tweetCell.weight = countList[indexPath.row]
-        
-        if let url = NSURL(string: tweetList[indexPath.row].userImageUrl) {
-            let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
-            dispatch_async(dispatch_get_global_queue(qos,0)) { () -> Void in
-                if let avatar = NSData(contentsOfURL: url) {
-                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                        tweetCell.tweetUserImage?.image = UIImage(data: avatar)
-                    }
-                }
-            }
-        }*/
         tweetCell.tweet = tweetList[indexPath.row]
         
         

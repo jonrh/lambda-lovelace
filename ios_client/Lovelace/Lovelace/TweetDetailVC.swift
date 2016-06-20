@@ -30,6 +30,15 @@ class TweetDetailVC: UIViewController {
         userNameLabel.text = tweetObj?.userName
         userScreenNameLabel.text = tweetObj?.userDisplayName
         tweetText.text = tweetObj?.tweet
+        let userImageUrl = NSURL(string: (tweetObj?.userImageUrl)!)
+        let avatar = NSData(contentsOfURL: userImageUrl!)
+        userProfileImage.image = UIImage(data: avatar!)
+        let tweetImageUrl = NSURL(string: (tweetObj?.tweetImageUrl)!)
+        if let tweetImage = NSData(contentsOfURL: tweetImageUrl!)
+        {
+            tweetMediaImage.image = UIImage(data: tweetImage)
+        }
+        
     }
     
 }

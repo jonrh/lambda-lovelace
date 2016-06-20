@@ -37,20 +37,28 @@ class FeedTableViewCell: UITableViewCell {
     
     @IBOutlet weak var tweetText: UILabel!
     
+    @IBOutlet weak var weightBar: UIView!
+
+    
     
     func updateCell()
     {
         tweetUserName.text = tweet?.userName
         tweetUserDisplayName.text = tweet?.userDisplayName
         tweetText.text = tweet?.tweet
-        let url = NSURL(string: (tweet?.userImageUrl)!)
-        let avatar = NSData(contentsOfURL: url!)
-        tweetUserImage.image = UIImage(data: avatar!)
         tweetDateTime.text = tweet?.tweetDateTime
+        if let url = NSURL(string: (tweet?.userImageUrl)!){
+            let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+            dispatch_async(dispatch_get_global_queue(qos,0)) { () -> Void in
+                if let avatar = NSData(contentsOfURL: url) {
+                    dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                        self.tweetUserImage?.image = UIImage(data: avatar)
+                    }
+                }
+            }
+        }
     }
     
-
-    @IBOutlet weak var weightBar: UIView!
     
     var weight: Int = 0 {
         didSet{
