@@ -11,7 +11,12 @@ import UIKit
 class TweetDetailVC: UIViewController {
     var tweetObj:Tweet?
     
-    @IBOutlet weak var userProfileImage: UIImageView!
+    @IBOutlet weak var userProfileImage: UIImageView!{
+        didSet{
+            userProfileImage.layer.cornerRadius = 8
+            userProfileImage.clipsToBounds = true
+        }
+    }
 
     @IBOutlet weak var userNameLabel: UILabel!
     
