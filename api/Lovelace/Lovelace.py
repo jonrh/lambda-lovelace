@@ -105,7 +105,7 @@ class RecommendTweets(Resource):
         user = api.me()
         
         #fetch tweets of user's home timeline
-        home_tweets = [tweet._json for tweet in api.home_timeline(count=200,page=page)]
+        home_tweets = [tweet._json for tweet in api.home_timeline(count=50,page=page)]
         
         #fetch tweets of user's own time line
         users_tweets = [tweet._json for tweet in tweepy.Cursor(api.user_timeline, count=50).items(50)]
