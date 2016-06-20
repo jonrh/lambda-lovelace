@@ -17,7 +17,9 @@ struct FeedTableViewConstants {
 
 class FeedViewController: UIViewController  {
     
-    @IBOutlet weak var feedTableView: UITableView!
+
+    @IBOutlet weak var feedTableView: UITableView! 
+    
     var tweetList = [Tweet]()
     var countList = [Int]()
     
@@ -29,34 +31,23 @@ class FeedViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        APIManager.apiDataRefreshDelegate = self
         initRefreshControl()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-        if APIManager.hasOAuthToken {
+        if !APIManager.isRequestingOAuthToken {
             refreshFeedTableView()
-        }
-        else {
-            if !APIManager.reqestingAccessToken {
-                APIManager.initOAuthTokenAndSecret(viewControllerForOpeningWebView: self,
-                                                   dataRefreshDelegate: self)
-            }
         }
     }
     
     private func initRefreshControl(){
-        feedTableViewRefreshControl.addTarget(self, action:#selector(loadTweetWithPage) ,
+        feedTableViewRefreshControl.addTarget(self, action:#selector(refreshFeedTableView) ,
                                               forControlEvents: .ValueChanged)
         feedTableView.addSubview(feedTableViewRefreshControl)
     }
     
     
-    @objc private func loadTweetWithPage(page: Int = 0){
+    private func loadTweetWithPage(page: Int = 0){
         APIManager.getHomeLineWithPage(page)
-        {result in
+        {   result in
             let recommendedTweeets = result["recommended_tweets"]
             for (_, tweet) in recommendedTweeets {
                 let tweetText = tweet["text"].stringValue
@@ -69,7 +60,6 @@ class FeedViewController: UIViewController  {
                                      userDisplayName: userScreenName, userImageUrl: userImageUrl,
                                      tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
                 self.tweetList.append(tweetObj)
-                print( tweet["text"] )
             }
             
             for (_,count) in result["counts"]{
@@ -82,19 +72,17 @@ class FeedViewController: UIViewController  {
         }
     }
     
-    private func refreshFeedTableView(){
+    @objc private func refreshFeedTableView(){
         tweetList.removeAll()
         countList.removeAll()
         feedPage = 0
         loadTweetWithPage(0)
     }
-}
-
-
-
-extension FeedViewController: APIDataRefreshDelegate {
-    func apiDataRefresh(){
-        refreshFeedTableView()
+    
+    @IBAction func removeLocalOAuthTokenButtonPressed(sender: UIBarButtonItem) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
+        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
     }
 }
 
@@ -155,7 +143,11 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-
+extension FeedViewController: APIDataRefreshDelegate {
+    func apiDataRefresh() {
+        refreshFeedTableView()
+    }
+}
 
 
 
