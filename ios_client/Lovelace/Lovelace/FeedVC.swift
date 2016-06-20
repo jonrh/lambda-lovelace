@@ -25,7 +25,7 @@ class FeedViewController: UIViewController  {
     
     let feedTableViewRefreshControl = UIRefreshControl()
     
-    private var feedPage = 0
+    private var feedPage = 1
     private var isLoadingNewPage = true
     
     override func viewDidLoad() {
@@ -45,7 +45,7 @@ class FeedViewController: UIViewController  {
     }
     
     
-    private func loadTweetWithPage(page: Int = 0){
+    private func loadTweetWithPage(page: Int = 1){
         APIManager.getHomeLineWithPage(page)
         {   result in
             let recommendedTweeets = result["recommended_tweets"]
@@ -80,8 +80,8 @@ class FeedViewController: UIViewController  {
     @objc private func refreshFeedTableView(){
         tweetList.removeAll()
         countList.removeAll()
-        feedPage = 0
-        loadTweetWithPage(0)
+        feedPage = 1
+        loadTweetWithPage(feedPage)
     }
     
     @IBAction func removeLocalOAuthTokenButtonPressed(sender: UIBarButtonItem) {
