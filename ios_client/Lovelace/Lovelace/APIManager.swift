@@ -30,19 +30,16 @@ protocol APIDataRefreshDelegate: class {
     func apiDataRefresh()
 }
 
+
 class APIManager {
     
-    weak static var dataRefreshDelegate: APIDataRefreshDelegate?
+    weak static var apiDataRefreshDelegate: APIDataRefreshDelegate?
     
     static private var oauth_token: String?
     
-    static private var oauth_token_secret: String?{
-        didSet{
-           dataRefreshDelegate?.apiDataRefresh()
-        }
-    }
+    static private var oauth_token_secret: String?
     
-    static var reqestingAccessToken = false
+    static var isRequestingOAuthToken = false
     
     class var hasOAuthToken: Bool {
         return oauth_token != nil && oauth_token_secret != nil
@@ -55,8 +52,8 @@ class APIManager {
             authorizeUrl: APIConstents.authorizeUrl,
             accessTokenUrl: APIConstents.accessTokenUrl)
     
-    class func initOAuthTokenAndSecret(viewControllerForOpeningWebView viewControllerForOpeningWebView: UIViewController, dataRefreshDelegate: APIDataRefreshDelegate){
-        self.dataRefreshDelegate = dataRefreshDelegate
+    
+    class func LoadLocalOAuthToken() -> Bool{
         
         let defaults = NSUserDefaults.standardUserDefaults()
         
@@ -64,25 +61,35 @@ class APIManager {
             if let oauthTokenSecret = defaults.stringForKey(NSUserDefaultKeys.oauthTokenSecretKey){
                 oauth_token = oauthToken
                 oauth_token_secret = oauthTokenSecret
+                return true
             }
-        } else {
-            // user first loggin will direct to twitter loggin website
-            authorize(viewControllerForOpeningWebView: viewControllerForOpeningWebView)
         }
+        return false
         
     }
     
-    class func authorize(viewControllerForOpeningWebView viewControllerForOpeningWebView: UIViewController) {
-        reqestingAccessToken = true
-        oauthSwift.authorize_url_handler = SafariURLHandler(viewController: viewControllerForOpeningWebView)
+    
+    class func getOAuthTokenAndTokenSecret() -> (oauth_token: String, oauth_token_secret: String){
+        guard hasOAuthToken else {
+            return ("","")
+        }
+        return (oauth_token!,oauth_token_secret!)
+    }
+    
+    
+    class func authorize(vcForOpeningWebView vcForOpeningWebView: UIViewController) {
+        isRequestingOAuthToken = true
+        oauthSwift.authorize_url_handler = SafariURLHandler(viewController: vcForOpeningWebView)
         oauthSwift.authorizeWithCallbackURL(APIConstents.callbackUrl,
                                             success: { (credential, response, parameters) in
+                                                print("get oauth token successfully")
                                                 successfullyReceiveAccessToken(credential)
+                                                isRequestingOAuthToken = false
             },
                                             failure: { (error) in
-                                                print("error")
+                                                print("request oauth token error")
                                                 print(error.localizedDescription)
-                                                reqestingAccessToken = false
+                                                isRequestingOAuthToken = false
             }
         )
     }
@@ -91,12 +98,14 @@ class APIManager {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(credential.oauth_token, forKey: NSUserDefaultKeys.oauthTokenKey)
         defaults.setObject(credential.oauth_token_secret, forKey: NSUserDefaultKeys.oauthTokenSecretKey)
+        defaults.synchronize()
         
         oauth_token = credential.oauth_token
         oauth_token_secret = credential.oauth_token_secret
-        
-        reqestingAccessToken = false
+        apiDataRefreshDelegate?.apiDataRefresh()
     }
+    
+    
     
     class func getHomeLineWithPage(page: Int, callback: (JSON)->Void) {
         Alamofire.request(Router.Tweets((page)))
@@ -107,17 +116,9 @@ class APIManager {
                 }
                 if let value = response.result.value {
                     let tweets = JSON(value)
-                    // get response data
                     callback(tweets)
                 }
         }
-    }
-    
-    class func getOAuthTokenAndTokenSecret() -> (oauth_token: String, oauth_token_secret: String){
-        guard hasOAuthToken else {
-            return ("","")
-        }
-        return (oauth_token!,oauth_token_secret!)
     }
     
 }

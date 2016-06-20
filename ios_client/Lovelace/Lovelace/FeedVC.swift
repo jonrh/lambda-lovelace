@@ -17,11 +17,7 @@ struct FeedTableViewConstants {
 
 class FeedViewController: UIViewController  {
     
-    @IBOutlet weak var feedTableView: UITableView! {
-        didSet{
-            feedTableView.allowsSelection = false
-        }
-    }
+    @IBOutlet weak var feedTableView: UITableView! 
     
     var tweetList = [Tweet]()
     var countList = [Int]()
@@ -34,21 +30,10 @@ class FeedViewController: UIViewController  {
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        APIManager.apiDataRefreshDelegate = self
         initRefreshControl()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-        if APIManager.hasOAuthToken {
+        if !APIManager.isRequestingOAuthToken {
             refreshFeedTableView()
-        }
-        else {
-            if !APIManager.reqestingAccessToken {
-                APIManager.initOAuthTokenAndSecret(viewControllerForOpeningWebView: self,
-                                                   dataRefreshDelegate: self)
-            }
         }
     }
     
@@ -93,17 +78,12 @@ class FeedViewController: UIViewController  {
         loadTweetWithPage(0)
     }
     
-}
-
-
-
-extension FeedViewController: APIDataRefreshDelegate {
-    func apiDataRefresh(){
-        refreshFeedTableView()
+    @IBAction func removeLocalOAuthTokenButtonPressed(sender: UIBarButtonItem) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
+        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
     }
 }
-
-
 
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     
@@ -153,7 +133,11 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-
+extension FeedViewController: APIDataRefreshDelegate {
+    func apiDataRefresh() {
+        refreshFeedTableView()
+    }
+}
 
 
 
