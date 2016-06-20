@@ -25,7 +25,8 @@ enum Router: URLRequestConvertible {
     var path: String {
         switch  self {
         case .Tweets:
-            return ("/tweets")
+//            return ("/tweets")
+            return ("/recommend")
         }
     }
     

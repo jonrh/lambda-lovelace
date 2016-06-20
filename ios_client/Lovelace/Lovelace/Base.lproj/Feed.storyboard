@@ -95,7 +95,11 @@
                                             <outlet property="tweetUserDisplayName" destination="Fys-2j-WqF" id="z8g-7t-FNi"/>
                                             <outlet property="tweetUserImage" destination="Zzu-ZI-OzL" id="X8f-Cb-fZl"/>
                                             <outlet property="tweetUserName" destination="NKQ-gG-cH4" id="AAa-GQ-4Xd"/>
+
                                             <segue destination="8cT-PH-zSD" kind="show" identifier="tweetDetailSegue" id="SSQ-Kx-Lgv"/>
+
+                                            <outlet property="weightBar" destination="amU-ch-3s1" id="6YV-En-gmO"/>
+
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
