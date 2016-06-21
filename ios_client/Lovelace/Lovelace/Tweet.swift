@@ -29,13 +29,15 @@ public class Tweet
     }
     
     class private func getReadableDate(rawDate: String) -> String{
+        print(rawDate)
         dataFormatter.dateFormat = "EEE MMM dd HH:mm:ss Z yyyy"
         let tweetDate = dataFormatter.dateFromString(rawDate)
-        dataFormatter.dateFormat = "HH:SS"
+        dataFormatter.dateFormat = "HH:mm"
         
         var readableDate = ""
         if let date = tweetDate{
             readableDate = dataFormatter.stringFromDate(date)
+            print(readableDate)
         }
         return readableDate
     }

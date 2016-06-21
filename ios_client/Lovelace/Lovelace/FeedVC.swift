@@ -18,7 +18,12 @@ struct FeedTableViewConstants {
 class FeedViewController: UIViewController  {
     
 
-    @IBOutlet weak var feedTableView: UITableView! 
+    @IBOutlet weak var feedTableView: UITableView! {
+        didSet{
+            feedTableView.rowHeight = UITableViewAutomaticDimension
+            feedTableView.estimatedRowHeight = 100
+        }
+    }
     
     var tweetList = [Tweet]()
     var countList = [Int]()
