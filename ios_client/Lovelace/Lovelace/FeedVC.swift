@@ -42,6 +42,7 @@ class FeedViewController: UIViewController  {
         feedTableViewRefreshControl.addTarget(self, action:#selector(refreshFeedTableView) ,
                                               forControlEvents: .ValueChanged)
         feedTableView.addSubview(feedTableViewRefreshControl)
+        self.feedTableViewRefreshControl.beginRefreshing()
     }
     
     
@@ -88,6 +89,11 @@ class FeedViewController: UIViewController  {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
         defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+        
+        let alertVC = UIAlertController(title: "Remove Token", message: "You have removed Twitter access token.", preferredStyle: .Alert)
+        let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+        alertVC.addAction(alertAction)
+        presentViewController(alertVC, animated: true, completion: nil)
     }
 }
 
