@@ -89,7 +89,7 @@ For issues we use the following story point estimations:
 ~~2016-06-14		Week 5 Lab (13:00 - 16:00)~~  
 ~~**2016-06-21		Mid-term presentations** (10:00 - 17:00)~~  
 ~~**2016-06-24		Mid-term report**~~  
-2016-07-05		Week 8 Lab (13:00 - 16:00
+2016-07-05		Week 8 Lab (13:00 - 16:00)  
 **2016-07-15		User evaluation report**  
 2016-07-19		Week 10 Lab (13:00 - 16:00)  
 2016-08-02		Week 12 Lab (13:00 - 16:00)  
