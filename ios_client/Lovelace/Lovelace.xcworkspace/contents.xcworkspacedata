@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:LovelaceEvaluation/LovelaceEvaluation.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Lovelace.xcodeproj">
    </FileRef>
    <FileRef

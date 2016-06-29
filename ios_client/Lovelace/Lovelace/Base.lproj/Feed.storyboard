@@ -41,7 +41,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qex-d3-g3l">
-                                                    <rect key="frame" x="562" y="14" width="30" height="18"/>
+                                                    <rect key="frame" x="566" y="16" width="26" height="16"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -117,8 +117,8 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="vE7-vE-F9B">
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="trash" id="g4E-Ny-epx">
-                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="calibratedRGB"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="trash" id="g4E-Ny-epx">
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="removeLocalOAuthTokenButtonPressed:" destination="BYZ-38-t0r" id="2uI-YG-ETl"/>
                             </connections>

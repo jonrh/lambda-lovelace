@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct StoryboardIdentifiers{
+struct LoignVCStoryboardIdentifiers{
     static let loginToFeedTableViewSegue = "login"
 }
 
@@ -17,7 +17,7 @@ class LoginVC: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         if APIManager.isRequestingOAuthToken || APIManager.LoadLocalOAuthToken() {
-            performSegueWithIdentifier(StoryboardIdentifiers.loginToFeedTableViewSegue, sender: self)
+            performSegueWithIdentifier(LoignVCStoryboardIdentifiers.loginToFeedTableViewSegue, sender: self)
         }
     }
 

@@ -2,7 +2,19 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 use_frameworks!
 
+workspace 'Lovelace'
+
+project 'Lovelace'
 target 'Lovelace' do
+	project 'Lovelace'
+	pod 'Alamofire'
+	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+	pod 'OAuthSwift'
+end
+
+project 'LovelaceEvaluation/LovelaceEvaluation'
+target 'LovelaceEvaluation' do
+	project 'LovelaceEvaluation/LovelaceEvaluation'
 	pod 'Alamofire'
 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 	pod 'OAuthSwift'
