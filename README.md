@@ -55,38 +55,14 @@ These are ordered by priority, that is we will first strive to implement tweet f
 
 In the beginning our project scope was to create a general recommendation system for all sorts of media: news, tweets, blogs, videos, etc. However given professor's feedback we decided to focus the idea on Twitter. We believe that doing so will allow us to deliver a more refined and complete solution. However if things go exceedingly well we may revisit this idea for further expansion.
 
-## Minimum Viable Product
-The minimum viable product we set ourselves out to achieve is a recommender system to filter out tweets from the timeline that are not of interest. That is, it will only include the back-end, no mobile app. The aim is to have a tweet timeline where a user would rate our version better than the default one provided by Twitter. We will see how deep we will get but the aim is to be able to have an objective evaluation that shows a statistically significant difference in user preference.
-
-
-## Evaluation Method
-
-There are two evaluations that come to mind:
-
-- Quality / Accuracy of recommender system
-- Usability of mobile client
-
-A cornerstone of the project will be to filter and order tweets to the user in a personalised way superior to the default Twitter timeline (all tweets from followers). The recommender system can be evaluated in two ways:
-
-- **Evaluation on a static dataset**. Static datasets constructed from existing Twitter accounts. Something we can test over and over to benchmark ourselves. Sort of like unit tests. Try to predict likes for example. This evaluation is more intended to aid us during development.
-- **User evaluation**. Here are some ideas for user evaluations:
-  - Present pairs of unseen tweets from a users timeline. User selects which tweet is more interesting or relevant. Our recommender system would make it's prediction behind the scenes. We would then compare and see if the guess by the recommender system is correct or not.
-  - A user is presented 10 (or X number) unseen tweets from her or his timeline. The user is asked to place the tweets in order of interest. This order would be compared to the order the recommender system predicted.
-  - True evaluations from live users. This is more fuzzy, we have users try our system with their Twitter account and report how accurate the predictions are. A full user run so to speak.
-
-Not sure how (or if at all) we would test the usability of the mobile app, but there are probably well known ways to do it : )
 
 ## Technical Decisions
 Here below are some of the technical descisions we've made so far. Please note that we do not consider them binding. That is, we are fully prepared to switch languages, stacks mid project if we believe it will suit us better.
 
 - **Mobile**: iOS 9 + Swift 2.2
-- **Recommender System**: Python 3
-- **Back-end web service**: Python 3 or 2, [Flask](http://flask.pocoo.org/) (or [Bottle](http://bottlepy.org/docs/dev/index.html))
-- **Database**: Undecided. Maybe [PostGres](https://www.postgresql.org/), [Redis](http://redis.io/), or [RethinkDB](http://rethinkdb.com/).
-
-For the backend we'll strive to use Python 3 as much as we can but for some parts it may be nescisary to use Python 2.7. For the recommender system we aim to use Python 3 data scicence libraries as much as we can. However Python is not the fastest language on the block so we've pondered the possibility to dip into [Rust](https://www.rust-lang.org/) for performance critical parts, but we'll see.
-
-As for the database we have not entirely made up our mind. What comes to mind is PostGres for general storage. The Twitter API has pretty restrictive rate limits so it looks like we might need to store tweets ourselves. What comes to mind are some document databases like Redis or RethinkDb.
+- **Recommender System**: Python 2.7, 
+- **Back-end web service**: Python 2.7 and [Flask](http://flask.pocoo.org/) 
+- **Database**: Undecided. Maybe [PostGres](https://www.postgresql.org/) for general storage, and a document database to store a cache of tweets.
 
 
 ## Project Managment
@@ -106,54 +82,22 @@ For issues we use the following story point estimations:
 
 
 ### Schedule & Deliverables
-
 ~~2016-05-17		Lecture 1 (10:00 - 16:00)~~  
 ~~2016-05-24		Lecture 2 (13:00 - 16:00)~~  
 ~~2016-05-31		Week 3 Lab (13:00 - 16:00)~~  
 ~~**2016-06-10		Week 4: Project Plan** (17:00)~~  
 ~~2016-06-14		Week 5 Lab (13:00 - 16:00)~~  
-**2016-06-21		Mid-term presentations** (10:00 - 17:00)  
-**2016-06-24		Mid-term report**  
-2016-07-05		Week 7 Lab (13:00 - 16:00)  
+~~**2016-06-21		Mid-term presentations** (10:00 - 17:00)~~  
+~~**2016-06-24		Mid-term report**~~  
+2016-07-05		Week 8 Lab (13:00 - 16:00)  
 **2016-07-15		User evaluation report**  
-2016-07-19		Week 8 Lab (13:00 - 16:00)  
-2016-08-02		Week 9 Lab (13:00 - 16:00)  
+2016-07-19		Week 10 Lab (13:00 - 16:00)  
+2016-08-02		Week 12 Lab (13:00 - 16:00)  
 **2016-08-09		Final presentations** (10:00 - 17:00)  
 **2016-08-19		Final Report & Code**  
 
-### Blog and Show'n'tell
-
-Moodle Deadlines:
-
-* **Blog post**: 17:00 on the Monday before
-* **Show & Tell slides**: 12:00 on Tuesday
-
-|             |     Blog    |    Show & Tell    |
-|------------:|:------------|:------------------|
-| **Week 3**  | Jón Rúnar   | Jón Rúnar         |
-| **Week 4**  | Xinqi       |                   |
-| **Week 5**  | Marc        | Marc              |
-| **Week 6**  |             |                   |
-| **Week 7**  | Eazhilarasi |                   |
-| **Week 8**  | Junyang     | Junyang           |
-| **Week 9**  | ?           |                   |
-| **Week 10** | ?           | ?                 |
-| **Week 11** | ?           |                   |
-| **Week 12** | ?           | ?                 |
-
-A tally of past jobs as well as scheduled ones:
-
-|             | Blog posts | Show & Tell |
-|:-----------:|:----------:|:-----------:|
-| Xinqi       | 1          | 0           |
-| Marc        | 1          | 1           |
-| Junyang     | 1          | 1           |
-| Jón Rúnar   | 1          | 1           |
-| Eazhilarasi | 1          | 0           |
-
 
 ### Week Calendar
-
 |             |    M    |    T    |    W    |    T    |    F    |    S    |    S    | Month     |
 |------------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:-------:|:----------|
 | **Week 1**  | 16      | 17      | 18      | 19      | 20      | 21      | 22      | May       |
@@ -175,13 +119,43 @@ A tally of past jobs as well as scheduled ones:
 *Italic*: Show & Tell
 
 
+### Blog and Show'n'tell
+Moodle Deadlines:
+
+* **Blog post**: 17:00 on the Monday before
+* **Show & Tell slides**: 12:00 on Tuesday
+
+|             |     Blog    |    Show & Tell    |
+|------------:|:------------|:------------------|
+| **Week 3**  | Jón Rúnar   | Jón Rúnar         |
+| **Week 4**  | Xinqi       |                   |
+| **Week 5**  | Marc        | Marc              |
+| **Week 6**  |             |                   |
+| **Week 7**  |             |                   |
+| **Week 8**  | Eazhilarasi | Eazhilarasi       |
+| **Week 9**  | Jón Rúnar   |                   |
+| **Week 10** | Junyang     | Junyang           |
+| **Week 11** | Marc        |                   |
+| **Week 12** | Xinqi       | Xinqi             |
+
+A tally of past jobs as well as scheduled ones:
+
+|             | Blog posts | Show & Tell |
+|:-----------:|:----------:|:-----------:|
+| Xinqi       | 2          | 1           |
+| Marc        | 2          | 1           |
+| Junyang     | 1          | 1           |
+| Jón Rúnar   | 2          | 1           |
+| Eazhilarasi | 1          | 1           |
+
+
 ## Team members
 
-- Jón Rúnar Helgason, [jonrh](https://github.com/jonrh), [jonrh@jonrh.is](jonrh@jonrh.is)
-- Xinqi Li, [XinqiLi1992](https://github.com/XinqiLi1992), [xinqi.li@ucdconnect.ie](xinqi.li@ucdconnect.ie)
-- Marc Laffan, [Marc5690](https://github.com/Marc5690), [marclaffan@gmail.com](marclaffan@gmail.com)
-- Junyang Ma, [specter4mjy](https://github.com/specter4mjy), [specter4mjy@gmail.com](specter4mjy@gmail.com)
-- Eazhilarasi Manivannan, [Eazhilarasi](https://github.com/Eazhilarasi), [eazhilarasi.manivannan@ucdconnect.ie](eazhilarasi.manivannan@ucdconnect.ie)
+- Jón Rúnar Helgason, [jonrh](https://github.com/jonrh), <jonrh@jonrh.is>
+- Xinqi Li, [XinqiLi1992](https://github.com/XinqiLi1992), <xinqi.li@ucdconnect.ie>
+- Marc Laffan, [Marc5690](https://github.com/Marc5690), <marclaffan@gmail.com>
+- Junyang Ma, [specter4mjy](https://github.com/specter4mjy), <specter4mjy@gmail.com>
+- Eazhilarasi Manivannan, [Eazhilarasi](https://github.com/Eazhilarasi), <eazhilarasi.manivannan@ucdconnect.ie>
 
 Project roles:
 
