@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetDetailVC: UIViewController {
+class TweetDetailVC: UIViewController, UITextViewDelegate {
     var tweetObj:Tweet?
     
     @IBOutlet weak var userProfileImage: UIImageView!{
@@ -25,13 +25,15 @@ class TweetDetailVC: UIViewController {
     
     
     
-    @IBOutlet weak var tweetText: UILabel!
+    @IBOutlet weak var tweetText: UITextView!
     
     
     @IBOutlet weak var tweetMediaImage: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tweetText.dataDetectorTypes = UIDataDetectorTypes.Link
+        tweetText.delegate = self
         userNameLabel.text = tweetObj?.userName
         userScreenNameLabel.text = tweetObj?.userDisplayName
         tweetText.text = tweetObj?.tweet
@@ -44,6 +46,10 @@ class TweetDetailVC: UIViewController {
             tweetMediaImage.image = UIImage(data: tweetImage)
         }
         
+    }
+    
+    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+        return true
     }
     
 }
