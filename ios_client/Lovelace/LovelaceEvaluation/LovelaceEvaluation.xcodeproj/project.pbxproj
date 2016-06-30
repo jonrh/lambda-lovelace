@@ -20,6 +20,7 @@
 		9F33F5A31D2459B90040EE26 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F5A11D2459B90040EE26 /* APIManager.swift */; };
 		9F33F5A41D2459B90040EE26 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F5A21D2459B90040EE26 /* APIRouter.swift */; };
 		9F33F5AA1D245A4F0040EE26 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F5A91D245A4F0040EE26 /* Tweet.swift */; };
+		9F49ED991D256DCA00A0CF1E /* evaluation.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F49ED981D256DCA00A0CF1E /* evaluation.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		9F33F5A11D2459B90040EE26 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIManager.swift; path = ../../Lovelace/APIManager.swift; sourceTree = "<group>"; };
 		9F33F5A21D2459B90040EE26 /* APIRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRouter.swift; path = ../../Lovelace/APIRouter.swift; sourceTree = "<group>"; };
 		9F33F5A91D245A4F0040EE26 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tweet.swift; path = ../../Lovelace/Tweet.swift; sourceTree = "<group>"; };
+		9F49ED981D256DCA00A0CF1E /* evaluation.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = evaluation.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				9F33F5731D240ACE0040EE26 /* Main.storyboard */,
 				9F33F5781D240ACE0040EE26 /* LaunchScreen.storyboard */,
 				9F33F59E1D2458FC0040EE26 /* Assets.xcassets */,
+				9F49ED981D256DCA00A0CF1E /* evaluation.xcassets */,
 				9F33F59C1D2458BF0040EE26 /* LaunchScreen.xcassets */,
 				9F33F56F1D240ACE0040EE26 /* AppDelegate.swift */,
 				9F33F57B1D240ACE0040EE26 /* Info.plist */,
@@ -134,9 +137,9 @@
 		9F33F5A71D2459F00040EE26 /* Page */ = {
 			isa = PBXGroup;
 			children = (
-				9F33F5711D240ACE0040EE26 /* ViewController.swift */,
-				9F33F5811D240B700040EE26 /* ContentViewController.swift */,
 				9F33F5831D240B9D0040EE26 /* PageViewController.swift */,
+				9F33F5811D240B700040EE26 /* ContentViewController.swift */,
+				9F33F5711D240ACE0040EE26 /* ViewController.swift */,
 			);
 			name = Page;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				9F33F59D1D2458BF0040EE26 /* LaunchScreen.xcassets in Resources */,
 				9F33F57A1D240ACE0040EE26 /* LaunchScreen.storyboard in Resources */,
 				9F33F5751D240ACE0040EE26 /* Main.storyboard in Resources */,
+				9F49ED991D256DCA00A0CF1E /* evaluation.xcassets in Resources */,
 				9F33F59F1D2458FC0040EE26 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
