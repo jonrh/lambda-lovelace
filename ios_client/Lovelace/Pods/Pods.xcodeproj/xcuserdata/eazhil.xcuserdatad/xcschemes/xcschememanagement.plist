@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>Pods-LovelaceEvaluation.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -33,6 +38,11 @@
 			<true/>
 		</dict>
 		<key>45935B91DF0442390E2CA6DEEF68AE99</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>594E26F13E33AF7A4C6A2B14767A33D3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
