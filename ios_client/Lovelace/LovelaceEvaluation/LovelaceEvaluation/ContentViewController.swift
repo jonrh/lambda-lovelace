@@ -40,7 +40,7 @@ class ContentViewController: UIViewController {
         super.viewDidLoad()
         
         userNameLabel.text = tweet.userName
-        screenNameLabel.text = "@" + tweet.userDisplayName
+        screenNameLabel.text = tweet.userDisplayName
         tweetContentLabel.text = tweet.tweet
         
         let userImageURL = NSURL(string: tweet.userImageUrl)

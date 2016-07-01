@@ -9,7 +9,8 @@
 import UIKit
 
 struct PageVCStoryboardIdentifiers{
-    static let contentViewControllerId = "ContentViewController"
+    static let contentViewControllerWithImageId = "ContentViewControllerWithImage"
+    static let contentViewControllerWithoutImageId = "ContentViewControllerWithoutImage"
 }
 class PageViewController: UIPageViewController {
     
@@ -32,7 +33,8 @@ class PageViewController: UIPageViewController {
     
     private func configurePageVC(){
         for i in 0..<pageCount{
-            let contentVC = viewControllerOfIndex(i)
+            let hasImage = tweets[i].tweetImageUrl != ""
+            let contentVC = viewControllerOfIndex(i, hasImage: hasImage)
             contentVC.tweet = tweets[i]
             contentVCs.append(contentVC)
         }
@@ -65,8 +67,11 @@ class PageViewController: UIPageViewController {
         }
     }
 
-    func viewControllerOfIndex(index: Int) -> ContentViewController{
-       let contentVC = storyboard?.instantiateViewControllerWithIdentifier(PageVCStoryboardIdentifiers.contentViewControllerId) as! ContentViewController
+    func viewControllerOfIndex(index: Int, hasImage: Bool) -> ContentViewController{
+        let VCIdentifier = hasImage == true ? PageVCStoryboardIdentifiers.contentViewControllerWithImageId :
+                                             PageVCStoryboardIdentifiers.contentViewControllerWithoutImageId
+        
+       let contentVC = storyboard?.instantiateViewControllerWithIdentifier(VCIdentifier) as! ContentViewController
         contentVC.pageNumber = index
         return contentVC
     }
