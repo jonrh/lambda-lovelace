@@ -22,8 +22,8 @@ class PageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor.clearColor()
         delegate = self
+        dataSource = self
         loadTweets()
     }
 
@@ -67,11 +67,45 @@ class PageViewController: UIPageViewController {
 
     func viewControllerOfIndex(index: Int) -> ContentViewController{
        let contentVC = storyboard?.instantiateViewControllerWithIdentifier(PageVCStoryboardIdentifiers.contentViewControllerId) as! ContentViewController
+        contentVC.pageNumber = index
         return contentVC
     }
 }
 
 extension PageViewController: UIPageViewControllerDelegate{
+    
+}
+
+extension PageViewController: UIPageViewControllerDataSource{
+    private func indexOfContentVC(viewController: UIViewController) -> Int{
+        let contentViewController = viewController as! ContentViewController
+        return contentViewController.pageNumber
+    }
+    
+    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+        let currentPageNumber = indexOfContentVC(viewController)
+        let beforePageNumber = currentPageNumber - 1
+        if beforePageNumber >= 0 && beforePageNumber < pageCount {
+            return contentVCs[beforePageNumber]
+        }
+        return nil
+    }
+    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+        let currentPageNumber = indexOfContentVC(viewController)
+        let afterPageNumber = currentPageNumber + 1
+        if afterPageNumber >= 0 && afterPageNumber < pageCount {
+            return contentVCs[afterPageNumber]
+        }
+        return nil
+    }
+    
+    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+        return 0
+    }
+    
+    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+        return pageCount
+    }
     
 }
 
