@@ -161,6 +161,39 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         return utilityButtons
     }
     
+    func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerRightUtilityButtonWithIndex index: Int) {
+        
+        let index = self.feedTableView.indexPathForCell(cell)
+        let tweetCell = self.feedTableView.cellForRowAtIndexPath(index!) as! FeedTableViewCell
+        let actionForLikeTweetController: UIAlertController = UIAlertController()
+        //Create and add the Cancel action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+            //Just dismiss the action sheet
+        }
+        actionForLikeTweetController.addAction(cancelAction)
+        //Like from tweet author option
+        let likeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like more from " + (tweetCell.tweet?.userName)!, style: .Default)
+        { action -> Void in
+            
+            //To-do
+        }
+        actionForLikeTweetController.addAction(likeForAuthorAction)
+        // Like from this subject
+        let likeForSubjectAction: UIAlertAction = UIAlertAction(title: "More of this Subject", style: .Default)
+        { action -> Void in
+            
+            //To -do
+            
+        }
+    
+        actionForLikeTweetController.addAction(likeForSubjectAction)
+        actionForLikeTweetController.popoverPresentationController?.sourceView = cell as UIView
+        
+        //Present the AlertController
+        self.presentViewController(actionForLikeTweetController, animated: true, completion: nil)
+        
+    }
+    
 }
 
 extension FeedViewController: APIDataRefreshDelegate {
