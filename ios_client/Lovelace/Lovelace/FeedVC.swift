@@ -129,7 +129,8 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
                 loadTweetWithPage(feedPage)
             }
         }
-        
+        tweetCell.rightUtilityButtons = getRightSwipeButtonsToCell() as [AnyObject]
+        tweetCell.leftUtilityButtons = getLeftSwipeButtonsToCell() as [AnyObject]
         return tweetCell
     }
     
@@ -139,6 +140,18 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             let tweetDetailTVC = segue.destinationViewController as? TweetDetailVC
             tweetDetailTVC?.tweetObj = tweet.tweet
         }
+    }
+    
+    func getRightSwipeButtonsToCell()-> NSMutableArray{
+        let utilityButtons: NSMutableArray = NSMutableArray()
+        utilityButtons.sw_addUtilityButtonWithColor(UIColor.redColor(), title: NSLocalizedString("Like", comment: ""))
+        return utilityButtons
+    }
+    
+    func getLeftSwipeButtonsToCell()-> NSMutableArray{
+        let utilityButtons: NSMutableArray = NSMutableArray()
+        utilityButtons.sw_addUtilityButtonWithColor(UIColor.blueColor(), title: NSLocalizedString("Dislike", comment: ""))
+        return utilityButtons
     }
     
 }
