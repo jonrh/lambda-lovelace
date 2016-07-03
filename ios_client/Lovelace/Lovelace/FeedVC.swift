@@ -194,6 +194,37 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         
     }
     
+    func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerLeftUtilityButtonWithIndex index: Int) {
+        let index = self.feedTableView.indexPathForCell(cell)
+        let tweetCell = self.feedTableView.cellForRowAtIndexPath(index!) as! FeedTableViewCell
+        let actionForDisLikeTweetController: UIAlertController = UIAlertController()
+        //Create and add the Cancel action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+            //Just dismiss the action sheet
+        }
+        actionForDisLikeTweetController.addAction(cancelAction)
+        //Like from tweet author option
+        let dislikeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like less from " + (tweetCell.tweet?.userName)!, style: .Default)
+        { action -> Void in
+            
+            //To-do
+        }
+        actionForDisLikeTweetController.addAction(dislikeForAuthorAction)
+        // Like from this subject
+        let dislikeForSubjectAction: UIAlertAction = UIAlertAction(title: "Very old tweet", style: .Default)
+        { action -> Void in
+            
+            //To -do
+            
+        }
+        
+        actionForDisLikeTweetController.addAction(dislikeForSubjectAction)
+        actionForDisLikeTweetController.popoverPresentationController?.sourceView = cell as UIView
+        
+        //Present the AlertController
+        self.presentViewController(actionForDisLikeTweetController, animated: true, completion: nil)
+    }
+    
 }
 
 extension FeedViewController: APIDataRefreshDelegate {
