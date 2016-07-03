@@ -9,13 +9,14 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SWTableViewCell
 
 struct FeedTableViewConstants {
     static let numberOfItemsLeftTriggerLoadNewPage = 5
 }
 
 
-class FeedViewController: UIViewController  {
+class FeedViewController: UIViewController {
     
 
     @IBOutlet weak var feedTableView: UITableView! {
@@ -103,7 +104,7 @@ class FeedViewController: UIViewController  {
 }
 
 
-extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
+extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTableViewCellDelegate{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) ->
         Int
@@ -131,6 +132,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
         }
         tweetCell.rightUtilityButtons = getRightSwipeButtonsToCell() as [AnyObject]
         tweetCell.leftUtilityButtons = getLeftSwipeButtonsToCell() as [AnyObject]
+        tweetCell.delegate = self
         return tweetCell
     }
     
@@ -140,6 +142,11 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             let tweetDetailTVC = segue.destinationViewController as? TweetDetailVC
             tweetDetailTVC?.tweetObj = tweet.tweet
         }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let tweetCell = tableView.cellForRowAtIndexPath(indexPath)
+        performSegueWithIdentifier("tweetDetailSegue", sender: tweetCell)
     }
     
     func getRightSwipeButtonsToCell()-> NSMutableArray{
