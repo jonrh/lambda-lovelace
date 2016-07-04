@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct PageVCStoryboardIdentifiers{
+struct PageVCStoryboard{
     static let contentViewControllerWithImageId = "ContentViewControllerWithImage"
     static let contentViewControllerWithoutImageId = "ContentViewControllerWithoutImage"
 }
@@ -16,20 +16,24 @@ class PageViewController: UIPageViewController {
     
     var contentVCs = [ContentViewController]()
     var tweets = [Tweet]()
+    var results = [ButtonsIdentifiers?](count: 20, repeatedValue: nil)
     var pageCount:Int {
         return min(tweets.count, 20)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         delegate = self
         dataSource = self
         loadTweets()
     }
 
-    private func initContentVCs(){
+    private func hideOtherViewsInParentView(hidden: Bool){
+        let parentVC = parentViewController as! ParentViewController
+        parentVC.setOtherViewsHidden(hidden)
     }
+    
     
     private func configurePageVC(){
         for i in 0..<pageCount{
@@ -39,7 +43,7 @@ class PageViewController: UIPageViewController {
             contentVCs.append(contentVC)
         }
         
-        setViewControllers([contentVCs[0]], direction: .Forward, animated: true, completion: nil)
+        setViewControllers([contentVCs[0]], direction: .Forward, animated: false, completion: nil)
     }
     
     private func loadTweets(){
@@ -63,13 +67,15 @@ class PageViewController: UIPageViewController {
                                      tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
                 self.tweets.append(tweetObj)
             }
+            self.hideOtherViewsInParentView(false)
             self.configurePageVC()
+            
         }
     }
 
     func viewControllerOfIndex(index: Int, hasImage: Bool) -> ContentViewController{
-        let VCIdentifier = hasImage == true ? PageVCStoryboardIdentifiers.contentViewControllerWithImageId :
-                                             PageVCStoryboardIdentifiers.contentViewControllerWithoutImageId
+        let VCIdentifier = hasImage == true ? PageVCStoryboard.contentViewControllerWithImageId :
+                                             PageVCStoryboard.contentViewControllerWithoutImageId
         
        let contentVC = storyboard?.instantiateViewControllerWithIdentifier(VCIdentifier) as! ContentViewController
         contentVC.pageNumber = index
@@ -78,7 +84,6 @@ class PageViewController: UIPageViewController {
 }
 
 extension PageViewController: UIPageViewControllerDelegate{
-    
 }
 
 extension PageViewController: UIPageViewControllerDataSource{
@@ -114,5 +119,10 @@ extension PageViewController: UIPageViewControllerDataSource{
     
 }
 
-
-
+extension PageViewController: ParentViewDelegate {
+    func decisionButtonPressed(buttonId: ButtonsIdentifiers ){
+        let currentVC = viewControllers![0] as! ContentViewController
+        let currentPageNumber = currentVC.pageNumber
+        results[currentPageNumber] = buttonId
+    }
+}

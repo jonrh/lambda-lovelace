@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		786D19CAD31D280E9456F313 /* Pods_LovelaceEvaluation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1161583011A501642428FD22 /* Pods_LovelaceEvaluation.framework */; };
 		9F33F5701D240ACE0040EE26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F56F1D240ACE0040EE26 /* AppDelegate.swift */; };
-		9F33F5721D240ACE0040EE26 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F5711D240ACE0040EE26 /* ViewController.swift */; };
+		9F33F5721D240ACE0040EE26 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F5711D240ACE0040EE26 /* ParentViewController.swift */; };
 		9F33F5751D240ACE0040EE26 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F33F5731D240ACE0040EE26 /* Main.storyboard */; };
 		9F33F57A1D240ACE0040EE26 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F33F5781D240ACE0040EE26 /* LaunchScreen.storyboard */; };
 		9F33F5821D240B700040EE26 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F5811D240B700040EE26 /* ContentViewController.swift */; };
@@ -29,7 +29,7 @@
 		215BA23D0209D30575FDAB25 /* Pods-LovelaceEvaluation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LovelaceEvaluation.release.xcconfig"; path = "../Pods/Target Support Files/Pods-LovelaceEvaluation/Pods-LovelaceEvaluation.release.xcconfig"; sourceTree = "<group>"; };
 		9F33F56C1D240ACE0040EE26 /* LovelaceEvaluation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LovelaceEvaluation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F33F56F1D240ACE0040EE26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9F33F5711D240ACE0040EE26 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		9F33F5711D240ACE0040EE26 /* ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
 		9F33F5741D240ACE0040EE26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9F33F5791D240ACE0040EE26 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F33F57B1D240ACE0040EE26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -139,7 +139,7 @@
 			children = (
 				9F33F5831D240B9D0040EE26 /* PageViewController.swift */,
 				9F33F5811D240B700040EE26 /* ContentViewController.swift */,
-				9F33F5711D240ACE0040EE26 /* ViewController.swift */,
+				9F33F5711D240ACE0040EE26 /* ParentViewController.swift */,
 			);
 			name = Page;
 			sourceTree = "<group>";
@@ -279,7 +279,7 @@
 			files = (
 				9F33F5A41D2459B90040EE26 /* APIRouter.swift in Sources */,
 				9F33F5A31D2459B90040EE26 /* APIManager.swift in Sources */,
-				9F33F5721D240ACE0040EE26 /* ViewController.swift in Sources */,
+				9F33F5721D240ACE0040EE26 /* ParentViewController.swift in Sources */,
 				9F33F5821D240B700040EE26 /* ContentViewController.swift in Sources */,
 				9F33F5701D240ACE0040EE26 /* AppDelegate.swift in Sources */,
 				9F33F5841D240B9D0040EE26 /* PageViewController.swift in Sources */,

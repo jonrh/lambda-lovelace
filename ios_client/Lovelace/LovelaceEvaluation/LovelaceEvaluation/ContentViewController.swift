@@ -8,11 +8,6 @@
 
 import UIKit
 
-struct ContentVCStoryboard{
-    static let likeButtonTag = 0
-    static let neitherButtonTag = 1
-    static let dislikeButtonTag = 2
-}
 
 class ContentViewController: UIViewController {
     @IBOutlet weak var tweetBackgroundView: UIVisualEffectView!{
@@ -61,16 +56,4 @@ class ContentViewController: UIViewController {
 
     }
 
-    @IBAction func decisionButtonPressed(sender: UIButton) {
-        switch sender.tag {
-        case ContentVCStoryboard.likeButtonTag:
-            print("like")
-        case ContentVCStoryboard.neitherButtonTag:
-            print("neither")
-        case ContentVCStoryboard.dislikeButtonTag:
-            print("dislike")
-        default:
-            break
-        }
-    }
 }
