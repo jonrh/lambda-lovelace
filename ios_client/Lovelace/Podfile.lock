@@ -2,11 +2,13 @@ PODS:
   - Alamofire (3.4.0)
   - OAuthSwift (0.5.2)
   - SwiftyJSON (2.3.2)
+  - SWTableViewCell (0.3.7)
 
 DEPENDENCIES:
   - Alamofire
   - OAuthSwift
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - SWTableViewCell (~> 0.3.7)
 
 EXTERNAL SOURCES:
   SwiftyJSON:
@@ -21,7 +23,8 @@ SPEC CHECKSUMS:
   Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
   OAuthSwift: 1ef042d4362e755e24a78f158d817245641a5d24
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: 77982b894cee5022ab5dbf860d908e813eaebe81
+PODFILE CHECKSUM: 4b33a5cbb4f6a993b39b7ada249534332276cd72
 
 COCOAPODS: 1.0.1

@@ -9,13 +9,14 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SWTableViewCell
 
 struct FeedTableViewConstants {
     static let numberOfItemsLeftTriggerLoadNewPage = 5
 }
 
 
-class FeedViewController: UIViewController  {
+class FeedViewController: UIViewController {
     
 
     @IBOutlet weak var feedTableView: UITableView! {
@@ -103,7 +104,7 @@ class FeedViewController: UIViewController  {
 }
 
 
-extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
+extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTableViewCellDelegate{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) ->
         Int
@@ -129,7 +130,9 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
                 loadTweetWithPage(feedPage)
             }
         }
-        
+        tweetCell.rightUtilityButtons = getRightSwipeButtonsToCell() as [AnyObject]
+        tweetCell.leftUtilityButtons = getLeftSwipeButtonsToCell() as [AnyObject]
+        tweetCell.delegate = self
         return tweetCell
     }
     
@@ -139,6 +142,87 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate {
             let tweetDetailTVC = segue.destinationViewController as? TweetDetailVC
             tweetDetailTVC?.tweetObj = tweet.tweet
         }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let tweetCell = tableView.cellForRowAtIndexPath(indexPath)
+        performSegueWithIdentifier("tweetDetailSegue", sender: tweetCell)
+    }
+    
+    func getRightSwipeButtonsToCell()-> NSMutableArray{
+        let utilityButtons: NSMutableArray = NSMutableArray()
+        utilityButtons.sw_addUtilityButtonWithColor(UIColor.redColor(), title: NSLocalizedString("Like", comment: ""))
+        return utilityButtons
+    }
+    
+    func getLeftSwipeButtonsToCell()-> NSMutableArray{
+        let utilityButtons: NSMutableArray = NSMutableArray()
+        utilityButtons.sw_addUtilityButtonWithColor(UIColor.blueColor(), title: NSLocalizedString("Dislike", comment: ""))
+        return utilityButtons
+    }
+    
+    func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerRightUtilityButtonWithIndex index: Int) {
+        
+        let index = self.feedTableView.indexPathForCell(cell)
+        let tweetCell = self.feedTableView.cellForRowAtIndexPath(index!) as! FeedTableViewCell
+        let actionForLikeTweetController: UIAlertController = UIAlertController()
+        //Create and add the Cancel action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+            //Just dismiss the action sheet
+        }
+        actionForLikeTweetController.addAction(cancelAction)
+        //Like from tweet author option
+        let likeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like more from " + (tweetCell.tweet?.userName)!, style: .Default)
+        { action -> Void in
+            
+            //To-do
+        }
+        actionForLikeTweetController.addAction(likeForAuthorAction)
+        // Like from this subject
+        let likeForSubjectAction: UIAlertAction = UIAlertAction(title: "More of this Subject", style: .Default)
+        { action -> Void in
+            
+            //To -do
+            
+        }
+    
+        actionForLikeTweetController.addAction(likeForSubjectAction)
+        actionForLikeTweetController.popoverPresentationController?.sourceView = cell as UIView
+        
+        //Present the AlertController
+        self.presentViewController(actionForLikeTweetController, animated: true, completion: nil)
+        
+    }
+    
+    func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerLeftUtilityButtonWithIndex index: Int) {
+        let index = self.feedTableView.indexPathForCell(cell)
+        let tweetCell = self.feedTableView.cellForRowAtIndexPath(index!) as! FeedTableViewCell
+        let actionForDisLikeTweetController: UIAlertController = UIAlertController()
+        //Create and add the Cancel action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+            //Just dismiss the action sheet
+        }
+        actionForDisLikeTweetController.addAction(cancelAction)
+        //Like from tweet author option
+        let dislikeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like less from " + (tweetCell.tweet?.userName)!, style: .Default)
+        { action -> Void in
+            
+            //To-do
+        }
+        actionForDisLikeTweetController.addAction(dislikeForAuthorAction)
+        // Like from this subject
+        let dislikeForSubjectAction: UIAlertAction = UIAlertAction(title: "Very old tweet", style: .Default)
+        { action -> Void in
+            
+            //To -do
+            
+        }
+        
+        actionForDisLikeTweetController.addAction(dislikeForSubjectAction)
+        actionForDisLikeTweetController.popoverPresentationController?.sourceView = cell as UIView
+        
+        //Present the AlertController
+        self.presentViewController(actionForDisLikeTweetController, animated: true, completion: nil)
     }
     
 }

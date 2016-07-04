@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0730"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CB8ADB5F6C2B3EC792B09EE78E569829"
+               BlueprintIdentifier = "BFB60669020FA1BF6CE64B7B8258A764"
                BuildableName = "Pods_Lovelace.framework"
                BlueprintName = "Pods-Lovelace"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CB8ADB5F6C2B3EC792B09EE78E569829"
+            BlueprintIdentifier = "BFB60669020FA1BF6CE64B7B8258A764"
             BuildableName = "Pods_Lovelace.framework"
             BlueprintName = "Pods-Lovelace"
             ReferencedContainer = "container:Pods.xcodeproj">
@@ -60,15 +60,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CB8ADB5F6C2B3EC792B09EE78E569829"
-            BuildableName = "Pods_Lovelace.framework"
-            BlueprintName = "Pods-Lovelace"
-            ReferencedContainer = "container:Pods.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

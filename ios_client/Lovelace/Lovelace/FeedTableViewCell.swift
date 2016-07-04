@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SWTableViewCell
 
-class FeedTableViewCell: UITableViewCell {
+class FeedTableViewCell: SWTableViewCell {
     
     var tweet: Tweet? {
         didSet {

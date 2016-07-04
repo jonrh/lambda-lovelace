@@ -10,6 +10,7 @@ target 'Lovelace' do
 	pod 'Alamofire'
 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 	pod 'OAuthSwift'
+	pod 'SWTableViewCell', '~>0.3.7'
 end
 
 project 'LovelaceEvaluation/LovelaceEvaluation'
