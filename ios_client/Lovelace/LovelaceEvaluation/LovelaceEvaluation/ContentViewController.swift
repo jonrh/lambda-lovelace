@@ -9,7 +9,7 @@
 import UIKit
 
 
-class ContentViewController: UIViewController {
+class ContentViewController: UIViewController, PageNumberDataSource {
     @IBOutlet weak var tweetBackgroundView: UIVisualEffectView!{
         didSet{
             tweetBackgroundView.layer.cornerRadius = 6

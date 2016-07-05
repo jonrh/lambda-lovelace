@@ -8,18 +8,25 @@
 
 import UIKit
 
-struct PageVCStoryboard{
-    static let contentViewControllerWithImageId = "ContentViewControllerWithImage"
-    static let contentViewControllerWithoutImageId = "ContentViewControllerWithoutImage"
+enum ContentViewControllerType:String {
+    case textAndImage = "ContentViewControllerWithImage"
+    case textOnly = "ContentViewControllerWithoutImage"
 }
+
+struct PageStoryboard {
+    static let resultTableId = "ResultTableViewController"
+}
+
+protocol PageNumberDataSource {
+    var pageNumber: Int {get set}
+}
+
+
 class PageViewController: UIPageViewController {
     
     var contentVCs = [ContentViewController]()
+    var resultTableVC = ResultTableViewController()
     var tweets = [Tweet]()
-    var results = [ButtonsIdentifiers?](count: 20, repeatedValue: nil)
-    var pageCount:Int {
-        return min(tweets.count, 20)
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,13 +43,16 @@ class PageViewController: UIPageViewController {
     
     
     private func configurePageVC(){
-        for i in 0..<pageCount{
+        for i in 0 ..< AppConstant.tweetContentViewCount{
             let hasImage = tweets[i].tweetImageUrl != ""
-            let contentVC = viewControllerOfIndex(i, hasImage: hasImage)
+            let contentViewType:ContentViewControllerType = hasImage ? .textAndImage : .textOnly
+            let contentVC = viewControllerOfIndex(i, contentViewType: contentViewType)
             contentVC.tweet = tweets[i]
             contentVCs.append(contentVC)
         }
         
+        resultTableVC = storyboard?.instantiateViewControllerWithIdentifier(PageStoryboard.resultTableId) as! ResultTableViewController
+        resultTableVC.pageNumber = AppConstant.totalPageViewCount - 1
         setViewControllers([contentVCs[0]], direction: .Forward, animated: false, completion: nil)
     }
     
@@ -73,11 +83,8 @@ class PageViewController: UIPageViewController {
         }
     }
 
-    func viewControllerOfIndex(index: Int, hasImage: Bool) -> ContentViewController{
-        let VCIdentifier = hasImage == true ? PageVCStoryboard.contentViewControllerWithImageId :
-                                             PageVCStoryboard.contentViewControllerWithoutImageId
-        
-       let contentVC = storyboard?.instantiateViewControllerWithIdentifier(VCIdentifier) as! ContentViewController
+    func viewControllerOfIndex(index: Int, contentViewType: ContentViewControllerType) -> ContentViewController{
+       let contentVC = storyboard?.instantiateViewControllerWithIdentifier(contentViewType.rawValue) as! ContentViewController
         contentVC.pageNumber = index
         return contentVC
     }
@@ -87,24 +94,27 @@ extension PageViewController: UIPageViewControllerDelegate{
 }
 
 extension PageViewController: UIPageViewControllerDataSource{
-    private func indexOfContentVC(viewController: UIViewController) -> Int{
-        let contentViewController = viewController as! ContentViewController
-        return contentViewController.pageNumber
+    private func getPageNumberFromChildViewController(viewController: UIViewController) -> Int{
+        let dataSource = viewController as! PageNumberDataSource
+        return dataSource.pageNumber
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
-        let currentPageNumber = indexOfContentVC(viewController)
+        let currentPageNumber = getPageNumberFromChildViewController(viewController)
         let beforePageNumber = currentPageNumber - 1
-        if beforePageNumber >= 0 && beforePageNumber < pageCount {
+        if beforePageNumber >= 0 && beforePageNumber < AppConstant.tweetContentViewCount {
             return contentVCs[beforePageNumber]
         }
         return nil
     }
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
-        let currentPageNumber = indexOfContentVC(viewController)
+        let currentPageNumber = getPageNumberFromChildViewController(viewController)
         let afterPageNumber = currentPageNumber + 1
-        if afterPageNumber >= 0 && afterPageNumber < pageCount {
+        if afterPageNumber >= 0 && afterPageNumber < AppConstant.tweetContentViewCount {
             return contentVCs[afterPageNumber]
+        }
+        if afterPageNumber == AppConstant.totalPageViewCount - 1 {
+            return resultTableVC
         }
         return nil
     }
@@ -114,7 +124,7 @@ extension PageViewController: UIPageViewControllerDataSource{
     }
     
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return pageCount
+        return AppConstant.totalPageViewCount
     }
     
 }
@@ -123,6 +133,6 @@ extension PageViewController: ParentViewDelegate {
     func decisionButtonPressed(buttonId: ButtonsIdentifiers ){
         let currentVC = viewControllers![0] as! ContentViewController
         let currentPageNumber = currentVC.pageNumber
-        results[currentPageNumber] = buttonId
+        EvaluationResult.results[currentPageNumber] = buttonId
     }
 }
