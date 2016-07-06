@@ -21,13 +21,19 @@ enum ButtonsIdentifier:Int{
 
 class ParentViewController: UIViewController {
 
-    @IBOutlet weak var questionLabel: UILabel!
+    @IBOutlet weak var topComponentView: UIStackView!
     @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private weak var pageVCDataSource: PageViewControllerDataSource!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var neitherButton: UIButton!
     @IBOutlet weak var dislikeButton: UIButton!
+    @IBOutlet weak var progressView: EvaluationProgressView!
+    @IBOutlet weak var pageNumberLabel: UILabel!
+    
+    var currentPageNumber:Int {
+        return pageVCDataSource.pageNumberOfCurrentPageView
+    }
     
     private var buttons: [UIButton]{
         return [likeButton,neitherButton,dislikeButton]
@@ -43,22 +49,23 @@ class ParentViewController: UIViewController {
     
     func setOtherViewsHidden(hidden: Bool){
         buttonsStackView.hidden = hidden
-        questionLabel.hidden = hidden
+        topComponentView.hidden = hidden
         switch hidden {
         case true:
             activityIndicator.startAnimating()
         case false:
             activityIndicator.stopAnimating()
+            updataeButtonsStatesAndProgressBar()
         }
     }
 
     @IBAction func decisionButtonPressed(sender: UIButton) {
         let pressedButtonTag = sender.tag
         let pressedButtonId = ButtonsIdentifier(rawValue: pressedButtonTag)
-        let currentPageNumberOfPageVC = pageVCDataSource.pageNumberOfCurrentPageView
-        EvaluationResult.results[currentPageNumberOfPageVC] = pressedButtonId
-        setButtonsStatesForPage(currentPageNumberOfPageVC)
+        EvaluationResult.results[currentPageNumber] = pressedButtonId
+        updataeButtonsStatesAndProgressBar()
     }
+    
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -73,12 +80,18 @@ class ParentViewController: UIViewController {
         }
     }
     
-    func setButtonsStatesForPage(pageNumber: Int){
+    func updataeButtonsStatesAndProgressBar(){
         restoreAllButtonsToDefaultState()
-        if let buttonId = EvaluationResult.results[pageNumber]{
-            let pressedButton = buttons[buttonId.rawValue]
-            pressedButton.deselect = false
+        if currentPageNumber < AppConstant.tweetContentViewCount {
+            if let buttonId = EvaluationResult.results[currentPageNumber]{
+                let pressedButton = buttons[buttonId.rawValue]
+                pressedButton.deselect = false
+            }
         }
+        
+        progressView.currentPageNumber = currentPageNumber
+        progressView.setNeedsDisplay()
+        pageNumberLabel.text = String(currentPageNumber + 1)
         
     }
 

@@ -28,7 +28,7 @@ protocol PageViewControllerDataSource:class{
 
 extension PageViewController: PageViewControllerDataSource {
     var pageNumberOfCurrentPageView:Int {
-        let currentVC = viewControllers![0] as! ContentViewController
+        let currentVC = viewControllers![0] as! PageNumberDataSource
         return currentVC.pageNumber
     }
 }
@@ -87,8 +87,8 @@ class PageViewController: UIPageViewController {
                                      tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
                 self.tweets.append(tweetObj)
             }
-            self.parentVC.setOtherViewsHidden(false)
             self.configurePageVC()
+            self.parentVC.setOtherViewsHidden(false)
             
         }
     }
@@ -103,10 +103,7 @@ class PageViewController: UIPageViewController {
 extension PageViewController: UIPageViewControllerDelegate{
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed {
-            if let currentVC = viewControllers![0] as? ContentViewController {
-                let currentPageNumber = currentVC.pageNumber
-                parentVC.setButtonsStatesForPage(currentPageNumber)
-            }
+            parentVC.updataeButtonsStatesAndProgressBar()
             
         }
     }
@@ -136,14 +133,6 @@ extension PageViewController: UIPageViewControllerDataSource{
             return resultTableVC
         }
         return nil
-    }
-    
-    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return 0
-    }
-    
-    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return AppConstant.totalPageViewCount
     }
     
 }

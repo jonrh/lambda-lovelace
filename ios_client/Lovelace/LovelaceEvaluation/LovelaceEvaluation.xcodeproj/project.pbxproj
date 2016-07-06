@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		786D19CAD31D280E9456F313 /* Pods_LovelaceEvaluation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1161583011A501642428FD22 /* Pods_LovelaceEvaluation.framework */; };
+		9F07B6351D2D5E1E00305BB3 /* EvaluationProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F07B6341D2D5E1E00305BB3 /* EvaluationProgressView.swift */; };
 		9F2F71ED1D2AC60900C91952 /* ResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F2F71EC1D2AC60900C91952 /* ResultTableViewController.swift */; };
 		9F33F5701D240ACE0040EE26 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F56F1D240ACE0040EE26 /* AppDelegate.swift */; };
 		9F33F5721D240ACE0040EE26 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F5711D240ACE0040EE26 /* ParentViewController.swift */; };
@@ -30,6 +31,7 @@
 		0E9C39676937285C5FD59AB5 /* Pods-LovelaceEvaluation.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LovelaceEvaluation.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-LovelaceEvaluation/Pods-LovelaceEvaluation.debug.xcconfig"; sourceTree = "<group>"; };
 		1161583011A501642428FD22 /* Pods_LovelaceEvaluation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LovelaceEvaluation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		215BA23D0209D30575FDAB25 /* Pods-LovelaceEvaluation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LovelaceEvaluation.release.xcconfig"; path = "../Pods/Target Support Files/Pods-LovelaceEvaluation/Pods-LovelaceEvaluation.release.xcconfig"; sourceTree = "<group>"; };
+		9F07B6341D2D5E1E00305BB3 /* EvaluationProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvaluationProgressView.swift; sourceTree = "<group>"; };
 		9F2F71EC1D2AC60900C91952 /* ResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewController.swift; sourceTree = "<group>"; };
 		9F33F56C1D240ACE0040EE26 /* LovelaceEvaluation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LovelaceEvaluation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F33F56F1D240ACE0040EE26 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9F07B6331D2D5DDE00305BB3 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9F07B6341D2D5E1E00305BB3 /* EvaluationProgressView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		9F33F5631D240ACE0040EE26 = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +110,7 @@
 		9F33F56E1D240ACE0040EE26 /* LovelaceEvaluation */ = {
 			isa = PBXGroup;
 			children = (
+				9F07B6331D2D5DDE00305BB3 /* View */,
 				9F33F5A01D2459810040EE26 /* Controller */,
 				9F33F5A51D2459C10040EE26 /* API */,
 				9F33F5A81D245A3D0040EE26 /* Model */,
@@ -293,6 +304,7 @@
 				9F33F5821D240B700040EE26 /* ContentViewController.swift in Sources */,
 				9F33F5701D240ACE0040EE26 /* AppDelegate.swift in Sources */,
 				9F2F71ED1D2AC60900C91952 /* ResultTableViewController.swift in Sources */,
+				9F07B6351D2D5E1E00305BB3 /* EvaluationProgressView.swift in Sources */,
 				9FA764F21D2C046100BB55A6 /* EvaluationResult.swift in Sources */,
 				9F33F5841D240B9D0040EE26 /* PageViewController.swift in Sources */,
 				9F33F59B1D24588F0040EE26 /* LoginVC.swift in Sources */,
