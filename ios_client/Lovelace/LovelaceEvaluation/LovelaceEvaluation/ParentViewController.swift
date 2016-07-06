@@ -28,10 +28,18 @@ class ParentViewController: UIViewController {
     @IBOutlet weak var buttonsStackView: UIStackView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private weak var delegate: ParentViewDelegate!
+    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var neitherButton: UIButton!
+    @IBOutlet weak var dislikeButton: UIButton!
+    
+    private var buttons: [UIButton]{
+        return [likeButton,neitherButton,dislikeButton]
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        deselectAllButtons()
         setOtherViewsHidden(true)
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -53,8 +61,16 @@ class ParentViewController: UIViewController {
     }
 
     @IBAction func decisionButtonPressed(sender: UIButton) {
+        deselectAllButtons()
+        sender.deselect = false
         let buttonTag = sender.tag
         delegate.decisionButtonPressed(ButtonsIdentifiers.init(rawValue: buttonTag)!)
+    }
+    
+    func deselectAllButtons()  {
+        for button in buttons{
+            button.deselect = true
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -62,6 +78,19 @@ class ParentViewController: UIViewController {
             delegate = segue.destinationViewController as! ParentViewDelegate
         }
     }
+    
+    
 
+}
+
+extension UIButton {
+    var deselect:Bool {
+        set{
+            selected = newValue
+        }
+        get {
+            return selected
+        }
+    }
 }
 
