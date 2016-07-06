@@ -1,6 +1,7 @@
 from sklearn.feature_extraction.text import CountVectorizer 
 from collections import Counter 
 import operator 
+
  
 tokenize = CountVectorizer().build_tokenizer() 
  
@@ -18,7 +19,9 @@ for tweet in tweets:
  
 term_frequencies = Counter(overall_list) 
 term_freq_top_five = term_frequencies.most_common(5)  
- 
+
+print("Top Five")
 print(term_freq_top_five) 
- 
+
+print("Term frequencies")
 print(term_frequencies)
