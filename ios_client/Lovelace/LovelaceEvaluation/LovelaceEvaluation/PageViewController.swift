@@ -22,23 +22,33 @@ protocol PageNumberDataSource {
 }
 
 
+protocol PageViewControllerDataSource:class{
+    var pageNumberOfCurrentPageView:Int {get}
+}
+
+extension PageViewController: PageViewControllerDataSource {
+    var pageNumberOfCurrentPageView:Int {
+        let currentVC = viewControllers![0] as! ContentViewController
+        return currentVC.pageNumber
+    }
+}
+
 class PageViewController: UIPageViewController {
     
     var contentVCs = [ContentViewController]()
     var resultTableVC = ResultTableViewController()
     var tweets = [Tweet]()
-
+    
+    var parentVC:ParentViewController{
+        return parentViewController as! ParentViewController
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         delegate = self
         dataSource = self
         loadTweets()
-    }
-
-    private func hideOtherViewsInParentView(hidden: Bool){
-        let parentVC = parentViewController as! ParentViewController
-        parentVC.setOtherViewsHidden(hidden)
     }
     
     
@@ -77,20 +87,29 @@ class PageViewController: UIPageViewController {
                                      tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
                 self.tweets.append(tweetObj)
             }
-            self.hideOtherViewsInParentView(false)
+            self.parentVC.setOtherViewsHidden(false)
             self.configurePageVC()
             
         }
     }
-
+    
     func viewControllerOfIndex(index: Int, contentViewType: ContentViewControllerType) -> ContentViewController{
-       let contentVC = storyboard?.instantiateViewControllerWithIdentifier(contentViewType.rawValue) as! ContentViewController
+        let contentVC = storyboard?.instantiateViewControllerWithIdentifier(contentViewType.rawValue) as! ContentViewController
         contentVC.pageNumber = index
         return contentVC
     }
 }
 
 extension PageViewController: UIPageViewControllerDelegate{
+    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if completed {
+            if let currentVC = viewControllers![0] as? ContentViewController {
+                let currentPageNumber = currentVC.pageNumber
+                parentVC.setButtonsStatesForPage(currentPageNumber)
+            }
+            
+        }
+    }
 }
 
 extension PageViewController: UIPageViewControllerDataSource{
@@ -129,10 +148,3 @@ extension PageViewController: UIPageViewControllerDataSource{
     
 }
 
-extension PageViewController: ParentViewDelegate {
-    func decisionButtonPressed(buttonId: ButtonsIdentifiers ){
-        let currentVC = viewControllers![0] as! ContentViewController
-        let currentPageNumber = currentVC.pageNumber
-        EvaluationResult.results[currentPageNumber] = buttonId
-    }
-}

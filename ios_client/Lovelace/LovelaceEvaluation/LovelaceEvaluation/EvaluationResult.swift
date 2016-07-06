@@ -9,5 +9,5 @@
 import Foundation
 
 class EvaluationResult {
-    static var results = [ButtonsIdentifiers?](count: 3, repeatedValue: nil)
+    static var results = [ButtonsIdentifier?](count: 3, repeatedValue: nil)
 }

@@ -10,7 +10,7 @@ import UIKit
 
 class ResultTableViewController: UITableViewController, PageNumberDataSource {
     var pageNumber = 0
-    var results: [ButtonsIdentifiers?] {
+    var results: [ButtonsIdentifier?] {
         return EvaluationResult.results
     }
     
