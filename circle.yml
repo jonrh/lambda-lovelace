@@ -4,3 +4,7 @@ machine:
 
 general:
   build_dir: backend
+
+test:
+  override:
+    - nosetests unittest.py
