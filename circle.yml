@@ -1,2 +1,6 @@
+machine:
+  services:
+    - docker
+
 general:
   build_dir: backend
