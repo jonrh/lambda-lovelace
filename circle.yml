@@ -1,6 +1,8 @@
 machine:
   services:
     - docker
+  python:
+    version: 2.7.12
 
 general:
   build_dir: backend
