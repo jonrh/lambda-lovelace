@@ -1,14 +1,17 @@
 from sklearn.feature_extraction.text import CountVectorizer
 from Tweetbox import Tweetbox
 from collections import Counter
-from Streaming import Streaming
+#from Streaming import Streaming
 import tweepy
+import time
 
 
 class Recommender:
     
     #TO-DO:
+    #-set language to users own twitter language
     #-currently misses end hashtags
+    #-Does not search for hashtags, just "word-searches"
     #-does not add hashtags to term-frequency document
     #-does not distinguish Java from JavaScript (Could use a bigram list for this)
     #-does not filter stop-words from the term-frequency document (Should be something in a library to help with this)
@@ -30,9 +33,17 @@ class Recommender:
     def set_followed_tweets(self):
         self.followed_tweets = self.api.home_timeline()
 
+    #This method using the streaming object and term frequency doc to find new tweets from unfollowed accounts 
     def get_unfollowed_tweets(self, term):
-        streaming_obj = Streaming()
-        streaming_obj.stream(term)
+        #streaming_obj = Streaming()
+        #streaming_obj.stream(term)
+        tweets = self.api.search(q=term, count=3)
+        #tweets = streaming_obj.get_tweets()
+        #maxi = streaming_obj.get_max()
+        print(" unfollowed tweets here")
+        for tweet in tweets:
+            print tweet.text.encode('utf-8')
+        return tweets
 
     #This method sets the "own_tweets" attrribute for the recommender object. These are tweets
     #from the users personal timeline, used to make the term frequncy document.   
@@ -80,10 +91,10 @@ class Recommender:
         
         #weighting = ((match_count + term_match_weighting)/len(tweet_text_stripped.split()))/ term_match_weighting#(len(self.termfreq_doc) + term_match_weighting)  
         weighting = term_match_weighting#((match_count + term_match_weighting)/len(tweet_text.split()))/(len(self.termfreq_doc) + term_match_weighting)  
-        print "weighting here"
-        print weighting
-        print "tweet here"
-        print tweet_text_stripped
+        #print "weighting here"
+        #print weighting
+        #print "tweet here"
+        #print tweet_text_stripped
         return weighting
 
     def generate(self, number_of_recommendations, followed_accounts, how_many_days_ago):
@@ -95,16 +106,26 @@ class Recommender:
         self.vectorizer.fit_transform(list_of_owners_tweets)
         words = self.own_tweets #The users own tweets
         print self.termfreq_doc
-        tweet_listy = self.followed_tweets #tweets from accounts that the user is following
-        data_returned = sorted(tweet_listy, key=self.count_bag, reverse=True)
-        results = data_returned[0:number_of_recommendations]
-        
+        tweet_list = self.followed_tweets #tweets from accounts that the user is following
+
         for term in self.termfreq_doc.keys():
-            for tweet in get_unfollowed_tweets(term):
+            #print "Getting unfollowed tweets for term: "
+            #print term
+            unfollowed_tweet_list = self.get_unfollowed_tweets(term)
+            #print unfollowed_tweet_list
+            for tweet in unfollowed_tweet_list:
                 unfollowed_tweets.append(tweet)
 
         print("UNFOLLOWED HERE")
-        print unfollowed_tweets
+        for tweet in unfollowed_tweets:
+            print tweet.text.encode('utf-8')
+
+        for unfollowed_tweet in unfollowed_tweets:
+            tweet_list.append(unfollowed_tweet)
+
+        data_returned = sorted(tweet_list, key=self.count_bag, reverse=True)
+        results = data_returned[0:number_of_recommendations]
+       
         return results
 
     def count_bag(self, tweet):
@@ -112,6 +133,7 @@ class Recommender:
         sanitised_tweet_text = tweet.text
         
         #bug
+        #Somehow, the following tweet is being counted as six (should be three)
         #Tweet!
         #Guavate: tiny library bridging Guava and Java8 - Core Java Google Guava, Guavate, Java 8 https://t.co/kQnWkUy9V7
         #count!
