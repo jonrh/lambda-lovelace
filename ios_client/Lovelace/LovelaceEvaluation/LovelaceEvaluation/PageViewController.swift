@@ -48,7 +48,9 @@ class PageViewController: UIPageViewController {
         
         delegate = self
         dataSource = self
-        loadTweets()
+        if  APIManager.LoadLocalOAuthToken() {
+            initTestData()
+        }
     }
     
     
@@ -67,7 +69,11 @@ class PageViewController: UIPageViewController {
         setViewControllers([contentVCs[0]], direction: .Forward, animated: false, completion: nil)
     }
     
-    private func loadTweets(){
+    func initTestData(){
+        tweets.removeAll()
+        EvaluationResult.cleanAllResult()
+        contentVCs.removeAll()
+        
         APIManager.getHomeLineWithPage(1)
         {   result in
             let recommendedTweeets = result["recommended_tweets"]
@@ -99,6 +105,12 @@ class PageViewController: UIPageViewController {
         let contentVC = storyboard?.instantiateViewControllerWithIdentifier(contentViewType.rawValue) as! ContentViewController
         contentVC.pageNumber = index
         return contentVC
+    }
+}
+
+extension PageViewController:APIDataRefreshDelegate{
+    func apiDataRefresh(){
+        initTestData()
     }
 }
 

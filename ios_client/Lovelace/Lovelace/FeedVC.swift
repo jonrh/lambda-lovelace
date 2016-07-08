@@ -15,9 +15,11 @@ struct FeedTableViewConstants {
     static let numberOfItemsLeftTriggerLoadNewPage = 5
 }
 
+struct FeedVCStoryboard{
+    static let loginViewSegue = "login"
+}
 
 class FeedViewController: UIViewController {
-    
 
     @IBOutlet weak var feedTableView: UITableView! {
         didSet{
@@ -39,8 +41,17 @@ class FeedViewController: UIViewController {
     
         APIManager.apiDataRefreshDelegate = self
         initRefreshControl()
-        if !APIManager.isRequestingOAuthToken {
-            refreshFeedTableView()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if !APIManager.isRequestingOAuthToken{
+            if APIManager.LoadLocalOAuthToken() {
+                refreshFeedTableView()
+            }else{
+                performSegueWithIdentifier(FeedVCStoryboard.loginViewSegue, sender: self)
+            }
         }
     }
     

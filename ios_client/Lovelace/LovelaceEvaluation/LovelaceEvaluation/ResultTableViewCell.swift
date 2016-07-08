@@ -16,7 +16,6 @@ class ResultTableViewCell: UITableViewCell {
             avatarImageView.clipsToBounds = true
         }
     }
-    @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var tweetLabel: UILabel!
     @IBOutlet weak var userChoiceImageView: UIImageView!
     
@@ -37,7 +36,6 @@ class ResultTableViewCell: UITableViewCell {
     
     var tweet: Tweet? {
         didSet{
-            userNameLabel.text = tweet?.userName
             tweetLabel.text = tweet?.tweet
             if let avatarUrl = NSURL(string: (tweet?.userImageUrl)!){
                 dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), {

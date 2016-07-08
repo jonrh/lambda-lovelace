@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hgT-MF-ykK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="SLl-pd-g40">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -126,6 +126,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="feedTableView" destination="c4T-J5-I22" id="sg3-c3-tUv"/>
+                        <segue destination="hgT-MF-ykK" kind="show" identifier="login" id="Toi-Mm-G6F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -279,13 +280,10 @@
                             <constraint firstItem="N4F-Uo-UYr" firstAttribute="top" secondItem="6Qq-fL-1Ud" secondAttribute="bottom" id="iS1-Mb-fE9"/>
                         </constraints>
                     </view>
-                    <connections>
-                        <segue destination="SLl-pd-g40" kind="show" identifier="login" id="qXv-Sn-10K"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bpk-09-Csk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-246" y="185"/>
+            <point key="canvasLocation" x="1200" y="-655"/>
         </scene>
     </scenes>
     <resources>

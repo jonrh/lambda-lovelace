@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         print("appDelegate")
+        window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
         OAuthSwift.handleOpenURL(url)
         return true
     }

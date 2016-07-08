@@ -10,4 +10,8 @@ import Foundation
 
 class EvaluationResult {
     static var results = [ButtonsIdentifier?](count: AppConstant.tweetContentViewCount, repeatedValue: nil)
+    class func cleanAllResult(){
+        results = [ButtonsIdentifier?](count: AppConstant.tweetContentViewCount, repeatedValue: nil)
+    }
+    
 }

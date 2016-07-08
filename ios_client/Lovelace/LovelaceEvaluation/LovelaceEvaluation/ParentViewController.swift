@@ -10,6 +10,7 @@ import UIKit
 
 struct ParentVCStoryboard{
     static let pageViewSegue = "PageViewSegue"
+    static let loginViewSegue = "login"
 }
 
 enum ButtonsIdentifier:Int{
@@ -34,8 +35,8 @@ class ParentViewController: UIViewController {
         didSet{
             containerView.layer.shadowColor = UIColor.blackColor().CGColor
             containerView.layer.shadowOffset = CGSize(width: 0, height: 1)
-            containerView.layer.shadowOpacity = 0.5
-            containerView.layer.shadowRadius = 8
+            containerView.layer.shadowOpacity = 0.7
+            containerView.layer.shadowRadius = 6
         }
     }
     
@@ -48,6 +49,14 @@ class ParentViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var pageNumberBackgroundImageView: UIImageView!{
+        didSet{
+            pageNumberBackgroundImageView.layer.shadowColor = UIColor.blackColor().CGColor
+            pageNumberBackgroundImageView.layer.shadowOffset = CGSizeMake(0, 1)
+            pageNumberBackgroundImageView.layer.shadowOpacity = 0.5
+            pageNumberBackgroundImageView.layer.shadowRadius = 3
+        }
+    }
     var isSubmitted = false
     
     var currentPageNumber:Int {
@@ -62,8 +71,15 @@ class ParentViewController: UIViewController {
         super.viewDidLoad()
         restoreAllButtonsToDefaultState()
         hideViewsAtStartup(true)
+        
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if !(APIManager.isRequestingOAuthToken || APIManager.LoadLocalOAuthToken()) {
+            performSegueWithIdentifier(ParentVCStoryboard.loginViewSegue, sender: self)
+        }
+    }
     
     
     func hideViewsAtStartup(hide: Bool){
@@ -119,8 +135,12 @@ class ParentViewController: UIViewController {
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == ParentVCStoryboard.pageViewSegue){
+        switch segue.identifier! {
+        case ParentVCStoryboard.pageViewSegue:
             pageVCDataSource = segue.destinationViewController as! PageViewControllerDataSource
+            APIManager.apiDataRefreshDelegate = (segue.destinationViewController as! APIDataRefreshDelegate)
+        default:
+            break
         }
     }
     
