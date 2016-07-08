@@ -20,9 +20,9 @@ enum ButtonsIdentifier:Int{
 
 
 class ParentViewController: UIViewController {
-
+    
     @IBOutlet weak var topComponentView: UIStackView!
-    @IBOutlet weak var buttonsStackView: UIStackView!
+    @IBOutlet weak var bottomComponentView: UIStackView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private weak var pageVCDataSource: PageViewControllerDataSource!
     @IBOutlet weak var likeButton: UIButton!
@@ -30,6 +30,10 @@ class ParentViewController: UIViewController {
     @IBOutlet weak var dislikeButton: UIButton!
     @IBOutlet weak var progressView: EvaluationProgressView!
     @IBOutlet weak var pageNumberLabel: UILabel!
+    @IBOutlet weak var containerView: UIView!
+    
+    
+    var topAndBottomComponentsHidden = false
     
     var currentPageNumber:Int {
         return pageVCDataSource.pageNumberOfCurrentPageView
@@ -41,24 +45,54 @@ class ParentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         restoreAllButtonsToDefaultState()
-        setOtherViewsHidden(true)
-        // Do any additional setup after loading the view, typically from a nib.
+        hideViewsAtStartup(true)
     }
     
-    func setOtherViewsHidden(hidden: Bool){
-        buttonsStackView.hidden = hidden
-        topComponentView.hidden = hidden
-        switch hidden {
-        case true:
-            activityIndicator.startAnimating()
-        case false:
-            activityIndicator.stopAnimating()
-            updataeButtonsStatesAndProgressBar()
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    
+    func displayTopAndBottomComponents(show show: Bool, animated: Bool){
+        if show != !topAndBottomComponentsHidden{
+            displayBottomComponents(show: show)
+            topAndBottomComponentsHidden = !show
         }
     }
-
+    
+    private func displayBottomComponents(show show: Bool){
+        let bottomHeight = bottomComponentView.bounds.height
+        
+        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .BeginFromCurrentState, animations: {
+            self.bottomComponentView.center.y += show ? -bottomHeight : bottomHeight
+            }, completion: nil)
+        UIView.animateWithDuration(0.6, delay: 0, options: .CurveEaseInOut, animations: {
+            self.containerView.frame.size.height += ( show ? -1 : 1 ) * ( bottomHeight - 30 )
+            }, completion: nil)
+    }
+    
+    private func displayTopComponents(show show: Bool){
+        let deltaY:CGFloat = show ? 150 : -150
+        UIView.animateWithDuration(1){
+            self.topComponentView.center.y += deltaY
+            self.bottomComponentView.center.y += -deltaY
+        }
+    }
+    func hideViewsAtStartup(hide: Bool){
+        UIView.animateWithDuration(0.8, delay: 0, options: .CurveEaseInOut, animations: {
+            self.containerView.alpha = hide ? 0 : 1
+            self.topComponentView.alpha = hide ? 0 : 1
+            self.bottomComponentView.alpha = hide ? 0 : 1
+            }, completion: nil)
+        if hide {
+            activityIndicator.startAnimating()
+        }
+        else {
+            activityIndicator.stopAnimating()
+        }
+    }
+    
     @IBAction func decisionButtonPressed(sender: UIButton) {
         let pressedButtonTag = sender.tag
         let pressedButtonId = ButtonsIdentifier(rawValue: pressedButtonTag)
@@ -85,7 +119,7 @@ class ParentViewController: UIViewController {
         if currentPageNumber < AppConstant.tweetContentViewCount {
             if let buttonId = EvaluationResult.results[currentPageNumber]{
                 let pressedButton = buttons[buttonId.rawValue]
-                pressedButton.deselect = false
+                    pressedButton.deselect = false
             }
         }
         
@@ -94,7 +128,7 @@ class ParentViewController: UIViewController {
         pageNumberLabel.text = String(currentPageNumber + 1)
         
     }
-
+    
 }
 
 extension UIButton {

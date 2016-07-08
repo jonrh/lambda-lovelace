@@ -36,7 +36,7 @@ extension PageViewController: PageViewControllerDataSource {
 class PageViewController: UIPageViewController {
     
     var contentVCs = [ContentViewController]()
-    var resultTableVC = ResultTableViewController()
+    var resultTableVC = ResultContentViewController()
     var tweets = [Tweet]()
     
     var parentVC:ParentViewController{
@@ -61,7 +61,7 @@ class PageViewController: UIPageViewController {
             contentVCs.append(contentVC)
         }
         
-        resultTableVC = storyboard?.instantiateViewControllerWithIdentifier(PageStoryboard.resultTableId) as! ResultTableViewController
+        resultTableVC = storyboard?.instantiateViewControllerWithIdentifier(PageStoryboard.resultTableId) as! ResultContentViewController
         resultTableVC.pageNumber = AppConstant.totalPageViewCount - 1
         setViewControllers([contentVCs[0]], direction: .Forward, animated: false, completion: nil)
     }
@@ -87,8 +87,10 @@ class PageViewController: UIPageViewController {
                                      tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
                 self.tweets.append(tweetObj)
             }
+            print("load tweets successfully")
             self.configurePageVC()
-            self.parentVC.setOtherViewsHidden(false)
+            self.parentVC.hideViewsAtStartup(false)
+            self.parentVC.updataeButtonsStatesAndProgressBar()
             
         }
     }
@@ -104,6 +106,12 @@ extension PageViewController: UIPageViewControllerDelegate{
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed {
             parentVC.updataeButtonsStatesAndProgressBar()
+            if pageNumberOfCurrentPageView == AppConstant.totalPageViewCount - 1 {
+                parentVC.displayTopAndBottomComponents(show: false, animated: true)
+            }
+            else {
+                parentVC.displayTopAndBottomComponents(show: true, animated: true)
+            }
             
         }
     }
