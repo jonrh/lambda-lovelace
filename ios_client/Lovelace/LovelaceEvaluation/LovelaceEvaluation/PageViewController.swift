@@ -63,6 +63,7 @@ class PageViewController: UIPageViewController {
         
         resultTableVC = storyboard?.instantiateViewControllerWithIdentifier(PageStoryboard.resultTableId) as! ResultContentViewController
         resultTableVC.pageNumber = AppConstant.totalPageViewCount - 1
+        resultTableVC.tweets = tweets
         setViewControllers([contentVCs[0]], direction: .Forward, animated: false, completion: nil)
     }
     
@@ -90,8 +91,7 @@ class PageViewController: UIPageViewController {
             print("load tweets successfully")
             self.configurePageVC()
             self.parentVC.hideViewsAtStartup(false)
-            self.parentVC.updataeButtonsStatesAndProgressBar()
-            
+            self.parentVC.updatePageNumberView()
         }
     }
     
@@ -105,12 +105,21 @@ class PageViewController: UIPageViewController {
 extension PageViewController: UIPageViewControllerDelegate{
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed {
-            parentVC.updataeButtonsStatesAndProgressBar()
-            if pageNumberOfCurrentPageView == AppConstant.totalPageViewCount - 1 {
-                parentVC.displayTopAndBottomComponents(show: false, animated: true)
-            }
-            else {
-                parentVC.displayTopAndBottomComponents(show: true, animated: true)
+            parentVC.updataeButtonsStates()
+            parentVC.updatePageNumberView()
+            switch pageNumberOfCurrentPageView {
+            case AppConstant.totalPageViewCount - 1:
+                parentVC.toggleLogoutSubmitButton()
+                parentVC.toggleBottomComponents()
+            case AppConstant.tweetContentViewCount - 1:
+                let previousVC = previousViewControllers[0] as! PageNumberDataSource
+                let previousPageNumber = previousVC.pageNumber
+                if previousPageNumber == AppConstant.totalPageViewCount - 1{
+                    parentVC.toggleLogoutSubmitButton()
+                    parentVC.toggleBottomComponents()
+                }
+            default:
+                break
             }
             
         }

@@ -38,11 +38,15 @@ class ContentViewController: UIViewController, PageNumberDataSource {
         screenNameLabel.text = tweet.userDisplayName
         tweetContentLabel.text = tweet.tweet
         
-        let userImageURL = NSURL(string: tweet.userImageUrl)
-        
-        if let userImageData = NSData(contentsOfURL: userImageURL!){
-            let userImage = UIImage(data: userImageData)
-            avatarImageView.image = userImage
+        if let userImageURL = NSURL(string: tweet.userImageUrl){
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), {
+                if let userImageData = NSData(contentsOfURL: userImageURL){
+                    dispatch_async(dispatch_get_main_queue(), {
+                        let userImage = UIImage(data: userImageData)
+                        self.avatarImageView.image = userImage
+                    })
+                }
+            })
         }
         
         

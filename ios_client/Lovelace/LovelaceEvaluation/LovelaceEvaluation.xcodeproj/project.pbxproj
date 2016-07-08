@@ -23,6 +23,7 @@
 		9F33F5AA1D245A4F0040EE26 /* Tweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F33F5A91D245A4F0040EE26 /* Tweet.swift */; };
 		9F49ED991D256DCA00A0CF1E /* evaluation.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F49ED981D256DCA00A0CF1E /* evaluation.xcassets */; };
 		9F5981461D2EA673003E97D2 /* ResultContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5981451D2EA673003E97D2 /* ResultContentViewController.swift */; };
+		9F6E5EF31D2F533900005A2E /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E5EF21D2F533900005A2E /* ResultTableViewCell.swift */; };
 		9FA764F21D2C046100BB55A6 /* EvaluationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA764F11D2C046100BB55A6 /* EvaluationResult.swift */; };
 		9FA764F41D2C04E000BB55A6 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA764F31D2C04E000BB55A6 /* AppConstant.swift */; };
 /* End PBXBuildFile section */
@@ -48,6 +49,7 @@
 		9F33F5A91D245A4F0040EE26 /* Tweet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tweet.swift; path = ../../Lovelace/Tweet.swift; sourceTree = "<group>"; };
 		9F49ED981D256DCA00A0CF1E /* evaluation.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = evaluation.xcassets; sourceTree = "<group>"; };
 		9F5981451D2EA673003E97D2 /* ResultContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultContentViewController.swift; sourceTree = "<group>"; };
+		9F6E5EF21D2F533900005A2E /* ResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
 		9FA764F11D2C046100BB55A6 /* EvaluationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvaluationResult.swift; sourceTree = "<group>"; };
 		9FA764F31D2C04E000BB55A6 /* AppConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -158,6 +160,7 @@
 				9F33F5831D240B9D0040EE26 /* PageViewController.swift */,
 				9F33F5811D240B700040EE26 /* ContentViewController.swift */,
 				9F5981451D2EA673003E97D2 /* ResultContentViewController.swift */,
+				9F6E5EF21D2F533900005A2E /* ResultTableViewCell.swift */,
 			);
 			name = Page;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				9F33F5701D240ACE0040EE26 /* AppDelegate.swift in Sources */,
 				9F07B6351D2D5E1E00305BB3 /* EvaluationProgressView.swift in Sources */,
 				9FA764F21D2C046100BB55A6 /* EvaluationResult.swift in Sources */,
+				9F6E5EF31D2F533900005A2E /* ResultTableViewCell.swift in Sources */,
 				9F33F5841D240B9D0040EE26 /* PageViewController.swift in Sources */,
 				9F33F59B1D24588F0040EE26 /* LoginVC.swift in Sources */,
 				9F33F5AA1D245A4F0040EE26 /* Tweet.swift in Sources */,

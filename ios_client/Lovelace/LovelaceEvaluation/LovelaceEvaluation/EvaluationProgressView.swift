@@ -17,14 +17,23 @@ class EvaluationProgressView: UIView {
     // An empty implementation adversely affects performance during animation.
     let numberOfSegments = AppConstant.tweetContentViewCount
     override func drawRect(rect: CGRect) {
-        // Drawing code
+        let results = EvaluationResult.results
+        let selectedChoiceCount = results.filter { $0 != nil }.count
+        
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         let radius = bounds.width / 2
         let angleStep = 2 * CGFloat(M_PI) / CGFloat(numberOfSegments)
         let startAngle = CGFloat(-M_PI_2)
-        let endAngle = CGFloat(currentPageNumber + 1) * angleStep + startAngle
+        let endAngle = CGFloat(selectedChoiceCount) * angleStep + startAngle
         
         var path = UIBezierPath()
+        
+        path = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        path.addLineToPoint(center)
+        path.closePath()
+        let greenColor = UIColor(hue: 0.425, saturation: 0.5, brightness: 1, alpha: 1.0) /* #7dffc6 */
+        greenColor.setFill()
+        path.fill()
         
         for i in 0..<numberOfSegments{
             path = UIBezierPath()
@@ -39,12 +48,6 @@ class EvaluationProgressView: UIView {
             path.stroke()
         }
         
-        path = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
-        path.addLineToPoint(center)
-        path.closePath()
-        let greenColor = UIColor(hue: 0.425, saturation: 0.5, brightness: 1, alpha: 1.0) /* #7dffc6 */
-        greenColor.setFill()
-        path.fill()
         
         
         let shadowView = UIImage(named: "progress shadow")

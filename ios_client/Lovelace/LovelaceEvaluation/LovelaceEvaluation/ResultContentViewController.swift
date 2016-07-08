@@ -10,11 +10,18 @@ import UIKit
 
 class ResultContentViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, PageNumberDataSource {
 
-    @IBOutlet weak var resultTableView: UITableView!
+    @IBOutlet weak var resultTableView: UITableView!{
+        didSet{
+            resultTableView.rowHeight = UITableViewAutomaticDimension
+            resultTableView.estimatedRowHeight = 100
+        }
+    }
     var pageNumber = 0
     var results: [ButtonsIdentifier?] {
         return EvaluationResult.results
     }
+    
+    var tweets: [Tweet]!
     
     @IBOutlet weak var tweetBackgroundView: UIVisualEffectView!{
         didSet{
@@ -42,26 +49,16 @@ class ResultContentViewController: UIViewController, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return AppConstant.tweetContentViewCount
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! ResultTableViewCell
         
-        // Configure the cell...
         if let buttonId = results[indexPath.row] {
-            var resultText = ""
-            switch buttonId {
-            case .like:
-                resultText = "like"
-            case .neither:
-                resultText = "neither"
-            case .dislike:
-                resultText = "dislike"
-            }
-            
-            cell.textLabel?.text = resultText
+            cell.userChoice = buttonId
         }
+        cell.tweet = tweets[indexPath.row]
         
         return cell
     }

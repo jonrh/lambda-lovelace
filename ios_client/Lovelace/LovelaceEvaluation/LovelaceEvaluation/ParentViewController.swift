@@ -30,10 +30,25 @@ class ParentViewController: UIViewController {
     @IBOutlet weak var dislikeButton: UIButton!
     @IBOutlet weak var progressView: EvaluationProgressView!
     @IBOutlet weak var pageNumberLabel: UILabel!
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var containerView: UIView! {
+        didSet{
+            containerView.layer.shadowColor = UIColor.blackColor().CGColor
+            containerView.layer.shadowOffset = CGSize(width: 0, height: 1)
+            containerView.layer.shadowOpacity = 0.5
+            containerView.layer.shadowRadius = 8
+        }
+    }
     
+    @IBOutlet weak var logoutSubmitButton: UIButton! {
+        didSet{
+            logoutSubmitButton.layer.shadowColor = UIColor.blackColor().CGColor
+            logoutSubmitButton.layer.shadowOffset = CGSizeMake(0, 1)
+            logoutSubmitButton.layer.shadowOpacity = 0.5
+            logoutSubmitButton.layer.shadowRadius = 3
+        }
+    }
     
-    var topAndBottomComponentsHidden = false
+    var isSubmitted = false
     
     var currentPageNumber:Int {
         return pageVCDataSource.pageNumberOfCurrentPageView
@@ -49,36 +64,8 @@ class ParentViewController: UIViewController {
         hideViewsAtStartup(true)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
     
     
-    func displayTopAndBottomComponents(show show: Bool, animated: Bool){
-        if show != !topAndBottomComponentsHidden{
-            displayBottomComponents(show: show)
-            topAndBottomComponentsHidden = !show
-        }
-    }
-    
-    private func displayBottomComponents(show show: Bool){
-        let bottomHeight = bottomComponentView.bounds.height
-        
-        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .BeginFromCurrentState, animations: {
-            self.bottomComponentView.center.y += show ? -bottomHeight : bottomHeight
-            }, completion: nil)
-        UIView.animateWithDuration(0.6, delay: 0, options: .CurveEaseInOut, animations: {
-            self.containerView.frame.size.height += ( show ? -1 : 1 ) * ( bottomHeight - 30 )
-            }, completion: nil)
-    }
-    
-    private func displayTopComponents(show show: Bool){
-        let deltaY:CGFloat = show ? 150 : -150
-        UIView.animateWithDuration(1){
-            self.topComponentView.center.y += deltaY
-            self.bottomComponentView.center.y += -deltaY
-        }
-    }
     func hideViewsAtStartup(hide: Bool){
         UIView.animateWithDuration(0.8, delay: 0, options: .CurveEaseInOut, animations: {
             self.containerView.alpha = hide ? 0 : 1
@@ -93,11 +80,40 @@ class ParentViewController: UIViewController {
         }
     }
     
+    func toggleBottomComponents(){
+        let isResultPage = currentPageNumber == AppConstant.totalPageViewCount - 1
+        let bottomHeight = bottomComponentView.bounds.height
+        let bottomMargin = view.bounds.width / 7 / 2
+        
+        UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .BeginFromCurrentState, animations: {
+            self.bottomComponentView.center.y += isResultPage ? bottomHeight : -bottomHeight
+            }, completion: nil)
+        UIView.animateWithDuration(0.6, delay: 0, options: .CurveEaseInOut, animations: {
+            self.containerView.frame.size.height += ( isResultPage ? 1 : -1 ) * ( bottomHeight - bottomMargin )
+            }, completion: nil)
+    }
+    
+    func toggleLogoutSubmitButton(){
+        let isResultPage = currentPageNumber == AppConstant.totalPageViewCount - 1
+        let scaleRatio:CGFloat = CGFloat(AppConstant.loginSubmitButtonScaleRatio)
+        
+        UIView.animateWithDuration(0.2,delay: 0,options: .CurveEaseInOut,animations: { _ in
+            self.logoutSubmitButton.transform = CGAffineTransformMakeScale(scaleRatio, scaleRatio)
+            }, completion: { _ in
+                self.logoutSubmitButton.selected = isResultPage
+        })
+        UIView.animateWithDuration(0.4, delay: 0.2, usingSpringWithDamping: 0.4, initialSpringVelocity: 0.6, options: .BeginFromCurrentState, animations: {
+            self.logoutSubmitButton.transform = CGAffineTransformMakeScale(1, 1)
+            }, completion: nil)
+        
+    }
+    
     @IBAction func decisionButtonPressed(sender: UIButton) {
         let pressedButtonTag = sender.tag
         let pressedButtonId = ButtonsIdentifier(rawValue: pressedButtonTag)
         EvaluationResult.results[currentPageNumber] = pressedButtonId
-        updataeButtonsStatesAndProgressBar()
+        updataeButtonsStates()
+        refreshProgressView()
     }
     
     
@@ -114,7 +130,7 @@ class ParentViewController: UIViewController {
         }
     }
     
-    func updataeButtonsStatesAndProgressBar(){
+    func updataeButtonsStates(){
         restoreAllButtonsToDefaultState()
         if currentPageNumber < AppConstant.tweetContentViewCount {
             if let buttonId = EvaluationResult.results[currentPageNumber]{
@@ -122,13 +138,85 @@ class ParentViewController: UIViewController {
                     pressedButton.deselect = false
             }
         }
-        
-        progressView.currentPageNumber = currentPageNumber
-        progressView.setNeedsDisplay()
-        pageNumberLabel.text = String(currentPageNumber + 1)
-        
     }
     
+    func updatePageNumberView(){
+        pageNumberLabel.text = String(currentPageNumber + 1)
+    }
+    
+    func refreshProgressView(){
+        progressView.setNeedsDisplay()
+    }
+    
+    private func logoutHandler(){
+        let alertController = UIAlertController(title: "Leave", message: "Do you want logout or restart test?", preferredStyle: .Alert)
+        let logoutAction = UIAlertAction(title: "Logout", style: .Destructive) { _ in
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
+            defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+        }
+        alertController.addAction(logoutAction)
+        
+        
+        
+        let restartAction = UIAlertAction(title: "Restart", style: .Default) { _ in
+            // todo restart
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alertController.addAction(cancelAction)
+        alertController.addAction(restartAction)
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    private func submitHandler(){
+        if isSubmitted == false {
+            let alertController = UIAlertController(title: "Submit", message: "Do you want submit?", preferredStyle: .Alert)
+            let submitAction = UIAlertAction(title: "Submit", style: .Default) { _ in
+                self.isSubmitted = true
+                let submittedImage = UIImage(named: "submitted")
+                self.logoutSubmitButton.setImage(submittedImage, forState: .Selected)
+            }
+            alertController.addAction(submitAction)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            presentViewController(alertController, animated: true, completion: nil)
+            
+        }
+        else {
+            let alertController = UIAlertController(title: "Can't submit again"
+                                                    , message: "You have submitted current test result. Do you want logout or restart test?"
+                                                    , preferredStyle: .Alert)
+            
+            let logoutAction = UIAlertAction(title: "Logout", style: .Destructive) { _ in
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
+                defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+            }
+            alertController.addAction(logoutAction)
+            
+            
+            
+            let restartAction = UIAlertAction(title: "Restart", style: .Default) { _ in
+               // todo restart
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            alertController.addAction(restartAction)
+            presentViewController(alertController, animated: true, completion: nil)
+        }
+    
+    }
+    
+    @IBAction func logoutSubmitButtonPressed() {
+        switch currentPageNumber {
+        case AppConstant.totalPageViewCount - 1:
+            submitHandler()
+        default:
+            logoutHandler()
+        }
+    }
 }
 
 extension UIButton {
