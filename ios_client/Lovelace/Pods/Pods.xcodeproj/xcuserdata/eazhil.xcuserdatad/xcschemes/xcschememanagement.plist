@@ -11,45 +11,52 @@
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>OAuthSwift.xcscheme</key>
+		<key>KILabel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>Pods-Lovelace.xcscheme</key>
+		<key>OAuthSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>Pods-LovelaceEvaluation.xcscheme</key>
+		<key>Pods-Lovelace.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>SWTableViewCell.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>6</integer>
-		</dict>
-		<key>SwiftyJSON.xcscheme</key>
+		<key>Pods-LovelaceEvaluation.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>SWTableViewCell.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3C67E7A44E50ACBBF0B76BD0BB15CB29</key>
+		<key>162B59B96FF1F5B6B21CF89AC9E41170</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -59,7 +66,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>533890E578AB7B50E5D60D3D97113E9B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>594E26F13E33AF7A4C6A2B14767A33D3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>71E2ED3E7CFE5B5156B569CA5C3F27A1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -69,12 +86,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A4FF48F25FAD4E9C2173E86D227C0633</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BFB60669020FA1BF6CE64B7B8258A764</key>
+		<key>7B0B574431823F0F209D4C558F1C9E07</key>
 		<dict>
 			<key>primary</key>
 			<true/>

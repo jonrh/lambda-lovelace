@@ -20,7 +20,8 @@ struct FeedVCStoryboard{
 }
 
 class FeedViewController: UIViewController {
-
+    
+    var isURLorHashtagSelected = false
     @IBOutlet weak var feedTableView: UITableView! {
         didSet{
             feedTableView.rowHeight = UITableViewAutomaticDimension
@@ -117,6 +118,7 @@ class FeedViewController: UIViewController {
 
 extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTableViewCellDelegate{
     
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) ->
         Int
     {
@@ -132,6 +134,23 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         tweetCell.weight = countList[indexPath.row]
         tweetCell.tweet = tweetList[indexPath.row]
         
+        // Attach a block to be called when the user taps a user handle
+        tweetCell.tweetText.userHandleLinkTapHandler = { label, handle, range in
+            print("User handle \(handle) tapped")
+            self.isURLorHashtagSelected = true
+        }
+        
+        // Attach a block to be called when the user taps a hashtag
+        tweetCell.tweetText.hashtagLinkTapHandler = { label, hashtag, range in
+            print("Hashtah \(hashtag) tapped")
+            self.isURLorHashtagSelected = true
+        }
+        
+        // Attach a block to be called when the user taps a URL
+        tweetCell.tweetText.urlLinkTapHandler = { label, url, range in
+            print("URL \(url) tapped")
+            self.isURLorHashtagSelected = true
+        }
         
         if !isLoadingNewPage {
             let numberOfItemLeft = tweetList.count - indexPath.row
@@ -156,8 +175,12 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let tweetCell = tableView.cellForRowAtIndexPath(indexPath)
-        performSegueWithIdentifier("tweetDetailSegue", sender: tweetCell)
+        if (!isURLorHashtagSelected)
+        {
+            let tweetCell = tableView.cellForRowAtIndexPath(indexPath)
+            performSegueWithIdentifier("tweetDetailSegue", sender: tweetCell)
+        }
+        isURLorHashtagSelected = false
     }
     
     func getRightSwipeButtonsToCell()-> NSMutableArray{

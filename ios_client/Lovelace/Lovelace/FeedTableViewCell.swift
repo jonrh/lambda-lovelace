@@ -8,6 +8,7 @@
 
 import UIKit
 import SWTableViewCell
+import KILabel
 
 class FeedTableViewCell: SWTableViewCell {
     
@@ -36,7 +37,7 @@ class FeedTableViewCell: SWTableViewCell {
     @IBOutlet weak var tweetUserDisplayName: UILabel!
     
     
-    @IBOutlet weak var tweetText: UILabel!
+    @IBOutlet weak var tweetText: KILabel!
     
     @IBOutlet weak var weightBar: UIView!
 
