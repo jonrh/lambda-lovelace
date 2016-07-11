@@ -1,5 +1,5 @@
 FROM python:2-onbuild
 
-EXPOSE 5000
+EXPOSE 80
 
 CMD ["python", "Lovelace.py"]
