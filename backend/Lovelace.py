@@ -1,5 +1,5 @@
 #!/usr/bin/python
- # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from flask import Flask, redirect, request, Response, jsonify
 from flask_restful import Resource, Api
@@ -111,13 +111,15 @@ class RecommendTweets(Resource):
         home_tweets = [tweet._json for tweet in api.home_timeline(count=50,page=page)]
         
         #fetch tweets of user's own time line
+        #TO-DO: Can this be removed now? It is no longer used when initialising the Recommmender Object.
         users_tweets = [tweet._json for tweet in tweepy.Cursor(api.user_timeline, count=50).items(50)]
         
         #filter out the tweets that the user tweeted from the home timeline
+        #TO-DO: Can this be removed now? It is no longer used when initialising the Recommmender Object.
         followed_tweets = [tweet for tweet in home_tweets if tweet['user']['screen_name'] != user._json['screen_name']]
         
         #give the user timeline and home timeline to the recommender system to make recommendation
-        recommender_object = Recommender(followed_tweets, users_tweets)
+        recommender_object = Recommender(consumer_key, consumer_secret, access_token, access_token_secret) 
         recommended_tweets = recommender_object.generate(3, None, None)
         
         return jsonify(recommended_tweets)
@@ -135,9 +137,6 @@ class IOSAppRedirectHelper(Resource):
         return redirect(location)
 
 
-@app.route("/")
-def hello():
-    return "Hello λ Lovelace!"
 
 # test
 # ios twitter authentication callback url redirect helper
@@ -150,4 +149,4 @@ api.add_resource(RecommendTweets, '/recommend')
 
 
 if __name__ == '__main__':
-    app.run(host = "0.0.0.0", port = 5000)
+    app.run()
