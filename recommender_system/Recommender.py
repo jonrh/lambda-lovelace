@@ -1,7 +1,6 @@
 from sklearn.feature_extraction.text import CountVectorizer
 from Tweetbox import Tweetbox
 from collections import Counter
-#from Streaming import Streaming
 import tweepy
 import time
 

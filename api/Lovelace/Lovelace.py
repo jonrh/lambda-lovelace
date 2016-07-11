@@ -108,13 +108,15 @@ class RecommendTweets(Resource):
         home_tweets = [tweet._json for tweet in api.home_timeline(count=50,page=page)]
         
         #fetch tweets of user's own time line
+        #TO-DO: Can this be removed now? It is no longer used when initialising the Recommmender Object.
         users_tweets = [tweet._json for tweet in tweepy.Cursor(api.user_timeline, count=50).items(50)]
         
         #filter out the tweets that the user tweeted from the home timeline
+        #TO-DO: Can this be removed now? It is no longer used when initialising the Recommmender Object.
         followed_tweets = [tweet for tweet in home_tweets if tweet['user']['screen_name'] != user._json['screen_name']]
         
         #give the user timeline and home timeline to the recommender system to make recommendation
-        recommender_object = Recommender(followed_tweets, users_tweets)
+        recommender_object = Recommender(consumer_key, consumer_secret, access_token, access_token_secret) 
         recommended_tweets = recommender_object.generate(3, None, None)
         
         return jsonify(recommended_tweets)
