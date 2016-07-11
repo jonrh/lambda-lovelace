@@ -1,0 +1,10 @@
+machine:
+  services:
+    - docker
+
+general:
+  build_dir: backend
+
+test:
+  override:
+    - nosetests unittest.py
