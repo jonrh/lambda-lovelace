@@ -147,6 +147,5 @@ api.add_resource(HomeTimeline, '/home_timeline')
 api.add_resource(Tweets, '/tweets')
 api.add_resource(RecommendTweets, '/recommend')
 
-
 if __name__ == '__main__':
-    app.run()
+    app.run(host = "0.0.0.0", port = 80)
