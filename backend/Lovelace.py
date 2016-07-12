@@ -139,7 +139,7 @@ class IOSAppRedirectHelper(Resource):
 
 @app.route("/")
 def hello():
-    return "Hello λ Lovelace!!"
+    return "Hello λ Lovelace!"
 
 # test
 # ios twitter authentication callback url redirect helper
