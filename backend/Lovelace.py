@@ -140,7 +140,7 @@ class IOSAppRedirectHelper(Resource):
 
 @app.route("/")
 def hello():
-    return "Hello λ Lovelace! Distelli build #"+ os.getenv("LLVERSION", "N/A")
+    return "Hello λ Lovelace!  Distelli build #"+ os.getenv("LLVERSION", "N/A")
 
 # test
 # ios twitter authentication callback url redirect helper
