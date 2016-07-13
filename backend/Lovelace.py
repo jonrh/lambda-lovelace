@@ -8,6 +8,7 @@ import json
 from sklearn.feature_extraction.text import CountVectorizer
 from collections import Counter
 from recommender import Recommender
+import os
 
 app = Flask(__name__)
 api = Api(app)
@@ -139,7 +140,7 @@ class IOSAppRedirectHelper(Resource):
 
 @app.route("/")
 def hello():
-    return "Hello λ Lovelace!!"
+    return "Hello λ Lovelace! Distelli build #"+ os.getenv("LLVERSION", "N/A")
 
 # test
 # ios twitter authentication callback url redirect helper
