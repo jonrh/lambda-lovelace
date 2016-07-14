@@ -50,7 +50,7 @@ class FeedViewController: UIViewController {
             }
         }
     }
-       
+    
     private func initRefreshControl(){
         feedTableViewRefreshControl.addTarget(self, action:#selector(refreshFeedTableView) ,
                                               forControlEvents: .ValueChanged)
@@ -145,6 +145,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         tweetCell.tweetText.urlLinkTapHandler = { label, url, range in
             print("URL \(url) tapped")
             self.isURLorHashtagSelected = true
+            self.prepareToURLWebViewSegue(url)
         }
         
         if !isLoadingNewPage {
@@ -161,13 +162,24 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         return tweetCell
     }
     
+    func prepareToURLWebViewSegue(url:String)
+    {
+        performSegueWithIdentifier("webViewSegue", sender: url)
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if let tweet = sender as? FeedTableViewCell
         {
             let tweetDetailTVC = segue.destinationViewController as? TweetDetailVC
             tweetDetailTVC?.tweetObj = tweet.tweet
         }
+        else if let url = sender as? String
+        {
+            let webViewVC = segue.destinationViewController as? URLWebViewController
+            webViewVC?.urlString = url
+        }
     }
+
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (!isURLorHashtagSelected)
