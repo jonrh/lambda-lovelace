@@ -42,11 +42,6 @@ class FeedViewController: UIViewController {
     
         APIManager.apiDataRefreshDelegate = self
         initRefreshControl()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
         if !APIManager.isRequestingOAuthToken{
             if APIManager.LoadLocalOAuthToken() {
                 refreshFeedTableView()
@@ -55,7 +50,7 @@ class FeedViewController: UIViewController {
             }
         }
     }
-    
+       
     private func initRefreshControl(){
         feedTableViewRefreshControl.addTarget(self, action:#selector(refreshFeedTableView) ,
                                               forControlEvents: .ValueChanged)
