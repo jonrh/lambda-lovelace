@@ -121,7 +121,7 @@ class RecommendTweets(Resource):
         
         #give the user timeline and home timeline to the recommender system to make recommendation
         recommender_object = Recommender(consumer_key, consumer_secret, access_token, access_token_secret) 
-        recommended_tweets = recommender_object.generate(3, None, None)
+        recommended_tweets = recommender_object.generate(3, None)
         
         return jsonify(recommended_tweets)
 

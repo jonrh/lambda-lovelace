@@ -35,7 +35,7 @@ class Recommender:
     #This method searches the api (Using tweepy)and uses the term frequency doc to find three 
     #new tweets per term from unfollowed accounts 
     def get_unfollowed_tweets(self, term):
-        tweets = self.api.search(q=term, count=3)
+        tweets = self.api.search(q=term, count=3, lang=["english"])
         return tweets
 
     #This method sets the "own_tweets" attribute for the recommender object. These are tweets
