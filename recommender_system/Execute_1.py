@@ -1,6 +1,6 @@
 from Recommender import Recommender 
 
-number_of_recommendations = 70 
+number_of_recommendations = 15
 tweet_two = 'tweet one two' 
 tweet_one = 'tweet one two three' 
 tweet_four = 'tweet' 
@@ -16,5 +16,6 @@ print(" *** ")
 print(" Recommended set: ")
 print(" *** ")
 print(" *** ")
-for tweet in recommended_tweets:
-    print(tweet.text.encode('utf-8'))
+print(dir(recommended_tweets[0]))#.__class__.__name__)
+#for tweet in recommended_tweets:
+#    print(tweet)#.text.encode('utf-8'))

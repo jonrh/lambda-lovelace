@@ -29,7 +29,7 @@ class Recommender:
         self.set_followed_tweets()#Grab the users home timeline and set it as an attribute
         self.get_term_frequency_weightings(None, None)
 
-    #This method sets the "followed_tweets" attrribute for the recommender object. Followed tweets are ones that we make recommendations upon.
+    #This method sets the "followed_tweets" attribute for the recommender object. Followed tweets are ones that we make recommendations upon.
     def set_followed_tweets(self):
         self.followed_tweets = self.api.home_timeline()
 
