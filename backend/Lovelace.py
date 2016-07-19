@@ -144,7 +144,7 @@ class IOSAppRedirectHelper(Resource):
 def hello():
     buildnumber = os.getenv("JENKINS_BUILDNUMBER", "N/A")
     githash = os.getenv("GITHASH", "N/A")
-    return "Hello λ Lovelace! Jenkins build number: "+ buildnumber +", Git hash: "+ githash
+    return "<p>Hello λ Lovelace!</p><p>Jenkins build number: "+ buildnumber +"<br /> Git hash: "+ githash +"</p>"
 
 # test
 # ios twitter authentication callback url redirect helper
