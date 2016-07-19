@@ -141,7 +141,9 @@ class IOSAppRedirectHelper(Resource):
 
 @app.route("/")
 def hello():
-    return "Hello λ Lovelace!! Distelli build #"+ os.getenv("LLVERSION", "N/A")
+    buildnumber = os.getenv("JENKINS_BUILDNUMBER", "N/A")
+    githash = os.getenv("GITHASH", "N/A")
+    return "Hello λ Lovelace! Jenkins build number: "+ buildnumber +", Git hash: "+ githash
 
 # test
 # ios twitter authentication callback url redirect helper
