@@ -28,8 +28,10 @@ def init_rollbar():
     rollbar.init(
         # access token for the demo app: https://rollbar.com/demo
         "9a41d7e8fdbb49cead0cae434765a927",
-        # environment name
-        'flaskbackend',
+        # environment name, production for now, maybe we want to change this 
+        # to a configurable environment variable later, e.g. environment for 
+        # each branch
+        'production', 
         # server root directory, makes tracebacks prettier
         root=os.path.dirname(os.path.realpath(__file__)),
         # flask already sets up logging
