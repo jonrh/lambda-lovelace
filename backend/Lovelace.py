@@ -16,11 +16,27 @@ import rollbar.contrib.flask
 app = Flask(__name__)
 api = Api(app)
 
-
 # =============================================================================
-# Rollbar hello world, to see if everything is working correctly
-rollbar.init('9a41d7e8fdbb49cead0cae434765a927')
-rollbar.report_message('Rollbar is configured correctly')
+# Setup for Rollbar, our error logging service. This should be all that is 
+# required to catch all errors and exceptions that ocurr in our program. To 
+# view them see https://rollbar.com/lambda-lovelace/Lambda-Lovelace-Backend/
+# The team members should have an account.
+# =============================================================================
+@app.before_first_request
+def init_rollbar():
+    """init rollbar module"""
+    rollbar.init(
+        # access token for the demo app: https://rollbar.com/demo
+        "9a41d7e8fdbb49cead0cae434765a927",
+        # environment name
+        'flaskbackend',
+        # server root directory, makes tracebacks prettier
+        root=os.path.dirname(os.path.realpath(__file__)),
+        # flask already sets up logging
+        allow_logging_basic_config=False)
+
+    # send exceptions from `app` to rollbar, using flask's signal system.
+    got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 # =============================================================================
 
 consumer_key    = "BbTvs8T7CZguiloHMIVeRdKUO"
