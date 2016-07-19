@@ -139,7 +139,7 @@ class IOSAppRedirectHelper(Resource):
         return redirect(location)
 
 
-# A test endpoint so we know which version is currently running
+# A test endpoint so we know which version is currently running 
 @app.route("/")
 def hello():
     buildnumber = os.getenv("JENKINS_BUILDNUMBER", "N/A")
