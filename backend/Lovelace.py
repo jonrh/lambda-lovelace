@@ -166,6 +166,15 @@ class IOSAppRedirectHelper(Resource):
         return redirect(location)
 
 
+# An endpoint to test if errors are correctly being transmitted to Rollbar
+@app.route('/error')
+def hello():
+    print "in hello"
+    x = None
+    x[5]
+    return "Hello World!"
+
+
 # A test endpoint so we know which version is currently running
 @app.route("/")
 def hello():
