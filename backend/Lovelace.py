@@ -2,17 +2,26 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, redirect, request, Response, jsonify
+from flask import got_request_exception # For Rollbar logging
 from flask_restful import Resource, Api
 import tweepy
 import json
 from sklearn.feature_extraction.text import CountVectorizer
 from collections import Counter
-#from recommender import Recommender
 from RecommenderTextual import RecommenderTextual
-import os
+import os # For environment variables and Rollbar logging
+import rollbar
+import rollbar.contrib.flask
 
 app = Flask(__name__)
 api = Api(app)
+
+
+# =============================================================================
+# Rollbar hello world, to see if everything is working correctly
+rollbar.init('9a41d7e8fdbb49cead0cae434765a927')
+rollbar.report_message('Rollbar is configured correctly')
+# =============================================================================
 
 consumer_key    = "BbTvs8T7CZguiloHMIVeRdKUO"
 consumer_secret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
