@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from sklearn.feature_extraction.text import CountVectorizer
-from Tweetbox import Tweetbox
 from collections import Counter
 import tweepy
 import time
