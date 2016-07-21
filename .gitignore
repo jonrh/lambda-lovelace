@@ -1,6 +1,15 @@
-#
+# =============================================================================
+# Our own
+# =============================================================================
+
+# Ignore IntelliJ IDE settings folder. For example for PyCharm
+.idea
+
+
+# =============================================================================
 # OSX: https://github.com/github/gitignore/blob/master/Global/OSX.gitignore
-#
+# =============================================================================
+
 *.DS_Store
 .AppleDouble
 .LSOverride
@@ -29,9 +38,10 @@ Temporary Items
 .apdisk
 
 
-#
+# =============================================================================
 # PYTHON: https://github.com/github/gitignore/blob/master/Python.gitignore
-# 
+# =============================================================================
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -123,9 +133,10 @@ ENV/
 .ropeproject
 Status API Training Shop Blog About
 
-
+# =============================================================================
 # Xcode
-#
+# =============================================================================
+
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
 
 ## Build generated
