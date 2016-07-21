@@ -40,6 +40,8 @@
 		9F73BE781D071127003050BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9FA72B0C1D09A4B500863058 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 		9FB660EF1D17796B008F5AB6 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		9FB9757B1D412EEA00EF7E84 /* Lovelace-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lovelace-Bridging-Header.h"; sourceTree = "<group>"; };
+		9FB9757F1D41313100EF7E84 /* Rollbar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rollbar.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/Lovelace-fjzrjfhcotsycbhktdniavthyvso/Build/Products/Debug-iphoneos/Rollbar/Rollbar.framework"; sourceTree = "<group>"; };
 		9FCE428A1D178B020052B5E1 /* LaunchScreen.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = LaunchScreen.xcassets; sourceTree = "<group>"; };
 		E271D71631D94BE616F75561 /* Pods_Lovelace.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Lovelace.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -86,6 +88,7 @@
 				9F73BE751D071127003050BB /* LaunchScreen.storyboard */,
 				9F73BE6C1D071127003050BB /* AppDelegate.swift */,
 				9F73BE781D071127003050BB /* Info.plist */,
+				9FB9757E1D412F0D00EF7E84 /* Bridging Header */,
 			);
 			path = Lovelace;
 			sourceTree = "<group>";
@@ -135,9 +138,18 @@
 			name = Login;
 			sourceTree = "<group>";
 		};
+		9FB9757E1D412F0D00EF7E84 /* Bridging Header */ = {
+			isa = PBXGroup;
+			children = (
+				9FB9757B1D412EEA00EF7E84 /* Lovelace-Bridging-Header.h */,
+			);
+			name = "Bridging Header";
+			sourceTree = "<group>";
+		};
 		BA1A5FE5DF906A0E5CDE2714 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9FB9757F1D41313100EF7E84 /* Rollbar.framework */,
 				E271D71631D94BE616F75561 /* Pods_Lovelace.framework */,
 			);
 			name = Frameworks;
@@ -187,7 +199,7 @@
 				TargetAttributes = {
 					9F73BE681D071127003050BB = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 9ZM4Q4G7NM;
+						DevelopmentTeam = 52XLC98QNC;
 					};
 				};
 			};
@@ -399,6 +411,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Lovelace/Info.plist;
@@ -407,6 +420,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.Lovelace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Lovelace/Lovelace-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -416,6 +431,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Lovelace/Info.plist;
@@ -424,6 +440,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.Lovelace;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "Lovelace/Lovelace-Bridging-Header.h";
 			};
 			name = Release;
 		};

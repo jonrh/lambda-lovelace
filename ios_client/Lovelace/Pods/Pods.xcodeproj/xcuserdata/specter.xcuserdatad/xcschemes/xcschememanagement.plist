@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>KILabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>OAuthSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -24,6 +29,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Rollbar.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SWTableViewCell.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,12 +47,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>3BBFB3E73F5DBD117CADC5D115A67E1E</key>
+		<key>162B59B96FF1F5B6B21CF89AC9E41170</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3C67E7A44E50ACBBF0B76BD0BB15CB29</key>
+		<key>38CA26599812F6126FBD15AB8AA6D99A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>450DB960122522A2735C9FE99DE3D61A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -47,7 +67,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>594E26F13E33AF7A4C6A2B14767A33D3</key>
+		<key>720C2235F147E0D781860B50BAD35C1B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -57,17 +77,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A4FF48F25FAD4E9C2173E86D227C0633</key>
+		<key>9C5189D42C749B739ED17AF80B0AFFBA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BFB60669020FA1BF6CE64B7B8258A764</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>CB8ADB5F6C2B3EC792B09EE78E569829</key>
+		<key>D2F195EB5D1AC21487E0FB8609423800</key>
 		<dict>
 			<key>primary</key>
 			<true/>

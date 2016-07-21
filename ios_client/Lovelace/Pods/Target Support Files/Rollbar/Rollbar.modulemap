@@ -1,0 +1,6 @@
+framework module Rollbar {
+  umbrella header "Rollbar-umbrella.h"
+
+  export *
+  module * { export * }
+}
