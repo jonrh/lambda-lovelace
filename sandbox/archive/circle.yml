@@ -1,0 +1,12 @@
+# CircleCI configuration file. No longer in use, we went with Jenkins instead.
+# Stored here in the archive just in case.
+machine:
+  services:
+    - docker
+
+general:
+  build_dir: backend
+
+test:
+  override:
+    - nosetests tests.py
