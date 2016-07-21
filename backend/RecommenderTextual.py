@@ -47,7 +47,7 @@ class RecommenderTextual:
         my_first_x_tweets = self.own_tweets[0:amount_of_tweets_to_gather]
         overall_list = []
         for sublist in my_first_x_tweets: 
-            for item in sublist.text.split():
+            for item in sublist['text'].split():
                 if item not in stop_words:
                     transformed_item = item.lower().translate(string.punctuation)
                     overall_list.append(transformed_item)# item.lower())
@@ -93,7 +93,7 @@ class RecommenderTextual:
         list_of_owners_tweets = []
         unfollowed_tweets = []
         for tweet in self.own_tweets:
-            list_of_owners_tweets.append(tweet.text.encode('utf-8'))
+            list_of_owners_tweets.append(tweet['text'].encode('utf-8'))
 
         self.vectorizer.fit_transform(list_of_owners_tweets)
         words = self.own_tweets #The users own tweets
@@ -106,7 +106,7 @@ class RecommenderTextual:
 
     def count_bag(self, tweet):
         count = 0
-        sanitised_tweet_text = tweet.text
+        sanitised_tweet_text = tweet['text']
         
         #bug
         #Somehow, the following tweet is being counted as six (should be three)
