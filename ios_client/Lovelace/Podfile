@@ -12,6 +12,7 @@ target 'Lovelace' do
 	pod 'OAuthSwift'
 	pod 'SWTableViewCell', '~>0.3.7'
 	pod 'KILabel', '1.0.1'
+  pod "Rollbar", "~> 0.2.0"
 end
 
 project 'LovelaceEvaluation/LovelaceEvaluation'
@@ -20,4 +21,5 @@ target 'LovelaceEvaluation' do
 	pod 'Alamofire'
 	pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 	pod 'OAuthSwift'
+  pod "Rollbar", "~> 0.2.0"
 end

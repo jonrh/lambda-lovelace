@@ -10,6 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SWTableViewCell
+import Rollbar
 
 struct FeedTableViewConstants {
     static let numberOfItemsLeftTriggerLoadNewPage = 5
@@ -92,6 +93,7 @@ class FeedViewController: UIViewController {
     }
     
     @objc private func refreshFeedTableView(){
+        Rollbar.infoWithMessage("user pull to refresh tweets")
         tweetList.removeAll()
         countList.removeAll()
         feedPage = 1

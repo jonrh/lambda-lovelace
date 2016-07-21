@@ -8,6 +8,8 @@
 
 import UIKit
 import OAuthSwift
+import Rollbar
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let config: RollbarConfiguration = RollbarConfiguration()
+        config.environment = "production"
+        
+        Rollbar.initWithAccessToken("a35a6bf7a9ed47c69091d6c646077f29", configuration: config)
+        
         return true
     }
 

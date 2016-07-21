@@ -2,6 +2,7 @@ PODS:
   - Alamofire (3.4.0)
   - KILabel (1.0.1)
   - OAuthSwift (0.5.2)
+  - Rollbar (0.2.0)
   - SwiftyJSON (2.3.2)
   - SWTableViewCell (0.3.7)
 
@@ -9,6 +10,7 @@ DEPENDENCIES:
   - Alamofire
   - KILabel (= 1.0.1)
   - OAuthSwift
+  - Rollbar (~> 0.2.0)
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
   - SWTableViewCell (~> 0.3.7)
 
@@ -25,9 +27,10 @@ SPEC CHECKSUMS:
   Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
   KILabel: 4797807cdc0b4992dad8bf91175ddc973c3b569b
   OAuthSwift: 1ef042d4362e755e24a78f158d817245641a5d24
+  Rollbar: 7f9f6faab9138cbb1b152f0a500e68f0469554ef
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
 
-PODFILE CHECKSUM: 026cfb58d7d7d88efbd4266f3dd7bf4fd1604610
+PODFILE CHECKSUM: 6cdca87e07c72480a4727581e59baf867304be28
 
 COCOAPODS: 1.0.1
