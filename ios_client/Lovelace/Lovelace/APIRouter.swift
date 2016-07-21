@@ -11,7 +11,7 @@ import Alamofire
 
 enum Router: URLRequestConvertible {
     
-    static let baseURLString = "https://lovelance.herokuapp.com"
+    static let baseURLString = "http://csi6220-1-vm1.ucd.ie"
     
     case Tweets(Int)
     

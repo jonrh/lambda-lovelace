@@ -18,7 +18,7 @@ struct APIConstents{
     static let requestTokenUrl = "https://api.twitter.com/oauth/request_token"
     static let authorizeUrl = "https://api.twitter.com/oauth/authenticate"
     static let accessTokenUrl = "https://api.twitter.com/oauth/access_token"
-    static let callbackUrl = NSURL(string:"https://lovelance.herokuapp.com/oauth-callback")!
+    static let callbackUrl = NSURL(string:"http://csi6220-1-vm1.ucd.ie/oauth-callback")!
 }
 
 struct NSUserDefaultKeys{
