@@ -4,36 +4,62 @@ from collections import Counter
 import tweepy
 import time
 import string
-
+import datetime
 
 class RecommenderTextual:
     
     #TO-DO:
     #-set language to users own twitter language
     #-currently misses end hashtags
-    #-Does not search for hashtags, just "word-searches"
     #-does not add hashtags to term-frequency document
     #-does not distinguish Java from JavaScript (Could use a bigram list for this)
-    
-    def __init__(self, users_own_tweets, users_followed_tweets):#, ckey, csecret, atoken, atokensecret):
+
+    #BUGS: 
+    #-Hashtags are worth "double" than what they appear
+
+    #TODAY:
+    #-Tweet.entities.hashtags - iterate when adding to term frequency document.
+    #-Figure out if above (entities) appears in tweet.text too.
+    #-Blog post!
+    #-does not add hashtags to term-frequency document
+    #-Remove punctuation (!, etc) from term frequency document
+    #-User Evaluation report discussion with Jon
+    #-Decrease tweet weight with age
+    #-Add functionality for extra arguments in Recommender System (Age of tweet, etc).
+
+    #DONE:
+    #-Git Kraken pull blog project posts
+
+    def __init__(self, users_own_tweets, users_followed_tweets):
+        ######################################################
+        ###get_term_frequency_weightings function variables###
+        ######################################################
+        #Could also be called the "number_of_user_timeline_tweets" parameter, + 1
+        #The extra "1" is because python is not inclusive of the last digit in the range that 
+        #this variable is used for later on.
+        self.amount_of_tweets_to_gather = 101
+        #We want the top 5 most occurring terms
+        self.top_x_terms = 50
+        #On a scale up to X.0, what is the scale that the term frequency document should follow
+        self.numeric_scale = 10
+        #How much are hashtags worth as opposed to terms (worth 1, so 2 means that a hashtag is 
+        #worth double the worth of a term)
+        #This is currently bugged however, see bugs section above.
+        self.hash_tag_multiplier = 2       
+
+        ###################
+        #Method calls, etc#
+        ###################
         self.vectorizer = CountVectorizer()
         self.own_tweets = users_own_tweets
         self.followed_tweets = users_followed_tweets
-        self.get_term_frequency_weightings(None, None)  
+        self.get_term_frequency_weightings(None, None)
+        #print(self.termfreq_doc)
+       
 
     #This method currently gets the top thirty terms that a users tweets with
     def get_term_frequency_weightings(self, number_of_terms_in_document, number_of_user_timeline_tweets):
         weightings = {}#Dictionary of terms (keys) and their weighting (value)
-        top_amount_of_terms = 30# or just the "number_of_terms_in_document" parameter
-        amount_of_tweets_to_gather = 101#Or just the "number_of_user_timeline_tweets" parameter, + 1
-                                        #The extra "1" is because python is not inclusive of the last digit in the range that 
-                                        #this variable is used for later on.
-        
-        #On a scale up to 10.0
-        numeric_scale = 10
-
-        #We want the top 5 most occurring terms
-        top_x_terms = 5
 
         #http://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string-in-python
         exclude = set(string.punctuation)
@@ -44,26 +70,39 @@ class RecommenderTextual:
         stop_words.append('https')
 
         #Filtering section
-        my_first_x_tweets = self.own_tweets[0:amount_of_tweets_to_gather]
+        my_first_x_tweets = self.own_tweets[0: self.amount_of_tweets_to_gather]
         overall_list = []
-        for sublist in my_first_x_tweets: 
-            for item in sublist['text'].split():
+        for sublist in my_first_x_tweets:#Iterating each tweet
+            for item in sublist['text'].split()
+            #for item in sublist.text.split():#Iterating each word of a tweet
                 if item not in stop_words:
                     transformed_item = item.lower().translate(string.punctuation)
                     overall_list.append(transformed_item)# item.lower())
-        
+            
+            for hashtag in sublist['entities']['hashtags']:
+            #for hashtag in sublist.entities['hashtags']:
+                overall_list.append(hashtag['text'].lower().translate(string.punctuation))
+
+
         total_count = len(overall_list)
         frequency_doc = Counter(overall_list)
         term_frequncy_list = {}
 
         for term in frequency_doc.keys():
-            term_weight = (float(frequency_doc.get(term))/total_count) * numeric_scale
-            term_frequncy_list[term] = term_weight
+            hashtag = str('#{}'.format(term))
+            hashtag_value = float(frequency_doc.get(hashtag) * self.hash_tag_multiplier) if frequency_doc.get(hashtag) is not None else 0.0
+            term_value = float(frequency_doc.get(str(term)))
+            #print(hashtag_value)
+            term_weight = ((hashtag_value + term_value)/total_count)  * self.numeric_scale
+            term_frequncy_list[str(term)] = term_weight
 
         self.termfreq_doc = term_frequncy_list
         top_terms = []
-        most_common_raw = frequency_doc.most_common(top_x_terms) 
-        for x in range(0, top_x_terms):
+        last_index = self.top_x_terms if len(frequency_doc) > self.top_x_terms else len(frequency_doc)
+        most_common_raw = frequency_doc.most_common(last_index) 
+        print(most_common_raw)
+        for x in range(0, last_index):
+            print(x)
             top_terms.append(most_common_raw[x][0])
 
         remove_these_terms = []
@@ -75,6 +114,7 @@ class RecommenderTextual:
         for removal in remove_these_terms:
             self.termfreq_doc.pop(removal, None)
 
+        print(weightings)
         return weightings
 
     def get_tweet_term_weighting(self, tweet_text, term):
@@ -93,6 +133,7 @@ class RecommenderTextual:
         list_of_owners_tweets = []
         unfollowed_tweets = []
         for tweet in self.own_tweets:
+            #list_of_owners_tweets.append(tweet.text.encode('utf-8'))
             list_of_owners_tweets.append(tweet['text'].encode('utf-8'))
 
         self.vectorizer.fit_transform(list_of_owners_tweets)
@@ -104,9 +145,19 @@ class RecommenderTextual:
         
         return {"recommended_tweets":results, "counts":sorted(counts, reverse=True)}
 
+    def get_tweet_age_score(self, tweet):
+        tweet_age = tweet.created_at
+        #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
+        age = time.time() - (tweet_age - datetime.datetime(1970,1,1)).total_seconds()
+        week_seconds = 604800 #604800 seconds in a week
+        rank = (age / week_seconds) * self.numeric_scale
+        return age
+
     def count_bag(self, tweet):
         count = 0
         sanitised_tweet_text = tweet['text']
+        #sanitised_tweet_text = tweet.text
+        #This seems to vary depending on where it's run for some reason.
         
         #bug
         #Somehow, the following tweet is being counted as six (should be three)
@@ -119,5 +170,8 @@ class RecommenderTextual:
             if word.lower() in self.termfreq_doc.keys():
                 count += 1 
                 count += self.get_tweet_term_weighting(sanitised_tweet_text, self.termfreq_doc.get(word))
+                count -= self.get_tweet_age_score(tweet)
+                if count < 0:
+                    count = 0
 
         return count
