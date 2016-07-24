@@ -73,7 +73,7 @@ class RecommenderTextual:
         my_first_x_tweets = self.own_tweets[0: self.amount_of_tweets_to_gather]
         overall_list = []
         for sublist in my_first_x_tweets:#Iterating each tweet
-            for item in sublist['text'].split()
+            for item in sublist['text'].split():
             #for item in sublist.text.split():#Iterating each word of a tweet
                 if item not in stop_words:
                     transformed_item = item.lower().translate(string.punctuation)
