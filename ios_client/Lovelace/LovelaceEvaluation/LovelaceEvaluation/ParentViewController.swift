@@ -232,18 +232,37 @@ class ParentViewController: UIViewController {
     }
     
     private func postResultDataToServer(){
-        var resultParams = [String:String]()
+        var resultParams = [String: AnyObject]()
         
+        let currentTime = Int64(NSDate().timeIntervalSince1970 * 1000)
+        resultParams["time"] = currentTime.description
+        
+        
+        
+        var resultList = Array<[String:String]>()
         for (index, result) in EvaluationResult.results.enumerate(){
+            var singleTweetResult = [String : String]()
+            let tweetId = TestTweetsPool.mixedTweets[index].id
+            singleTweetResult["tweetId"] = tweetId
+            
+            let userScreenName = TestTweetsPool.mixedTweets[index].userDisplayName
+            singleTweetResult["userScreenName"] = userScreenName
+            
+            let userOption:String
             switch result! {
             case .like:
-                resultParams[String(index)] = "like"
+                userOption = "like"
             case .neither:
-                resultParams[String(index)] = "neither"
+                userOption = "neither"
             case .dislike:
-                resultParams[String(index)] = "dislike"
+                userOption = "dislike"
             }
+            singleTweetResult["userOption"] = userOption
+            
+            resultList.append(singleTweetResult)
         }
+        
+        resultParams["result"] = resultList
         
         APIManager.postEvaluationResult(resultParams)
     }

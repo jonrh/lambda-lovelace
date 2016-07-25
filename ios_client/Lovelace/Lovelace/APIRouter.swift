@@ -12,13 +12,17 @@ import Alamofire
 enum Router: URLRequestConvertible {
     
     static let baseURLString = "http://csi6220-1-vm1.ucd.ie"
+//    static let baseURLString = "http://127.0.0.1:5000"
     
-    case Tweets(Int)
-    case Result([String:String])
+    case RecommendTweets(Int)
+    case OriginalTweets(Int)
+    case Result([String:AnyObject])
     
     var method: Alamofire.Method {
         switch self {
-        case .Tweets:
+        case .RecommendTweets:
+            return .GET
+        case .OriginalTweets:
             return .GET
         case .Result:
             return .PUT
@@ -27,9 +31,10 @@ enum Router: URLRequestConvertible {
     
     var path: String {
         switch  self {
-        case .Tweets:
-//            return ("/tweets")
+        case .RecommendTweets:
             return ("/recommend")
+        case .OriginalTweets:
+            return ("/original")
         case .Result:
             return ("/evaluationResult")
         }
@@ -42,11 +47,13 @@ enum Router: URLRequestConvertible {
         
         if APIManager.hasOAuthToken {
             let oauthToken = APIManager.getOAuthTokenAndTokenSecret()
-            var parameters = ["oauth_token" : oauthToken.oauth_token,
+            var parameters:[String: AnyObject] = ["oauth_token" : oauthToken.oauth_token,
                               "oauth_token_secret" : oauthToken.oauth_token_secret]
             var encodeing = Alamofire.ParameterEncoding.URL
             switch self {
-            case .Tweets(let page):
+            case .RecommendTweets(let page):
+                parameters["page"] = String(page)
+            case .OriginalTweets(let page):
                 parameters["page"] = String(page)
             case .Result(let resultParameters) :
                 parameters = resultParameters

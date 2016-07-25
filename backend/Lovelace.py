@@ -126,6 +126,19 @@ class RecommendTweets(Resource):
         # return "Hello world!"
         return jsonify(recommended_tweets)
 
+# The original tweet part
+class OriginalTweets(Resource):
+    def get(self):
+        access_token = request.args.get('oauth_token')
+        access_token_secret = request.args.get('oauth_token_secret')
+        page = request.args.get('page')
+        auth.set_access_token(access_token, access_token_secret)
+        api = tweepy.API(auth)
+
+        home_tweets = [tweet._json for tweet in api.home_timeline(count=50, page=page)]
+
+        return jsonify({"original_tweets" : home_tweets})
+
 
 class IOSAppRedirectHelper(Resource):
     def get(self):
@@ -140,9 +153,17 @@ class IOSAppRedirectHelper(Resource):
 
 class EvaluationResult(Resource):
     def put(self):
-        result = request.get_json()
-        print(result)
-        return result
+        jsonData = request.get_json()
+        time = jsonData["time"]
+        print("time" + time)
+        resultList = jsonData["result"]
+        for singleResult in resultList:
+            tweetId = singleResult["tweetId"]
+            userScreenName = singleResult["userScreenName"]
+            userOption = singleResult["userOption"]
+            print(tweetId + "," + userScreenName + "," + userOption)
+
+        return jsonData
 
 
 # An endpoint to test if errors are correctly being transmitted to Rollbar
@@ -167,6 +188,7 @@ def hello():
 api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
 
 api.add_resource(RecommendTweets, '/recommend')
+api.add_resource(OriginalTweets, '/original')
 
 api.add_resource(EvaluationResult, '/evaluationResult')
 

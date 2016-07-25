@@ -37,7 +37,6 @@ class PageViewController: UIPageViewController {
     
     var contentVCs = [ContentViewController]()
     var resultTableVC = ResultContentViewController()
-    var tweets = [Tweet]()
     
     var parentVC:ParentViewController{
         return parentViewController as! ParentViewController
@@ -56,49 +55,48 @@ class PageViewController: UIPageViewController {
     
     private func configurePageVC(){
         for i in 0 ..< AppConstant.tweetContentViewCount{
-            let hasImage = tweets[i].tweetImageUrl != ""
+            let hasImage = TestTweetsPool.mixedTweets[i].tweetImageUrl != ""
             let contentViewType:ContentViewControllerType = hasImage ? .textAndImage : .textOnly
             let contentVC = viewControllerOfIndex(i, contentViewType: contentViewType)
-            contentVC.tweet = tweets[i]
+            contentVC.tweet = TestTweetsPool.mixedTweets[i]
             contentVCs.append(contentVC)
         }
         
         resultTableVC = storyboard?.instantiateViewControllerWithIdentifier(PageStoryboard.resultTableId) as! ResultContentViewController
         resultTableVC.pageNumber = AppConstant.totalPageViewCount - 1
-        resultTableVC.tweets = tweets
+        resultTableVC.tweets = TestTweetsPool.mixedTweets
         setViewControllers([contentVCs[0]], direction: .Forward, animated: false, completion: nil)
     }
     
     func initTestData(){
-        tweets.removeAll()
-        EvaluationResult.cleanAllResult()
+        TestTweetsPool.removeAll()
+        EvaluationResult.removeAll()
         contentVCs.removeAll()
         
-        APIManager.getHomeLineWithPage(1)
+        APIManager.getRecommendTweetsWithPage(1)
         {   result in
             let recommendedTweeets = result["recommended_tweets"]
             for (_, tweet) in recommendedTweeets {
-                let tweetText = tweet["text"].stringValue
-                let userName = tweet["user"]["name"].stringValue
-                let userScreenName = tweet["user"]["screen_name"].stringValue
-                let userImageUrl = tweet["user"]["profile_image_url_https"].stringValue
-                let tweetDateTime = tweet["created_at"].stringValue
-                var tweetImageUrl = ""
-                if let items = tweet["entities"]["media"].array {
-                    for item in items {
-                        tweetImageUrl = item["media_url_https"].stringValue
-                    }
-                }
-                let tweetObj = Tweet(tweet: tweetText, userName: userName,
-                                     userDisplayName: userScreenName, userImageUrl: userImageUrl,
-                                     tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
-                self.tweets.append(tweetObj)
+                let tweetObj = Tweet(jsonTweet: tweet)
+                TestTweetsPool.recommendTweets.append(tweetObj)
             }
-            print("load tweets successfully")
-            self.configurePageVC()
-            self.parentVC.hideViewsAtStartup(false)
-            self.parentVC.updatePageNumberView()
+            
+            APIManager.getOriginalTweetsWithPage(1)
+            {   result in
+                let originalTweets = result["original_tweets"]
+                for (_, tweet) in originalTweets {
+                    let tweetObj = Tweet(jsonTweet: tweet)
+                    TestTweetsPool.originalTweets.append(tweetObj)
+                }
+                
+                TestTweetsPool.initMixedTweets()
+                print(TestTweetsPool.mixedTweets)
+                self.configurePageVC()
+                self.parentVC.hideViewsAtStartup(false)
+                self.parentVC.updatePageNumberView()
+            }
         }
+        
     }
     
     func viewControllerOfIndex(index: Int, contentViewType: ContentViewControllerType) -> ContentViewController{

@@ -24,6 +24,7 @@
 		9F49ED991D256DCA00A0CF1E /* evaluation.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F49ED981D256DCA00A0CF1E /* evaluation.xcassets */; };
 		9F5981461D2EA673003E97D2 /* ResultContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5981451D2EA673003E97D2 /* ResultContentViewController.swift */; };
 		9F6E5EF31D2F533900005A2E /* ResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F6E5EF21D2F533900005A2E /* ResultTableViewCell.swift */; };
+		9F87B7CD1D46780300394CD2 /* TestTweetsPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F87B7CC1D46780300394CD2 /* TestTweetsPool.swift */; };
 		9FA764F21D2C046100BB55A6 /* EvaluationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA764F11D2C046100BB55A6 /* EvaluationResult.swift */; };
 		9FA764F41D2C04E000BB55A6 /* AppConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA764F31D2C04E000BB55A6 /* AppConstant.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		9F49ED981D256DCA00A0CF1E /* evaluation.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = evaluation.xcassets; sourceTree = "<group>"; };
 		9F5981451D2EA673003E97D2 /* ResultContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultContentViewController.swift; sourceTree = "<group>"; };
 		9F6E5EF21D2F533900005A2E /* ResultTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewCell.swift; sourceTree = "<group>"; };
+		9F87B7CC1D46780300394CD2 /* TestTweetsPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestTweetsPool.swift; sourceTree = "<group>"; };
 		9FA764F11D2C046100BB55A6 /* EvaluationResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvaluationResult.swift; sourceTree = "<group>"; };
 		9FA764F31D2C04E000BB55A6 /* AppConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -171,6 +173,7 @@
 				9F33F5A91D245A4F0040EE26 /* Tweet.swift */,
 				9FA764F11D2C046100BB55A6 /* EvaluationResult.swift */,
 				9FA764F31D2C04E000BB55A6 /* AppConstant.swift */,
+				9F87B7CC1D46780300394CD2 /* TestTweetsPool.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F33F5A41D2459B90040EE26 /* APIRouter.swift in Sources */,
+				9F87B7CD1D46780300394CD2 /* TestTweetsPool.swift in Sources */,
 				9FA764F41D2C04E000BB55A6 /* AppConstant.swift in Sources */,
 				9F5981461D2EA673003E97D2 /* ResultContentViewController.swift in Sources */,
 				9F33F5A31D2459B90040EE26 /* APIManager.swift in Sources */,
