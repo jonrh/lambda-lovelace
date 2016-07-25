@@ -161,7 +161,12 @@ class EvaluationResult(Resource):
             tweetId = singleResult["tweetId"]
             userScreenName = singleResult["userScreenName"]
             userOption = singleResult["userOption"]
-            print(tweetId + "," + userScreenName + "," + userOption)
+            source = singleResult["source"]
+            print(tweetId + "," + userScreenName + "," + userOption + "," + source)
+        recommendLike = jsonData["recommendLike"]
+        print("recommendLike" + recommendLike)
+        originalLike = jsonData["originalLike"]
+        print("originalLike" + originalLike)
 
         return jsonData
 

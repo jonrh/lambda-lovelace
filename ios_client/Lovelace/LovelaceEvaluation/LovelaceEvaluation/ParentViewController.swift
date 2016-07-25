@@ -258,11 +258,28 @@ class ParentViewController: UIViewController {
                 userOption = "dislike"
             }
             singleTweetResult["userOption"] = userOption
+            singleTweetResult["source"] = TestTweetsPool.mixedTweetsSource[index]
             
             resultList.append(singleTweetResult)
         }
         
         resultParams["result"] = resultList
+        
+        var recommendLikeCount = 0
+        var originalLikeCount = 0
+        for (index, result) in EvaluationResult.results.enumerate() {
+            if result! == .like {
+                if TestTweetsPool.mixedTweetsSource[index] == "recommend" {
+                    recommendLikeCount += 1
+                }
+                else {
+                    originalLikeCount += 1
+                }
+            }
+        }
+        resultParams["recommendLike"] = recommendLikeCount.description
+        resultParams["originalLike"] = originalLikeCount.description
+        
         
         APIManager.postEvaluationResult(resultParams)
     }
