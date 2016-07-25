@@ -6,7 +6,7 @@ import rethinkdb as r
 import time
 
 
-app = Celery('tasks', backend='amqp://guest@localhost//', broker='redis://localhost:6379/0')
+app = Celery('tasks', broker='redis://localhost:6379/0')
 
 #config celery, the task 'add' will be executed every 60 seconds
 app.conf.update(
