@@ -210,7 +210,7 @@
 				TargetAttributes = {
 					9F33F56B1D240ACE0040EE26 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 9ZM4Q4G7NM;
+						DevelopmentTeam = 52XLC98QNC;
 					};
 				};
 			};
@@ -426,10 +426,13 @@
 			baseConfigurationReference = 0E9C39676937285C5FD59AB5 /* Pods-LovelaceEvaluation.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LovelaceEvaluation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.LovelaceEvaluation;
+				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.LovelaceEvaluation1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -438,10 +441,13 @@
 			baseConfigurationReference = 215BA23D0209D30575FDAB25 /* Pods-LovelaceEvaluation.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = LovelaceEvaluation/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.LovelaceEvaluation;
+				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.LovelaceEvaluation1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

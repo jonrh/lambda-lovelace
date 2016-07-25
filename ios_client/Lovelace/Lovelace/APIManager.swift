@@ -108,7 +108,7 @@ class APIManager {
     
     
     class func getHomeLineWithPage(page: Int, callback: (JSON)->Void) {
-        Alamofire.request(Router.Tweets((page)))
+        Alamofire.request(Router.Tweets(page))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     print(response.result.error)
@@ -120,5 +120,14 @@ class APIManager {
                 }
         }
     }
+    
+    class func postEvaluationResult(resultParams: [String:String]){
+        Alamofire.request(Router.Result(resultParams))
+            .response { request, response, data, error in
+                print(request)
+        }
+        
+    }
+    
     
 }

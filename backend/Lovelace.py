@@ -138,6 +138,12 @@ class IOSAppRedirectHelper(Resource):
         location += oauth_verifier
         return redirect(location)
 
+class EvaluationResult(Resource):
+    def put(self):
+        result = request.get_json()
+        print(result)
+        return result
+
 
 # An endpoint to test if errors are correctly being transmitted to Rollbar
 @app.route("/error")
@@ -162,5 +168,8 @@ api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
 
 api.add_resource(RecommendTweets, '/recommend')
 
+api.add_resource(EvaluationResult, '/evaluationResult')
+
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    # app.run(host="0.0.0.0", port=80)
+    app.run()

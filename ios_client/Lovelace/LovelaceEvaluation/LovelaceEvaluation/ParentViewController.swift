@@ -196,6 +196,8 @@ class ParentViewController: UIViewController {
                 self.isSubmitted = true
                 let submittedImage = UIImage(named: "submitted")
                 self.logoutSubmitButton.setImage(submittedImage, forState: .Selected)
+                
+                self.postResultDataToServer()
             }
             alertController.addAction(submitAction)
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -229,6 +231,23 @@ class ParentViewController: UIViewController {
     
     }
     
+    private func postResultDataToServer(){
+        var resultParams = [String:String]()
+        
+        for (index, result) in EvaluationResult.results.enumerate(){
+            switch result! {
+            case .like:
+                resultParams[String(index)] = "like"
+            case .neither:
+                resultParams[String(index)] = "neither"
+            case .dislike:
+                resultParams[String(index)] = "dislike"
+            }
+        }
+        
+        APIManager.postEvaluationResult(resultParams)
+    }
+    
     @IBAction func logoutSubmitButtonPressed() {
         switch currentPageNumber {
         case AppConstant.totalPageViewCount - 1:
@@ -249,4 +268,3 @@ extension UIButton {
         }
     }
 }
-
