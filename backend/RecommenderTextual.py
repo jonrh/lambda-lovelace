@@ -4,7 +4,7 @@ from collections import Counter
 import tweepy
 import time
 import string
-import datetime
+from datetime import datetime, timedelta
 
 class RecommenderTextual:
     
@@ -42,7 +42,7 @@ class RecommenderTextual:
         self.vectorizer = CountVectorizer()
         self.own_tweets = users_own_tweets
         self.followed_tweets = users_followed_tweets
-        self.get_term_frequency_weightings(None, None)
+        self.get_term_frequency_weightings()
         #print(self.termfreq_doc)
        
 
@@ -124,6 +124,26 @@ class RecommenderTextual:
     def generate(self, number_of_recommendations, how_many_days_ago):
         list_of_owners_tweets = []
         unfollowed_tweets = []
+
+
+
+
+
+
+
+        #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
+        #age = time.time() - (tweet_age - datetime.datetime(1970,1,1)).total_seconds()
+
+
+
+
+
+
+
+        #http://stackoverflow.com/questions/7582333/python-get-datetime-of-last-hour
+        #lastHourDateTime = datetime.today() - timedelta(hours = 1)
+
+
         for tweet in self.own_tweets:
             #list_of_owners_tweets.append(tweet.text.encode('utf-8'))
             list_of_owners_tweets.append(tweet['text'].encode('utf-8')) #UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE ABOVE
@@ -160,7 +180,7 @@ class RecommenderTextual:
         for word in sanitised_tweet_text.split():
             if word.lower() in self.termfreq_doc.keys():
                 count += 1 
-                count += self.get_tweet_term_weighting(sanitised_tweet_text, self.termfreq_doc.get(word))
+                count += self.get_tweet_term_weighting(sanitised_tweet_text)#, self.termfreq_doc.get(word))
                 count -= self.get_tweet_age_score(tweet)
                 if count < 0:
                     count = 0
