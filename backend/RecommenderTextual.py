@@ -4,14 +4,12 @@ from collections import Counter
 import tweepy
 import time
 import string
-import datetime
+from datetime import datetime, timedelta
 
 class RecommenderTextual:
     
     #TO-DO:
     #-set language to users own twitter language
-    #-currently misses end hashtags
-    #-does not add hashtags to term-frequency document
     #-does not distinguish Java from JavaScript (Could use a bigram list for this)
 
     #BUGS: 
@@ -20,15 +18,6 @@ class RecommenderTextual:
     #TODAY:
     #-Tweet.entities.hashtags - iterate when adding to term frequency document.
     #-Figure out if above (entities) appears in tweet.text too.
-    #-Blog post!
-    #-does not add hashtags to term-frequency document
-    #-Remove punctuation (!, etc) from term frequency document
-    #-User Evaluation report discussion with Jon
-    #-Decrease tweet weight with age
-    #-Add functionality for extra arguments in Recommender System (Age of tweet, etc).
-
-    #DONE:
-    #-Git Kraken pull blog project posts
 
     def __init__(self, users_own_tweets, users_followed_tweets):
         ######################################################
@@ -53,12 +42,12 @@ class RecommenderTextual:
         self.vectorizer = CountVectorizer()
         self.own_tweets = users_own_tweets
         self.followed_tweets = users_followed_tweets
-        self.get_term_frequency_weightings(None, None)
+        self.get_term_frequency_weightings()
         #print(self.termfreq_doc)
        
 
-    #This method currently gets the top thirty terms that a users tweets with
-    def get_term_frequency_weightings(self, number_of_terms_in_document, number_of_user_timeline_tweets):
+    #This method currently gets the top x terms that a users tweets with
+    def get_term_frequency_weightings(self):
         weightings = {}#Dictionary of terms (keys) and their weighting (value)
 
         #http://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string-in-python
@@ -73,15 +62,19 @@ class RecommenderTextual:
         my_first_x_tweets = self.own_tweets[0: self.amount_of_tweets_to_gather]
         overall_list = []
         for sublist in my_first_x_tweets:#Iterating each tweet
-            for item in sublist['text'].split():
+            for item in sublist['text'].split():#UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
             #for item in sublist.text.split():#Iterating each word of a tweet
                 if item not in stop_words:
-                    transformed_item = item.lower().translate(string.punctuation)
-                    overall_list.append(transformed_item)# item.lower())
+                    #https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
+                    word = item.lower()
+                    transformed_item = ''.join(c for c in word if c not in string.punctuation)
+                    overall_list.append(transformed_item)
             
-            for hashtag in sublist['entities']['hashtags']:
-            #for hashtag in sublist.entities['hashtags']:
-                overall_list.append(hashtag['text'].lower().translate(string.punctuation))
+            for hashtag in sublist['entities']['hashtags']:#UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+            #for hashtag in sublist.entities['hashtags']: 
+                tag = hashtag['text'].lower()
+                #https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
+                overall_list.append(''.join(c for c in tag if c not in string.punctuation))
 
 
         total_count = len(overall_list)
@@ -92,7 +85,6 @@ class RecommenderTextual:
             hashtag = str('#{}'.format(term))
             hashtag_value = float(frequency_doc.get(hashtag) * self.hash_tag_multiplier) if frequency_doc.get(hashtag) is not None else 0.0
             term_value = float(frequency_doc.get(str(term)))
-            #print(hashtag_value)
             term_weight = ((hashtag_value + term_value)/total_count)  * self.numeric_scale
             term_frequncy_list[str(term)] = term_weight
 
@@ -117,7 +109,7 @@ class RecommenderTextual:
         print(weightings)
         return weightings
 
-    def get_tweet_term_weighting(self, tweet_text, term):
+    def get_tweet_term_weighting(self, tweet_text):
         weighting = 0
         term_match_weighting = 0
         already_weighted_terms = []
@@ -132,9 +124,29 @@ class RecommenderTextual:
     def generate(self, number_of_recommendations, how_many_days_ago):
         list_of_owners_tweets = []
         unfollowed_tweets = []
+
+
+
+
+
+
+
+        #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
+        #age = time.time() - (tweet_age - datetime.datetime(1970,1,1)).total_seconds()
+
+
+
+
+
+
+
+        #http://stackoverflow.com/questions/7582333/python-get-datetime-of-last-hour
+        #lastHourDateTime = datetime.today() - timedelta(hours = 1)
+
+
         for tweet in self.own_tweets:
             #list_of_owners_tweets.append(tweet.text.encode('utf-8'))
-            list_of_owners_tweets.append(tweet['text'].encode('utf-8'))
+            list_of_owners_tweets.append(tweet['text'].encode('utf-8')) #UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE ABOVE
 
         self.vectorizer.fit_transform(list_of_owners_tweets)
         words = self.own_tweets #The users own tweets
@@ -155,9 +167,8 @@ class RecommenderTextual:
 
     def count_bag(self, tweet):
         count = 0
-        sanitised_tweet_text = tweet['text']
-        #sanitised_tweet_text = tweet.text
-        #This seems to vary depending on where it's run for some reason.
+        sanitised_tweet_text = tweet['text'] #UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+        #sanitised_tweet_text = tweet.text 
         
         #bug
         #Somehow, the following tweet is being counted as six (should be three)
@@ -169,7 +180,7 @@ class RecommenderTextual:
         for word in sanitised_tweet_text.split():
             if word.lower() in self.termfreq_doc.keys():
                 count += 1 
-                count += self.get_tweet_term_weighting(sanitised_tweet_text, self.termfreq_doc.get(word))
+                count += self.get_tweet_term_weighting(sanitised_tweet_text)#, self.termfreq_doc.get(word))
                 count -= self.get_tweet_age_score(tweet)
                 if count < 0:
                     count = 0
