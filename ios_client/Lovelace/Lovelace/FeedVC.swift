@@ -61,24 +61,11 @@ class FeedViewController: UIViewController {
     
     
     private func loadTweetWithPage(page: Int = 1){
-        APIManager.getHomeLineWithPage(page)
+        APIManager.getRecommendTweetsWithPage(page)
         {   result in
             let recommendedTweeets = result["recommended_tweets"]
-            for (_, tweet) in recommendedTweeets {
-                let tweetText = tweet["text"].stringValue
-                let userName = tweet["user"]["name"].stringValue
-                let userScreenName = tweet["user"]["screen_name"].stringValue
-                let userImageUrl = tweet["user"]["profile_image_url_https"].stringValue
-                let tweetDateTime = tweet["created_at"].stringValue
-                var tweetImageUrl = ""
-                if let items = tweet["entities"]["media"].array {
-                    for item in items {
-                        tweetImageUrl = item["media_url_https"].stringValue
-                    }
-                }
-                let tweetObj = Tweet(tweet: tweetText, userName: userName,
-                                     userDisplayName: userScreenName, userImageUrl: userImageUrl,
-                                     tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
+            for (_, tweetJson) in recommendedTweeets {
+                let tweetObj = Tweet(jsonTweet: tweetJson)
                 self.tweetList.append(tweetObj)
             }
             
