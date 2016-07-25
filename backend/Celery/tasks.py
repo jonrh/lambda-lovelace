@@ -5,6 +5,9 @@ import pandas as pd
 import rethinkdb as r
 import time
 
+#Commend here!!!!!!
+#celery -A tasks worker -B -c 8 --loglevel=info
+
 
 app = Celery('tasks', broker='redis://localhost:6379/0')
 
