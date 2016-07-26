@@ -86,7 +86,7 @@ class RecommenderTextual:
             #hashtag = str(u'#{}'.format(term))#.encode('utf-8')
             hashtag = u'#' + term
             hashtag_value = float(frequency_doc.get(hashtag) * self.hash_tag_multiplier) if frequency_doc.get(hashtag) is not None else 0.0
-            term_value = float(frequency_doc.get(str(term)))
+            term_value = float(frequency_doc.get(term))
             term_weight = ((hashtag_value + term_value)/total_count)  * self.numeric_scale
             term_frequncy_list[str(term)] = term_weight
 
