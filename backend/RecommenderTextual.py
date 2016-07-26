@@ -4,7 +4,8 @@ from collections import Counter
 import tweepy
 import time
 import string
-from datetime import datetime, timedelta
+#from datetime import timedelta
+import datetime
 
 class RecommenderTextual:
     
@@ -124,25 +125,25 @@ class RecommenderTextual:
     def generate(self, number_of_recommendations, how_many_days_ago):
         list_of_owners_tweets = []
         unfollowed_tweets = []
+        seconds_ago = 0 
 
-
-
-
-
-
-
-        #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
-        #age = time.time() - (tweet_age - datetime.datetime(1970,1,1)).total_seconds()
-
-
-
-
-
-
-
-        #http://stackoverflow.com/questions/7582333/python-get-datetime-of-last-hour
-        #lastHourDateTime = datetime.today() - timedelta(hours = 1)
-
+        #https://www.google.ie/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=seconds%20in%20six%20days
+        if how_many_days_ago is 7:
+            seconds_ago = 604800  
+        elif how_many_days_ago is 6:
+            seconds_ago = 518400
+        elif how_many_days_ago is 5:
+            seconds_ago = 432000
+        elif how_many_days_ago is 4:
+            seconds_ago = 345600
+        elif how_many_days_ago is 3:
+            seconds_ago = 259200
+        elif how_many_days_ago is 2:
+            seconds_ago = 172800
+        elif how_many_days_ago is 1:
+            seconds_ago = 86400
+        else:
+            seconds_ago = 1000000
 
         for tweet in self.own_tweets:
             #list_of_owners_tweets.append(tweet.text.encode('utf-8'))
@@ -151,6 +152,19 @@ class RecommenderTextual:
         self.vectorizer.fit_transform(list_of_owners_tweets)
         words = self.own_tweets #The users own tweets
         tweet_list = self.followed_tweets #tweets from accounts that the user is following
+
+        remove_these_tweets = []
+
+        for tweet in tweet_list:
+            tweet_age = tweet.created_at
+            #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
+            age = time.time() - (tweet_age - datetime.datetime(1970,1,1)).total_seconds()
+            if age > seconds_ago:
+                remove_these_tweets.append(tweet)
+
+        for removal in remove_these_tweets:
+            tweet_list.remove(removal)
+
         data_returned = sorted(tweet_list, key=self.count_bag, reverse=True)
         results = data_returned[0:number_of_recommendations]
         counts  = [self.count_bag(tweet) for tweet in results]

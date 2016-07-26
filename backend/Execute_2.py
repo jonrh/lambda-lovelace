@@ -21,7 +21,7 @@ users_tweets = api.user_timeline()
 followed_tweets = api.home_timeline()
 print("Hashtags Included:")
 recommender_object = RecommenderTextual(users_tweets, followed_tweets) 
-recommended_tweets = recommender_object.generate(number_of_recommendations, None) 
+recommended_tweets = recommender_object.generate(number_of_recommendations, 1) 
 
 print(" *** ")
 print(" *** ")

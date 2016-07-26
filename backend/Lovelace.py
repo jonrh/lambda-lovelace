@@ -121,7 +121,7 @@ class RecommendTweets(Resource):
         # give the user timeline and home timeline to the recommender system to make recommendation
         print(home_tweets)
         recommender_object = RecommenderTextual(user_tweets, home_tweets)
-        recommended_tweets = recommender_object.generate(50, None)
+        recommended_tweets = recommender_object.generate(50, 1)
         # print(recommended_tweets)
         # return "Hello world!"
         return jsonify(recommended_tweets)
