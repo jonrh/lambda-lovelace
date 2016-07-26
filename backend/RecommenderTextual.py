@@ -159,6 +159,8 @@ class RecommenderTextual:
         for tweet in tweet_list:
             #tweet_age = tweet.created_at
             tweet_age = tweet['created_at']
+            print("sexy mard" + tweet_age)
+            print(type(tweet_age))
             #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
             age = time.time() - (tweet_age - datetime(1970,1,1)).total_seconds()
             if age > seconds_ago:
@@ -175,6 +177,8 @@ class RecommenderTextual:
 
     def get_tweet_age_score(self, tweet):
         tweet_age = tweet['created_at']
+        print("sexy mard" + tweet_age)
+        print(type(tweet_age))
         #tweet_age = tweet.created_at
         #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
         age = time.time() - (tweet_age - datetime(1970,1,1)).total_seconds()
