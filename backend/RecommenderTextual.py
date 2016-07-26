@@ -4,8 +4,8 @@ from collections import Counter
 import tweepy
 import time
 import string
-#from datetime import timedelta
-import datetime
+from datetime import timedelta, datetime
+#import datetime
 
 class RecommenderTextual:
     
@@ -160,7 +160,7 @@ class RecommenderTextual:
             #tweet_age = tweet.created_at
             tweet_age = tweet['created_at']
             #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
-            age = time.time() - (tweet_age - datetime.datetime(1970,1,1)).total_seconds()
+            age = time.time() - (tweet_age - datetime(1970,1,1)).total_seconds()
             if age > seconds_ago:
                 remove_these_tweets.append(tweet)
 
@@ -177,7 +177,7 @@ class RecommenderTextual:
         tweet_age = tweet['created_at']
         #tweet_age = tweet.created_at
         #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
-        age = time.time() - (tweet_age - datetime.datetime(1970,1,1)).total_seconds()
+        age = time.time() - (tweet_age - datetime(1970,1,1)).total_seconds()
         week_seconds = 604800 #604800 seconds in a week
         rank = (age / week_seconds) * self.numeric_scale
         return age
