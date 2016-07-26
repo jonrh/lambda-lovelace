@@ -155,19 +155,32 @@ class EvaluationResult(Resource):
     def put(self):
         jsonData = request.get_json()
         time = jsonData["time"]
-        print("time" + time)
+        recommend=[]
+        original=[]
+        
         resultList = jsonData["result"]
         for singleResult in resultList:
-            tweetId = singleResult["tweetId"]
-            userScreenName = singleResult["userScreenName"]
-            userOption = singleResult["userOption"]
-            source = singleResult["source"]
-            print(tweetId + "," + userScreenName + "," + userOption + "," + source)
-        recommendLike = jsonData["recommendLike"]
-        print("recommendLike" + recommendLike)
-        originalLike = jsonData["originalLike"]
-        print("originalLike" + originalLike)
-
+            temp_dict = {'time':time,
+                        'tweet_id':singleResult["tweetId"],
+                        'user_screen_name':singleResult["userScreenName"],
+                        'result':singleResult["userOption"],
+                        'source':singleResult["source"]}
+            
+            if singleResult["source"] == "recommend":
+                recommend.append(temp_dict)
+            else:
+                original.append(temp_dict)
+        
+        result = {'recommend':recommend,
+                  'original':original,
+                  'recommend_like':jsonData["recommendLike"],
+                  'original_like':jsonData["originalLike"]}
+        
+        r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
+                  password="marcgoestothegym").repl()
+            
+        r.db('evaluation').table('results').insert(result).run()
+                  
         return jsonData
 
 
