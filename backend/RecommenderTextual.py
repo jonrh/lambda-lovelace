@@ -157,7 +157,8 @@ class RecommenderTextual:
         remove_these_tweets = []
 
         for tweet in tweet_list:
-            tweet_age = tweet.created_at
+            #tweet_age = tweet.created_at
+            tweet_age = tweet['created_at']
             #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
             age = time.time() - (tweet_age - datetime.datetime(1970,1,1)).total_seconds()
             if age > seconds_ago:
@@ -173,7 +174,8 @@ class RecommenderTextual:
         return {"recommended_tweets":results, "counts":sorted(counts, reverse=True)}
 
     def get_tweet_age_score(self, tweet):
-        tweet_age = tweet.created_at
+        tweet_age = tweet['created_at']
+        #tweet_age = tweet.created_at
         #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
         age = time.time() - (tweet_age - datetime.datetime(1970,1,1)).total_seconds()
         week_seconds = 604800 #604800 seconds in a week
