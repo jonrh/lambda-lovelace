@@ -7,8 +7,8 @@ import string
 from datetime import timedelta, datetime
 # import datetime
 
+
 class RecommenderTextual:
-    
     # TO-DO:
     # -set language to users own twitter language
     # -does not distinguish Java from JavaScript (Could use a bigram list for this)
@@ -147,21 +147,20 @@ class RecommenderTextual:
 
         for tweet in self.own_tweets:
             # list_of_owners_tweets.append(tweet.text.encode('utf-8'))
-            list_of_owners_tweets.append(tweet['text'].encode('utf-8')) # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE ABOVE
+            list_of_owners_tweets.append(tweet['text'].encode('utf-8'))  # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE ABOVE
 
         self.vectorizer.fit_transform(list_of_owners_tweets)
-        words = self.own_tweets # The users own tweets
-        tweet_list = self.followed_tweets # tweets from accounts that the user is following
+        words = self.own_tweets  # The users own tweets
+        tweet_list = self.followed_tweets  # tweets from accounts that the user is following
 
         remove_these_tweets = []
 
         for tweet in tweet_list:
             # tweet_age = tweet.created_at
             tweet_age = tweet['created_at']
-            print("sexy mard" + tweet_age)
-            print(type(tweet_age))
             # http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
-            age = time.time() - (tweet_age - datetime(1970,1,1)).total_seconds()
+            tweet_age = datetime.strptime(tweet_age, '%a %b %d %H:%M:%S +0000 %Y')  # dirty fix
+            age = time.time() - (tweet_age - datetime(1970, 1, 1)).total_seconds()
             if age > seconds_ago:
                 remove_these_tweets.append(tweet)
 
@@ -170,17 +169,16 @@ class RecommenderTextual:
 
         data_returned = sorted(tweet_list, key=self.count_bag, reverse=True)
         results = data_returned[0:number_of_recommendations]
-        counts  = [self.count_bag(tweet) for tweet in results]
+        counts = [self.count_bag(tweet) for tweet in results]
         
         return {"recommended_tweets":results, "counts":sorted(counts, reverse=True)}
 
     def get_tweet_age_score(self, tweet):
         tweet_age = tweet['created_at']
-        print("sexy mard" + tweet_age)
-        print(type(tweet_age))
+        tweet_age = datetime.strptime(tweet_age, '%a %b %d %H:%M:%S +0000 %Y')  # dirty fix
         # tweet_age = tweet.created_at
         # http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
-        age = time.time() - (tweet_age - datetime(1970,1,1)).total_seconds()
+        age = time.time() - (tweet_age - datetime(1970, 1, 1)).total_seconds()
         week_seconds = 604800 # 604800 seconds in a week
         rank = (age / week_seconds) * self.numeric_scale
         return age
