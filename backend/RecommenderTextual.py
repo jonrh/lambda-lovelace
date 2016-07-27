@@ -95,7 +95,6 @@ class RecommenderTextual:
         most_common_raw = frequency_doc.most_common(last_index) 
 
         for x in range(0, last_index):
-            print(x)
             top_terms.append(most_common_raw[x][0])
 
         remove_these_terms = []
