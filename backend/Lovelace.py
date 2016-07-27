@@ -127,7 +127,7 @@ class RecommendTweets(Resource):
         return jsonify(recommended_tweets)
 
 # The original tweet part
-class OriginalTweets(Resource):
+class EvaluationData(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
@@ -135,10 +135,12 @@ class OriginalTweets(Resource):
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth)
 
-        home_tweets = [tweet._json for tweet in api.home_timeline(count=50, page=page)]
+        home_tweets = [tweet._json for tweet in api.home_timeline(count=200, page=page)]
+        
+        recommender_object = RecommenderTextual(user_tweets, home_tweets)
+        recommended_tweets = recommender_object.generate(200, 1)
 
-        return jsonify({"original_tweets" : home_tweets})
-
+        return jsonify({"original_tweets":home_tweets, "recommend_tweets":recommended_tweets})
 
 class IOSAppRedirectHelper(Resource):
     def get(self):
@@ -206,7 +208,7 @@ def hello():
 api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
 
 api.add_resource(RecommendTweets, '/recommend')
-api.add_resource(OriginalTweets, '/original')
+api.add_resource(EvaluationData, '/evaluationData')
 
 api.add_resource(EvaluationResult, '/evaluationResult')
 
