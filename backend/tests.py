@@ -7,4 +7,4 @@ def test_one_plus_one():
     assert 1 + 1 == 2
 
 def test_recommender_backend():
-	response = urllib2.urlopen("http://localhost/recommend?oauth_token=735845050458984448-oLfMuBPTyCnOw2yPEU0MdJ65YxX1BwU&oauth_token_secret=veyfudJQz0TMY5S8K6VwzPfteQFVPOSdU1yWwq5fWtZHC&page=1")
+	response = urllib2.urlopen("http://0.0.0.0/recommend?oauth_token=735845050458984448-oLfMuBPTyCnOw2yPEU0MdJ65YxX1BwU&oauth_token_secret=veyfudJQz0TMY5S8K6VwzPfteQFVPOSdU1yWwq5fWtZHC&page=1")
