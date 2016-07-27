@@ -119,12 +119,13 @@ class RecommendTweets(Resource):
         # followed_tweets = [tweet for tweet in home_tweets if tweet['user']['screen_name'] != user._json['screen_name']]
 
         # give the user timeline and home timeline to the recommender system to make recommendation
-        print(home_tweets)
+        print("Home tweets count: " + str(len(home_tweets)))
         recommender_object = RecommenderTextual(user_tweets, home_tweets)
         recommended_tweets = recommender_object.generate(50, 1)
-        # print(recommended_tweets)
-        # return "Hello world!"
+        print("Recommended tweet count: " + str(len(recommended_tweets)))
+
         return jsonify(recommended_tweets)
+
 
 # The original tweet part
 class EvaluationData(Resource):
@@ -144,6 +145,7 @@ class EvaluationData(Resource):
 
         return jsonify({"original_tweets":home_tweets, "recommend_tweets":recommended_tweets})
 
+
 class IOSAppRedirectHelper(Resource):
     def get(self):
         oauth_token = request.args.get('oauth_token')
@@ -154,6 +156,7 @@ class IOSAppRedirectHelper(Resource):
         location += '&oauth_verifier='
         location += oauth_verifier
         return redirect(location)
+
 
 class EvaluationResult(Resource):
     def put(self):
