@@ -73,7 +73,7 @@ class RecommendTweets(Resource):
 
         # user's screen_name
         screen_name = user._json['screen_name']
-
+        print(screen_name)
         # get user's own timeline
         user_tweets = [tweet._json for tweet in api.user_timeline(count=50)]
 
