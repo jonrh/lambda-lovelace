@@ -69,34 +69,15 @@ class PageViewController: UIPageViewController {
     }
     
     func initTestData(){
-        TestTweetsPool.removeAll()
+        TestTweetsPool.removePreviousTestTweetsSet()
         EvaluationResult.removeAll()
         contentVCs.removeAll()
         
-        APIManager.getRecommendTweetsWithPage(1)
-        {   result in
-            let recommendedTweeets = result["recommended_tweets"]
-            for (_, tweet) in recommendedTweeets {
-                let tweetObj = Tweet(jsonTweet: tweet)
-                TestTweetsPool.recommendTweets.append(tweetObj)
-            }
-            
-            APIManager.getOriginalTweetsWithPage(1)
-            {   result in
-                let originalTweets = result["original_tweets"]
-                for (_, tweet) in originalTweets {
-                    let tweetObj = Tweet(jsonTweet: tweet)
-                    TestTweetsPool.originalTweets.append(tweetObj)
-                }
-                
-                TestTweetsPool.initMixedTweets()
-                print(TestTweetsPool.mixedTweets)
-                self.configurePageVC()
-                self.parentVC.hideViewsAtStartup(false)
-                self.parentVC.updatePageNumberView()
-            }
+        TestTweetsPool.initTestTweetsPool {
+            self.configurePageVC()
+            self.parentVC.hideViewsAtStartup(false)
+            self.parentVC.updatePageNumberView()
         }
-        
     }
     
     func viewControllerOfIndex(index: Int, contentViewType: ContentViewControllerType) -> ContentViewController{

@@ -67,6 +67,8 @@ class ParentViewController: UIViewController {
         return [likeButton,neitherButton,dislikeButton]
     }
     
+    private var pageViewController: PageViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         restoreAllButtonsToDefaultState()
@@ -139,6 +141,7 @@ class ParentViewController: UIViewController {
         case ParentVCStoryboard.pageViewSegue:
             pageVCDataSource = segue.destinationViewController as! PageViewControllerDataSource
             APIManager.apiDataRefreshDelegate = (segue.destinationViewController as! APIDataRefreshDelegate)
+            pageViewController = (segue.destinationViewController as! PageViewController)
         default:
             break
         }
@@ -174,13 +177,15 @@ class ParentViewController: UIViewController {
             let defaults = NSUserDefaults.standardUserDefaults()
             defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
             defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+            
+            TestTweetsPool.cleanLocalData()
         }
         alertController.addAction(logoutAction)
         
         
         
         let restartAction = UIAlertAction(title: "Restart", style: .Default) { _ in
-            // todo restart
+            self.pageViewController.initTestData()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)

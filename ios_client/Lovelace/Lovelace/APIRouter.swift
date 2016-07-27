@@ -15,16 +15,16 @@ enum Router: URLRequestConvertible {
 //    static let baseURLString = "http://127.0.0.1:5000"
     
     case RecommendTweets(Int)
-    case OriginalTweets(Int)
-    case Result([String:AnyObject])
+    case EvaluationData(Int)
+    case EvaluationResult([String:AnyObject])
     
     var method: Alamofire.Method {
         switch self {
         case .RecommendTweets:
             return .GET
-        case .OriginalTweets:
+        case .EvaluationData:
             return .GET
-        case .Result:
+        case .EvaluationResult:
             return .PUT
         }
     }
@@ -33,9 +33,9 @@ enum Router: URLRequestConvertible {
         switch  self {
         case .RecommendTweets:
             return ("/recommend")
-        case .OriginalTweets:
-            return ("/original")
-        case .Result:
+        case .EvaluationData:
+            return ("/evaluationData")
+        case .EvaluationResult:
             return ("/evaluationResult")
         }
     }
@@ -53,9 +53,9 @@ enum Router: URLRequestConvertible {
             switch self {
             case .RecommendTweets(let page):
                 parameters["page"] = String(page)
-            case .OriginalTweets(let page):
+            case .EvaluationData(let page):
                 parameters["page"] = String(page)
-            case .Result(let resultParameters) :
+            case .EvaluationResult(let resultParameters) :
                 parameters = resultParameters
                 encodeing = Alamofire.ParameterEncoding.JSON
             }

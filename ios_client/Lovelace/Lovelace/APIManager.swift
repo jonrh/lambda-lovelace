@@ -122,8 +122,8 @@ class APIManager {
     }
     
     
-    class func getOriginalTweetsWithPage(page: Int, callback: (JSON)->Void) {
-        Alamofire.request(Router.OriginalTweets(page))
+    class func getEvaluationDataWithPage(page: Int, callback: (JSON)->Void) {
+        Alamofire.request(Router.EvaluationData(page))
             .responseJSON { response in
                 guard response.result.error == nil else {
                     print(response.result.error)
@@ -137,7 +137,7 @@ class APIManager {
     }
     
     class func postEvaluationResult(resultParams: [String: AnyObject]){
-        Alamofire.request(Router.Result(resultParams))
+        Alamofire.request(Router.EvaluationResult(resultParams))
             .response { request, response, data, error in
                 print(request)
         }
