@@ -47,6 +47,10 @@ class TestTweetsPool {
                 mixedTweetsSource.append("original")
             }
         }
+        print("recommend count: \(recommendTweets.count)")
+        print("original count: \(originalTweets.count)")
+        print("recommend index: \(recommendTweetsIndex)")
+        print("original  index: \(originalTweetsIndex)")
         saveTweetsIndexLocally()
     }
     
@@ -86,8 +90,10 @@ class TestTweetsPool {
     class func loadLocalData() -> Bool{
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.boolForKey(TestTweetsDataKeys.localDataAvailable) {
-            recommendTweets = defaults.arrayForKey(TestTweetsDataKeys.recommendTweetsList) as! [Tweet]
-            originalTweets = defaults.arrayForKey(TestTweetsDataKeys.originalTweetsList) as! [Tweet]
+            let recommendTweetsData = defaults.objectForKey(TestTweetsDataKeys.recommendTweetsList) as! NSData
+            recommendTweets = NSKeyedUnarchiver.unarchiveObjectWithData(recommendTweetsData) as! [Tweet]
+            let originalTweetsData = defaults.objectForKey(TestTweetsDataKeys.originalTweetsList) as! NSData
+            originalTweets = NSKeyedUnarchiver.unarchiveObjectWithData(originalTweetsData) as! [Tweet]
             recommendTweetsIndex = defaults.integerForKey(TestTweetsDataKeys.recommmendTweetsIndex)
             originalTweetsIndex = defaults.integerForKey(TestTweetsDataKeys.originalTweetsIndex)
             return true
@@ -109,8 +115,8 @@ class TestTweetsPool {
     
     class func saveTweetsListLocally(){
         let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(recommendTweets, forKey: TestTweetsDataKeys.recommendTweetsList)
-        defaults.setObject(originalTweets, forKey: TestTweetsDataKeys.originalTweetsList)
+        defaults.setObject(NSKeyedArchiver.archivedDataWithRootObject(recommendTweets), forKey: TestTweetsDataKeys.recommendTweetsList)
+        defaults.setObject(NSKeyedArchiver.archivedDataWithRootObject(originalTweets), forKey: TestTweetsDataKeys.originalTweetsList)
         defaults.setBool(true, forKey: TestTweetsDataKeys.localDataAvailable)
     }
     

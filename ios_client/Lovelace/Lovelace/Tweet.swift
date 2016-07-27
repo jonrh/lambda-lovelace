@@ -9,7 +9,7 @@
 import Foundation
 import SwiftyJSON
 
-public class Tweet
+class Tweet : NSObject, NSCoding
 {
     var id: String
     var tweet: String
@@ -29,6 +29,26 @@ public class Tweet
         self.userImageUrl = userImageUrl
         self.tweetDateTime = Tweet.getReadableDate(tweetDateTime)
         self.tweetImageUrl = tweetImageUrl
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        self.id = aDecoder.decodeObjectForKey("id") as! String
+        self.tweet = aDecoder.decodeObjectForKey("tweet") as! String
+        self.userName = aDecoder.decodeObjectForKey("userName") as! String
+        self.userDisplayName = aDecoder.decodeObjectForKey("userDisplayName") as! String
+        self.userImageUrl = aDecoder.decodeObjectForKey("userImageUrl") as! String
+        self.tweetImageUrl = aDecoder.decodeObjectForKey("tweetImageUrl") as! String
+        self.tweetDateTime = aDecoder.decodeObjectForKey("tweetDateTime") as! String
+    }
+    
+    func encodeWithCoder(aCoder: NSCoder) {
+        aCoder.encodeObject(id, forKey: "id")
+        aCoder.encodeObject(tweet, forKey: "tweet")
+        aCoder.encodeObject(userName, forKey: "userName")
+        aCoder.encodeObject(userDisplayName, forKey: "userDisplayName")
+        aCoder.encodeObject(tweetImageUrl, forKey: "tweetImageUrl")
+        aCoder.encodeObject(userImageUrl, forKey: "userImageUrl")
+        aCoder.encodeObject(tweetDateTime, forKey: "tweetDateTime")
     }
     
     convenience init (jsonTweet: JSON){
