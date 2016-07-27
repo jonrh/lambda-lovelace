@@ -137,6 +137,8 @@ class EvaluationData(Resource):
 
         home_tweets = [tweet._json for tweet in api.home_timeline(count=200, page=page)]
         
+        user_tweets = [tweet._json for tweet in api.user_timeline(count=50)]
+        
         recommender_object = RecommenderTextual(user_tweets, home_tweets)
         recommended_tweets = recommender_object.generate(200, 1)
 
