@@ -5,76 +5,75 @@ import tweepy
 import time
 import string
 from datetime import timedelta, datetime
-#import datetime
+# import datetime
 
 class RecommenderTextual:
     
-    #TO-DO:
-    #-set language to users own twitter language
-    #-does not distinguish Java from JavaScript (Could use a bigram list for this)
+    # TO-DO:
+    # -set language to users own twitter language
+    # -does not distinguish Java from JavaScript (Could use a bigram list for this)
 
-    #BUGS: 
-    #-Hashtags are worth "double" than what they appear
+    # BUGS:
+    #  -Hashtags are worth "double" than what they appear
 
-    #TODAY:
-    #-Tweet.entities.hashtags - iterate when adding to term frequency document.
-    #-Figure out if above (entities) appears in tweet.text too.
+    # TODAY:
+    # -Tweet.entities.hashtags - iterate when adding to term frequency document.
+    # -Figure out if above (entities) appears in tweet.text too.
 
     def __init__(self, users_own_tweets, users_followed_tweets):
         ######################################################
-        ###get_term_frequency_weightings function variables###
+        # get_term_frequency_weightings function variables###
         ######################################################
-        #Could also be called the "number_of_user_timeline_tweets" parameter, + 1
-        #The extra "1" is because python is not inclusive of the last digit in the range that 
-        #this variable is used for later on.
+        # Could also be called the "number_of_user_timeline_tweets" parameter, + 1
+        # The extra "1" is because python is not inclusive of the last digit in the range that
+        # this variable is used for later on.
         self.amount_of_tweets_to_gather = 101
-        #We want the top 5 most occurring terms
+        # We want the top 5 most occurring terms
         self.top_x_terms = 50
-        #On a scale up to X.0, what is the scale that the term frequency document should follow
+        # On a scale up to X.0, what is the scale that the term frequency document should follow
         self.numeric_scale = 10
-        #How much are hashtags worth as opposed to terms (worth 1, so 2 means that a hashtag is 
-        #worth double the worth of a term)
-        #This is currently bugged however, see bugs section above.
+        # How much are hashtags worth as opposed to terms (worth 1, so 2 means that a hashtag is
+        # worth double the worth of a term)
+        # This is currently bugged however, see bugs section above.
         self.hash_tag_multiplier = 2       
 
         ###################
-        #Method calls, etc#
+        # Method calls, etc#
         ###################
         self.vectorizer = CountVectorizer()
         self.own_tweets = users_own_tweets
         self.followed_tweets = users_followed_tweets
         self.get_term_frequency_weightings()
-        #print(self.termfreq_doc)
-       
+        # print(self.termfreq_doc)
 
-    #This method currently gets the top x terms that a users tweets with
+    # This method currently gets the top x terms that a users tweets with
     def get_term_frequency_weightings(self):
-        weightings = {}#Dictionary of terms (keys) and their weighting (value)
+        weightings = {} # Dictionary of terms (keys) and their weighting (value)
 
-        #http://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string-in-python
+        # http://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string-in-python
         exclude = set(string.punctuation)
         
-        #generate a list of stop words
+        # generate a list of stop words
         stop_words = [word for word in CountVectorizer(stop_words='english').get_stop_words()]
         stop_words.append('rt')
         stop_words.append('https')
 
-        #Filtering section
+        # Filtering section
         my_first_x_tweets = self.own_tweets[0: self.amount_of_tweets_to_gather]
         overall_list = []
-        for sublist in my_first_x_tweets:#Iterating each tweet
-            for item in sublist['text'].split():#UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
-            #for item in sublist.text.split():#Iterating each word of a tweet
+        for sublist in my_first_x_tweets: # Iterating each tweet
+            for item in sublist['text'].split(): # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+            # for item in sublist.text.split():#Iterating each word of a tweet
                 if item not in stop_words:
-                    #https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
+                    # https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
                     word = item.lower()
                     transformed_item = ''.join(c for c in word if c not in string.punctuation)
                     overall_list.append(transformed_item)
             
-            for hashtag in sublist['entities']['hashtags']:#UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+            for hashtag in sublist['entities']['hashtags']: # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
             #for hashtag in sublist.entities['hashtags']: 
                 tag = hashtag['text'].lower()
-                #https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
+                # https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
                 overall_list.append(''.join(c for c in tag if c not in string.punctuation))
 
 
@@ -128,7 +127,7 @@ class RecommenderTextual:
         unfollowed_tweets = []
         seconds_ago = 0 
 
-        #https://www.google.ie/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=seconds%20in%20six%20days
+        # https://www.google.ie/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=seconds%20in%20six%20days
         if how_many_days_ago is 7:
             seconds_ago = 604800  
         elif how_many_days_ago is 6:
@@ -147,21 +146,21 @@ class RecommenderTextual:
             seconds_ago = 1000000
 
         for tweet in self.own_tweets:
-            #list_of_owners_tweets.append(tweet.text.encode('utf-8'))
-            list_of_owners_tweets.append(tweet['text'].encode('utf-8')) #UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE ABOVE
+            # list_of_owners_tweets.append(tweet.text.encode('utf-8'))
+            list_of_owners_tweets.append(tweet['text'].encode('utf-8')) # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE ABOVE
 
         self.vectorizer.fit_transform(list_of_owners_tweets)
-        words = self.own_tweets #The users own tweets
-        tweet_list = self.followed_tweets #tweets from accounts that the user is following
+        words = self.own_tweets # The users own tweets
+        tweet_list = self.followed_tweets # tweets from accounts that the user is following
 
         remove_these_tweets = []
 
         for tweet in tweet_list:
-            #tweet_age = tweet.created_at
+            # tweet_age = tweet.created_at
             tweet_age = tweet['created_at']
             print("sexy mard" + tweet_age)
             print(type(tweet_age))
-            #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
+            # http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
             age = time.time() - (tweet_age - datetime(1970,1,1)).total_seconds()
             if age > seconds_ago:
                 remove_these_tweets.append(tweet)
@@ -179,29 +178,29 @@ class RecommenderTextual:
         tweet_age = tweet['created_at']
         print("sexy mard" + tweet_age)
         print(type(tweet_age))
-        #tweet_age = tweet.created_at
-        #http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
+        # tweet_age = tweet.created_at
+        # http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
         age = time.time() - (tweet_age - datetime(1970,1,1)).total_seconds()
-        week_seconds = 604800 #604800 seconds in a week
+        week_seconds = 604800 # 604800 seconds in a week
         rank = (age / week_seconds) * self.numeric_scale
         return age
 
     def count_bag(self, tweet):
         count = 0
-        sanitised_tweet_text = tweet['text'] #UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
-        #sanitised_tweet_text = tweet.text 
+        sanitised_tweet_text = tweet['text'] # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+        # sanitised_tweet_text = tweet.text
         
-        #bug
-        #Somehow, the following tweet is being counted as six (should be three)
-        #Tweet!
-        #Guavate: tiny library bridging Guava and Java8 - Core Java Google Guava, Guavate, Java 8 https://t.co/kQnWkUy9V7
-        #count!
-        #6
+        # bug
+        # Somehow, the following tweet is being counted as six (should be three)
+        # Tweet!
+        # Guavate: tiny library bridging Guava and Java8 - Core Java Google Guava, Guavate, Java 8 https://t.co/kQnWkUy9V7
+        # count!
+        # 6
 
         for word in sanitised_tweet_text.split():
             if word.lower() in self.termfreq_doc.keys():
                 count += 1 
-                count += self.get_tweet_term_weighting(sanitised_tweet_text)#, self.termfreq_doc.get(word))
+                count += self.get_tweet_term_weighting(sanitised_tweet_text) #, self.termfreq_doc.get(word))
                 count -= self.get_tweet_age_score(tweet)
                 if count < 0:
                     count = 0
