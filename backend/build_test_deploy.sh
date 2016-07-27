@@ -26,7 +26,13 @@ docker build -t $IMAGE_NAME .
 # =============================================================================
 #                                   TESTS
 # =============================================================================
-docker run $IMAGE_NAME nosetests tests.py
+#docker run $IMAGE_NAME nosetests tests.py
+
+docker rm -f "backend-testing" || true
+docker run --name="backend-testing" -p 1337:80 --detach $IMAGE_NAME
+sleep 5s
+docker exec "backend-testing" nosetests /usr/src/app/tests.py
+docker rm -f "backend-testing"
 
 # Tag the image we built with the tag latest
 docker tag $IMAGE_NAME "lovelace/backend:latest"

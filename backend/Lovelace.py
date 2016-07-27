@@ -119,15 +119,16 @@ class RecommendTweets(Resource):
         # followed_tweets = [tweet for tweet in home_tweets if tweet['user']['screen_name'] != user._json['screen_name']]
 
         # give the user timeline and home timeline to the recommender system to make recommendation
-        print(home_tweets)
+        print("Home tweets count: " + str(len(home_tweets)))
         recommender_object = RecommenderTextual(user_tweets, home_tweets)
-        recommended_tweets = recommender_object.generate(50, None)
-        # print(recommended_tweets)
-        # return "Hello world!"
+        recommended_tweets = recommender_object.generate(50, 1)
+        print("Recommended tweet count: " + str(len(recommended_tweets)))
+
         return jsonify(recommended_tweets)
 
+
 # The original tweet part
-class OriginalTweets(Resource):
+class EvaluationData(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
@@ -135,9 +136,14 @@ class OriginalTweets(Resource):
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth)
 
-        home_tweets = [tweet._json for tweet in api.home_timeline(count=50, page=page)]
+        home_tweets = [tweet._json for tweet in api.home_timeline(count=200, page=page)]
+        
+        user_tweets = [tweet._json for tweet in api.user_timeline(count=50)]
+        
+        recommender_object = RecommenderTextual(user_tweets, home_tweets)
+        recommended_tweets = recommender_object.generate(200, 1)
 
-        return jsonify({"original_tweets" : home_tweets})
+        return jsonify({"original_tweets":home_tweets, "recommend_tweets":recommended_tweets})
 
 
 class IOSAppRedirectHelper(Resource):
@@ -151,23 +157,37 @@ class IOSAppRedirectHelper(Resource):
         location += oauth_verifier
         return redirect(location)
 
+
 class EvaluationResult(Resource):
     def put(self):
         jsonData = request.get_json()
         time = jsonData["time"]
-        print("time" + time)
+        recommend=[]
+        original=[]
+        
         resultList = jsonData["result"]
         for singleResult in resultList:
-            tweetId = singleResult["tweetId"]
-            userScreenName = singleResult["userScreenName"]
-            userOption = singleResult["userOption"]
-            source = singleResult["source"]
-            print(tweetId + "," + userScreenName + "," + userOption + "," + source)
-        recommendLike = jsonData["recommendLike"]
-        print("recommendLike" + recommendLike)
-        originalLike = jsonData["originalLike"]
-        print("originalLike" + originalLike)
-
+            temp_dict = {'time':time,
+                        'tweet_id':singleResult["tweetId"],
+                        'user_screen_name':singleResult["userScreenName"],
+                        'result':singleResult["userOption"],
+                        'source':singleResult["source"]}
+            
+            if singleResult["source"] == "recommend":
+                recommend.append(temp_dict)
+            else:
+                original.append(temp_dict)
+        
+        result = {'recommend':recommend,
+                  'original':original,
+                  'recommend_like':jsonData["recommendLike"],
+                  'original_like':jsonData["originalLike"]}
+        
+        r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
+                  password="marcgoestothegym").repl()
+            
+        r.db('evaluation').table('results').insert(result).run()
+                  
         return jsonData
 
 
@@ -193,10 +213,10 @@ def hello():
 api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
 
 api.add_resource(RecommendTweets, '/recommend')
-api.add_resource(OriginalTweets, '/original')
+api.add_resource(EvaluationData, '/evaluationData')
 
 api.add_resource(EvaluationResult, '/evaluationResult')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
-    # app.run()
+    app.run(host="0.0.0.0", port=80)  # Production
+    # app.run(host="127.0.0.1", port=5000)  # Local debugging
