@@ -142,7 +142,8 @@ class RecommenderTextual:
         elif how_many_days_ago is 2:
             seconds_ago = 172800
         elif how_many_days_ago is 1:
-            seconds_ago = 86400
+            # seconds_ago = 86400
+            seconds_ago = 1000000
         else:
             seconds_ago = 1000000
 
