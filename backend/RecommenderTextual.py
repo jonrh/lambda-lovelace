@@ -93,7 +93,7 @@ class RecommenderTextual:
         top_terms = []
         last_index = self.top_x_terms if len(frequency_doc) > self.top_x_terms else len(frequency_doc)
         most_common_raw = frequency_doc.most_common(last_index) 
-        print(most_common_raw)
+
         for x in range(0, last_index):
             print(x)
             top_terms.append(most_common_raw[x][0])
@@ -107,8 +107,7 @@ class RecommenderTextual:
         for removal in remove_these_terms:
             self.termfreq_doc.pop(removal, None)
 
-        print(weightings)
-        return weightings
+        print(self.termfreq_doc)
 
     def get_tweet_term_weighting(self, tweet_text):
         weighting = 0
