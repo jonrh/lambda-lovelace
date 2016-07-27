@@ -107,8 +107,10 @@ class RecommenderTextual:
         for removal in remove_these_terms:
             self.termfreq_doc.pop(removal, None)
 
-        print("Mard you sexy beast")
+        print("Term Frequency Document: ")
         print(self.termfreq_doc)
+
+        return weightings
 
     def get_tweet_term_weighting(self, tweet_text):
         weighting = 0
