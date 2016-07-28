@@ -157,7 +157,7 @@ class IOSAppRedirectHelper(Resource):
         location += oauth_verifier
         return redirect(location)
 
-
+#Evaluation part
 class EvaluationResult(Resource):
     def put(self):
         
