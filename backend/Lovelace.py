@@ -120,13 +120,13 @@ class RecommendTweets(Resource):
         # followed_tweets = [tweet for tweet in home_tweets if tweet['user']['screen_name'] != user._json['screen_name']]
 
         # give the user timeline and home timeline to the recommender system to make recommendation
-        print("Home tweets count: " + str(len(home_tweets)))
-        recommender_object = RecommenderTextual(user_tweets, home_tweets)
-        recommended_tweets = recommender_object.generate(50, 1)
-        print("Recommended tweet count: " + str(len(recommended_tweets)))
+#        print("Home tweets count: " + str(len(home_tweets)))
+#        recommender_object = RecommenderTextual(user_tweets, home_tweets)
+#        recommended_tweets = recommender_object.generate(50, 1)
+#        print("Recommended tweet count: " + str(len(recommended_tweets)))
 
-        return jsonify(recommended_tweets)
-
+#        return jsonify(recommended_tweets)
+        return screen_name
 
 # The original tweet part
 class EvaluationData(Resource):
