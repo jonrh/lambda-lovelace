@@ -110,7 +110,6 @@ class TestTweetsPool {
         defaults.removeObjectForKey(TestTweetsDataKeys.recommmendTweetsIndex)
         defaults.removeObjectForKey(TestTweetsDataKeys.originalTweetsIndex)
         defaults.removeObjectForKey(TestTweetsDataKeys.localDataAvailable)
-        
     }
     
     class func saveTweetsListLocally(){
@@ -128,8 +127,12 @@ class TestTweetsPool {
     
     
     class func removePreviousTestTweetsSet(){
+        recommendTweets.removeAll()
+        originalTweets.removeAll()
         mixedTweets.removeAll()
         mixedTweetsSource.removeAll()
+        recommendTweetsIndex = 0
+        originalTweetsIndex = 0
     }
     
 }
