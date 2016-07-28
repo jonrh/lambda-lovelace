@@ -69,7 +69,7 @@ class RecommendTweets(Resource):
                   password="marcgoestothegym").repl()
 
         # get a list of screen_names
-        users = list(r.db('lovelace').table('tweets').get_field('screen_name').run())
+        users = list(r.db('lovelace').table('user_tokens').get_field('screen_name').run())
 
         # user's screen_name
         screen_name = user._json['screen_name']

@@ -272,18 +272,47 @@ class ParentViewController: UIViewController {
         
         var recommendLikeCount = 0
         var originalLikeCount = 0
+        
+        var recommendNeitherCount = 0
+        var originalNeitherCount = 0
+        
+        var recommendDislikeCount = 0
+        var originalDislikeCount = 0
+        
         for (index, result) in EvaluationResult.results.enumerate() {
-            if result! == .like {
+            switch result!{
+            case .like:
                 if TestTweetsPool.mixedTweetsSource[index] == "recommend" {
                     recommendLikeCount += 1
                 }
                 else {
                     originalLikeCount += 1
                 }
+            case .neither:
+                if TestTweetsPool.mixedTweetsSource[index] == "recommend" {
+                    recommendNeitherCount += 1
+                }
+                else {
+                    originalNeitherCount += 1
+                }
+            case .dislike:
+                if TestTweetsPool.mixedTweetsSource[index] == "recommend" {
+                    recommendDislikeCount += 1
+                }
+                else {
+                    originalDislikeCount += 1
+                }
             }
         }
         resultParams["recommendLike"] = recommendLikeCount.description
         resultParams["originalLike"] = originalLikeCount.description
+        
+        resultParams["recomendNeither"] = recommendNeitherCount.description
+        resultParams["originalNeither"] = originalNeitherCount.description
+        
+        resultParams["recomendDislike"] = recommendDislikeCount.description
+        resultParams["originalDislike"] = originalDislikeCount.description
+        
         
         
         APIManager.postEvaluationResult(resultParams)

@@ -45,6 +45,10 @@ class PageViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         delegate = self
         dataSource = self
         if  APIManager.LoadLocalOAuthToken() {
@@ -65,7 +69,7 @@ class PageViewController: UIPageViewController {
         resultTableVC = storyboard?.instantiateViewControllerWithIdentifier(PageStoryboard.resultTableId) as! ResultContentViewController
         resultTableVC.pageNumber = AppConstant.totalPageViewCount - 1
         resultTableVC.tweets = TestTweetsPool.mixedTweets
-        setViewControllers([contentVCs[0]], direction: .Forward, animated: false, completion: nil)
+        setViewControllers([contentVCs[0]], direction: .Reverse , animated: true, completion: nil)
     }
     
     func initTestData(){
@@ -77,6 +81,7 @@ class PageViewController: UIPageViewController {
             self.configurePageVC()
             self.parentVC.hideViewsAtStartup(false)
             self.parentVC.updatePageNumberView()
+            self.parentVC.refreshProgressView()
         }
     }
     

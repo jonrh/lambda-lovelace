@@ -11,8 +11,8 @@ import Alamofire
 
 enum Router: URLRequestConvertible {
     
-//    static let baseURLString = "http://csi6220-1-vm1.ucd.ie"
-    static let baseURLString = "http://127.0.0.1:5000"
+    static let baseURLString = "http://csi6220-1-vm1.ucd.ie"
+//    static let baseURLString = "http://127.0.0.1:5000"
     
     case RecommendTweets(Int)
     case EvaluationData(Int)
