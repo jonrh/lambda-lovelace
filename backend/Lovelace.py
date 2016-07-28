@@ -180,7 +180,7 @@ class EvaluationResult(Resource):
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
 
-            r.db('evaluation').table('results').insert(jsonData).run()
+        r.db('evaluation').table('results').insert(jsonData).run()
                   
         return jsonData
 
@@ -211,11 +211,5 @@ api.add_resource(EvaluationData, '/evaluationData')
 api.add_resource(EvaluationResult, '/evaluationResult')
 
 if __name__ == '__main__':
-    # If for some reason there was an issue starting the Flask server, report
-    # it to Rollbar.
-    try:
-        app.run(host="0.0.0.0", port=80)  # Production
-        # app.run(host="127.0.0.1", port=5000)  # Local debugging
-    except:
-        rollbar.report_exc_info()
-
+    app.run(host="0.0.0.0", port=80)  # Production
+    # app.run(host="127.0.0.1", port=5000)  # Local debugging
