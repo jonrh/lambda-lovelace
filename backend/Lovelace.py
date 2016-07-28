@@ -143,7 +143,7 @@ class EvaluationData(Resource):
         recommender_object = RecommenderTextual(user_tweets, home_tweets)
         recommended_tweets = recommender_object.generate(200, 1)
 
-        return jsonify({"original_tweets":home_tweets, "recommend_tweets":recommended_tweets})
+        return jsonify({"original_tweets":home_tweets, "recommend_tweets":recommended_tweets["recommended_tweets"]})
 
 
 class IOSAppRedirectHelper(Resource):
