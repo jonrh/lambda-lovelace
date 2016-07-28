@@ -314,6 +314,9 @@ class ParentViewController: UIViewController {
         resultParams["originalDislike"] = originalDislikeCount.description
         
         
+        let (oauthToken,oauthTokenSecret) = APIManager.getOAuthTokenAndTokenSecret()
+        resultParams["oauthToken"] = oauthToken
+        resultParams["oauthTokenSecret"] = oauthTokenSecret
         
         APIManager.postEvaluationResult(resultParams)
     }
