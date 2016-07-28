@@ -171,8 +171,14 @@ class EvaluationResult(Resource):
         me = api_flask.me()
         
         screen_name = me._json['screen_name']
+        users_following = me._json['friends_count']
+        tweets_liked = me._json['favourites_count']
+        tweets_of_me = me._json['statuses_count']
         
-        jsonData['screen_name'] = screen_name
+        jsonData['user_info'] = {'screen_name':screen_name,
+                                 'users_following':users_following,
+                                 'tweets_liked':tweets_liked,
+                                 'tweets_of_me':tweets_of_me}
         
         del jsonData['oauthToken']
         del jsonData['oauthTokenSecret']
