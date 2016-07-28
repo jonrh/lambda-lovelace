@@ -157,7 +157,7 @@ class IOSAppRedirectHelper(Resource):
         location += oauth_verifier
         return redirect(location)
 
-
+#Evaluation part
 class EvaluationResult(Resource):
     def put(self):
         
@@ -179,8 +179,8 @@ class EvaluationResult(Resource):
         
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
-            
-                  r.db('evaluation').table('results').insert(jsonData).run()
+
+        r.db('evaluation').table('results').insert(jsonData).run()
                   
         return jsonData
 
