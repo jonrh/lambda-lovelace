@@ -57,10 +57,10 @@ class RecommendTweets(Resource):
         page = request.args.get('page')
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
-        api = tweepy.API(auth)
+        api_flask = tweepy.API(auth)
 
         # get user's information
-        user = api.me()
+        user = api_flask.me()
 
         # connect database
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
@@ -74,14 +74,14 @@ class RecommendTweets(Resource):
         print(1233333)
         print(screen_name)
         # get user's own timeline
-        user_tweets = [tweet._json for tweet in api.user_timeline(count=50)]
+        user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=50)]
 
         home_tweets = []
 
         # if true, then this is the first time user uses this app
         # so we first get tweets directly from twitter API
         if screen_name not in users:
-            home_tweets = [tweet._json for tweet in api.home_timeline(count=50)
+            home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=50)
                            if tweet._json['user']['screen_name'] != screen_name]
 
             for item in home_tweets:
