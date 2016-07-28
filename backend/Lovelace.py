@@ -171,8 +171,14 @@ class EvaluationResult(Resource):
         me = api_flask.me()
         
         screen_name = me._json['screen_name']
+        following_count = me._json['friends_count']
+        liked_count = me._json['favourites_count']
+        tweets_of_me = me._json['statuses_count']
         
         jsonData['screen_name'] = screen_name
+        jsonData['following_count'] = following_count
+        jsonData['liked_count'] = liked_count
+        jsonData['tweets_of_me'] = tweets_of_me
         
         del jsonData['oauthToken']
         del jsonData['oauthTokenSecret']
@@ -180,7 +186,7 @@ class EvaluationResult(Resource):
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
 
-            r.db('evaluation').table('results').insert(jsonData).run()
+        r.db('evaluation').table('results').insert(jsonData).run()
                   
         return jsonData
 
