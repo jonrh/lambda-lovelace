@@ -49,20 +49,18 @@ consumer_secret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
 # consumer_key = 'WtxItBWIIw35Ei1tQ4Zrmkybk'
 # consumer_secret = '7KV0Mmg1P7qrIrYCeeRB5V1nKrVRK0r3PQiy7RwNWYTCDxNevH'
 
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-
-
 # The recommend system part
 class RecommendTweets(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
         page = request.args.get('page')
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
-        api = tweepy.API(auth)
+        api_flask = tweepy.API(auth)
 
         # get user's information
-        user = api.me()
+        user = api_flask.me()
 
         # connect database
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
@@ -73,16 +71,17 @@ class RecommendTweets(Resource):
 
         # user's screen_name
         screen_name = user._json['screen_name']
-
+        print(1233333)
+        print(screen_name)
         # get user's own timeline
-        user_tweets = [tweet._json for tweet in api.user_timeline(count=50)]
+        user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=50)]
 
         home_tweets = []
 
         # if true, then this is the first time user uses this app
         # so we first get tweets directly from twitter API
         if screen_name not in users:
-            home_tweets = [tweet._json for tweet in api.home_timeline(count=50)
+            home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=50)
                            if tweet._json['user']['screen_name'] != screen_name]
 
             for item in home_tweets:
@@ -119,13 +118,13 @@ class RecommendTweets(Resource):
         # followed_tweets = [tweet for tweet in home_tweets if tweet['user']['screen_name'] != user._json['screen_name']]
 
         # give the user timeline and home timeline to the recommender system to make recommendation
-        print("Home tweets count: " + str(len(home_tweets)))
+#        print("Home tweets count: " + str(len(home_tweets)))
         recommender_object = RecommenderTextual(user_tweets, home_tweets)
         recommended_tweets = recommender_object.generate(50, 1)
-        print("Recommended tweet count: " + str(len(recommended_tweets)))
+#        print("Recommended tweet count: " + str(len(recommended_tweets)))
 
         return jsonify(recommended_tweets)
-
+#        return screen_name
 
 # The original tweet part
 class EvaluationData(Resource):
@@ -133,6 +132,7 @@ class EvaluationData(Resource):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
         page = request.args.get('page')
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth)
 
@@ -143,7 +143,7 @@ class EvaluationData(Resource):
         recommender_object = RecommenderTextual(user_tweets, home_tweets)
         recommended_tweets = recommender_object.generate(200, 1)
 
-        return jsonify({"original_tweets":home_tweets, "recommend_tweets":recommended_tweets})
+        return jsonify({"original_tweets":home_tweets, "recommend_tweets":recommended_tweets["recommended_tweets"]})
 
 
 class IOSAppRedirectHelper(Resource):
