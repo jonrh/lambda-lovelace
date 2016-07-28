@@ -49,15 +49,13 @@ consumer_secret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
 # consumer_key = 'WtxItBWIIw35Ei1tQ4Zrmkybk'
 # consumer_secret = '7KV0Mmg1P7qrIrYCeeRB5V1nKrVRK0r3PQiy7RwNWYTCDxNevH'
 
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-
-
 # The recommend system part
 class RecommendTweets(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
         page = request.args.get('page')
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth)
 
@@ -134,6 +132,7 @@ class EvaluationData(Resource):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
         page = request.args.get('page')
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth)
 
