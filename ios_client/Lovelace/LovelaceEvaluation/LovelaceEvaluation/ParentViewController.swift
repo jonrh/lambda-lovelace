@@ -320,15 +320,15 @@ class ParentViewController: UIViewController {
                 }
             }
         }
-        resultParams["recommendLike"] = recommendLikeCount.description
-        resultParams["originalLike"] = originalLikeCount.description
+        var countsParams = [String: String]()
+        countsParams["recommendLike"] = recommendLikeCount.description
+        countsParams["originalLike"] = originalLikeCount.description
+        countsParams["recomendNeither"] = recommendNeitherCount.description
+        countsParams["originalNeither"] = originalNeitherCount.description
+        countsParams["recomendDislike"] = recommendDislikeCount.description
+        countsParams["originalDislike"] = originalDislikeCount.description
         
-        resultParams["recomendNeither"] = recommendNeitherCount.description
-        resultParams["originalNeither"] = originalNeitherCount.description
-        
-        resultParams["recomendDislike"] = recommendDislikeCount.description
-        resultParams["originalDislike"] = originalDislikeCount.description
-        
+        resultParams["counts"] = countsParams
         
         let (oauthToken,oauthTokenSecret) = APIManager.getOAuthTokenAndTokenSecret()
         resultParams["oauthToken"] = oauthToken
