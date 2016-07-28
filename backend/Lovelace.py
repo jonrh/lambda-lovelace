@@ -160,36 +160,29 @@ class IOSAppRedirectHelper(Resource):
 
 class EvaluationResult(Resource):
     def put(self):
+        
         jsonData = request.get_json()
-        time = jsonData["time"]
-        recommend=[]
-        original=[]
+        access_token = jsonData['oauthToken']
+        access_token_secret = jsonData['oauthTokenSecret']
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        api_flask = tweepy.API(auth)
         
-        resultList = jsonData["result"]
-        for singleResult in resultList:
-            temp_dict = {'time':time,
-                        'tweet_id':singleResult["tweetId"],
-                        'user_screen_name':singleResult["userScreenName"],
-                        'result':singleResult["userOption"],
-                        'source':singleResult["source"]}
-            
-            if singleResult["source"] == "recommend":
-                recommend.append(temp_dict)
-            else:
-                original.append(temp_dict)
+        me = api_flask.me()
         
-        result = {'recommend':recommend,
-                  'original':original,
-                  'recommend_like':jsonData["recommendLike"],
-                  'original_like':jsonData["originalLike"]}
+        screen_name = me._json['screen_name']
+        
+        jsonData['screen_name'] = screen_name
+        
+        del jsonData['oauthToken']
+        del jsonData['oauthTokenSecret']
         
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
             
-        r.db('evaluation').table('results').insert(result).run()
+                  r.db('evaluation').table('results').insert(jsonData).run()
                   
         return jsonData
-
 
 # An endpoint to test if errors are correctly being transmitted to Rollbar
 @app.route("/error")
