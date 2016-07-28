@@ -73,7 +73,6 @@ class ParentViewController: UIViewController {
         super.viewDidLoad()
         restoreAllButtonsToDefaultState()
         hideViewsAtStartup(true)
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -98,16 +97,15 @@ class ParentViewController: UIViewController {
         }
     }
     
-    func toggleBottomComponents(){
-        let isResultPage = currentPageNumber == AppConstant.totalPageViewCount - 1
+    func toggleBottomComponents(moveDown moveDown: Bool){
         let bottomHeight = bottomComponentView.bounds.height
         let bottomMargin = view.bounds.width / 7 / 2
         
         UIView.animateWithDuration(1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0.5, options: .BeginFromCurrentState, animations: {
-            self.bottomComponentView.center.y += isResultPage ? bottomHeight : -bottomHeight
+            self.bottomComponentView.center.y += moveDown ? bottomHeight : -bottomHeight
             }, completion: nil)
         UIView.animateWithDuration(0.6, delay: 0, options: .CurveEaseInOut, animations: {
-            self.containerView.frame.size.height += ( isResultPage ? 1 : -1 ) * ( bottomHeight - bottomMargin )
+            self.containerView.frame.size.height += ( moveDown ? 1 : -1 ) * ( bottomHeight - bottomMargin )
             }, completion: nil)
     }
     
@@ -174,18 +172,14 @@ class ParentViewController: UIViewController {
     private func logoutHandler(){
         let alertController = UIAlertController(title: "Leave", message: "Do you want logout or restart test?", preferredStyle: .Alert)
         let logoutAction = UIAlertAction(title: "Logout", style: .Destructive) { _ in
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
-            defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
-            
-            TestTweetsPool.cleanLocalData()
+            self.logoutTest()
         }
         alertController.addAction(logoutAction)
         
         
         
         let restartAction = UIAlertAction(title: "Restart", style: .Default) { _ in
-            self.pageViewController.initTestData()
+            self.restartTest()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -216,16 +210,16 @@ class ParentViewController: UIViewController {
                                                     , preferredStyle: .Alert)
             
             let logoutAction = UIAlertAction(title: "Logout", style: .Destructive) { _ in
-                let defaults = NSUserDefaults.standardUserDefaults()
-                defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
-                defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+                self.toggleBottomComponents(moveDown: false)
+                self.logoutTest()
             }
             alertController.addAction(logoutAction)
             
             
             
             let restartAction = UIAlertAction(title: "Restart", style: .Default) { _ in
-               // todo restart
+                self.toggleBottomComponents(moveDown: false)
+                self.restartTest()
             }
             
             let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -234,6 +228,28 @@ class ParentViewController: UIViewController {
             presentViewController(alertController, animated: true, completion: nil)
         }
     
+    }
+    
+    private func logoutTest(){
+        
+        restoreAllButtonsToDefaultState()
+        hideViewsAtStartup(true)
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
+        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+        
+        TestTweetsPool.cleanLocalData()
+        performSegueWithIdentifier(ParentVCStoryboard.loginViewSegue, sender: self)
+        
+        
+    }
+    
+    private func restartTest(){
+        isSubmitted = false
+        let submitImage = UIImage(named: "submit")
+        logoutSubmitButton.setImage(submitImage, forState: .Selected)
+        pageViewController.initTestData()
     }
     
     private func postResultDataToServer(){

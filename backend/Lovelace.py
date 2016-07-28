@@ -217,11 +217,5 @@ api.add_resource(EvaluationData, '/evaluationData')
 api.add_resource(EvaluationResult, '/evaluationResult')
 
 if __name__ == '__main__':
-    # If for some reason there was an issue starting the Flask server, report
-    # it to Rollbar.
-    try:
-        app.run(host="0.0.0.0", port=80)  # Production
-        # app.run(host="127.0.0.1", port=5000)  # Local debugging
-    except:
-        rollbar.report_exc_info()
-
+    app.run(host="0.0.0.0", port=80)  # Production
+    # app.run(host="127.0.0.1", port=5000)  # Local debugging

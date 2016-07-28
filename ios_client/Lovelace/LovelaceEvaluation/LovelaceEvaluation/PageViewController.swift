@@ -82,6 +82,7 @@ class PageViewController: UIPageViewController {
             self.parentVC.hideViewsAtStartup(false)
             self.parentVC.updatePageNumberView()
             self.parentVC.refreshProgressView()
+            self.parentVC.toggleLogoutSubmitButton()
         }
     }
     
@@ -106,13 +107,13 @@ extension PageViewController: UIPageViewControllerDelegate{
             switch pageNumberOfCurrentPageView {
             case AppConstant.totalPageViewCount - 1:
                 parentVC.toggleLogoutSubmitButton()
-                parentVC.toggleBottomComponents()
+                parentVC.toggleBottomComponents(moveDown: true)
             case AppConstant.tweetContentViewCount - 1:
                 let previousVC = previousViewControllers[0] as! PageNumberDataSource
                 let previousPageNumber = previousVC.pageNumber
                 if previousPageNumber == AppConstant.totalPageViewCount - 1{
                     parentVC.toggleLogoutSubmitButton()
-                    parentVC.toggleBottomComponents()
+                    parentVC.toggleBottomComponents(moveDown: false)
                 }
             default:
                 break
