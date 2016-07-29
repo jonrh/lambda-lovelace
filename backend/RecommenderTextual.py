@@ -202,7 +202,7 @@ class RecommenderTextual:
             else:
                 new_word = word
             for term in self.termfreq_doc.keys():
-                if new_word.lower() == str(term):
+                if new_word.lower() == term.encode("utf-8"):
                     count += 1
                     count += self.get_tweet_term_weighting(sanitised_tweet_text)  # , self.termfreq_doc.get(word))
                     count -= self.get_tweet_age_score(tweet)
