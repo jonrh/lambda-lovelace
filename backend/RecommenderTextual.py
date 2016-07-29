@@ -173,7 +173,7 @@ class RecommenderTextual:
         results = data_returned[0:number_of_recommendations]
         counts = [self.count_bag(tweet) for tweet in results]
         
-        return {"recommended_tweets":results, "counts":sorted(counts, reverse=True)}
+        return {"recommended_tweets": results, "counts": sorted(counts, reverse=True)}
 
     def get_tweet_age_score(self, tweet):
         tweet_age = tweet['created_at']
@@ -202,7 +202,7 @@ class RecommenderTextual:
             else:
                 new_word = word
             for term in self.termfreq_doc.keys():
-                if new_word.lower() == term.encode("utf-8"):
+                if new_word.lower() == str(term.encode("utf-8")):
                     count += 1
                     count += self.get_tweet_term_weighting(sanitised_tweet_text)  # , self.termfreq_doc.get(word))
                     count -= self.get_tweet_age_score(tweet)
