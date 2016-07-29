@@ -213,7 +213,7 @@ class SingleTweetFeedback(Resource):
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
             
-        r.db('lovelace').table('single_results').insert(jsonData).run()
+        r.db('lovelace').table('single_feedback').insert(jsonData).run()
                   
         return jsonData
 
@@ -241,7 +241,7 @@ api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
 
 api.add_resource(RecommendTweets, '/recommend')
 api.add_resource(EvaluationData, '/evaluationData')
-
+api.add_resource(SingleTweetFeedback, '/singleTweetFeedback')
 api.add_resource(EvaluationResult, '/evaluationResult')
 
 if __name__ == '__main__':
