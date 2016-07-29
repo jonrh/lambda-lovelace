@@ -190,6 +190,34 @@ class EvaluationResult(Resource):
                   
         return jsonData
 
+#Single tweet feedback
+class SingleTweetFeedback(Resource):
+    def put(self):
+        
+        jsonData = request.get_json()
+        access_token = jsonData['oauthToken']
+        access_token_secret = jsonData['oauthTokenSecret']
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        api_flask = tweepy.API(auth)
+        
+        me = api_flask.me()
+        
+        screen_name = me._json['screen_name']
+        
+        jsonData['user_name'] = screen_name
+        
+        del jsonData['oauthToken']
+        del jsonData['oauthTokenSecret']
+
+        r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
+                  password="marcgoestothegym").repl()
+            
+        r.db('lovelace').table('single_feedback').insert(jsonData).run()
+                  
+        return jsonData
+
+
 # An endpoint to test if errors are correctly being transmitted to Rollbar
 @app.route("/error")
 def error():
@@ -213,7 +241,7 @@ api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
 
 api.add_resource(RecommendTweets, '/recommend')
 api.add_resource(EvaluationData, '/evaluationData')
-
+api.add_resource(SingleTweetFeedback, '/singleTweetFeedback')
 api.add_resource(EvaluationResult, '/evaluationResult')
 
 if __name__ == '__main__':
