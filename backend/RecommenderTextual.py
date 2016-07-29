@@ -184,7 +184,7 @@ class RecommenderTextual:
         age = time.time() - (tweet_age - datetime(1970, 1, 1)).total_seconds()
         week_seconds = 604800 # 604800 seconds in a week
         rank = (age / week_seconds) * self.numeric_scale
-        return age
+        return rank
 
     def count_bag(self, tweet):
         count = 0.0
