@@ -122,14 +122,12 @@ class RecommendTweets(Resource):
 
         single_feedback = {}
 
-        for item in feedback[screen_name]:
-            if item['feedback'] == 'like':
-                single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) + 1
-            else:
-                single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) - 1
-
-
-
+        if feedback.get(screen_name) != None:
+            for item in feedback[screen_name]:
+                if item['feedback'] == 'like':
+                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) + 1
+                else:
+                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) - 1
 
         # give the user timeline and home timeline to the recommender system to make recommendation
 #        print("Home tweets count: " + str(len(home_tweets)))
