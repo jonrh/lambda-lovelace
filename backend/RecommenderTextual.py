@@ -208,4 +208,7 @@ class RecommenderTextual:
                     count -= self.get_tweet_age_score(tweet)
                     if count < 0.0:
                         count = 0.0
+
+        print("Count bag: " + str(count))
+
         return count
