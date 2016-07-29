@@ -25,7 +25,7 @@ class Tweet : NSObject, NSCoding
         self.id = id
         self.tweet = tweet
         self.userName = userName
-        self.userDisplayName = "@" + userDisplayName
+        self.userDisplayName = userDisplayName
         self.userImageUrl = userImageUrl
         self.tweetDateTime = Tweet.getReadableDate(tweetDateTime)
         self.tweetImageUrl = tweetImageUrl

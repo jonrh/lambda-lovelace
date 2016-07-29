@@ -35,7 +35,7 @@ class TweetDetailVC: UIViewController, UITextViewDelegate {
         tweetText.dataDetectorTypes = UIDataDetectorTypes.Link
         tweetText.delegate = self
         userNameLabel.text = tweetObj?.userName
-        userScreenNameLabel.text = tweetObj?.userDisplayName
+        userScreenNameLabel.text = "@" + tweetObj!.userDisplayName
         tweetText.text = tweetObj?.tweet
         let userImageUrl = NSURL(string: (tweetObj?.userImageUrl)!)
         let avatar = NSData(contentsOfURL: userImageUrl!)

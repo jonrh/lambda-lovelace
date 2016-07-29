@@ -46,7 +46,7 @@ class FeedTableViewCell: SWTableViewCell {
     func updateCell()
     {
         tweetUserName.text = tweet?.userName
-        tweetUserDisplayName.text = tweet?.userDisplayName
+        tweetUserDisplayName.text = "@" + tweet!.userDisplayName
         tweetText.text = tweet?.tweet
         tweetDateTime.text = tweet?.tweetDateTime
         if let url = NSURL(string: (tweet?.userImageUrl)!){

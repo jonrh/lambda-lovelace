@@ -35,7 +35,7 @@ class ContentViewController: UIViewController, PageNumberDataSource {
         super.viewDidLoad()
         
         userNameLabel.text = tweet.userName
-        screenNameLabel.text = tweet.userDisplayName
+        screenNameLabel.text = "@" + tweet.userDisplayName
         tweetContentLabel.text = tweet.tweet
         
         if let userImageURL = NSURL(string: tweet.userImageUrl){
