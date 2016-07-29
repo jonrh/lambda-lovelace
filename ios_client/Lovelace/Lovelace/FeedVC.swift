@@ -202,18 +202,16 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         }
         actionForLikeTweetController.addAction(cancelAction)
         //Like from tweet author option
-        let likeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like more from " + (tweetCell.tweet?.userName)!, style: .Default)
+        let userName = tweetCell.tweet!.userName
+        let likeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like more from " + userName, style: .Default)
         { action -> Void in
-            
-            //To-do
+            self.postSingleTweetFeedbackToServer(username: userName, feedback: "like")
         }
         actionForLikeTweetController.addAction(likeForAuthorAction)
         // Like from this subject
         let likeForSubjectAction: UIAlertAction = UIAlertAction(title: "More of this Subject", style: .Default)
         { action -> Void in
-            
-            //To -do
-            
+            self.postSingleTweetFeedbackToServer(username: userName, feedback: "like")
         }
     
         actionForLikeTweetController.addAction(likeForSubjectAction)
@@ -234,17 +232,17 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         }
         actionForDisLikeTweetController.addAction(cancelAction)
         //Like from tweet author option
-        let dislikeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like less from " + (tweetCell.tweet?.userName)!, style: .Default)
+        let userName = tweetCell.tweet!.userName
+        let dislikeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like less from " + userName, style: .Default)
         { action -> Void in
             
-            //To-do
+            self.postSingleTweetFeedbackToServer(username: userName, feedback: "dislike")
         }
         actionForDisLikeTweetController.addAction(dislikeForAuthorAction)
         // Like from this subject
         let dislikeForSubjectAction: UIAlertAction = UIAlertAction(title: "Very old tweet", style: .Default)
         { action -> Void in
-            
-            //To -do
+            self.postSingleTweetFeedbackToServer(username: userName, feedback: "dislike", reason: "veryOld")
             
         }
         
@@ -253,6 +251,14 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         
         //Present the AlertController
         self.presentViewController(actionForDisLikeTweetController, animated: true, completion: nil)
+    }
+    
+    private func postSingleTweetFeedbackToServer(username username: String, feedback: String, reason: String = ""){
+        let feedbackParams = ["username":username,
+                              "feedback":feedback,
+                              "reason"  :reason
+                              ]
+        APIManager.postSingleTweetFeedback(feedbackParams)
     }
     
 }

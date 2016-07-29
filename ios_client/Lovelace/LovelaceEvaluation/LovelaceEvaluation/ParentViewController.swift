@@ -255,8 +255,8 @@ class ParentViewController: UIViewController {
     private func postResultDataToServer(){
         var resultParams = [String: AnyObject]()
         
-        let currentTime = Int64(NSDate().timeIntervalSince1970 * 1000)
-        resultParams["time"] = currentTime.description
+        let currentTime = Int(NSDate().timeIntervalSince1970 * 1000)
+        resultParams["time"] = currentTime
         
         
         
@@ -320,13 +320,13 @@ class ParentViewController: UIViewController {
                 }
             }
         }
-        var countsParams = [String: String]()
-        countsParams["recommendLike"] = recommendLikeCount.description
-        countsParams["originalLike"] = originalLikeCount.description
-        countsParams["recomendNeither"] = recommendNeitherCount.description
-        countsParams["originalNeither"] = originalNeitherCount.description
-        countsParams["recomendDislike"] = recommendDislikeCount.description
-        countsParams["originalDislike"] = originalDislikeCount.description
+        var countsParams = [String: Int]()
+        countsParams["recommendLike"] = recommendLikeCount
+        countsParams["originalLike"] = originalLikeCount
+        countsParams["recomendNeither"] = recommendNeitherCount
+        countsParams["originalNeither"] = originalNeitherCount
+        countsParams["recomendDislike"] = recommendDislikeCount
+        countsParams["originalDislike"] = originalDislikeCount
         
         resultParams["counts"] = countsParams
         

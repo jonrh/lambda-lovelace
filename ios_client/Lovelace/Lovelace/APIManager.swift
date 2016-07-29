@@ -138,11 +138,9 @@ class APIManager {
     
     class func postEvaluationResult(resultParams: [String: AnyObject]){
         Alamofire.request(Router.EvaluationResult(resultParams))
-            .response { request, response, data, error in
-                print(request)
-        }
-        
     }
     
-    
+    class func postSingleTweetFeedback(feedbackParams: [String: String]){
+        Alamofire.request(Router.SingleTweetFeedback(feedbackParams))
+    }
 }

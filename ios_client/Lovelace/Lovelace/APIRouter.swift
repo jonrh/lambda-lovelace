@@ -17,6 +17,7 @@ enum Router: URLRequestConvertible {
     case RecommendTweets(Int)
     case EvaluationData(Int)
     case EvaluationResult([String:AnyObject])
+    case SingleTweetFeedback([String:String])
     
     var method: Alamofire.Method {
         switch self {
@@ -25,6 +26,8 @@ enum Router: URLRequestConvertible {
         case .EvaluationData:
             return .GET
         case .EvaluationResult:
+            return .PUT
+        case .SingleTweetFeedback:
             return .PUT
         }
     }
@@ -37,6 +40,8 @@ enum Router: URLRequestConvertible {
             return ("/evaluationData")
         case .EvaluationResult:
             return ("/evaluationResult")
+        case .SingleTweetFeedback:
+            return ("/singleTweetFeedback")
         }
     }
     
@@ -57,6 +62,9 @@ enum Router: URLRequestConvertible {
                 parameters["page"] = String(page)
             case .EvaluationResult(let resultParameters) :
                 parameters = resultParameters
+                encodeing = Alamofire.ParameterEncoding.JSON
+            case .SingleTweetFeedback(let feedbackParams):
+                parameters = feedbackParams
                 encodeing = Alamofire.ParameterEncoding.JSON
             }
             
