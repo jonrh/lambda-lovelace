@@ -186,10 +186,9 @@ class RecommenderTextual:
         return age
 
     def count_bag(self, tweet):
-        count = 0
-        sanitised_tweet_text = tweet['text'] # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
-        # sanitised_tweet_text = tweet.text
-        
+        count = 0.0
+        # sanitised_tweet_text = tweet['text'] # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+        sanitised_tweet_text = tweet.text
         # bug
         # Somehow, the following tweet is being counted as six (should be three)
         # Tweet!
@@ -198,11 +197,15 @@ class RecommenderTextual:
         # 6
 
         for word in sanitised_tweet_text.split():
-            if word.lower() in self.termfreq_doc.keys():
-                count += 1 
-                count += self.get_tweet_term_weighting(sanitised_tweet_text) #, self.termfreq_doc.get(word))
-                count -= self.get_tweet_age_score(tweet)
-                if count < 0:
-                    count = 0
-
+            if word[0] == "#":
+                new_word = word.replace("#", "")
+            else:
+                new_word = word
+            for term in self.termfreq_doc.keys():
+                if new_word.lower() == str(term):
+                    count += 1
+                    count += self.get_tweet_term_weighting(sanitised_tweet_text)  # , self.termfreq_doc.get(word))
+                    count -= self.get_tweet_age_score(tweet)
+                    if count < 0.0:
+                        count = 0.0
         return count
