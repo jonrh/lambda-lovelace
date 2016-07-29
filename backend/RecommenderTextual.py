@@ -187,8 +187,8 @@ class RecommenderTextual:
 
     def count_bag(self, tweet):
         count = 0.0
-        # sanitised_tweet_text = tweet['text'] # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
-        sanitised_tweet_text = tweet.text
+        sanitised_tweet_text = tweet['text']  # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+        # sanitised_tweet_text = tweet.text
         # bug
         # Somehow, the following tweet is being counted as six (should be three)
         # Tweet!
