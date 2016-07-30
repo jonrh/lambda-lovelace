@@ -49,6 +49,7 @@ consumer_secret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
 # consumer_key = 'WtxItBWIIw35Ei1tQ4Zrmkybk'
 # consumer_secret = '7KV0Mmg1P7qrIrYCeeRB5V1nKrVRK0r3PQiy7RwNWYTCDxNevH'
 
+
 # The recommend system part
 class RecommendTweets(Resource):
     def get(self):
@@ -125,9 +126,9 @@ class RecommendTweets(Resource):
         if feedback.get(screen_name) != None:
             for item in feedback[screen_name]:
                 if item['feedback'] == 'like':
-                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) + 1
+                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) + 1
                 else:
-                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) - 1
+                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) - 1
 
         # give the user timeline and home timeline to the recommender system to make recommendation
 #        print("Home tweets count: " + str(len(home_tweets)))
@@ -137,6 +138,7 @@ class RecommendTweets(Resource):
 
         return jsonify(recommended_tweets)
 #        return screen_name
+
 
 # The original tweet part
 class EvaluationData(Resource):
@@ -168,6 +170,7 @@ class IOSAppRedirectHelper(Resource):
         location += '&oauth_verifier='
         location += oauth_verifier
         return redirect(location)
+
 
 #Evaluation part
 class EvaluationResult(Resource):
@@ -201,6 +204,7 @@ class EvaluationResult(Resource):
         r.db('evaluation').table('results').insert(jsonData).run()
                   
         return jsonData
+
 
 #Single tweet feedback
 class SingleTweetFeedback(Resource):

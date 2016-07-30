@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+
 from sklearn.feature_extraction.text import CountVectorizer
 from collections import Counter
-import tweepy
 import time
 import string
-from datetime import timedelta, datetime
-# import datetime
+from datetime import datetime
+import rollbar
+import operator
 
 
 class RecommenderTextual:
@@ -107,8 +108,7 @@ class RecommenderTextual:
         for removal in remove_these_terms:
             self.termfreq_doc.pop(removal, None)
 
-        print("Term Frequency Document: ")
-        print(self.termfreq_doc)
+        self.debug_term_frequency_to_rollbar()
 
         return weightings
 
@@ -210,6 +210,23 @@ class RecommenderTextual:
                     if count < 0.0:
                         count = 0.0
 
-        print("Count bag: " + str(count))
+        # print("Count bag: " + str(count))
 
         return count
+
+    def debug_term_frequency_to_rollbar(self):
+        """
+        Sends to Rollbar the term frequcny document so we can easily debug
+        what terms and weights we work with. This should hopefully allow us to
+        see what terms are being used and what sort of weights they get. To
+        spot anomalies, stopwords, etc.
+        """
+        # List of (term, weight) tuples sorted descending by weight. Example: [("lol", 9.89), ("kek", 3.37)]
+        sorted_by_weight = sorted(self.termfreq_doc.items(), key=operator.itemgetter(1), reverse=True)
+
+        pretty_termdoc_string = "Term weights: \n"
+
+        for term, weight in sorted_by_weight:
+            pretty_termdoc_string += "{0:.3f}: {1}\n".format(weight, term)
+
+        rollbar.report_message(pretty_termdoc_string, "debug")
