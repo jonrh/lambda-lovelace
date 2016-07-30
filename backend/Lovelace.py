@@ -117,9 +117,21 @@ class RecommendTweets(Resource):
         # #TO-DO: Can this be removed now? It is no longer used when initialising the Recommmender Object.
         # followed_tweets = [tweet for tweet in home_tweets if tweet['user']['screen_name'] != user._json['screen_name']]
 
+
+        feedback = r.db('lovelace').table('single_feedback').group('user_name').run()
+
+        single_feedback = {}
+
+        if feedback.get(screen_name) != None:
+            for item in feedback[screen_name]:
+                if item['feedback'] == 'like':
+                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) + 1
+                else:
+                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) - 1
+
         # give the user timeline and home timeline to the recommender system to make recommendation
 #        print("Home tweets count: " + str(len(home_tweets)))
-        recommender_object = RecommenderTextual(user_tweets, home_tweets)
+        recommender_object = RecommenderTextual(user_tweets, home_tweets, single_feedback)
         recommended_tweets = recommender_object.generate(50, 1)
 #        print("Recommended tweet count: " + str(len(recommended_tweets)))
 
