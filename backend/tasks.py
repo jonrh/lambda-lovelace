@@ -1,7 +1,26 @@
 from celery import Celery
-import tweepy
+from celery.signals import task_failure
 from datetime import timedelta
 import rethinkdb as r
+import tweepy
+import rollbar
+
+# =============================================================================
+#                                  ROLLBAR
+# =============================================================================
+# Setup for Rollbar, our error logging service. To view them see
+# https://rollbar.com/lambda-lovelace/Lambda-Lovelace-Backend/ Team members
+# should have an account. This code is worked from the following example:
+# https://github.com/rollbar/rollbar-celery-example
+rollbar.init(access_token="9a41d7e8fdbb49cead0cae434765a927", environment="celery-worker")
+
+
+def celery_base_data_hook(request, data):
+    data['framework'] = 'celery'
+
+rollbar.BASE_DATA_HOOK = celery_base_data_hook
+# =============================================================================
+
 
 # Terminal command to run this task file
 # celery -A tasks worker -B -c 8 --loglevel=info
@@ -17,6 +36,12 @@ app.conf.update(
         },
     },
 )
+
+
+@task_failure.connect
+def handle_task_failure(**kw):
+    """Send all error and exception to Rollbar"""
+    rollbar.report_exc_info(extra_data=kw)
 
 
 @app.task
