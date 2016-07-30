@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# =============================================================================
+#                       Jenkins Build/Test/Deploy Script
+#
+# This is a bash script to build, test and deploy Lambda Lovelace's backend.
+# At the time of writing Jenkins is installed on our UCD virtual machine and is
+# accessible at http://csi6220-1-vm1.ucd.ie:8080/ during the project if you got
+# the right credentials.
+#
+# Every time there is a new push to our Git repository this script executes.
+# First it builds a Docker image. Fires up a testing container and runs tests
+# and if nothing failed images are pushed to Docker Hub and then finally the
+# new "production" container is swapped.
+#
+# Author: Jón Rúnar Helgason, jonrh, 2016
+# =============================================================================
+
 # Move into the backend/ folder where our Docker image is located
 cd backend
 
