@@ -110,6 +110,9 @@ docker rm -f backend-running || true
 #			  to the stdin/out
 docker run --name="backend-running" -p 80:80 -e JENKINS_BUILDNUMBER=$BUILD_NUMBER -e GITHASH=$GITHASH --detach --restart=on-failure:50 $IMAGE_NAME
 
+# Start a Celery container. It'll
+docker run --name="celery-worker" --detach -e C_FORCE_ROOT=True --link celery-redis:redis.local $IMAGE_NAME celery -A tasks worker -B -c 8 --loglevel=info
+
 # The Docker CLI program gave some issues with signing in multiple times. To
 # fix it I simply log out after the build is complete and sign in again when
 # the next build starts. In and out.
