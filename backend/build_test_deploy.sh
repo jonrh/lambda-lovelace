@@ -3,9 +3,9 @@
 # Move into the backend/ folder where our Docker image is located
 cd backend
 
-# Variable definitions:
 # =============================================================================
-
+#                           VARIABLE DEFINITIONS
+# =============================================================================
 # Define a variable to hold a short version of the git commit this build
 # represents. E.g: "c721cdd"
 GITHASH=$(git rev-parse --short HEAD)
@@ -28,15 +28,42 @@ docker build -t $IMAGE_NAME .
 # =============================================================================
 #                                   TESTS
 # =============================================================================
-#docker run $IMAGE_NAME nosetests tests.py
-
+# Stop & remove the Docker container "backend-testing" if it exits
 docker rm -f "backend-testing" || true
-docker run --name="backend-testing" -p 1337:80 --detach $IMAGE_NAME
-sleep 5s
-docker exec "backend-testing" nosetests /usr/src/app/tests.py
-docker rm -f "backend-testing"
 
-# Tag the image we built with the tag latest
+# Start up a Docker container with the name "backend-testing". We map to port
+# 1337 on the UCD VM so we don't clash with port 80 which is used by the
+# "production" container.
+docker run --name="backend-testing" -p 1337:80 --detach $IMAGE_NAME
+
+# This is a bit of a shit mix. The problem we were faced with was that in
+# order to test a web service (by calling an endpoint) it needs to be up and
+# running. My bash scripting foo isn't that good so the only way I found was
+# to simply wait for 5 seconds then run the tests. Then the service would be
+# up for sure.
+sleep 5s
+
+# Execute the Python tests inside the testing container. The command
+# "nosetests" is some testing tool I saw was popular. It claims to be "nicer"
+# testing than the standard Python testing. I don't really see why. It claims
+# to be in maintenance mode, then there is nosetests2 which claims to be a
+# successor but at the time of writing it seems to be even less maintained.
+# Long story short: I find it confusing and I have no reservation to switch to
+# some other Python tester. See here: https://nose.readthedocs.io/en/latest/
+#
+# "usr/src/app/" is the path our source code gets shoved in the Docker
+# container. This path is determined by the Python on-build docker image. If
+# we switch to another base image we may have to update that string.
+# See more here: https://hub.docker.com/_/python/
+docker exec "backend-testing" nosetests /usr/src/app/tests.py
+
+# Stop and delete the testing container, throw it away, we're done here!
+docker rm -f "backend-testing"
+#                               END OF TESTS
+# =============================================================================
+
+# If we got to here the tests passed. Tag the Docker image we built with the
+# tag latest as it's solid and ready to be pushed to Docker Hub.
 docker tag $IMAGE_NAME "lovelace/backend:latest"
 
 # Log in to Docker Hub with user and pass credentials
@@ -72,6 +99,9 @@ docker run --name="backend-running" -p 80:80 -e JENKINS_BUILDNUMBER=$BUILD_NUMBE
 # the next build starts. In and out.
 docker logout
 
+# =============================================================================
+#                                    ROLLBAR
+# =============================================================================
 # The code below sends a notification to Rollbar (our logging service) that
 # a new deployment ocurred. I don't have any idea what this all does, it's
 # just a copy paste as instructed from Rollbar.
