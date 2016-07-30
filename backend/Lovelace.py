@@ -21,7 +21,7 @@ api = Api(app)
 
 # =============================================================================
 # Setup for Rollbar, our error logging service. This should be all that is
-# required to catch all errors and exceptions that ocurr in our program. To
+# required to catch all errors and exceptions that occur in our program. To
 # view them see https://rollbar.com/lambda-lovelace/Lambda-Lovelace-Backend/
 # The team members should have an account.
 # =============================================================================
@@ -246,20 +246,23 @@ class UserProfile(Resource):
         return me._json
 
 
-# An endpoint to test if errors are correctly being transmitted to Rollbar
 @app.route("/error")
 def error():
-    print "In /error"
+    """An endpoint to test if errors are correctly being transmitted to Rollbar"""
     x = None
     x[5]
+
     return "We won't get to here!"
 
 
-# A test endpoint so we know which version is currently running
 @app.route("/")
 def hello():
+    """A test endpoint so we know which version is currently running"""
     buildnumber = os.getenv("JENKINS_BUILDNUMBER", "N/A")
     githash = os.getenv("GITHASH", "N/A")
+
+    app.logger.debug("Hello endpoint was called. I'm testing if Rollbar will record this.")
+
     return "<p>Hello λ Lovelace!</p><p>Jenkins build number: " + buildnumber + "<br /> Git hash: " + githash + "</p>"
 
 
