@@ -97,7 +97,7 @@ docker push "lovelace/backend:latest"
 # is more of a dirty hack. The alternative would be to name it with for
 # example Jenkins build number but I'm not smart enough to look it up to shut
 # down a previous container.
-docker rm -f backend-running || true
+docker rm -f "backend-running" || true
 
 # Start and run the new container
 # + give the container the name "backend-running"
@@ -111,6 +111,7 @@ docker rm -f backend-running || true
 docker run --name="backend-running" -p 80:80 -e JENKINS_BUILDNUMBER=$BUILD_NUMBER -e GITHASH=$GITHASH --detach --restart=on-failure:50 $IMAGE_NAME
 
 # Start a Celery container. It'll
+docker rm -f "celery-worker" || true
 docker run --name="celery-worker" --detach -e C_FORCE_ROOT=True --link celery-redis:redis.local $IMAGE_NAME celery -A tasks worker -B -c 8 --loglevel=info
 
 # The Docker CLI program gave some issues with signing in multiple times. To
