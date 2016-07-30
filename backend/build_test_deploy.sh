@@ -1,5 +1,7 @@
+#!/usr/bin/env bash
+
 # Move into the backend/ folder where our Docker image is located
-cd backend
+#cd backend
 
 # Variable definitions:
 # =============================================================================
