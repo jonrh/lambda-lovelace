@@ -13,6 +13,26 @@
 # and if nothing failed images are pushed to Docker Hub and then finally the
 # new "production" container is swapped.
 #
+# Notes:
+#
+#   1.
+#   Before we deploy a new version we have to stop and remove the previous
+#   Docker container. We normally name our containers and remove like this:
+#
+#       docker rm -f "name-of-container" || true
+#
+#   The "|| true" bit is a bit of a hack to satisfy Jenkins. When Jenkins runs
+#   scripts it fails a build if any command or execution doesn't return 0
+#   (successful execution). Docker returns an error if we try to remove a
+#   container that doesn't exist. For us that's grand, we didn't want it
+#   anyway! So the "or true" bit simply guarantees we return so the script can
+#   continue executing.
+#
+#   2.
+#   I try my best to explain what the various commands and flags do but if
+#   something is missing then please refer to the official Docker docs at:
+#   https://docs.docker.com/engine/reference/run/
+#
 # Author: Jón Rúnar Helgason, jonrh, 2016
 # =============================================================================
 
@@ -37,8 +57,13 @@ JENKINS_BUILDNUMBER="J$BUILD_NUMBER"
 # Example: lovelace/backend:J1337
 IMAGE_NAME="lovelace/backend:$JENKINS_BUILDNUMBER"
 
-# Build a docker image with the name lovelace/backend and tag.
-# Example: lovelace/backend:J1337 where 1337 is the build number
+# Build a docker image with the name lovelace/backend and tag. The dot at the
+# end is important. It means "and copy all the contents of my current working
+# directory to the container". Since the script executes inside the backend/
+# folder it basically means we shove all files and folders in the backend/
+# folder into the container.
+#
+# Example image name: lovelace/backend:J1337 where 1337 is the build number
 docker build -t $IMAGE_NAME .
 
 # =============================================================================
@@ -75,9 +100,10 @@ docker exec "backend-testing" nosetests /usr/src/app/tests.py
 
 # Stop and delete the testing container, throw it away, we're done here!
 docker rm -f "backend-testing"
-#                               END OF TESTS
-# =============================================================================
 
+# =============================================================================
+#                   DOCKER TAGGING AND PUSHING TO DOCKER HUB
+# =============================================================================
 # If we got to here the tests passed. Tag the Docker image we built with the
 # tag latest as it's solid and ready to be pushed to Docker Hub.
 docker tag $IMAGE_NAME "lovelace/backend:latest"
@@ -85,34 +111,51 @@ docker tag $IMAGE_NAME "lovelace/backend:latest"
 # Log in to Docker Hub with user and pass credentials
 docker login -u lovelace -p sexymard
 
-# Push to Docker Hub our new versions. They are the same so duplicate upload
+# Push to Docker Hub our new versions. They are the same so no duplicate upload
 # happens. We push both so we always have an "latest" image so we don't have
 # to look up the latest build number if we need to manually start a container.
 docker push $IMAGE_NAME
 docker push "lovelace/backend:latest"
 
-# Remove the previous container if it was running. The "|| true" bit is to
-# have the build not fail if the container didn't exist. Note that for this
-# script we always name our running backend container "backend-running". This
-# is more of a dirty hack. The alternative would be to name it with for
-# example Jenkins build number but I'm not smart enough to look it up to shut
-# down a previous container.
+# Python backend Flask web service container
+# =============================================================================
+# Stop and throw away the previously running backend container if it exits
 docker rm -f "backend-running" || true
 
 # Start and run the new container
-# + give the container the name "backend-running"
-# + -p 80:80: map port 80 of the host to port 80 in the container
-# + -e: passes in environment variables. We use two, the Jenkins build number
-#		and the short Git hash of the latest commit. This is then used in the
-#		root / endpoint in the Flask app, so we can easily see which version
-#		is being currently run. Example: http://csi6220-1-vm1.ucd.ie/
-# + --detach: runs the container in a background process, i.e. doesn't attach
-#			  to the stdin/out
-docker run --name="backend-running" -p 80:80 -e JENKINS_BUILDNUMBER=$BUILD_NUMBER -e GITHASH=$GITHASH --detach --restart=on-failure:50 $IMAGE_NAME
+#
+# -p 80:80: map port 80 of the host to port 80 in the container
+# -e: passes in environment variables. We use two, the Jenkins build number
+#	  and the short Git hash of the latest commit. This is then used in the
+#     root / endpoint in the Flask app, so we can easily see which version
+#	  is being currently run. Example: http://csi6220-1-vm1.ucd.ie/
+# -itd: Detached Interactive TTY terminal session. Generally we want to detach
+#       our containers (so poor Jenkins doesn't drown in STDOUT). I'm not
+#       quite sure what the -it part does, but it allows us to detach from
+#       containers without killing them (by pressing Ctrl + P then Ctrl + Q
+#       if we ever need to manually peek inside of them while debugging.
+docker run --name="backend-running" -itd -p 80:80 -e JENKINS_BUILDNUMBER=$BUILD_NUMBER -e GITHASH=$GITHASH --restart=on-failure:50 $IMAGE_NAME
 
-# Start a Celery container. It'll
+
+# Python Celery container
+# =============================================================================
+# Stop and throw away the previously running celery container if it exits
 docker rm -f "celery-worker" || true
-docker run --name="celery-worker" --detach -e C_FORCE_ROOT=True --link celery-redis:redis.local $IMAGE_NAME celery -A tasks worker -B -c 8 --loglevel=info
+
+# Start a Celery worker container. It basically re-uses the backend container
+# but starts it with an overwritten execution command:
+#
+#   celery -A tasks worker -B -c 8 --loglevel=info
+#
+# We do this because both share a lot of the same dependencies and it
+# simplifies the build/test/deploy script quite a bit. Reuse for the win!
+#
+# Docker containers run as the root user by default. This poses a problem for
+# Celery because it uses pickle which is insecure. -e C_FORCE_ROOT=True runs
+# the container with an environment variable that allows us to run as root.
+# It's not really ideal but it's an okay fix for us.
+# See more here: http://stackoverflow.com/q/20346851
+docker run --name="celery-worker" -itd -e C_FORCE_ROOT=True --link celery-redis:redis.local $IMAGE_NAME celery -A tasks worker -B -c 8 --loglevel=info
 
 # The Docker CLI program gave some issues with signing in multiple times. To
 # fix it I simply log out after the build is complete and sign in again when
@@ -123,7 +166,7 @@ docker logout
 #                                    ROLLBAR
 # =============================================================================
 # The code below sends a notification to Rollbar (our logging service) that
-# a new deployment ocurred. I don't have any idea what this all does, it's
+# a new deployment occurred. I don't have any idea what this all does, it's
 # just a copy paste as instructed from Rollbar.
 ACCESS_TOKEN=9a41d7e8fdbb49cead0cae434765a927
 ENVIRONMENT=production
