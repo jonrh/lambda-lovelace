@@ -143,4 +143,18 @@ class APIManager {
     class func postSingleTweetFeedback(feedbackParams: [String: String]){
         Alamofire.request(Router.SingleTweetFeedback(feedbackParams))
     }
+    
+    class func getUserProfile(callback: (JSON)->Void) {
+        Alamofire.request(Router.UserProfile)
+            .responseJSON { response in
+                guard response.result.error == nil else {
+                    print(response.result.error)
+                    return
+                }
+                if let value = response.result.value {
+                    let me = JSON(value)
+                    callback(me)
+                }
+        }
+    }
 }

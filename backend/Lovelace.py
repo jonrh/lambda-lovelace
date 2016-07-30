@@ -230,6 +230,18 @@ class SingleTweetFeedback(Resource):
         return jsonData
 
 
+class UserProfile(Resource):
+    def get(self):
+        access_token = request.args.get('oauth_token')
+        access_token_secret = request.args.get('oauth_token_secret')
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+        auth.set_access_token(access_token, access_token_secret)
+        api_flask = tweepy.API(auth)
+
+        me = api_flask.me()
+        return me._json
+
+
 # An endpoint to test if errors are correctly being transmitted to Rollbar
 @app.route("/error")
 def error():
@@ -255,6 +267,7 @@ api.add_resource(RecommendTweets, '/recommend')
 api.add_resource(EvaluationData, '/evaluationData')
 api.add_resource(SingleTweetFeedback, '/singleTweetFeedback')
 api.add_resource(EvaluationResult, '/evaluationResult')
+api.add_resource(UserProfile, '/userProfile')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)  # Production

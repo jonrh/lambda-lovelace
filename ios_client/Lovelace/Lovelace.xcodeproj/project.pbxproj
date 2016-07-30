@@ -18,6 +18,7 @@
 		9F73BE741D071127003050BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F73BE731D071127003050BB /* Assets.xcassets */; };
 		9F73BE771D071127003050BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F73BE751D071127003050BB /* LaunchScreen.storyboard */; };
 		9FA72B0D1D09A4B500863058 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA72B0C1D09A4B500863058 /* APIManager.swift */; };
+		9FAA04941D4C671600E6DE98 /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FAA04931D4C671600E6DE98 /* UserProfileViewController.swift */; };
 		9FB660F01D17796B008F5AB6 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB660EF1D17796B008F5AB6 /* LoginVC.swift */; };
 		9FCE428B1D178B020052B5E1 /* LaunchScreen.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9FCE428A1D178B020052B5E1 /* LaunchScreen.xcassets */; };
 		A01741AC426A78EAECE80956 /* Pods_Lovelace.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E271D71631D94BE616F75561 /* Pods_Lovelace.framework */; };
@@ -39,6 +40,7 @@
 		9F73BE761D071127003050BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9F73BE781D071127003050BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9FA72B0C1D09A4B500863058 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		9FAA04931D4C671600E6DE98 /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		9FB660EF1D17796B008F5AB6 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		9FB9757B1D412EEA00EF7E84 /* Lovelace-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Lovelace-Bridging-Header.h"; sourceTree = "<group>"; };
 		9FB9757F1D41313100EF7E84 /* Rollbar.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rollbar.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/Lovelace-fjzrjfhcotsycbhktdniavthyvso/Build/Products/Debug-iphoneos/Rollbar/Rollbar.framework"; sourceTree = "<group>"; };
@@ -124,10 +126,19 @@
 		9F96783A1D16034100D81833 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9FAA04921D4C66E600E6DE98 /* Profile */,
 				9FB660EE1D17794B008F5AB6 /* Login */,
 				9F9678381D1602D200D81833 /* Feed */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		9FAA04921D4C66E600E6DE98 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				9FAA04931D4C671600E6DE98 /* UserProfileViewController.swift */,
+			);
+			name = Profile;
 			sourceTree = "<group>";
 		};
 		9FB660EE1D17794B008F5AB6 /* Login */ = {
@@ -289,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9FB660F01D17796B008F5AB6 /* LoginVC.swift in Sources */,
+				9FAA04941D4C671600E6DE98 /* UserProfileViewController.swift in Sources */,
 				9FA72B0D1D09A4B500863058 /* APIManager.swift in Sources */,
 				75A376121D1010DA0054072F /* Tweet.swift in Sources */,
 				75E425A51D37D03400033A21 /* URLWebViewController.swift in Sources */,
