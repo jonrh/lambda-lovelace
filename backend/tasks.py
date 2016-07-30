@@ -6,7 +6,7 @@ import rethinkdb as r
 # Terminal command to run this task file
 # celery -A tasks worker -B -c 8 --loglevel=info
 
-app = Celery('tasks', broker='redis://0.0.0.0:6379/0')
+app = Celery('tasks', broker='redis://celery-redis:6379/0')
 
 # config celery, the task 'add' will be executed every 60 seconds
 app.conf.update(

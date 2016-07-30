@@ -136,6 +136,12 @@ docker rm -f "backend-running" || true
 #       if we ever need to manually peek inside of them while debugging.
 docker run --name="backend-running" -itd -p 80:80 -e JENKINS_BUILDNUMBER=$BUILD_NUMBER -e GITHASH=$GITHASH --restart=on-failure:50 $IMAGE_NAME
 
+# If the celery-redis container is not running: remove any remains and start
+# up a new one. This is a message broker for the Celery worker, a queue.
+if [ ! docker inspect -f "{{.State.Running}}" "celery-redis" ] ; then
+    docker rm -f "celery-redis" || true
+    docker run -itd --name "celery-redis" redis
+fi
 
 # Python Celery container
 # =============================================================================
@@ -155,7 +161,7 @@ docker rm -f "celery-worker" || true
 # the container with an environment variable that allows us to run as root.
 # It's not really ideal but it's an okay fix for us.
 # See more here: http://stackoverflow.com/q/20346851
-docker run --name="celery-worker" -itd -e C_FORCE_ROOT=True --link celery-redis:redis.local $IMAGE_NAME celery -A tasks worker -B -c 8 --loglevel=info
+docker run --name="celery-worker" -itd -e C_FORCE_ROOT=True --link celery-redis $IMAGE_NAME celery -A tasks worker -B -c 8 --loglevel=info
 
 # The Docker CLI program gave some issues with signing in multiple times. To
 # fix it I simply log out after the build is complete and sign in again when
