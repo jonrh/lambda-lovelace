@@ -210,7 +210,7 @@
 				TargetAttributes = {
 					9F73BE681D071127003050BB = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 52XLC98QNC;
+						DevelopmentTeam = 5N64WXG932;
 					};
 				};
 			};
@@ -429,7 +429,7 @@
 				INFOPLIST_FILE = Lovelace/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.Lovelace;
+				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.Lovelace.jonrh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lovelace/Lovelace-Bridging-Header.h";
@@ -449,7 +449,7 @@
 				INFOPLIST_FILE = Lovelace/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.Lovelace;
+				PRODUCT_BUNDLE_IDENTIFIER = lovelaceTeam.Lovelace.jonrh;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Lovelace/Lovelace-Bridging-Header.h";
