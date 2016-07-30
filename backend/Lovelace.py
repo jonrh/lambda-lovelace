@@ -72,8 +72,7 @@ class RecommendTweets(Resource):
 
         # user's screen_name
         screen_name = user._json['screen_name']
-        print(1233333)
-        print(screen_name)
+
         # get user's own timeline
         user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=50)]
 
@@ -131,10 +130,8 @@ class RecommendTweets(Resource):
                     single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) - 1
 
         # give the user timeline and home timeline to the recommender system to make recommendation
-#        print("Home tweets count: " + str(len(home_tweets)))
         recommender_object = RecommenderTextual(user_tweets, home_tweets, single_feedback)
         recommended_tweets = recommender_object.generate(50, 1)
-#        print("Recommended tweet count: " + str(len(recommended_tweets)))
 
         return jsonify(recommended_tweets)
 #        return screen_name
@@ -260,8 +257,6 @@ def hello():
     """A test endpoint so we know which version is currently running"""
     buildnumber = os.getenv("JENKINS_BUILDNUMBER", "N/A")
     githash = os.getenv("GITHASH", "N/A")
-
-    app.logger.debug("Hello endpoint was called. I'm testing if Rollbar will record this.")
 
     return "<p>Hello λ Lovelace!</p><p>Jenkins build number: " + buildnumber + "<br /> Git hash: " + githash + "</p>"
 

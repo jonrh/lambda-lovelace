@@ -46,7 +46,6 @@ class RecommenderTextual:
         self.own_tweets = users_own_tweets
         self.followed_tweets = users_followed_tweets
         self.get_term_frequency_weightings()
-        # print(self.termfreq_doc)
 
     # This method currently gets the top x terms that a users tweets with
     def get_term_frequency_weightings(self):
@@ -209,8 +208,6 @@ class RecommenderTextual:
                     if count < 0.0:
                         count = 0.0
 
-        # print("Count bag: " + str(count))
-
         return count
 
     def debug_term_frequency_to_rollbar(self):
@@ -223,7 +220,7 @@ class RecommenderTextual:
         # List of (term, weight) tuples sorted descending by weight. Example: [("lol", 9.89), ("kek", 3.37)]
         sorted_by_weight = sorted(self.termfreq_doc.items(), key=operator.itemgetter(1), reverse=True)
 
-        pretty_termdoc_string = u"Term weights: \n"
+        pretty_termdoc_string = u"Term weights: \n weight: term \n"
 
         for term, weight in sorted_by_weight:
             pretty_termdoc_string += u"{0:.3f}: {1}\n".format(weight, term)
