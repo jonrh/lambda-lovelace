@@ -138,7 +138,7 @@ docker run --name="backend-running" -itd -p 80:80 -e JENKINS_BUILDNUMBER=$BUILD_
 
 # If the celery-redis container is not running: remove any remains and start
 # up a new one. This is a message broker for the Celery worker, a queue.
-if [ ! docker inspect -f "{{.State.Running}}" "celery-redis" ] ; then
+if [ ! $(docker inspect -f "{{.State.Running}}" "celery-redis") ] ; then
     docker rm -f "celery-redis" || true
     docker run -itd --name "celery-redis" redis
 fi
