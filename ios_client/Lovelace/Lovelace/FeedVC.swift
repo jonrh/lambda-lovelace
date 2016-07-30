@@ -181,13 +181,13 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
     
     func getRightSwipeButtonsToCell()-> NSMutableArray{
         let utilityButtons: NSMutableArray = NSMutableArray()
-        utilityButtons.sw_addUtilityButtonWithColor(UIColor.redColor(), title: NSLocalizedString("Like", comment: ""))
+        utilityButtons.sw_addUtilityButtonWithColor(UIColor.clearColor(), icon: UIImage(named: "like icon"))
         return utilityButtons
     }
     
     func getLeftSwipeButtonsToCell()-> NSMutableArray{
         let utilityButtons: NSMutableArray = NSMutableArray()
-        utilityButtons.sw_addUtilityButtonWithColor(UIColor.blueColor(), title: NSLocalizedString("Dislike", comment: ""))
+        utilityButtons.sw_addUtilityButtonWithColor(UIColor.clearColor(), icon: UIImage(named: "dislike icon"))
         return utilityButtons
     }
     
@@ -219,6 +219,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         
         //Present the AlertController
         self.presentViewController(actionForLikeTweetController, animated: true, completion: nil)
+        cell.hideUtilityButtonsAnimated(true)
         
     }
     
@@ -251,6 +252,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         
         //Present the AlertController
         self.presentViewController(actionForDisLikeTweetController, animated: true, completion: nil)
+        cell.hideUtilityButtonsAnimated(true)
     }
     
     private func postSingleTweetFeedbackToServer(followerName followerName: String, feedback: String, reason: String = ""){

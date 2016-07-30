@@ -39,7 +39,23 @@ class FeedTableViewCell: SWTableViewCell {
     
     @IBOutlet weak var tweetText: KILabel!
     
-    @IBOutlet weak var weightBar: UIView!
+    @IBOutlet weak var weightBar: UIView!{
+        didSet{
+            weightBar.layer.cornerRadius = 6
+            weightBar.clipsToBounds = true
+        }
+    }
+    @IBOutlet weak var shadowView: UIView! {
+        didSet{
+            shadowView.layer.shadowColor = UIColor.blackColor().colorWithAlphaComponent(0.2).CGColor
+            shadowView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(0.1).CGColor
+            shadowView.layer.borderWidth = 1
+            shadowView.layer.shadowOffset = CGSizeMake(0, 1)
+            shadowView.layer.shadowRadius = 3
+            shadowView.layer.shadowOpacity = 1
+            shadowView.layer.cornerRadius = 8
+        }
+    }
 
     
     
