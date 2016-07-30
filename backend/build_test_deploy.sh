@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Move into the backend/ folder where our Docker image is located
 #cd backend
