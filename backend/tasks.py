@@ -41,7 +41,11 @@ app.conf.update(
 @task_failure.connect
 def handle_task_failure(**kw):
     """Send all error and exception to Rollbar"""
-    rollbar.report_exc_info(extra_data=kw)
+    # Commented out for now, so we don't drain our Rollbar quota too hard
+    # there is an error in the Celery worker. Will comment back in once it
+    # has been fixed.
+    # rollbar.report_exc_info(extra_data=kw)
+    pass
 
 
 @app.task
