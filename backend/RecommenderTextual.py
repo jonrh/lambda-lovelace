@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+
 from sklearn.feature_extraction.text import CountVectorizer
 from collections import Counter
-import tweepy
 import time
 import string
-from datetime import timedelta, datetime
-# import datetime
+from datetime import datetime
+import rollbar
+import operator
 
 
 class RecommenderTextual:
@@ -45,11 +46,10 @@ class RecommenderTextual:
         self.own_tweets = users_own_tweets
         self.followed_tweets = users_followed_tweets
         self.get_term_frequency_weightings()
-        # print(self.termfreq_doc)
 
     # This method currently gets the top x terms that a users tweets with
     def get_term_frequency_weightings(self):
-        weightings = {} # Dictionary of terms (keys) and their weighting (value)
+        weightings = {}  # Dictionary of terms (keys) and their weighting (value)
 
         # http://stackoverflow.com/questions/265960/best-way-to-strip-punctuation-from-a-string-in-python
         exclude = set(string.punctuation)
@@ -62,8 +62,8 @@ class RecommenderTextual:
         # Filtering section
         my_first_x_tweets = self.own_tweets[0: self.amount_of_tweets_to_gather]
         overall_list = []
-        for sublist in my_first_x_tweets: # Iterating each tweet
-            for item in sublist['text'].split(): # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+        for sublist in my_first_x_tweets:  # Iterating each tweet
+            for item in sublist['text'].split():  # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
             # for item in sublist.text.split():#Iterating each word of a tweet
                 if item not in stop_words:
                     # https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
@@ -71,19 +71,18 @@ class RecommenderTextual:
                     transformed_item = ''.join(c for c in word if c not in string.punctuation)
                     overall_list.append(transformed_item)
             
-            for hashtag in sublist['entities']['hashtags']: # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+            for hashtag in sublist['entities']['hashtags']:  # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
             #for hashtag in sublist.entities['hashtags']: 
                 tag = hashtag['text'].lower()
                 # https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
                 overall_list.append(''.join(c for c in tag if c not in string.punctuation))
-
 
         total_count = len(overall_list)
         frequency_doc = Counter(overall_list)
         term_frequncy_list = {}
 
         for term in frequency_doc.keys():
-            #hashtag = str(u'#{}'.format(term))#.encode('utf-8')
+            # hashtag = str(u'#{}'.format(term))#.encode('utf-8')
             hashtag = u'#' + term
             hashtag_value = float(frequency_doc.get(hashtag) * self.hash_tag_multiplier) if frequency_doc.get(hashtag) is not None else 0.0
             term_value = float(frequency_doc.get(term))
@@ -107,8 +106,7 @@ class RecommenderTextual:
         for removal in remove_these_terms:
             self.termfreq_doc.pop(removal, None)
 
-        print("Term Frequency Document: ")
-        print(self.termfreq_doc)
+        self.debug_term_frequency_to_rollbar()
 
         return weightings
 
@@ -210,6 +208,21 @@ class RecommenderTextual:
                     if count < 0.0:
                         count = 0.0
 
-        print("Count bag: " + str(count))
-
         return count
+
+    def debug_term_frequency_to_rollbar(self):
+        """
+        Sends to Rollbar the term frequcny document so we can easily debug
+        what terms and weights we work with. This should hopefully allow us to
+        see what terms are being used and what sort of weights they get. To
+        spot anomalies, stopwords, etc.
+        """
+        # List of (term, weight) tuples sorted descending by weight. Example: [("lol", 9.89), ("kek", 3.37)]
+        sorted_by_weight = sorted(self.termfreq_doc.items(), key=operator.itemgetter(1), reverse=True)
+
+        pretty_termdoc_string = u"Term weights: \n weight: term \n"
+
+        for term, weight in sorted_by_weight:
+            pretty_termdoc_string += u"{0:.3f}: {1}\n".format(weight, term)
+
+        rollbar.report_message(pretty_termdoc_string, "debug")

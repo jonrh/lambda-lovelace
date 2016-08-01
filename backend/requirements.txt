@@ -21,3 +21,5 @@ scipy==0.17.1
 scikit-learn==0.17.1
 blinker==1.4
 rollbar==0.13.2
+Celery==3.1.23
+redis==2.10.5

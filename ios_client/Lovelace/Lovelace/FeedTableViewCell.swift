@@ -28,6 +28,7 @@ class FeedTableViewCell: SWTableViewCell {
     }
     
     
+    @IBOutlet weak var tweetImage: UIImageView!
     @IBOutlet weak var tweetUserName: UILabel!
     
   
@@ -62,7 +63,7 @@ class FeedTableViewCell: SWTableViewCell {
     func updateCell()
     {
         tweetUserName.text = tweet?.userName
-        tweetUserDisplayName.text = "@" + tweet!.userDisplayName
+        tweetUserDisplayName.text = tweet?.userDisplayName
         tweetText.text = tweet?.tweet
         tweetDateTime.text = tweet?.tweetDateTime
         if let url = NSURL(string: (tweet?.userImageUrl)!){
@@ -75,6 +76,20 @@ class FeedTableViewCell: SWTableViewCell {
                 }
             }
         }
+        if !(tweet?.tweetImageUrl.isEmpty)!
+        {
+            if let url = NSURL(string: (tweet?.tweetImageUrl)!){
+                let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+                dispatch_async(dispatch_get_global_queue(qos,0)) { () -> Void in
+                    if let avatar = NSData(contentsOfURL: url) {
+                        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                            self.tweetImage?.image = UIImage(data: avatar)
+                        }
+                    }
+                }
+            }
+        }
+
     }
     
     

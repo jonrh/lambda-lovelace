@@ -21,7 +21,7 @@ api = Api(app)
 
 # =============================================================================
 # Setup for Rollbar, our error logging service. This should be all that is
-# required to catch all errors and exceptions that ocurr in our program. To
+# required to catch all errors and exceptions that occur in our program. To
 # view them see https://rollbar.com/lambda-lovelace/Lambda-Lovelace-Backend/
 # The team members should have an account.
 # =============================================================================
@@ -49,6 +49,7 @@ consumer_secret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
 # consumer_key = 'WtxItBWIIw35Ei1tQ4Zrmkybk'
 # consumer_secret = '7KV0Mmg1P7qrIrYCeeRB5V1nKrVRK0r3PQiy7RwNWYTCDxNevH'
 
+
 # The recommend system part
 class RecommendTweets(Resource):
     def get(self):
@@ -71,8 +72,7 @@ class RecommendTweets(Resource):
 
         # user's screen_name
         screen_name = user._json['screen_name']
-        print(1233333)
-        print(screen_name)
+
         # get user's own timeline
         user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=50)]
 
@@ -125,18 +125,17 @@ class RecommendTweets(Resource):
         if feedback.get(screen_name) != None:
             for item in feedback[screen_name]:
                 if item['feedback'] == 'like':
-                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) + 1
+                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) + 1
                 else:
-                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'],0) - 1
+                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) - 1
 
         # give the user timeline and home timeline to the recommender system to make recommendation
-#        print("Home tweets count: " + str(len(home_tweets)))
         recommender_object = RecommenderTextual(user_tweets, home_tweets, single_feedback)
         recommended_tweets = recommender_object.generate(50, 1)
-#        print("Recommended tweet count: " + str(len(recommended_tweets)))
 
         return jsonify(recommended_tweets)
 #        return screen_name
+
 
 # The original tweet part
 class EvaluationData(Resource):
@@ -168,6 +167,7 @@ class IOSAppRedirectHelper(Resource):
         location += '&oauth_verifier='
         location += oauth_verifier
         return redirect(location)
+
 
 #Evaluation part
 class EvaluationResult(Resource):
@@ -201,6 +201,7 @@ class EvaluationResult(Resource):
         r.db('evaluation').table('results').insert(jsonData).run()
                   
         return jsonData
+
 
 #Single tweet feedback
 class SingleTweetFeedback(Resource):
@@ -242,20 +243,21 @@ class UserProfile(Resource):
         return me._json
 
 
-# An endpoint to test if errors are correctly being transmitted to Rollbar
 @app.route("/error")
 def error():
-    print "In /error"
+    """An endpoint to test if errors are correctly being transmitted to Rollbar"""
     x = None
     x[5]
+
     return "We won't get to here!"
 
 
-# A test endpoint so we know which version is currently running
 @app.route("/")
 def hello():
+    """A test endpoint so we know which version is currently running"""
     buildnumber = os.getenv("JENKINS_BUILDNUMBER", "N/A")
     githash = os.getenv("GITHASH", "N/A")
+
     return "<p>Hello λ Lovelace!</p><p>Jenkins build number: " + buildnumber + "<br /> Git hash: " + githash + "</p>"
 
 
