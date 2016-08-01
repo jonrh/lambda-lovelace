@@ -129,17 +129,17 @@ class RecommenderTextual:
                 #numeric scale?
                 feedback_score = self.single_feedback.get(author_name)
                 capped_score =  feedback_score if feedback_score <= 100 else 100
-                score =  (capped_score/self.numeric_scale)* more_or_less_from_this_author_multiplier
+                score =  (capped_score/self.numeric_scale)* self.more_or_less_from_this_author_multiplier
         return score
 
     def get_dislike_weighting(self, tweet):
         print("DISLIKED")
         print(tweet['text'])
-        tweet_text = tweet['text']
+        tweet_text = tweet['text'].lower()
         terms_to_reduce = []
         for word in tweet_text.split(" "):
-            unhashedword = word.lower()
-            if "#" in word and word[0] == "#":
+            unhashedword = word
+            if "#" in word and word.startswith("#"):
                 unhashedword.replace("#", "", 1)
             if unhashedword in self.termfreq_doc.keys():
                 terms_to_reduce.append(unhashedword)
@@ -171,11 +171,11 @@ class RecommenderTextual:
     def get_liked_weighting(self, tweet):
         print("LIKED")
         print(tweet['text'])
-        tweet_text = tweet['text']
+        tweet_text = tweet['text'].lower()
         terms_to_increase = []
         for word in tweet_text.split(" "):
-            unhashedword = word.lower()
-            if "#" in word and word[0] == "#":
+            unhashedword = word
+            if "#" in word and word.startswith("#"):
                 unhashedword.replace("#", "", 1)
             if unhashedword in self.termfreq_doc.keys():
                 terms_to_increase.append(unhashedword)
