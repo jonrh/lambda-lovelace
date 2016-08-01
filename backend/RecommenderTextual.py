@@ -134,10 +134,10 @@ class RecommenderTextual:
 
     def get_dislike_weighting(self, tweet):
         print("DISLIKED")
-        print(tweet.text)
-        tweet_text = tweet.text
+        print(tweet['text'])
+        tweet_text = tweet['text']
         terms_to_reduce = []
-        for word in tweet.text.split(" "):
+        for word in tweet_text.split(" "):
             unhashedword = word.lower()
             if "#" in word and word[0] == "#":
                 unhashedword.replace("#", "", 1)
@@ -170,10 +170,10 @@ class RecommenderTextual:
 
     def get_liked_weighting(self, tweet):
         print("LIKED")
-        print(tweet.text)
-        tweet_text = tweet.text
+        print(tweet['text'])
+        tweet_text = tweet['text']
         terms_to_increase = []
-        for word in tweet.text.split(" "):
+        for word in tweet_text.split(" "):
             unhashedword = word.lower()
             if "#" in word and word[0] == "#":
                 unhashedword.replace("#", "", 1)
@@ -274,11 +274,11 @@ class RecommenderTextual:
         # count!
         # 6
         count += self.get_author_sentiment(tweet)
-        if "Java" in tweet.text:
+        if "Java" in tweet['text']:#.text:
         #if tweet in self.disliked_tweets:
             self.get_dislike_weighting(tweet)
 
-        if "Ruby" in tweet.text:
+        if "Ruby" in tweet['text']:#.text:
         #if tweet in self.liked_tweets:
             self.get_liked_weighting(tweet)
 
