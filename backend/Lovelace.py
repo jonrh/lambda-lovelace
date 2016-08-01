@@ -8,7 +8,6 @@ import tweepy
 import json
 from sklearn.feature_extraction.text import CountVectorizer
 from collections import Counter
-from recommender import Recommender
 import rethinkdb as r
 from RecommenderTextual import RecommenderTextual
 import os  # For environment variables and Rollbar logging
@@ -93,31 +92,46 @@ class RecommendTweets(Resource):
                                                           'consumer_key': consumer_key,
                                                           'consumer_secret': consumer_secret,
                                                           'screen_name': screen_name,
-                                                          'created_at': r.now().to_epoch_time().run()}).run()
+                                                          'last_login': r.now().to_epoch_time().run(),
+                                                          'last_logout': None,
+                                                          'fetch_status': True}).run()
 
         # if not, we get tweets directly from database
         else:
-            data = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).group('screen_name').limit(50).run()
-            tweets = data[screen_name]
-            r.db('lovelace').table('user_tokens').insert({'access_secret': access_token_secret,
-                                                          'access_token': access_token,
-                                                          'consumer_key': consumer_key,
-                                                          'consumer_secret': consumer_secret,
-                                                          'screen_name': screen_name,
-                                                          'created_at': r.now().to_epoch_time().run()}).run()
+            user = r.db('lovelace').table('user_tokens').get(screen_name).run()
+            current_time = r.now().to_epoch_time().run()
+            if user['fetch_status'] == True:
+                print('refreshing')
+                data = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).group('screen_name').limit(
+                    50).run()
+                tweets = data[screen_name]
 
-            home_tweets = [tweet['tweet'] for tweet in tweets
-                           if tweet['tweet']['user']['screen_name'] != screen_name]
+                home_tweets = [tweet['tweet'] for tweet in tweets
+                               if tweet['tweet']['user']['screen_name'] != screen_name]
 
-        # #fetch tweets of user's own time line
-        # #TO-DO: Can this be removed now? It is no longer used when initialising the Recommmender Object.
-        # users_tweets = [tweet._json for tweet in tweepy.Cursor(api.user_timeline, count=50).items(50)]
-        #
-        # #filter out the tweets that the user tweeted from the home timeline
-        # #TO-DO: Can this be removed now? It is no longer used when initialising the Recommmender Object.
-        # followed_tweets = [tweet for tweet in home_tweets if tweet['user']['screen_name'] != user._json['screen_name']]
+            elif user['last_logout'] == None or (current_time - user['last_logout']) <= 900:
+                print('within 15min, directly from database')
+                data = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).group('screen_name').limit(
+                    50).run()
+                tweets = data[screen_name]
 
+                home_tweets = [tweet['tweet'] for tweet in tweets
+                               if tweet['tweet']['user']['screen_name'] != screen_name]
 
+                r.db('lovelace').table('user_tokens').update({'screen_name': screen_name,
+                                                              'fetch_status': True}).run()
+            else:
+                print('put of 15 min, get from twitter api')
+                home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=50)
+                               if tweet._json['user']['screen_name'] != screen_name]
+                for item in home_tweets:
+                    r.db('lovelace').table('tweets').insert(
+                        {'screen_name': screen_name, 'tweet_id': item['id'], 'tweet': item}).run()
+
+                r.db('lovelace').table('user_tokens').update({'screen_name': screen_name,
+                                                              'last_login': r.now().to_epoch_time().run(),
+                                                              'fetch_status': True}).run()
+        #single feedback
         feedback = r.db('lovelace').table('single_feedback').group('user_name').run()
 
         single_feedback = {}
