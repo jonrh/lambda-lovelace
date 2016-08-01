@@ -28,7 +28,11 @@ class FeedTableViewCell: SWTableViewCell {
     }
     
     
-    @IBOutlet weak var tweetImage: UIImageView!
+    @IBOutlet weak var tweetImage: UIImageView! {
+        didSet{
+            tweetImage.clipsToBounds = true
+        }
+    }
     @IBOutlet weak var tweetUserName: UILabel!
     
   
@@ -48,13 +52,15 @@ class FeedTableViewCell: SWTableViewCell {
     }
     @IBOutlet weak var shadowView: UIView! {
         didSet{
-            shadowView.layer.shadowColor = UIColor.blackColor().colorWithAlphaComponent(0.2).CGColor
-            shadowView.layer.borderColor = UIColor.blackColor().colorWithAlphaComponent(0.1).CGColor
-            shadowView.layer.borderWidth = 1
+            shadowView.layer.shadowColor = UIColor.blackColor().CGColor
+//            shadowView.layer.borderColor = UIColor.blackColor().CGColor
+//            shadowView.layer.borderWidth = 1
             shadowView.layer.shadowOffset = CGSizeMake(0, 1)
             shadowView.layer.shadowRadius = 3
-            shadowView.layer.shadowOpacity = 1
+            shadowView.layer.shadowOpacity = 0.2
             shadowView.layer.cornerRadius = 8
+//            let path = UIBezierPath(roundedRect: shadowView.layer.bounds, cornerRadius: 6).CGPath
+//            shadowView.layer.shadowPath = path
         }
     }
 
@@ -63,7 +69,7 @@ class FeedTableViewCell: SWTableViewCell {
     func updateCell()
     {
         tweetUserName.text = tweet?.userName
-        tweetUserDisplayName.text = tweet?.userDisplayName
+        tweetUserDisplayName.text = "@" + tweet!.userDisplayName
         tweetText.text = tweet?.tweet
         tweetDateTime.text = tweet?.tweetDateTime
         if let url = NSURL(string: (tweet?.userImageUrl)!){

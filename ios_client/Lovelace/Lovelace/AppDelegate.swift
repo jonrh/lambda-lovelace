@@ -51,8 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(app: UIApplication, openURL url: NSURL, options: [String : AnyObject]) -> Bool {
         print("appDelegate")
-        let nevigationController = window?.rootViewController as! UINavigationController
-        nevigationController.popViewControllerAnimated(true)
+        window?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
         OAuthSwift.handleOpenURL(url)
         return true
     }

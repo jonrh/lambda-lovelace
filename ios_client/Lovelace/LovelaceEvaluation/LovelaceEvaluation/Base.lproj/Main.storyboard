@@ -144,12 +144,12 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="b6z-8w-uYT" userLabel="Bottom components">
                                         <rect key="frame" x="0.0" y="427" width="600" height="153"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yys-p1-fX7" userLabel="placeholder">
-                                                <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yys-p1-fX7" userLabel="placeholder">
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="42"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
-                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UIR-15-2yO" userLabel="buttons">
-                                                <rect key="frame" x="0.0" y="43" width="600" height="68"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UIR-15-2yO" userLabel="buttons">
+                                                <rect key="frame" x="0.0" y="42" width="600" height="68"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pNW-NF-SDw" userLabel="placeholder">
                                                         <rect key="frame" x="0.0" y="0.0" width="99" height="68"/>
@@ -207,8 +207,8 @@
                                                     <constraint firstItem="Cef-YP-Diw" firstAttribute="width" secondItem="pNW-NF-SDw" secondAttribute="width" id="nV0-U4-qEV"/>
                                                 </constraints>
                                             </stackView>
-                                            <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LvC-5f-Ysi" userLabel="palaceholder">
-                                                <rect key="frame" x="0.0" y="111" width="600" height="42"/>
+                                            <view contentMode="scaleToFill" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LvC-5f-Ysi" userLabel="palaceholder">
+                                                <rect key="frame" x="0.0" y="110" width="600" height="43"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="20" id="Yip-Xt-IXb"/>
@@ -477,7 +477,7 @@
                                                             <rect key="frame" x="0.0" y="28" width="514" height="99"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fhd-uN-mrC" id="Dsl-x8-ndD">
-                                                                <rect key="frame" x="0.0" y="0.0" width="514" height="98.5"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="514" height="98"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6Ae-fp-gQd">
@@ -658,8 +658,8 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <blurEffect style="extraLight"/>
                                     </visualEffectView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hgy-KR-gKx" userLabel="placeholder">
-                                        <rect key="frame" x="0.0" y="348" width="514" height="253"/>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hgy-KR-gKx" userLabel="placeholder">
+                                        <rect key="frame" x="0.0" y="348" width="514" height="252"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
