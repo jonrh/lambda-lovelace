@@ -293,7 +293,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="kdc-e6-GpJ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitter default avatar" translatesAutoresizingMaskIntoConstraints="NO" id="kdc-e6-GpJ">
                                 <rect key="frame" x="30" y="65" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="6xK-A9-v5S"/>
@@ -484,5 +484,6 @@
         <image name="login button" width="208" height="61"/>
         <image name="profile" width="30" height="29"/>
         <image name="sign out" width="82" height="28"/>
+        <image name="twitter default avatar" width="400" height="400"/>
     </resources>
 </document>
