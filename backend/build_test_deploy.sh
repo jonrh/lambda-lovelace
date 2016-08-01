@@ -72,10 +72,9 @@ docker build -t $IMAGE_NAME .
 # Stop & remove the Docker container "backend-testing" if it exits
 docker rm -f "backend-testing" || true
 
-# Start up a Docker container with the name "backend-testing". We map to port
-# 1337 on the UCD VM so we don't clash with port 80 which is used by the
-# "production" container.
-docker run --name="backend-testing" -p 1337:80 --detach $IMAGE_NAME
+# Start up a Docker container with the name "backend-testing". We don't need to
+# map any ports because the tests will be run inside the container
+docker run --name="backend-testing" --detach $IMAGE_NAME
 
 # This is a bit of a shit mix. The problem we were faced with was that in
 # order to test a web service (by calling an endpoint) it needs to be up and
@@ -83,6 +82,10 @@ docker run --name="backend-testing" -p 1337:80 --detach $IMAGE_NAME
 # to simply wait for 5 seconds then run the tests. Then the service would be
 # up for sure.
 sleep 5s
+
+# Print logs so that the Jenkins build console log has a record of if the
+# server started normally. Easier debugging.
+docker logs "backend-testing"
 
 # Execute the Python tests inside the testing container. The command
 # "nosetests" is some testing tool I saw was popular. It claims to be "nicer"
@@ -97,6 +100,7 @@ sleep 5s
 # we switch to another base image we may have to update that string.
 # See more here: https://hub.docker.com/_/python/
 docker exec "backend-testing" nosetests /usr/src/app/tests.py
+docker logs "backend-testing"
 
 # Stop and delete the testing container, throw it away, we're done here!
 docker rm -f "backend-testing"
