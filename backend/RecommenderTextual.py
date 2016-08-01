@@ -121,7 +121,7 @@ class RecommenderTextual:
         return weighting
 
     def get_author_sentiment(self, tweet):
-        author_name = tweet['author']._json['screen_name']
+        author_name = tweet['user']._json['screen_name']
         #author_name = tweet.author._json['screen_name']
         score = 0
         for name in self.single_tweet_feedback.keys():
@@ -129,7 +129,7 @@ class RecommenderTextual:
                 #numeric scale?
                 feedback_score = self.single_feedback.get(author_name)
                 capped_score =  feedback_score if feedback_score <= 100 else 100
-                score =  (capped_score/numeric_scale)* more_or_less_from_this_author_multiplier
+                score =  (capped_score/self.numeric_scale)* more_or_less_from_this_author_multiplier
         return score
 
     def get_dislike_weighting(self, tweet):
