@@ -1,8 +1,6 @@
-from RecommenderTextual import RecommenderTextual
 from sklearn.feature_extraction.text import CountVectorizer
 import tweepy 
 
-number_of_recommendations = 70 
 
 consumer_key = "KOUIbWm4VWYzI0uuQLogzGRa0"
 consumer_secret = "r5Ac1fwLmuYFYL6biR4E1iYzS8S78DInUNM3AQ76EeMDBBVSFL"
@@ -19,16 +17,7 @@ api = tweepy.API(auth)
 
 users_tweets = api.user_timeline()
 followed_tweets = api.home_timeline()
+fave_tweets = api.favorites()
 
-feedback = {"@PokemonGoApp": 5}
-recommender_object = RecommenderTextual(users_tweets, followed_tweets, feedback) 
-recommended_tweets = recommender_object.generate(number_of_recommendations, 1) 
-
-print(" *** ")
-print(" *** ")
-print(" Recommended set: ")
-print(" *** ")
-print(" *** ")
-#print(recommended_tweets)
-for tweet in recommended_tweets["recommended_tweets"]:#Generate now returns the original tweets AND a counter
-    print(tweet.text.encode('utf-8'))
+for x in fave_tweets:
+	print(x.text)
