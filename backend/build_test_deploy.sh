@@ -88,7 +88,7 @@ sleep 5s
 # server started normally. Easier debugging.
 docker logs "backend-testing"
 
-docker run --name="backend-unittests" --link="backend-testing" $IMAGE_NAME
+docker run --name="backend-unittests" --link="backend-testing" $IMAGE_NAME nosetests tests.py
 
 # Execute the Python tests inside the testing container. The command
 # "nosetests" is some testing tool I saw was popular. It claims to be "nicer"
