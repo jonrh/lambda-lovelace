@@ -10,3 +10,8 @@ def test_one_plus_one():
 
 # def test_recommender_backend():
     # urllib2.urlopen("http://0.0.0.0/recommend?oauth_token=735845050458984448-oLfMuBPTyCnOw2yPEU0MdJ65YxX1BwU&oauth_token_secret=veyfudJQz0TMY5S8K6VwzPfteQFVPOSdU1yWwq5fWtZHC&page=1")
+
+
+def test_hello_endpoint():
+    html = urllib2.urlopen("http://0.0.0.0").read()
+    assert "Hello" in html
