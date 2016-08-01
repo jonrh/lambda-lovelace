@@ -84,11 +84,7 @@ docker run -d --name="backend-testing" $IMAGE_NAME
 # up for sure.
 sleep 5s
 
-# Print logs so that the Jenkins build console log has a record of if the
-# server started normally. Easier debugging.
-docker logs "backend-testing"
-
-docker run --name="backend-unittests" --link="backend-testing" $IMAGE_NAME nosetests tests.py
+docker run --name "backend-unittests" --link "backend-testing" $IMAGE_NAME nosetests tests.py
 
 # Execute the Python tests inside the testing container. The command
 # "nosetests" is some testing tool I saw was popular. It claims to be "nicer"
@@ -103,7 +99,10 @@ docker run --name="backend-unittests" --link="backend-testing" $IMAGE_NAME noset
 # we switch to another base image we may have to update that string.
 # See more here: https://hub.docker.com/_/python/
 #docker exec "backend-testing" nosetests /usr/src/app/tests.py
-#docker logs "backend-testing"
+
+# Print logs so that the Jenkins build console log has a record of if the
+# server started normally. Easier debugging.
+docker logs "backend-testing"
 
 # Stop and delete the testing container, throw it away, we're done here!
 docker rm -f "backend-testing"
