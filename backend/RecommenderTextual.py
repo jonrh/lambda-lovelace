@@ -121,7 +121,8 @@ class RecommenderTextual:
         return weighting
 
     def get_author_sentiment(self, tweet):
-        author_name = tweet.author._json['screen_name']
+        author_name = tweet['author']._json['screen_name']
+        #author_name = tweet.author._json['screen_name']
         score = 0
         for name in self.single_tweet_feedback.keys():
             if author_name == str(name):
