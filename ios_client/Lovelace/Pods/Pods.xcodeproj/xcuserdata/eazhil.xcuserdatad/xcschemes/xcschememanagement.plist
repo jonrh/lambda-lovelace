@@ -37,14 +37,19 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>5</integer>
+			<integer>6</integer>
+		</dict>
+		<key>Rollbar.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 		<key>SWTableViewCell.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>8</integer>
 		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
@@ -57,6 +62,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>162B59B96FF1F5B6B21CF89AC9E41170</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>38CA26599812F6126FBD15AB8AA6D99A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>450DB960122522A2735C9FE99DE3D61A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -81,12 +96,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>720C2235F147E0D781860B50BAD35C1B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>7B0B574431823F0F209D4C558F1C9E07</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9C5189D42C749B739ED17AF80B0AFFBA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D2F195EB5D1AC21487E0FB8609423800</key>
 		<dict>
 			<key>primary</key>
 			<true/>
