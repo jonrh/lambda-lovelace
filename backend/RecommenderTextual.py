@@ -7,19 +7,12 @@ import string
 from datetime import datetime
 import rollbar
 import operator
+from Stopwords import Stopwords
 
 
 class RecommenderTextual:
-    # TO-DO:
-    # -set language to users own twitter language
-    # -does not distinguish Java from JavaScript (Could use a bigram list for this)
-
     # BUGS:
     #  -Hashtags are worth "double" than what they appear
-
-    # TODAY:
-    # -Tweet.entities.hashtags - iterate when adding to term frequency document.
-    # -Figure out if above (entities) appears in tweet.text too.
 
     def __init__(self, users_own_tweets, users_followed_tweets, single_tweet_feedback):
         ######################################################
@@ -38,7 +31,10 @@ class RecommenderTextual:
         # This is currently bugged however, see bugs section above.
         self.hash_tag_multiplier = 2
         self.single_tweet_feedback = single_tweet_feedback
-
+        self.liked_tweets = []
+        self.disliked_tweets = []
+        self.more_or_less_from_this_author_multiplier = 0.4
+        self.like_and_dislike_multiplier = 0.125
         ###################
         # Method calls, etc#
         ###################
@@ -62,10 +58,13 @@ class RecommenderTextual:
         # Filtering section
         my_first_x_tweets = self.own_tweets[0: self.amount_of_tweets_to_gather]
         overall_list = []
-        for sublist in my_first_x_tweets:  # Iterating each tweet
-            for item in sublist['text'].split():  # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
-            # for item in sublist.text.split():#Iterating each word of a tweet
-                if item not in stop_words:
+        stop_words_list = Stopwords()
+        long_stop_words = stop_words_list.return_stopwords()
+        #for sublist in my_first_x_tweets: # Iterating each tweet
+        for item in sublist['text'].split(): # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+
+            for item in sublist.text.split():#Iterating each word of a tweet
+                if item.lower() not in stop_words and item.lower() not in long_stop_words:
                     # https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
                     word = item.lower()
                     transformed_item = ''.join(c for c in word if c not in string.punctuation)
@@ -122,6 +121,86 @@ class RecommenderTextual:
         weighting = term_match_weighting
         return weighting
 
+    def get_author_sentiment(self, tweet):
+        author_name = tweet.author._json['screen_name']
+        score = 0
+        for name in self.single_tweet_feedback.keys():
+            if author_name == str(name):
+                #numeric scale?
+                feedback_score = self.single_feedback.get(author_name)
+                capped_score =  feedback_score if feedback_score <= 100 else 100
+                score =  (capped_score/numeric_scale)* more_or_less_from_this_author_multiplier
+        return score
+
+    def get_dislike_weighting(self, tweet):
+        print("DISLIKED")
+        print(tweet.text)
+        tweet_text = tweet.text
+        terms_to_reduce = []
+        for word in tweet.text.split(" "):
+            unhashedword = word.lower()
+            if "#" in word and word[0] == "#":
+                unhashedword.replace("#", "", 1)
+            if unhashedword in self.termfreq_doc.keys():
+                terms_to_reduce.append(unhashedword)
+        self.balance_reduce_term_freq_doc_preference(terms_to_reduce)
+
+    def balance_reduce_term_freq_doc_preference(self, terms_to_reduce):
+        num_of_reduced_terms = len(terms_to_reduce)
+        num_of_terms = len(self.termfreq_doc.keys())
+        alter_value = self.like_and_dislike_multiplier
+        print("***")
+        print(alter_value)
+        print("divided by")
+        print(num_of_reduced_terms)
+        reduce_value = alter_value/num_of_reduced_terms 
+        increase_value = alter_value/(num_of_terms - num_of_reduced_terms) #self.numeric_scale/(self.numeric_scale - num_of_reduced_terms) * like_and_dislike_multiplier 
+        increase_terms = []
+        for key in self.termfreq_doc.keys():
+            if str(key) not in terms_to_reduce:
+                increase_terms.append(str(key))
+
+        for term in terms_to_reduce:
+            print("removing from " + str(term) + " with: " + str(reduce_value))
+            self.termfreq_doc[term] -= reduce_value
+
+        for term in increase_terms:
+            print("adding to " + str(term) + " with: " + str(increase_value))
+            self.termfreq_doc[term] += increase_value
+
+    def get_liked_weighting(self, tweet):
+        print("LIKED")
+        print(tweet.text)
+        tweet_text = tweet.text
+        terms_to_increase = []
+        for word in tweet.text.split(" "):
+            unhashedword = word.lower()
+            if "#" in word and word[0] == "#":
+                unhashedword.replace("#", "", 1)
+            if unhashedword in self.termfreq_doc.keys():
+                terms_to_increase.append(unhashedword)
+        self.balance_increase_term_freq_doc_preference(terms_to_increase)
+
+    def balance_increase_term_freq_doc_preference(self, terms_to_increase):
+        num_of_increased_terms = len(terms_to_increase)
+        num_of_terms = len(self.termfreq_doc.keys())
+        alter_value = self.like_and_dislike_multiplier 
+        increase_value = alter_value/(num_of_increased_terms) 
+        reduce_value = alter_value/(num_of_terms - num_of_increased_terms) 
+        reduce_terms = []
+        for key in self.termfreq_doc.keys():
+            if str(key) not in terms_to_increase:
+                reduce_terms.append(str(key))
+
+        for term in terms_to_increase:
+            print("adding to " + str(term) + " with: " + str(increase_value))
+            self.termfreq_doc.get[term] += increase_value
+
+        for term in reduce_terms:
+            print("removing from " + str(term) + " with: " + str(reduce_value))
+            self.termfreq_doc.get[term] -= reduce_value
+
+
     def generate(self, number_of_recommendations, how_many_days_ago):
         list_of_owners_tweets = []
         unfollowed_tweets = []
@@ -147,7 +226,7 @@ class RecommenderTextual:
             seconds_ago = 1000000
 
         for tweet in self.own_tweets:
-            # list_of_owners_tweets.append(tweet.text.encode('utf-8'))
+            #list_of_owners_tweets.append(tweet.text.encode('utf-8'))
             list_of_owners_tweets.append(tweet['text'].encode('utf-8'))  # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE ABOVE
 
         self.vectorizer.fit_transform(list_of_owners_tweets)
@@ -157,7 +236,7 @@ class RecommenderTextual:
         remove_these_tweets = []
 
         for tweet in tweet_list:
-            # tweet_age = tweet.created_at
+            #tweet_age = tweet.created_at
             tweet_age = tweet['created_at']
             # http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
             tweet_age = datetime.strptime(tweet_age, '%a %b %d %H:%M:%S +0000 %Y')  # dirty fix
@@ -177,7 +256,7 @@ class RecommenderTextual:
     def get_tweet_age_score(self, tweet):
         tweet_age = tweet['created_at']
         tweet_age = datetime.strptime(tweet_age, '%a %b %d %H:%M:%S +0000 %Y')  # dirty fix
-        # tweet_age = tweet.created_at
+        #tweet_age = tweet.created_at
         # http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
         age = time.time() - (tweet_age - datetime(1970, 1, 1)).total_seconds()
         week_seconds = 604800 # 604800 seconds in a week
@@ -187,13 +266,21 @@ class RecommenderTextual:
     def count_bag(self, tweet):
         count = 0.0
         sanitised_tweet_text = tweet['text']  # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
-        # sanitised_tweet_text = tweet.text
+        #sanitised_tweet_text = tweet.text
         # bug
         # Somehow, the following tweet is being counted as six (should be three)
         # Tweet!
         # Guavate: tiny library bridging Guava and Java8 - Core Java Google Guava, Guavate, Java 8 https://t.co/kQnWkUy9V7
         # count!
         # 6
+        count += self.get_author_sentiment(tweet)
+        if "Java" in tweet.text:
+        #if tweet in self.disliked_tweets:
+            self.get_dislike_weighting(tweet)
+
+        if "Ruby" in tweet.text:
+        #if tweet in self.liked_tweets:
+            self.get_liked_weighting(tweet)
 
         for word in sanitised_tweet_text.split():
             if word[0] == "#":
