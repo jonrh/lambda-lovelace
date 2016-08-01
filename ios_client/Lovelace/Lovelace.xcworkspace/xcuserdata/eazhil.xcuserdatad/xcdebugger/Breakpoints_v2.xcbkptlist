@@ -158,12 +158,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Lovelace/FeedVC.swift"
-            timestampString = "490197376.380829"
+            timestampString = "491749108.963242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "155"
-            endingLineNumber = "155"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "prepareToURLWebViewSegue(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -174,12 +174,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Lovelace/FeedVC.swift"
-            timestampString = "490197376.380829"
+            timestampString = "491749108.963242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "prepareForSegue(_:sender:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -190,28 +190,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Lovelace/FeedVC.swift"
-            timestampString = "490197376.380829"
+            timestampString = "491749108.963242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Lovelace/FeedVC.swift"
-            timestampString = "490194811.566955"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "prepareToURLWebViewSegue(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

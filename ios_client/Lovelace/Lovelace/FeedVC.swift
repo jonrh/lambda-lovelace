@@ -111,9 +111,19 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
-        let tweetCell = tableView.dequeueReusableCellWithIdentifier("tweetPrototypeCell",
-                                                                    forIndexPath: indexPath) as! FeedTableViewCell
-        
+        let tweetObj = tweetList[indexPath.row]
+        let tweetCell:FeedTableViewCell
+        if tweetObj.tweetImageUrl.isEmpty
+        {
+            
+             tweetCell = tableView.dequeueReusableCellWithIdentifier("tweetPrototypeCell",
+                                                                        forIndexPath: indexPath) as! FeedTableViewCell
+        }
+        else
+        {
+             tweetCell = tableView.dequeueReusableCellWithIdentifier("tweetImagePrototypeCell",
+                                                                        forIndexPath: indexPath) as! FeedTableViewCell
+        }
         
         tweetCell.weight = countList[indexPath.row]
         tweetCell.tweet = tweetList[indexPath.row]
