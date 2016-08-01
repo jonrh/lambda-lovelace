@@ -60,10 +60,9 @@ class RecommenderTextual:
         overall_list = []
         stop_words_list = Stopwords()
         long_stop_words = stop_words_list.return_stopwords()
-        #for sublist in my_first_x_tweets: # Iterating each tweet
-        for item in sublist['text'].split(): # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
-
-            for item in sublist.text.split():#Iterating each word of a tweet
+        for sublist in my_first_x_tweets: # Iterating each tweet
+            for item in sublist['text'].split(): # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
+            #for item in sublist.text.split():#Iterating each word of a tweet
                 if item.lower() not in stop_words and item.lower() not in long_stop_words:
                     # https://www.quora.com/How-do-I-remove-punctuation-from-a-Python-string
                     word = item.lower()
