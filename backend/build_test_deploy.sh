@@ -74,7 +74,7 @@ docker rm -f "backend-testing" || true
 
 # Start up a Docker container with the name "backend-testing". We don't need to
 # map any ports because the tests will be run inside the container
-docker run --name="backend-testing" --detach $IMAGE_NAME
+docker run --name="backend-testing" -td $IMAGE_NAME
 
 # This is a bit of a shit mix. The problem we were faced with was that in
 # order to test a web service (by calling an endpoint) it needs to be up and
