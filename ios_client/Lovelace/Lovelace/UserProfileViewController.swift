@@ -23,8 +23,8 @@ class UserProfileViewController: UIViewController {
     @IBOutlet weak var followingNumberLabel: UILabel!
     @IBOutlet weak var followerNumberLabel: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
 
         CurrentUserAccountInfo.getCurrentUser{ currentUser in
             self.userNameLabel.text = currentUser.userName
@@ -52,5 +52,19 @@ class UserProfileViewController: UIViewController {
     */
 
     @IBAction func logoutButtonPressed() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
+        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+        CurrentUserAccountInfo.removeCurrentUserLocalData()
+        
+        let alertVC = UIAlertController(title: "Sign out", message: "Are you sure you want to sign out?", preferredStyle: .Alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .Destructive ){ _ in
+            self.tabBarController?.selectedIndex = 0
+            self.performSegueWithIdentifier("logout", sender: self)
+        }
+        alertVC.addAction(yesAction)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        alertVC.addAction(cancelAction)
+        presentViewController(alertVC, animated: true, completion: nil)
     }
 }

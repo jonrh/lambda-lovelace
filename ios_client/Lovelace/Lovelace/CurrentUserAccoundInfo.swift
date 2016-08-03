@@ -68,6 +68,9 @@ class CurrentUserAccountInfo {
             }
             
         }
+        else {
+            complete(currentUser)
+        }
     }
     
     

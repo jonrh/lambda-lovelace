@@ -38,8 +38,8 @@ class FeedViewController: UIViewController {
     private var feedPage = 1
     private var isLoadingNewPage = true
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     
         APIManager.apiDataRefreshDelegate = self
         initRefreshControl()
@@ -87,17 +87,6 @@ class FeedViewController: UIViewController {
         loadTweetWithPage(feedPage)
     }
     
-    @IBAction func removeLocalOAuthTokenButtonPressed(sender: UIBarButtonItem) {
-//        let defaults = NSUserDefaults.standardUserDefaults()
-//        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
-//        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
-        CurrentUserAccountInfo.removeCurrentUserLocalData()
-        
-        let alertVC = UIAlertController(title: "Remove Token", message: "You have removed Twitter access token.", preferredStyle: .Alert)
-        let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-        alertVC.addAction(alertAction)
-        presentViewController(alertVC, animated: true, completion: nil)
-    }
 }
 
 
@@ -214,15 +203,16 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         actionForLikeTweetController.addAction(cancelAction)
         //Like from tweet author option
         let followerName = tweetCell.tweet!.userDisplayName
+        let tweetContent = tweetCell.tweet!.tweet
         let likeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like more from " + followerName, style: .Default)
         { action -> Void in
-            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "like")
+            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "like", tweetContent: tweetContent)
         }
         actionForLikeTweetController.addAction(likeForAuthorAction)
         // Like from this subject
         let likeForSubjectAction: UIAlertAction = UIAlertAction(title: "More of this Subject", style: .Default)
         { action -> Void in
-            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "like")
+            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "like", tweetContent: tweetContent)
         }
     
         actionForLikeTweetController.addAction(likeForSubjectAction)
@@ -245,16 +235,17 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         actionForDisLikeTweetController.addAction(cancelAction)
         //Like from tweet author option
         let followerName = tweetCell.tweet!.userDisplayName
+        let tweetContent = tweetCell.tweet!.tweet
         let dislikeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like less from " + followerName, style: .Default)
         { action -> Void in
             
-            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "dislike")
+            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "dislike", tweetContent: tweetContent)
         }
         actionForDisLikeTweetController.addAction(dislikeForAuthorAction)
         // Like from this subject
         let dislikeForSubjectAction: UIAlertAction = UIAlertAction(title: "Very old tweet", style: .Default)
         { action -> Void in
-            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "dislike", reason: "veryOld")
+            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "dislike", tweetContent: tweetContent, reason: "veryOld")
             
         }
         
@@ -266,10 +257,11 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         cell.hideUtilityButtonsAnimated(true)
     }
     
-    private func postSingleTweetFeedbackToServer(followerName followerName: String, feedback: String, reason: String = ""){
+    private func postSingleTweetFeedbackToServer(followerName followerName: String, feedback: String, tweetContent: String, reason: String = ""){
         var feedbackParams = ["followerScreenName":followerName,
                               "feedback":feedback,
-                              "reason"  :reason
+                              "reason"  :reason,
+                              "tweetContent" : tweetContent
                               ]
         CurrentUserAccountInfo.getCurrentUser { currentUser in
             feedbackParams["user_name"] = currentUser.screenName
