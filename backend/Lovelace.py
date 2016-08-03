@@ -73,7 +73,7 @@ class RecommendTweets(Resource):
         screen_name = user._json['screen_name']
 
         # get user's own timeline
-        user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=50)]
+        user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
 
         home_tweets = []
 
