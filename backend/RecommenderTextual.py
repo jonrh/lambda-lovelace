@@ -345,7 +345,7 @@ class RecommenderTextual:
                     if count <= 0.0:
                         count = 0.0
                         self.second_net_list.append(tweet)
-        print("COUNT HERE: " + count)
+        print("COUNT HERE: " + str(count))
         return count
 
     def debug_term_frequency_to_rollbar(self):
