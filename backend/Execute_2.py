@@ -17,7 +17,7 @@ auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
-users_tweets = api.user_timeline()
+users_tweets = api.user_timeline(count = 100)
 followed_tweets = api.home_timeline()
 
 feedback = {"@PokemonGoApp": 5}
