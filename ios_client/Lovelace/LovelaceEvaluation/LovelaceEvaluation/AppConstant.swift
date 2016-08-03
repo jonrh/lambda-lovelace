@@ -12,6 +12,6 @@ struct AppConstant {
     static var totalPageViewCount:Int {
         return tweetContentViewCount + 1
     }
-    static let tweetContentViewCount = 4
+    static let tweetContentViewCount = 20
     static let loginSubmitButtonScaleRatio = 1.4
 }

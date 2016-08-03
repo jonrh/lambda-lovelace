@@ -160,14 +160,20 @@ class EvaluationData(Resource):
         auth.set_access_token(access_token, access_token_secret)
         api = tweepy.API(auth)
 
+        # get user's information
+        user = api_flask.me()
+
         home_tweets = [tweet._json for tweet in api.home_timeline(count=200, page=page)]
         
-        user_tweets = [tweet._json for tweet in api.user_timeline(count=50)]
+        user_tweets = [tweet._json for tweet in api.user_timeline(count=200)]
 
         #single feedback
         feedback = r.db('lovelace').table('single_feedback').group('user_name').run()
 
         single_feedback = {}
+
+        # user's screen_name
+        screen_name = user._json['screen_name']
 
         if feedback.get(screen_name) != None:
             for item in feedback[screen_name]:
@@ -175,7 +181,7 @@ class EvaluationData(Resource):
                     single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) + 1
                 else:
                     single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) - 1
-                    
+
         recommender_object = RecommenderTextual(user_tweets, home_tweets, single_feedback)
         recommended_tweets = recommender_object.generate(200, 1)
 
