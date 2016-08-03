@@ -148,7 +148,6 @@ class RecommendTweets(Resource):
         recommended_tweets = recommender_object.generate(50, 1)
 
         return jsonify(recommended_tweets)
-#        return screen_name
 
 
 # The original tweet part
@@ -193,9 +192,9 @@ class EvaluationResult(Resource):
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
         api_flask = tweepy.API(auth)
-        
+
         me = api_flask.me()
-        
+
         screen_name = me._json['screen_name']
         users_following = me._json['friends_count']
         tweets_liked = me._json['favourites_count']
@@ -220,22 +219,8 @@ class EvaluationResult(Resource):
 #Single tweet feedback
 class SingleTweetFeedback(Resource):
     def put(self):
-        
+
         jsonData = request.get_json()
-        access_token = jsonData['oauthToken']
-        access_token_secret = jsonData['oauthTokenSecret']
-        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-        auth.set_access_token(access_token, access_token_secret)
-        api_flask = tweepy.API(auth)
-        
-        me = api_flask.me()
-        
-        screen_name = me._json['screen_name']
-        
-        jsonData['user_name'] = screen_name
-        
-        del jsonData['oauthToken']
-        del jsonData['oauthTokenSecret']
 
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()

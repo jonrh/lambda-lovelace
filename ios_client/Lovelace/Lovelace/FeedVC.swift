@@ -88,9 +88,10 @@ class FeedViewController: UIViewController {
     }
     
     @IBAction func removeLocalOAuthTokenButtonPressed(sender: UIBarButtonItem) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
-        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+//        let defaults = NSUserDefaults.standardUserDefaults()
+//        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
+//        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+        CurrentUserAccountInfo.removeCurrentUserLocalData()
         
         let alertVC = UIAlertController(title: "Remove Token", message: "You have removed Twitter access token.", preferredStyle: .Alert)
         let alertAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
@@ -270,10 +271,10 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
                               "feedback":feedback,
                               "reason"  :reason
                               ]
-        let (oauthToken,oauthTokenSecret) = APIManager.getOAuthTokenAndTokenSecret()
-        feedbackParams["oauthToken"] = oauthToken
-        feedbackParams["oauthTokenSecret"] = oauthTokenSecret
-        APIManager.postSingleTweetFeedback(feedbackParams)
+        CurrentUserAccountInfo.getCurrentUser { currentUser in
+            feedbackParams["user_name"] = currentUser.screenName
+            APIManager.postSingleTweetFeedback(feedbackParams)
+        }
     }
     
 }
