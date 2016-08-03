@@ -158,14 +158,14 @@ class EvaluationData(Resource):
         page = request.args.get('page')
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
-        api = tweepy.API(auth)
+        api_flask = tweepy.API(auth)
 
         # get user's information
         user = api_flask.me()
 
-        home_tweets = [tweet._json for tweet in api.home_timeline(count=200, page=page)]
+        home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=200, page=page)]
         
-        user_tweets = [tweet._json for tweet in api.user_timeline(count=200)]
+        user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
 
         #single feedback
         feedback = r.db('lovelace').table('single_feedback').group('user_name').run()
