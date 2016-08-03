@@ -167,6 +167,8 @@ class EvaluationData(Resource):
         
         user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
 
+        r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
+                  password="marcgoestothegym").repl()
         #single feedback
         feedback = r.db('lovelace').table('single_feedback').group('user_name').run()
 
