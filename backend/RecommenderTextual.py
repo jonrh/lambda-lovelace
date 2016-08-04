@@ -165,8 +165,13 @@ class RecommenderTextual:
             for term in self.termfreq_doc.keys():
                 if unhashedword == term:
                     terms_to_reduce.append(str(term))#Add the term, because a "term" can be inside another full word (Javacodegeeks for Java)
-        self.balance_reduce_term_freq_doc_preference(terms_to_reduce)
-
+        
+        # Only execute this method if there is a term in the tweets text that can be reduced.
+        # This means that disliking a tweet that does not contain a term will have no effect, but
+        # these terms are towards the end of the recommended list anyway.
+        if len(terms_to_reduce) >= 1:
+            self.balance_reduce_term_freq_doc_preference(terms_to_reduce)
+        
     def balance_reduce_term_freq_doc_preference(self, terms_to_reduce):
         num_of_reduced_terms = len(terms_to_reduce)
         num_of_terms = len(self.termfreq_doc.keys())
@@ -195,7 +200,12 @@ class RecommenderTextual:
             for term in self.termfreq_doc.keys():
                 if unhashedword == term:
                     terms_to_increase.append(str(term))
-        self.balance_increase_term_freq_doc_preference(terms_to_increase)
+
+        # Only execute this method if there is a term in the tweets text that can be increased.
+        # This means that liking a tweet that does not contain a term will have no effect, but
+        # the more the user tweets/retweets/likes on Twitter, the more likely these terms will appear.
+        if len(terms_to_increase) >= 1:
+            self.balance_increase_term_freq_doc_preference(terms_to_increase)
 
     def balance_increase_term_freq_doc_preference(self, terms_to_increase):
         num_of_increased_terms = len(terms_to_increase)
