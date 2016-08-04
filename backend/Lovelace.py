@@ -133,18 +133,10 @@ class RecommendTweets(Resource):
                                                               'last_login': r.now().to_epoch_time().run(),
                                                               'fetch_status': True}).run()
         #single feedback
-        feedback = r.db('lovelace').table('single_feedback').group('user_name').run()
-
-        single_feedback = {}
-
-        if feedback.get(screen_name) != None:
-            for item in feedback[screen_name]:
-                if item['feedback'] == 'like':
-                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) + 1
-                else:
-                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) - 1
+        single_feedback = r.db('lovelace').table('single_feedback').filter({"user_name":screen_name}).run()
 
         # give the user timeline and home timeline to the recommender system to make recommendation
+        print(single_feedback)
         recommender_object = RecommenderTextual(user_tweets, home_tweets, single_feedback)
         recommended_tweets = recommender_object.generate(50, 7)
 
@@ -171,19 +163,8 @@ class EvaluationData(Resource):
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
         #single feedback
-        feedback = r.db('lovelace').table('single_feedback').group('user_name').run()
-
-        single_feedback = {}
-
-        # user's screen_name
         screen_name = user._json['screen_name']
-
-        if feedback.get(screen_name) != None:
-            for item in feedback[screen_name]:
-                if item['feedback'] == 'like':
-                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) + 1
-                else:
-                    single_feedback[item['followerScreenName']] = single_feedback.get(item['followerScreenName'], 0) - 1
+        single_feedback = r.db('lovelace').table('single_feedback').filter({"user_name":screen_name}).run()
 
         recommender_object = RecommenderTextual(user_tweets, home_tweets, single_feedback)
         recommended_tweets = recommender_object.generate(200, 1)

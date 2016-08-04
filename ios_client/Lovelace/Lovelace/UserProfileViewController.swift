@@ -52,13 +52,13 @@ class UserProfileViewController: UIViewController {
     */
 
     @IBAction func logoutButtonPressed() {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
-        defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
-        CurrentUserAccountInfo.removeCurrentUserLocalData()
         
         let alertVC = UIAlertController(title: "Sign out", message: "Are you sure you want to sign out?", preferredStyle: .Alert)
         let yesAction = UIAlertAction(title: "Yes", style: .Destructive ){ _ in
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenKey)
+            defaults.removeObjectForKey( NSUserDefaultKeys.oauthTokenSecretKey)
+            CurrentUserAccountInfo.removeCurrentUserLocalData()
             self.tabBarController?.selectedIndex = 0
             self.performSegueWithIdentifier("logout", sender: self)
         }
