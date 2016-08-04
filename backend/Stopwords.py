@@ -71,4 +71,4 @@ class Stopwords:
         "wherever","whether","which","while","whim","whither","who","whod","whoever","whole","who'll","whom",
         "whomever","whos","whose","why","widely","willing","wish","with","within","without","wont","words","world",
         "would","wouldnt","www","x","y","yes","yet","you","youd","you'll","your","youre","yours","yourself",
-        "yourselves","you've","z","zero", "myfirsttweet", "rt"]
+        "yourselves","you've","z","zero", "myfirsttweet", "rt", ""]

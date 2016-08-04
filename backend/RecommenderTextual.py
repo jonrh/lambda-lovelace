@@ -20,9 +20,9 @@ class RecommenderTextual:
         ######################################################
         # Could also be called the "number_of_user_timeline_tweets" parameter, + 1
         # The extra "1" is because python is not inclusive of the last digit in the range that
-        # this variable is used for later on.
+        # this variable is used for later on jónsi: for what?
         self.amount_of_tweets_to_gather = 101
-        # We want the top 5 most occurring terms
+        # We want the top X most occurring terms
         self.top_x_terms = 50
         self.second_net_multiplier = 2
         # On a scale up to X.0, what is the scale that the term frequency document should follow
@@ -64,7 +64,7 @@ class RecommenderTextual:
         overall_list = []
         stop_words_list = Stopwords()
         long_stop_words = stop_words_list.return_stopwords()
-        for sublist in my_first_x_tweets: # Iterating each tweet
+        for sublist in my_first_x_tweets:  # Iterating each tweet
             for item in sublist['text'].split(): # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE BELOW
             #for item in sublist.text.split():#Iterating each word of a tweet
                 if item.lower() not in stop_words and item.lower() not in long_stop_words:
@@ -89,7 +89,7 @@ class RecommenderTextual:
             hashtag = u'#' + term
             hashtag_value = float(frequency_doc.get(hashtag) * self.hash_tag_multiplier) if frequency_doc.get(hashtag) is not None else 0.0
             term_value = float(frequency_doc.get(term))
-            term_weight = ((hashtag_value + term_value)/total_count)  * self.numeric_scale
+            term_weight = ((hashtag_value + term_value)/total_count) * self.numeric_scale
             term_frequency_list[term] = term_weight
 
         self.termfreq_doc = term_frequency_list
@@ -124,6 +124,11 @@ class RecommenderTextual:
 
         for removal in second_net_remove_these_terms:
             self.second_net_termfreq_doc.pop(removal, None)
+
+        # Removes the empty string from the term frequency document. This is a fix for an issue we were not able to
+        # resolve otherwise. What happens is that terms that only contain special characters get aggregated together
+        # to create a "super" term. This is not indented so we remove the empty string as a viable term.
+        self.termfreq_doc.pop("")
 
         self.debug_term_frequency_to_rollbar()
 
@@ -229,37 +234,19 @@ class RecommenderTextual:
             #print("removing from " + str(term) + " with: " + str(reduce_value))
             self.termfreq_doc.get[term] -= reduce_value
 
-
     def generate(self, number_of_recommendations, how_many_days_ago):
+        """What does this function do?"""
         list_of_owners_tweets = []
-        unfollowed_tweets = []
-        seconds_ago = 0 
+        max_age_in_seconds = how_many_days_ago * 86400  # number of seconds in 1 day
 
-        # https://www.google.ie/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=seconds%20in%20six%20days
-        if how_many_days_ago is 7:
-            seconds_ago = 604800  
-        elif how_many_days_ago is 6:
-            seconds_ago = 518400
-        elif how_many_days_ago is 5:
-            seconds_ago = 432000
-        elif how_many_days_ago is 4:
-            seconds_ago = 345600
-        elif how_many_days_ago is 3:
-            seconds_ago = 259200
-        elif how_many_days_ago is 2:
-            seconds_ago = 172800
-        elif how_many_days_ago is 1:
-            # seconds_ago = 86400
-            seconds_ago = 1000000
-        else:
-            seconds_ago = 1000000
+        if how_many_days_ago > 7:
+            max_age_in_seconds = 1000000
 
         for tweet in self.own_tweets:
             #list_of_owners_tweets.append(tweet.text.encode('utf-8'))
             list_of_owners_tweets.append(tweet['text'].encode('utf-8'))  # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE ABOVE
 
         self.vectorizer.fit_transform(list_of_owners_tweets)
-        words = self.own_tweets  # The users own tweets
         tweet_list = self.followed_tweets  # tweets from accounts that the user is following
 
         remove_these_tweets = []
@@ -270,9 +257,10 @@ class RecommenderTextual:
             # http://stackoverflow.com/questions/23356523/how-can-i-get-the-age-of-a-tweet-using-tweepy
             tweet_age = datetime.strptime(tweet_age, '%a %b %d %H:%M:%S +0000 %Y')  # dirty fix
             age = time.time() - (tweet_age - datetime(1970, 1, 1)).total_seconds()
-            if age > seconds_ago:
+            if age > max_age_in_seconds:
                 remove_these_tweets.append(tweet)
 
+        # Remove tweets that are older than our desired max age
         for removal in remove_these_tweets:
             tweet_list.remove(removal)
 
@@ -290,7 +278,6 @@ class RecommenderTextual:
                 if tweet == term:
                     cut_off = prelim_results.index(tweet)
                     break
-
 
         print(cut_off)
         results = prelim_results[:cut_off]

@@ -5,9 +5,6 @@ from flask import Flask, redirect, request, Response, jsonify
 from flask import got_request_exception  # For Rollbar logging
 from flask_restful import Resource, Api
 import tweepy
-import json
-from sklearn.feature_extraction.text import CountVectorizer
-from collections import Counter
 import rethinkdb as r
 from RecommenderTextual import RecommenderTextual
 import os  # For environment variables and Rollbar logging
@@ -66,7 +63,7 @@ class RecommendTweets(Resource):
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
 
-        # get a list of screen_names
+        # get a list of screen_names, i.e. users that have signed up for our service
         users = list(r.db('lovelace').table('user_tokens').get_field('screen_name').run())
 
         # user's screen_name
@@ -80,13 +77,14 @@ class RecommendTweets(Resource):
         # if true, then this is the first time user uses this app
         # so we first get tweets directly from twitter API
         if screen_name not in users:
-            home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=50)
+            home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=200)
                            if tweet._json['user']['screen_name'] != screen_name]
 
             for item in home_tweets:
                 r.db('lovelace').table('tweets').insert(
                     {'screen_name': screen_name, 'tweet_id': item['id'], 'tweet': item}).run()
 
+            # Add this user to the list of users we should regularly fetch tweets from now on
             r.db('lovelace').table('user_tokens').insert({'access_secret': access_token_secret,
                                                           'access_token': access_token,
                                                           'consumer_key': consumer_key,
@@ -100,6 +98,8 @@ class RecommendTweets(Resource):
         else:
             user = r.db('lovelace').table('user_tokens').get(screen_name).run()
             current_time = r.now().to_epoch_time().run()
+
+            # What does this mean?
             if user['fetch_status'] == True:
                 print('refreshing')
                 data = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).group('screen_name').limit(
@@ -108,8 +108,8 @@ class RecommendTweets(Resource):
 
                 home_tweets = [tweet['tweet'] for tweet in tweets
                                if tweet['tweet']['user']['screen_name'] != screen_name]
-
-            elif user['last_logout'] == None or (current_time - user['last_logout']) <= 900:
+            # What about this?
+            elif user['last_logout'] is None or (current_time - user['last_logout']) <= 900:
                 print('within 15min, directly from database')
                 data = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).group('screen_name').limit(
                     50).run()
@@ -120,6 +120,7 @@ class RecommendTweets(Resource):
 
                 r.db('lovelace').table('user_tokens').update({'screen_name': screen_name,
                                                               'fetch_status': True}).run()
+            # And this?
             else:
                 print('put of 15 min, get from twitter api')
                 home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=50)
@@ -145,7 +146,7 @@ class RecommendTweets(Resource):
 
         # give the user timeline and home timeline to the recommender system to make recommendation
         recommender_object = RecommenderTextual(user_tweets, home_tweets, single_feedback)
-        recommended_tweets = recommender_object.generate(50, 1)
+        recommended_tweets = recommender_object.generate(50, 7)
 
         return jsonify(recommended_tweets)
 
@@ -291,5 +292,5 @@ api.add_resource(EvaluationResult, '/evaluationResult')
 api.add_resource(UserProfile, '/userProfile')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)  # Production
-    # app.run(host="127.0.0.1", port=5000)  # Local debugging
+    # app.run(host="0.0.0.0", port=80)  # Production
+    app.run(host="127.0.0.1", port=5000)  # Local debugging
