@@ -9,6 +9,7 @@
 cd backend/
 docker build -t "test_image" .
 
+docker rm -f "backend-testing"
 docker run -d --name="backend-testing" "test_image"
 
 sleep 5s
