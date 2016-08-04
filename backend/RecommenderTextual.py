@@ -164,7 +164,7 @@ class RecommenderTextual:
         #tweet_text = tweet.text.lower().encode("utf-8")
         #print(tweet_text)
         terms_to_reduce = []
-        for word in tweet_text.replace("\n"," ").split():
+        for word in tweet_text.replace("\n", " ").split():
             #print("WORD: " + str(word))
             unhashedword = word
             if word.startswith("#"):
@@ -182,7 +182,7 @@ class RecommenderTextual:
         #print(alter_value)
         #print("divided by")
         #print(num_of_reduced_terms)
-        reduce_value = alter_value/num_of_reduced_terms 
+        reduce_value = alter_value / num_of_reduced_terms
         increase_value = alter_value/(num_of_terms - num_of_reduced_terms) #self.numeric_scale/(self.numeric_scale - num_of_reduced_terms) * like_and_dislike_multiplier 
         increase_terms = []
         for key in self.termfreq_doc.keys():
@@ -309,14 +309,14 @@ class RecommenderTextual:
         # count!
         # 6
         count += self.get_author_sentiment(tweet)
-        if "Java" in tweet['text']:
+        #if "Java" in tweet['text']:
         #if "Java" in tweet.text:
-        #if tweet in self.disliked_tweets:
+        if tweet in self.disliked_tweets:
             self.get_dislike_weighting(tweet)
 
-        if "Ruby" in tweet['text']:
+        #if "Ruby" in tweet['text']:
         #if "Ruby" in tweet.text:
-        #if tweet in self.liked_tweets:
+        if tweet in self.liked_tweets:
             self.get_liked_weighting(tweet)
 
         for word in sanitised_tweet_text.split():
