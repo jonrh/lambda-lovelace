@@ -141,7 +141,10 @@ docker rm -f "backend-running" || true
 #       quite sure what the -it part does, but it allows us to detach from
 #       containers without killing them (by pressing Ctrl + P then Ctrl + Q
 #       if we ever need to manually peek inside of them while debugging.
-docker run --name="backend-running" -itd -p 80:80 -e JENKINS_BUILDNUMBER=$BUILD_NUMBER -e GITHASH=$GITHASH --restart=on-failure:50 $IMAGE_NAME
+docker run --name="backend-running" -itd -p 80:80 --restart=on-failure:50 \
+    -e JENKINS_BUILDNUMBER=$BUILD_NUMBER -e GITHASH=$GITHASH \
+    $IMAGE_NAME \
+    gunicorn -w 1 -b 0.0.0.0:80 Lovelace:app
 
 # If the celery-redis container is not running: remove any remains and start
 # up a new one. This is a message broker for the Celery worker, a queue.
