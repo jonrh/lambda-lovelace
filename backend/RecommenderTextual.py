@@ -267,7 +267,7 @@ class RecommenderTextual:
         
         for tweet in prelim_results:
             for term in self.termfreq_doc.keys():
-                if term in tweet['text']lower():
+                if term in tweet['text'].lower():
                 #if term in tweet.text.lower():
                     tweets_that_contain_tf_terms.append(tweet)
 
