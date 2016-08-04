@@ -2,7 +2,7 @@ from RecommenderTextual import RecommenderTextual
 from sklearn.feature_extraction.text import CountVectorizer
 import tweepy 
 
-number_of_recommendations = 70 
+number_of_recommendations = 15 
 
 consumer_key = "KOUIbWm4VWYzI0uuQLogzGRa0"
 consumer_secret = "r5Ac1fwLmuYFYL6biR4E1iYzS8S78DInUNM3AQ76EeMDBBVSFL"
@@ -29,6 +29,6 @@ print(" *** ")
 print(" Recommended set: ")
 print(" *** ")
 print(" *** ")
-#print(recommended_tweets)
+
 for tweet in recommended_tweets["recommended_tweets"]:#Generate now returns the original tweets AND a counter
     print(tweet.text.encode('utf-8'))

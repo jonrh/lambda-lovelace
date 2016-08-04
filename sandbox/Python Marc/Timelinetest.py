@@ -1,4 +1,16 @@
-from sklearn.feature_extraction.text import CountVectorizer
+
+def count_bag(n, arg_here):
+	print(arg_here)
+	return n + 1
+
+x = sorted([1,2,34,45,2], key=count_bag "arg matey!", reverse=True)
+
+
+
+
+
+
+'''from sklearn.feature_extraction.text import CountVectorizer
 import tweepy 
 
 
@@ -20,4 +32,4 @@ followed_tweets = api.home_timeline()
 fave_tweets = api.favorites()
 
 for x in fave_tweets:
-	print(x.text)
+	print(x.text)'''
