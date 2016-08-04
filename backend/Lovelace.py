@@ -292,5 +292,5 @@ api.add_resource(EvaluationResult, '/evaluationResult')
 api.add_resource(UserProfile, '/userProfile')
 
 if __name__ == '__main__':
-    # app.run(host="0.0.0.0", port=80)  # Production
-    app.run(host="127.0.0.1", port=5000)  # Local debugging
+    app.run(host="0.0.0.0", port=80)  # Production
+    # app.run(host="127.0.0.1", port=5000)  # Local debugging
