@@ -127,7 +127,13 @@ class RecommenderTextual:
         # Removes the empty string from the term frequency document. This is a fix for an issue we were not able to
         # resolve otherwise. What happens is that terms that only contain special characters get aggregated together
         # to create a "super" term. This is not indented so we remove the empty string as a viable term.
-        self.termfreq_doc.pop("")
+        print("This is the term frequency document")
+        print(self.termfreq_doc)
+        if "" in self.termfreq_doc.keys():
+            print("POPPED the empty string!")
+            self.termfreq_doc.pop("")
+        else:
+            print("Did not POP an empty string...")
 
         return weightings
 
