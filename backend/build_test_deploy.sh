@@ -84,7 +84,10 @@ docker run -d --name="backend-testing" $IMAGE_NAME
 # up for sure.
 sleep 5s
 
-docker run --name "backend-unittests" --link "backend-testing" $IMAGE_NAME nosetests tests.py
+# The || {...; exit 1; } bit at the end means: if the tests fail (returned
+# non-zero value) dump the logs of the "backend-testing" container and return
+# 1 so that the Jenkins build remains failed (non-zero).
+docker run --name "backend-unittests" --link "backend-testing" $IMAGE_NAME nosetests tests.py || { docker logs "backend-testing"; exit 1; }
 
 # Execute the Python tests inside the testing container. The command
 # "nosetests" is some testing tool I saw was popular. It claims to be "nicer"
@@ -153,25 +156,47 @@ if [ ! $(docker inspect -f "{{.State.Running}}" "celery-redis") ] ; then
     docker run -itd --name "celery-redis" redis
 fi
 
-# Python Celery container
+# Python Celery containers
 # =============================================================================
-# Stop and throw away the previously running celery container if it exits
-docker rm -f "celery-worker" || true
+# Stop and throw away the previously running celery containers if they exits
+docker rm -f "celery-worker-homeline" || true
+docker rm -f "celery-worker-userline" || true
+docker rm -f "celery-worker-likes" || true
 
-# Start a Celery worker container. It basically re-uses the backend container
-# but starts it with an overwritten execution command:
+# Start Celery worker containers. They basically re-uses the backend container
+# but start it with an overwritten execution command:
 #
 #   celery -A tasks worker -B -c 8 --loglevel=info
 #
 # We do this because both share a lot of the same dependencies and it
 # simplifies the build/test/deploy script quite a bit. Reuse for the win!
 #
+# There are 3 Celery worker containers:
+#
+#   1. celery-worker-homeline: collects tweets user is supposed to see in feed
+#   2. celery-worker-userline: collects tweets composed by the user
+#   3. celery-worker-likes: collects tweets the user has liked
+#
+# These 3 workers exists to circumvent Twitter's API rate limits. These workers
+# then save the results to a DB we do lookups to later.
+#
 # Docker containers run as the root user by default. This poses a problem for
 # Celery because it uses pickle which is insecure. -e C_FORCE_ROOT=True runs
 # the container with an environment variable that allows us to run as root.
 # It's not really ideal but it's an okay fix for us.
 # See more here: http://stackoverflow.com/q/20346851
-docker run --name="celery-worker" -itd -e C_FORCE_ROOT=True --link celery-redis $IMAGE_NAME celery -A tasks worker -B -c 8 --loglevel=info
+docker run --name="celery-worker-homeline" -itd -e C_FORCE_ROOT=True --link celery-redis \
+    $IMAGE_NAME \
+    celery -A tasks worker -B -c 8 --loglevel=info
+
+docker run --name="celery-worker-userline" -itd -e C_FORCE_ROOT=True --link celery-redis \
+    $IMAGE_NAME \
+    celery -A tasks_user worker -B -c 8 --loglevel=info -Q user_queue -n user
+
+docker run --name="celery-worker-likes" -itd -e C_FORCE_ROOT=True --link celery-redis \
+    $IMAGE_NAME \
+    celery -A tasks_liked worker -B -c 8 --loglevel=info -Q liked_queue -n like
+
 
 # The Docker CLI program gave some issues with signing in multiple times. To
 # fix it I simply log out after the build is complete and sign in again when

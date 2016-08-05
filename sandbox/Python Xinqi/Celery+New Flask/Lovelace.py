@@ -45,14 +45,13 @@ consumer_secret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
 # consumer_key = 'WtxItBWIIw35Ei1tQ4Zrmkybk'
 # consumer_secret = '7KV0Mmg1P7qrIrYCeeRB5V1nKrVRK0r3PQiy7RwNWYTCDxNevH'
 
-countOfReturnTweets = 200
 
 # The recommend system part
 class RecommendTweets(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
-        page = int(request.args.get('page'))
+        page = request.args.get('page')
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
         api_flask = tweepy.API(auth)
@@ -67,15 +66,16 @@ class RecommendTweets(Resource):
 
         # user's screen_name
         screen_name = request.args.get('currentUserScreenName')
-        rollbar.report_message(screen_name + "request tweets of page: " + str(page), "debug")
 
         # get user's own timeline
-        user_tweets = []
+        user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
+
         home_tweets = []
 
         # if true, then this is the first time user uses this app
         # so we first get tweets directly from twitter API
         if screen_name not in users:
+            # get home timeline
             home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=200)
                            if tweet._json['user']['screen_name'] != screen_name]
 
@@ -92,7 +92,8 @@ class RecommendTweets(Resource):
                     {'screen_name': screen_name, 'tweet_id': item['id_str'], 'type': 'like', 'tweet': item}).run()
 
             # get user timeline
-            user_tweets = [user_tweet._json for user_tweet in tweepy.Cursor(api_flask.user_timeline, count=200).items(1000)]
+            user_tweets = [user_tweet._json for user_tweet in
+                           tweepy.Cursor(api_flask.user_timeline, count=200).items(1000)]
 
             print(len(user_tweets))
 
@@ -113,7 +114,7 @@ class RecommendTweets(Resource):
                                                           'last_logout': None,
                                                           'fetch_status': True}).run()
 
-        # if not, we get tweets directly from database
+            # if not, we get tweets directly from database
         else:
             user = r.db('lovelace').table('user_tokens').get(screen_name).run()
             current_time = r.now().to_epoch_time().run()
@@ -121,8 +122,9 @@ class RecommendTweets(Resource):
             # What does this mean?
             if user['fetch_status'] == True:
                 print('refreshing')
-                tweets = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).filter(
-                    {'screen_name': screen_name}).slice(countOfReturnTweets * (page - 1), countOfReturnTweets * page).run()
+                data = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).group('screen_name').limit(
+                    200).run()
+                tweets = data[screen_name]
 
                 home_tweets = [tweet['tweet'] for tweet in tweets
                                if tweet['tweet']['user']['screen_name'] != screen_name]
@@ -135,8 +137,9 @@ class RecommendTweets(Resource):
             # What about this?
             elif user['last_logout'] is None or (current_time - user['last_logout']) <= 900:
                 print('within 15min, directly from database')
-                tweets = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).filter(
-                    {'screen_name': screen_name}).slice(countOfReturnTweets * (page - 1), countOfReturnTweets * page).run()
+                data = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).group('screen_name').limit(
+                    200).run()
+                tweets = data[screen_name]
 
                 home_tweets = [tweet['tweet'] for tweet in tweets
                                if tweet['tweet']['user']['screen_name'] != screen_name]
@@ -149,8 +152,8 @@ class RecommendTweets(Resource):
                                                               'fetch_status': True}).run()
             # And this?
             else:
-                print('put of 15 min, get from twitter api')
-                home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=50)
+                print('out of 15 min, get from twitter api')
+                home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=200)
                                if tweet._json['user']['screen_name'] != screen_name]
                 for item in home_tweets:
                     r.db('lovelace').table('tweets').insert(
@@ -159,7 +162,6 @@ class RecommendTweets(Resource):
                 r.db('lovelace').table('user_tokens').update({'screen_name': screen_name,
                                                               'last_login': r.now().to_epoch_time().run(),
                                                               'fetch_status': True}).run()
-
                 # get user liked tweets
                 liked_tweets = [liked_tweet._json for liked_tweet in api_flask.favorites(count=200)]
 
@@ -193,20 +195,14 @@ class EvaluationData(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
-        page = int(request.args.get('page'))
+        page = request.args.get('page')
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
         api_flask = tweepy.API(auth)
 
-
-        # home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=200, page=page)]
-        # user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
-        # liked_tweets = [tweet._json for tweet in api_flask.favorites(count=200)]
-
         home_tweets = [tweet._json for tweet in tweepy.Cursor(api_flask.home_timeline, count=200).items(800)]
         user_tweets = [tweet._json for tweet in tweepy.Cursor(api_flask.user_timeline, count=200).items(3200)]
         liked_tweets = [tweet._json for tweet in tweepy.Cursor(api_flask.favorites, count=200).items(3000)]
-
         user_tweets = user_tweets + liked_tweets
 
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
@@ -296,23 +292,6 @@ class UserProfile(Resource):
         me = api_flask.me()
         return me._json
 
-class UserLogout(Resource):
-    def delete(self):
-        access_token = request.args.get('oauth_token')
-        access_token_secret = request.args.get('oauth_token_secret')
-        screen_name = request.args.get('currentUserScreenName')
-
-        # connect database
-        r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
-                  password="marcgoestothegym").repl()
-
-        r.db('lovelace').table('user_tokens').update({'screen_name': screen_name,
-                                                      'fetch_status': False,
-                                                      'last_logout': r.now().to_epoch_time().run()
-                                                      }).run()
-
-        rollbar.report_message(screen_name + "has logout" , "debug")
-        return ""
 
 @app.route("/error")
 def error():
@@ -341,7 +320,6 @@ api.add_resource(EvaluationData, '/evaluationData')
 api.add_resource(SingleTweetFeedback, '/singleTweetFeedback')
 api.add_resource(EvaluationResult, '/evaluationResult')
 api.add_resource(UserProfile, '/userProfile')
-api.add_resource(UserLogout, '/userLogout')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)  # Production

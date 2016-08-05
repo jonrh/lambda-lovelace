@@ -108,6 +108,7 @@ class APIManager {
     
     
     class func getRecommendTweetsWithPage(page: Int, callback: (JSON)->Void) {
+        print("fetch tweets of page:" + String(page))
         Alamofire.request(Router.RecommendTweets(page))
             .responseJSON { response in
                 guard response.result.error == nil else {
@@ -159,5 +160,9 @@ class APIManager {
                     callback(me)
                 }
         }
+    }
+    
+    class func deleteUser(){
+        Alamofire.request(Router.UserLogout)
     }
 }
