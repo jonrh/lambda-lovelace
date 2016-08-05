@@ -56,8 +56,6 @@ class RecommendTweets(Resource):
         auth.set_access_token(access_token, access_token_secret)
         api_flask = tweepy.API(auth)
 
-        # get user's information
-        user = api_flask.me()
 
         # connect database
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
@@ -67,7 +65,7 @@ class RecommendTweets(Resource):
         users = list(r.db('lovelace').table('user_tokens').get_field('screen_name').run())
 
         # user's screen_name
-        screen_name = user._json['screen_name']
+        screen_name = request.args.get('currentUserScreenName')
 
         # get user's own timeline
         user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
@@ -153,8 +151,6 @@ class EvaluationData(Resource):
         auth.set_access_token(access_token, access_token_secret)
         api_flask = tweepy.API(auth)
 
-        # get user's information
-        user = api_flask.me()
 
         home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=200, page=page)]
         
@@ -163,7 +159,8 @@ class EvaluationData(Resource):
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
         #single feedback
-        screen_name = user._json['screen_name']
+        screen_name = request.args.get('currentUserScreenName')
+
         single_feedback = r.db('lovelace').table('single_feedback').filter({"user_name":screen_name}).run()
 
         recommender_object = RecommenderTextual(user_tweets, home_tweets, single_feedback)

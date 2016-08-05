@@ -132,13 +132,16 @@
                                                     <rect key="frame" x="6" y="5" width="580" height="247"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P9p-Ka-2cc">
-                                                            <rect key="frame" x="96" y="82" width="474" height="150"/>
+                                                            <rect key="frame" x="96" y="87" width="474" height="150"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="150" id="1dV-3M-CHv"/>
                                                             </constraints>
                                                         </imageView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="P9p-Ka-2cc" secondAttribute="bottom" constant="10" id="xTF-xV-2D4"/>
+                                                    </constraints>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pqh-Zt-Yli">
                                                     <rect key="frame" x="42" y="15" width="48" height="48"/>
@@ -174,7 +177,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Text" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bnv-Zc-Dhq" customClass="KILabel">
-                                                    <rect key="frame" x="102" y="63" width="474" height="21"/>
+                                                    <rect key="frame" x="102" y="63" width="474" height="26"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="80" id="I79-yC-DaR"/>
                                                     </constraints>
@@ -586,6 +589,6 @@
         <image name="twitter default avatar" width="400" height="400"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="1PV-rR-9ca"/>
+        <segue reference="Toi-Mm-G6F"/>
     </inferredMetricsTieBreakers>
 </document>

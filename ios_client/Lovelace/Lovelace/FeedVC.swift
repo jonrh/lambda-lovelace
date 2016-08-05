@@ -38,18 +38,25 @@ class FeedViewController: UIViewController {
     private var feedPage = 1
     private var isLoadingNewPage = true
     
+    var needReloadTable = true
+    
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-    
-        APIManager.apiDataRefreshDelegate = self
-        initRefreshControl()
-        if !APIManager.isRequestingOAuthToken{
-            if APIManager.LoadLocalOAuthToken() {
-                refreshFeedTableView()
-            }else{
-                performSegueWithIdentifier(FeedVCStoryboard.loginViewSegue, sender: self)
+        
+        if needReloadTable == true {
+            needReloadTable = false
+            APIManager.apiDataRefreshDelegate = self
+            initRefreshControl()
+            if !APIManager.isRequestingOAuthToken{
+                if APIManager.LoadLocalOAuthToken() {
+                    refreshFeedTableView(true)
+                }else{
+                    performSegueWithIdentifier(FeedVCStoryboard.loginViewSegue, sender: self)
+                }
             }
         }
+    
     }
     
     private func initRefreshControl(){
@@ -79,14 +86,18 @@ class FeedViewController: UIViewController {
         }
     }
     
-    @objc private func refreshFeedTableView(){
-        Rollbar.infoWithMessage("user pull to refresh tweets")
-        tweetList.removeAll()
-        countList.removeAll()
-        feedPage = 1
+    @objc private func refreshFeedTableView(reloadData: Bool = false){
+        cleanTableView(reloadData)
         loadTweetWithPage(feedPage)
     }
     
+    func cleanTableView(reloadData: Bool = false){
+        tweetList.removeAll()
+        countList.removeAll()
+        if reloadData == true {
+            feedTableView.reloadData()
+        }
+    }
 }
 
 
@@ -206,13 +217,13 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         let tweetContent = tweetCell.tweet!.tweet
         let likeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like more from " + followerName, style: .Default)
         { action -> Void in
-            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "like", tweetContent: tweetContent)
+            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "like", tweetContent: tweetContent, reason: "Author")
         }
         actionForLikeTweetController.addAction(likeForAuthorAction)
         // Like from this subject
         let likeForSubjectAction: UIAlertAction = UIAlertAction(title: "More of this Subject", style: .Default)
         { action -> Void in
-            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "like", tweetContent: tweetContent)
+            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "like", tweetContent: tweetContent, reason: "Subject")
         }
     
         actionForLikeTweetController.addAction(likeForSubjectAction)
@@ -239,13 +250,13 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         let dislikeForAuthorAction: UIAlertAction = UIAlertAction(title: "Like less from " + followerName, style: .Default)
         { action -> Void in
             
-            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "dislike", tweetContent: tweetContent)
+            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "dislike", tweetContent: tweetContent, reason: "Author")
         }
         actionForDisLikeTweetController.addAction(dislikeForAuthorAction)
         // Like from this subject
-        let dislikeForSubjectAction: UIAlertAction = UIAlertAction(title: "Very old tweet", style: .Default)
+        let dislikeForSubjectAction: UIAlertAction = UIAlertAction(title: "Less of this Subject", style: .Default)
         { action -> Void in
-            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "dislike", tweetContent: tweetContent, reason: "veryOld")
+            self.postSingleTweetFeedbackToServer(followerName: followerName, feedback: "dislike", tweetContent: tweetContent, reason: "Subject")
             
         }
         
@@ -257,7 +268,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         cell.hideUtilityButtonsAnimated(true)
     }
     
-    private func postSingleTweetFeedbackToServer(followerName followerName: String, feedback: String, tweetContent: String, reason: String = ""){
+    private func postSingleTweetFeedbackToServer(followerName followerName: String, feedback: String, tweetContent: String, reason: String){
         var feedbackParams = ["followerScreenName":followerName,
                               "feedback":feedback,
                               "reason"  :reason,
