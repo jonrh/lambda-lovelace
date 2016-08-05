@@ -84,6 +84,9 @@ docker run -d --name="backend-testing" $IMAGE_NAME
 # up for sure.
 sleep 5s
 
+# The || {...; exit 1; } bit at the end means: if the tests fail (returned
+# non-zero value) dump the logs of the "backend-testing" container and return
+# 1 so that the Jenkins build remains failed (non-zero).
 docker run --name "backend-unittests" --link "backend-testing" $IMAGE_NAME nosetests tests.py || { docker logs "backend-testing"; exit 1; }
 
 # Execute the Python tests inside the testing container. The command
