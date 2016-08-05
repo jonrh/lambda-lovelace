@@ -39,7 +39,6 @@ class FeedViewController: UIViewController {
     private var isLoadingNewPage = true
     
     var needReloadTable = true
-    var needLoadUserAccountInfo = true
     
     
     override func viewDidAppear(animated: Bool) {
@@ -51,15 +50,7 @@ class FeedViewController: UIViewController {
             initRefreshControl()
             if !APIManager.isRequestingOAuthToken{
                 if APIManager.LoadLocalOAuthToken() {
-//                    if needLoadUserAccountInfo == true {
-//                        needLoadUserAccountInfo = false
-//                        APIManager.getUserProfile { _ in
-//                            self.refreshFeedTableView(true)
-//                        }
-//                    }
-//                    else {
-                        refreshFeedTableView(true)
-//                    }
+                    refreshFeedTableView(true)
                 }else{
                     performSegueWithIdentifier(FeedVCStoryboard.loginViewSegue, sender: self)
                 }
