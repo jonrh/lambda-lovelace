@@ -21,7 +21,7 @@ class RecommenderTextual:
         # to use when creating their term frequency document.
         self.amount_of_tweets_to_gather = 101
         # We want the top 5 most occurring terms
-        self.top_x_terms = 5
+        self.top_x_terms = 25
         self.second_net_multiplier = 2
         # On a scale up to X.0, what is the scale that the term frequency document should follow
         self.numeric_scale = 10
