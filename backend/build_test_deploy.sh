@@ -83,6 +83,7 @@ docker run -d --name="backend-testing" $IMAGE_NAME
 # to simply wait for 5 seconds then run the tests. Then the service would be
 # up for sure.
 sleep 5s
+docker logs "backend-testing"
 
 docker run --name "backend-unittests" --link "backend-testing" $IMAGE_NAME nosetests tests.py
 
