@@ -16,7 +16,7 @@ rollbar.init(access_token="9a41d7e8fdbb49cead0cae434765a927", environment="celer
 
 
 def celery_base_data_hook(request, data):
-   data['framework'] = 'celery'
+    data['framework'] = 'celery'
 
 rollbar.BASE_DATA_HOOK = celery_base_data_hook
 # =============================================================================
@@ -85,7 +85,7 @@ def get_tweet(self, token):
         try:
             if (token['fetch_status'] is True) or ((token['fetch_status'] is False) and (r.now().to_epoch_time().run() - token['last_logout'] <= 900)):
                 # since_id is the id of the newest tweet of user's home timeline in the database
-                since_id = r.db('lovelace').table('tweets').filter({'screen_name':screen_name}).max('tweet_id').run()
+                since_id = r.db('lovelace').table('tweets').filter({'screen_name': screen_name}).max('tweet_id').run()
                 # only fetch the tweets whose ids are greater than the since_id, to avoid fetching duplicate tweets
                 new_tweets = [tweet._json for tweet in api.home_timeline(count=200, since_id=since_id['tweet_id'])]
                 print(len(new_tweets))

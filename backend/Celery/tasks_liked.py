@@ -16,7 +16,7 @@ rollbar.init(access_token="9a41d7e8fdbb49cead0cae434765a927", environment="celer
 
 
 def celery_base_data_hook(request, data):
-     data['framework'] = 'celery'
+    data['framework'] = 'celery'
 
 rollbar.BASE_DATA_HOOK = celery_base_data_hook
 # =============================================================================
