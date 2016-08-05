@@ -115,7 +115,7 @@ class RecommendTweets(Resource):
                                                           'fetch_status': True}).run()
 
             # if not, we get tweets directly from database
-            else:
+        else:
             user = r.db('lovelace').table('user_tokens').get(screen_name).run()
             current_time = r.now().to_epoch_time().run()
 
