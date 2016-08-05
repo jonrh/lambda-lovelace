@@ -45,6 +45,7 @@ consumer_secret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
 # consumer_key = 'WtxItBWIIw35Ei1tQ4Zrmkybk'
 # consumer_secret = '7KV0Mmg1P7qrIrYCeeRB5V1nKrVRK0r3PQiy7RwNWYTCDxNevH'
 
+countOfReturnTweets = 200
 
 # The recommend system part
 class RecommendTweets(Resource):
@@ -66,6 +67,7 @@ class RecommendTweets(Resource):
 
         # user's screen_name
         screen_name = request.args.get('currentUserScreenName')
+        rollbar.report_message(screen_name + "request tweets of page: " + page, "debug")
 
         # get user's own timeline
         user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
@@ -100,18 +102,16 @@ class RecommendTweets(Resource):
             # What does this mean?
             if user['fetch_status'] == True:
                 print('refreshing')
-                data = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).group('screen_name').limit(
-                    50).run()
-                tweets = data[screen_name]
+                tweets = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).filter(
+                    {'screen_name': screen_name}).slice(countOfReturnTweets * (page - 1), countOfReturnTweets * page).run()
 
                 home_tweets = [tweet['tweet'] for tweet in tweets
                                if tweet['tweet']['user']['screen_name'] != screen_name]
             # What about this?
             elif user['last_logout'] is None or (current_time - user['last_logout']) <= 900:
                 print('within 15min, directly from database')
-                data = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).group('screen_name').limit(
-                    50).run()
-                tweets = data[screen_name]
+                tweets = r.db('lovelace').table('tweets').order_by(r.desc('tweet_id')).filter(
+                    {'screen_name': screen_name}).slice(countOfReturnTweets * (page - 1), countOfReturnTweets * page).run()
 
                 home_tweets = [tweet['tweet'] for tweet in tweets
                                if tweet['tweet']['user']['screen_name'] != screen_name]
@@ -245,6 +245,14 @@ class UserProfile(Resource):
         me = api_flask.me()
         return me._json
 
+class UserLogout(Resource):
+    def delete(self):
+        access_token = request.args.get('oauth_token')
+        access_token_secret = request.args.get('oauth_token_secret')
+        screen_name = request.args.get('currentUserScreenName')
+
+        rollbar.report_message(screen_name + "has logout" , "debug")
+        return ""
 
 @app.route("/error")
 def error():
@@ -273,6 +281,7 @@ api.add_resource(EvaluationData, '/evaluationData')
 api.add_resource(SingleTweetFeedback, '/singleTweetFeedback')
 api.add_resource(EvaluationResult, '/evaluationResult')
 api.add_resource(UserProfile, '/userProfile')
+api.add_resource(UserLogout, '/userLogout')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)  # Production

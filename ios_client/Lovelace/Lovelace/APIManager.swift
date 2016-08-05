@@ -160,4 +160,8 @@ class APIManager {
                 }
         }
     }
+    
+    class func deleteUser(){
+        Alamofire.request(Router.UserLogout)
+    }
 }

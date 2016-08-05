@@ -19,6 +19,7 @@ enum Router: URLRequestConvertible {
     case EvaluationResult([String:AnyObject])
     case SingleTweetFeedback([String:String])
     case UserProfile
+    case UserLogout
     
     var method: Alamofire.Method {
         switch self {
@@ -32,6 +33,8 @@ enum Router: URLRequestConvertible {
             return .PUT
         case .UserProfile:
             return .GET
+        case .UserLogout:
+            return .DELETE
         }
     }
     
@@ -47,6 +50,8 @@ enum Router: URLRequestConvertible {
             return ("/singleTweetFeedback")
         case .UserProfile:
             return ("/userProfile")
+        case .UserLogout:
+            return ("/userLogout")
         }
     }
     
