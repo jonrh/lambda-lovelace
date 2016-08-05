@@ -56,6 +56,7 @@ class UserProfileViewController: UIViewController {
         
         let alertVC = UIAlertController(title: "Sign out", message: "Are you sure you want to sign out?", preferredStyle: .Alert)
         let yesAction = UIAlertAction(title: "Yes", style: .Destructive ){ _ in
+            APIManager.deleteUser()
             var userName = ""
             CurrentUserAccountInfo.getCurrentUser{ user in
                 userName = user.screenName
