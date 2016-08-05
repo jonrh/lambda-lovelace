@@ -70,8 +70,7 @@ class RecommendTweets(Resource):
         rollbar.report_message(screen_name + "request tweets of page: " + str(page), "debug")
 
         # get user's own timeline
-        user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
-
+        user_tweets = []
         home_tweets = []
 
         # if true, then this is the first time user uses this app
@@ -82,7 +81,27 @@ class RecommendTweets(Resource):
 
             for item in home_tweets:
                 r.db('lovelace').table('tweets').insert(
-                    {'screen_name': screen_name, 'tweet_id': item['id'], 'tweet': item}).run()
+                    {'screen_name': screen_name, 'tweet_id': item['id_str'], 'tweet': item}).run()
+
+            # get liked tweets of the users
+            liked_tweets = [liked_tweet._json for liked_tweet in api_flask.favorites(count=200)]
+            print(len(liked_tweets))
+
+            for item in liked_tweets:
+                r.db('lovelace').table('like_user_timeline').insert(
+                    {'screen_name': screen_name, 'tweet_id': item['id_str'], 'type': 'like', 'tweet': item}).run()
+
+            # get user timeline
+            user_tweets = [user_tweet._json for user_tweet in tweepy.Cursor(api_flask.user_timeline, count=200).items(1000)]
+
+            print(len(user_tweets))
+
+            for item in user_tweets:
+                r.db('lovelace').table('like_user_timeline').insert(
+                    {'screen_name': screen_name, 'tweet_id': item['id_str'], 'type': 'user', 'tweet': item}).run()
+
+            user_tweets = user_tweets + liked_tweets
+            print(len(user_tweets))
 
             # Add this user to the list of users we should regularly fetch tweets from now on
             r.db('lovelace').table('user_tokens').insert({'access_secret': access_token_secret,
@@ -107,6 +126,12 @@ class RecommendTweets(Resource):
 
                 home_tweets = [tweet['tweet'] for tweet in tweets
                                if tweet['tweet']['user']['screen_name'] != screen_name]
+
+                user_data = r.db('lovelace').table('like_user_timeline').group('screen_name').limit(2000).run()
+                raw_user_tweets = user_data[screen_name]
+                user_tweets = [user_tweet['tweet'] for user_tweet in raw_user_tweets]
+                print(len(user_tweets))
+
             # What about this?
             elif user['last_logout'] is None or (current_time - user['last_logout']) <= 900:
                 print('within 15min, directly from database')
@@ -115,6 +140,10 @@ class RecommendTweets(Resource):
 
                 home_tweets = [tweet['tweet'] for tweet in tweets
                                if tweet['tweet']['user']['screen_name'] != screen_name]
+
+                user_data = r.db('lovelace').table('like_user_timeline').group('screen_name').limit(2000).run()
+                raw_user_tweets = user_data[screen_name]
+                user_tweets = [user_tweet['tweet'] for user_tweet in raw_user_tweets]
 
                 r.db('lovelace').table('user_tokens').update({'screen_name': screen_name,
                                                               'fetch_status': True}).run()
@@ -125,11 +154,29 @@ class RecommendTweets(Resource):
                                if tweet._json['user']['screen_name'] != screen_name]
                 for item in home_tweets:
                     r.db('lovelace').table('tweets').insert(
-                        {'screen_name': screen_name, 'tweet_id': item['id'], 'tweet': item}).run()
+                        {'screen_name': screen_name, 'tweet_id': item['id_str'], 'tweet': item}).run()
 
                 r.db('lovelace').table('user_tokens').update({'screen_name': screen_name,
                                                               'last_login': r.now().to_epoch_time().run(),
                                                               'fetch_status': True}).run()
+
+                # get user liked tweets
+                liked_tweets = [liked_tweet._json for liked_tweet in api_flask.favorites(count=200)]
+
+                for item in liked_tweets:
+                    r.db('lovelace').table('like_user_timeline').insert(
+                        {'screen_name': screen_name, 'tweet_id': item['id_str'], 'type': 'like', 'tweet': item}).run()
+
+                # get user timeline
+                user_tweets = [user_tweet._json for user_tweet in
+                               tweepy.Cursor(api.user_timeline, count=200).items(1000)]
+
+                for item in user_tweets:
+                    r.db('lovelace').table('tweets').insert(
+                        {'screen_name': screen_name, 'tweet_id': item['id_str'], 'type': 'user', 'tweet': item}).run()
+
+                user_tweets = user_tweets + liked_tweets
+
         #single feedback
         single_feedback = r.db('lovelace').table('single_feedback').filter({"user_name":screen_name}).run()
 
@@ -152,9 +199,13 @@ class EvaluationData(Resource):
         api_flask = tweepy.API(auth)
 
 
-        home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=200, page=page)]
-        user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
-        liked_tweets = [tweet._json for tweet in api_flask.favorites(count=200)]
+        # home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=200, page=page)]
+        # user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
+        # liked_tweets = [tweet._json for tweet in api_flask.favorites(count=200)]
+
+        home_tweets = [tweet._json for tweet in tweepy.Cursor(api_flask.home_timeline, count=200).items(800)]
+        user_tweets = [tweet._json for tweet in tweepy.Cursor(api_flask.user_timeline, count=200).items(3200)]
+        liked_tweets = [tweet._json for tweet in tweepy.Cursor(api_flask.favorites, count=200).items(3000)]
 
         user_tweets = user_tweets + liked_tweets
 
@@ -250,6 +301,15 @@ class UserLogout(Resource):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
         screen_name = request.args.get('currentUserScreenName')
+
+        # connect database
+        r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
+                  password="marcgoestothegym").repl()
+
+        r.db('lovelace').table('user_tokens').update({'screen_name': screen_name,
+                                                      'fetch_status': False,
+                                                      'last_logout': r.now().to_epoch_time().run()
+                                                      }).run()
 
         rollbar.report_message(screen_name + "has logout" , "debug")
         return ""

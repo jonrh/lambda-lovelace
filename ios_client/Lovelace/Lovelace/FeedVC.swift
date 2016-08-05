@@ -88,6 +88,7 @@ class FeedViewController: UIViewController {
     
     @objc private func refreshFeedTableView(reloadData: Bool = false){
         cleanTableView(reloadData)
+        feedPage = 1
         loadTweetWithPage(feedPage)
     }
     
