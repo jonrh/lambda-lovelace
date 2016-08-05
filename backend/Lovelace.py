@@ -52,7 +52,7 @@ class RecommendTweets(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
-        page = request.args.get('page')
+        page = int(request.args.get('page'))
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
         api_flask = tweepy.API(auth)
@@ -67,7 +67,7 @@ class RecommendTweets(Resource):
 
         # user's screen_name
         screen_name = request.args.get('currentUserScreenName')
-        rollbar.report_message(screen_name + "request tweets of page: " + page, "debug")
+        rollbar.report_message(screen_name + "request tweets of page: " + str(page), "debug")
 
         # get user's own timeline
         user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
@@ -146,7 +146,7 @@ class EvaluationData(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
         access_token_secret = request.args.get('oauth_token_secret')
-        page = request.args.get('page')
+        page = int(request.args.get('page'))
         auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         auth.set_access_token(access_token, access_token_secret)
         api_flask = tweepy.API(auth)
@@ -285,4 +285,4 @@ api.add_resource(UserLogout, '/userLogout')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)  # Production
-    # app.run(host="127.0.0.1", port=5000)  # Local debugging
+     app.run(host="127.0.0.1", port=5000)  # Local debugging
