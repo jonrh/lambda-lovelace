@@ -21,7 +21,7 @@ class RecommenderTextual:
         # to use when creating their term frequency document.
         self.amount_of_tweets_to_gather = 101
         # We want the top 5 most occurring terms
-        self.top_x_terms = 5
+        self.top_x_terms = 25
         self.second_net_multiplier = 2
         # On a scale up to X.0, what is the scale that the term frequency document should follow
         self.numeric_scale = 10
@@ -29,21 +29,61 @@ class RecommenderTextual:
         # worth double the worth of a term)
         # This is currently bugged however, see bugs section above.
         self.hash_tag_multiplier = 2
-        self.single_tweet_feedback = {"me":"m"}#single_tweet_feedback["author"]
-        self.liked_tweets = []#single_tweet_feedback["like"]
-        self.disliked_tweets = []#single_tweet_feedback["dislike"]
+        self.single_tweet_feedback = single_tweet_feedback#{"me":"m"}
+        self.liked_tweets = []
+        self.disliked_tweets = []
+        self.liked_authors = []
+        self.disliked_authors = []
         self.termfreq_doc = {}
         self.second_net_termfreq_doc = {}
-        self.more_or_less_from_this_author_multiplier = 0.4
+        self.more_or_less_from_this_author_multiplier = 2.5
         self.like_and_dislike_multiplier = 0.125
         ###################
         # Method calls, etc#
         ###################
-        self.vectorizer = CountVectorizer()
+        #self.vectorizer = CountVectorizer()
         self.own_tweets = users_own_tweets
         self.followed_tweets = users_followed_tweets
         self.get_term_frequency_weightings()
+        self.set_feedback()
+        self.author_feedback = self.set_author_sentiment()
+        self.set_tweet_feedback()
 
+    def set_tweet_feedback(self):
+        for tweet_text in self.liked_tweets:
+            self.get_liked_weighting(tweet_text)
+        for tweet_text in self.disliked_tweets:
+            self.get_dislike_weighting(tweet_text)
+
+    def set_author_sentiment(self):
+        author_feedback = {}
+        for author in self.disliked_authors:
+            print("author")
+            print(str(author) + " disliked!")
+            author_feedback[author] = author_feedback.get(author, 0) - 1
+        for author in self.liked_authors:
+            print("author")
+            print(str(author) + " liked!")
+            author_feedback[author] = author_feedback.get(author, 0) + 1
+        return author_feedback
+
+    def set_feedback(self):
+        #WORKS
+        for feedback in self.single_tweet_feedback:
+            if feedback.get("feedback", None) is "like" and feedback.get("reason", None) is "subject":
+                self.liked_tweets.append(str(feedback.get("tweetContent", None)))
+
+            elif feedback.get("feedback", None) is "dislike" and feedback.get("reason", None) is "subject":
+                self.disliked_tweets.append(str(feedback.get("tweetContent", None)))
+            
+            elif feedback.get("feedback", None) is "like" and feedback.get("reason", None) is "author":
+                self.liked_authors.append(str(feedback.get("followerScreenName", None)))
+            
+            elif feedback.get("feedback", None) is "dislike" and feedback.get("reason", None) is "author":
+                self.disliked_authors.append(str(feedback.get("followerScreenName", None)))
+            
+            else:
+                print("ERROR, the following feedback could not be processed: " + str(feedback))
 
     # This method gets the top x terms that a users tweets with
     def get_term_frequency_weightings(self):
@@ -150,27 +190,33 @@ class RecommenderTextual:
         return weighting
 
     def get_author_sentiment(self, tweet):
-        author_name = tweet['user']['screen_name']
+        #WORKS
         #author_name = tweet.author._json['screen_name']
-        score = 0
-        for name in self.single_tweet_feedback.keys():
-            if author_name == str(name):
-                feedback_score = self.single_tweet_feedback.get(author_name)
-                capped_score = feedback_score if feedback_score <= 100 else 100
-                score = (capped_score/self.numeric_scale)* self.more_or_less_from_this_author_multiplier
+        author_name = tweet['user']['screen_name']
+        score = 0.0
+        print(str(author_name.lower().encode("utf-8")))
+        for name in self.author_feedback.keys():
+            if str(author_name.lower().encode("utf-8")) == str(name.lower().encode("utf-8")):
+                feedback_score = self.author_feedback.get(author_name)
+                multiplier = self.more_or_less_from_this_author_multiplier
+                scale = self.numeric_scale
+                score = float(feedback_score)/float(scale) * float(multiplier)
         return score
 
     def get_dislike_weighting(self, tweet):
-        tweet_text = tweet['text'].lower()
-        #tweet_text = tweet.text.lower()
-        terms_to_reduce = []
+        #WORKS
+        tweet_text = tweet['text']#.lower()
+        #tweet_text = tweet#.text.lower()
+        print("tweet")
+        print("DISLIKED " + str(tweet_text))
+        terms_to_reduce = set() # We only want to reduce each term once
         for word in tweet_text.replace("\n"," ").split():
             unhashedword = word
             if word.startswith("#"):
                 unhashedword = unhashedword[1:]
             for term in self.termfreq_doc.keys():
                 if unhashedword == term:
-                    terms_to_reduce.append(str(term))#Add the term, because a "term" can be inside another full word (Javacodegeeks for Java)
+                    terms_to_reduce.add(str(term))#Add the term, because a "term" can be inside another full word (Javacodegeeks for Java)
         
         # Only execute this method if there is a term in the tweets text that can be reduced.
         # This means that disliking a tweet that does not contain a term will have no effect, but
@@ -179,6 +225,7 @@ class RecommenderTextual:
             self.balance_reduce_term_freq_doc_preference(terms_to_reduce)
         
     def balance_reduce_term_freq_doc_preference(self, terms_to_reduce):
+        #WORKS
         num_of_reduced_terms = len(terms_to_reduce)
         num_of_terms = len(self.termfreq_doc.keys())
         alter_value = self.like_and_dislike_multiplier
@@ -190,22 +237,27 @@ class RecommenderTextual:
                 increase_terms.append(str(key))
 
         for term in terms_to_reduce:
+            print("reducing from " + str(term) + " with " + str(reduce_value))
             self.termfreq_doc[term] -= reduce_value
 
         for term in increase_terms:
+            print("adding to " + str(term) + " with " + str(increase_value))
             self.termfreq_doc[term] += increase_value
 
     def get_liked_weighting(self, tweet):
-        tweet_text = tweet['text'].lower()
-        #tweet_text = tweet.text.lower()
-        terms_to_increase = []
+        #WORKS
+        tweet_text = tweet['text']#.lower()
+        #tweet_text = tweet#.text.lower()
+        print("Tweet")
+        print("LIKED" + str(tweet_text))
+        terms_to_increase = set() # We only want to increase each term once
         for word in tweet_text.replace("\n"," ").split():
             unhashedword = word
             if word.startswith("#"):
                 unhashedword = unhashedword[1:]
             for term in self.termfreq_doc.keys():
                 if unhashedword == term:
-                    terms_to_increase.append(str(term))
+                    terms_to_increase.add(str(term))
 
         # Only execute this method if there is a term in the tweets text that can be increased.
         # This means that liking a tweet that does not contain a term will have no effect, but
@@ -214,6 +266,7 @@ class RecommenderTextual:
             self.balance_increase_term_freq_doc_preference(terms_to_increase)
 
     def balance_increase_term_freq_doc_preference(self, terms_to_increase):
+        #WORKS
         num_of_increased_terms = len(terms_to_increase)
         num_of_terms = len(self.termfreq_doc.keys())
         alter_value = self.like_and_dislike_multiplier 
@@ -225,14 +278,18 @@ class RecommenderTextual:
                 reduce_terms.append(str(key))
 
         for term in terms_to_increase:
-            self.termfreq_doc.get[term] += increase_value
+            print("adding to " + str(term) + " with " + str(increase_value))
+            self.termfreq_doc[term] += increase_value
 
         for term in reduce_terms:
-            self.termfreq_doc.get[term] -= reduce_value
+            print("reducing from " + str(term) + " with " + str(reduce_value))
+            self.termfreq_doc[term] -= reduce_value
 
 
     def generate(self, number_of_recommendations, how_many_days_ago):
         """What does this function do?"""
+
+        #WORKS
         list_of_owners_tweets = []
         max_age_in_seconds = how_many_days_ago * 86400  # number of seconds in 1 day
         seconds_ago = 0
@@ -243,7 +300,7 @@ class RecommenderTextual:
             #list_of_owners_tweets.append(tweet.text.encode('utf-8'))
             list_of_owners_tweets.append(tweet['text'].encode('utf-8'))  # UNCOMMENT THIS LINE BEFORE COMMITTING AND COMMENT OUT LINE ABOVE
 
-        self.vectorizer.fit_transform(list_of_owners_tweets)
+        #self.vectorizer.fit_transform(list_of_owners_tweets)
         words = self.own_tweets  # The users own tweets
         tweet_list = self.followed_tweets  # tweets from accounts that the user is following
 
@@ -256,6 +313,8 @@ class RecommenderTextual:
             tweet_age = datetime.strptime(tweet_age, '%a %b %d %H:%M:%S +0000 %Y')  # dirty fix
             age = time.time() - (tweet_age - datetime(1970, 1, 1)).total_seconds()
             if age > max_age_in_seconds:
+                print(tweet.text.encode("utf-8"))
+                print(tweet.created_at)
                 remove_these_tweets.append(tweet)
 
         for removal in remove_these_tweets:
@@ -320,12 +379,8 @@ class RecommenderTextual:
         # count!
         # 6
 
+        #Works with negative and positive
         count += self.get_author_sentiment(tweet)
-        if tweet in self.disliked_tweets:
-            self.get_dislike_weighting(tweet)
-
-        if tweet in self.liked_tweets:
-            self.get_liked_weighting(tweet)
 
         for word in sanitised_tweet_text.split():
             if word[0] == "#":
