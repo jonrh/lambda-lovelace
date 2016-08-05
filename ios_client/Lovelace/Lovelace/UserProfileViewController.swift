@@ -71,6 +71,7 @@ class UserProfileViewController: UIViewController {
             let feedVC = nevigationVC.viewControllers[0] as! FeedViewController
             feedVC.cleanTableView(true)
             feedVC.needReloadTable = true
+            feedVC.needLoadUserAccountInfo = true
             self.tabBarController?.selectedIndex = 0
             
         }

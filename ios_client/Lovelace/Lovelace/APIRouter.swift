@@ -80,11 +80,16 @@ enum Router: URLRequestConvertible {
                 break
             }
             
-            var curretnUserScreenName = ""
-            CurrentUserAccountInfo.getCurrentUser{ user in
-                curretnUserScreenName = user.screenName
+            switch self {
+            case .UserProfile:
+                break
+            default:
+                var curretnUserScreenName = ""
+                CurrentUserAccountInfo.getCurrentUser{ user in
+                    curretnUserScreenName = user.screenName
+                    parameters["currentUserScreenName"] = curretnUserScreenName
+                }
             }
-            parameters["currentUserScreenName"] = curretnUserScreenName
             
             return encodeing.encode(mutableURLRequest, parameters: parameters).0
         }
