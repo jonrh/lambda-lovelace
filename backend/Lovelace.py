@@ -157,8 +157,10 @@ class EvaluationData(Resource):
         user = api_flask.me()
 
         home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=200, page=page)]
-        
         user_tweets = [tweet._json for tweet in api_flask.user_timeline(count=200)]
+        liked_tweets = [tweet._json for tweet in api_flask.favorites(count=200)]
+
+        user_tweets = user_tweets + liked_tweets
 
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
