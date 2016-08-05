@@ -84,7 +84,7 @@ docker run -d --name="backend-testing" $IMAGE_NAME
 # up for sure.
 sleep 5s
 
-docker run --name "backend-unittests" --link "backend-testing" $IMAGE_NAME nosetests tests.py || docker logs "backend-testing"
+docker run --name "backend-unittests" --link "backend-testing" $IMAGE_NAME nosetests tests.py && docker logs "backend-testing"
 
 # Execute the Python tests inside the testing container. The command
 # "nosetests" is some testing tool I saw was popular. It claims to be "nicer"
