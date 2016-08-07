@@ -18,6 +18,7 @@ rollbar.init(access_token="9a41d7e8fdbb49cead0cae434765a927", environment="celer
 def celery_base_data_hook(request, data):
     data['framework'] = 'celery'
 
+
 rollbar.BASE_DATA_HOOK = celery_base_data_hook
 # =============================================================================
 
@@ -48,7 +49,7 @@ def handle_task_failure(**kw):
 def add():
     # read tokens of all user's in the database
     tokens = read_tokens()
-    
+
     # iteratively fetch tweets of each user
     # all tasks are async tasks, so will not affect each other
     for item in tokens:
@@ -63,7 +64,7 @@ def get_tweet(self, token):
         host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com',
         port=28015, db='lovelace', password="marcgoestothegym"
     ).repl()
-    
+
     last_login = token['last_login']
     print(last_login)
     now = r.now().to_epoch_time().run()
@@ -77,22 +78,24 @@ def get_tweet(self, token):
         # authentication
         auth = tweepy.OAuthHandler(consumer_key=token['consumer_key'], consumer_secret=token['consumer_secret'])
         auth.set_access_token(token['access_token'], token['access_secret'])
-        
+
         api = tweepy.API(auth)
-        
+
         # fetch user's home timeline and insert it into database
         # here is an error handling, if the rate limit exceed, the task will be retried after 5 seconds
         try:
-            if (token['fetch_status'] is True) or ((token['fetch_status'] is False) and (r.now().to_epoch_time().run() - token['last_logout'] <= 900)):
+            if (token['fetch_status'] is True) or (
+                (token['fetch_status'] is False) and (r.now().to_epoch_time().run() - token['last_logout'] <= 900)):
                 # since_id is the id of the newest tweet of user's home timeline in the database
-                since_id = r.db('lovelace').table('tweets').filter({'screen_name':screen_name}).max('tweet_id').run()
+                since_id = r.db('lovelace').table('tweets').filter({'screen_name': screen_name}).max('tweet_id').run()
                 # only fetch the tweets whose ids are greater than the since_id, to avoid fetching duplicate tweets
                 new_tweets = [tweet._json for tweet in api.home_timeline(count=200, since_id=since_id['tweet_id'])]
+                print(len(new_tweets))
                 # insert each tweet into database
                 for item in new_tweets:
                     r.db('lovelace').table('tweets').insert({
                         'screen_name': screen_name,
-                        'tweet_id': item['id'],
+                        'tweet_id': item['id_str'],
                         'tweet': item
                     }).run()
                 # check rate limit remaining
