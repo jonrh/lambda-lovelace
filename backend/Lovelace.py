@@ -66,7 +66,7 @@ class RecommendTweets(Resource):
         users = list(r.db('lovelace').table('user_tokens').get_field('screen_name').run())
 
         # user's screen_name
-        screen_name = request.args.get('currentUserScreenName')
+        screen_name = request.args.get('currentUserScreenName') or "NoUserNameFound"
         rollbar.report_message(screen_name + "request tweets of page: " + str(page), "debug")
 
         # get user's own timeline
