@@ -163,6 +163,8 @@ docker rm -f "celery-worker-homeline" || true
 docker rm -f "celery-worker-userline" || true
 docker rm -f "celery-worker-likes" || true
 
+cd Celery/
+
 # Start Celery worker containers. They basically re-uses the backend container
 # but start it with an overwritten execution command:
 #
