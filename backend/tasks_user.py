@@ -25,7 +25,7 @@ rollbar.BASE_DATA_HOOK = celery_base_data_hook
 # Terminal command to run this task file
 # celery -A tasks_user worker -B -c 8 --loglevel=info -Q user_queue -n user
 
-app = Celery('tasks', broker='redis://celery_redis:6379/0')
+app = Celery('tasks', broker='redis://celery-redis:6379/0')
 
 app.config_from_object("celeryconfig")
 # config celery, the task 'add' will be executed every 60 seconds
