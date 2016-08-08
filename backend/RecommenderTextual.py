@@ -228,7 +228,7 @@ class RecommenderTextual:
                 unhashedword = unhashedword[1:]
             for term in self.termfreq_doc.keys():
                 if unhashedword == term:
-                    terms_to_reduce.add(str(term))#Add the term, because a "term" can be inside another full word (Javacodegeeks for Java)
+                    terms_to_reduce.add(term)#Add the term, because a "term" can be inside another full word (Javacodegeeks for Java)
         
         # Only execute this method if there is a term in the tweets text that can be reduced.
         # This means that disliking a tweet that does not contain a term will have no effect, but
@@ -244,15 +244,15 @@ class RecommenderTextual:
         increase_value = alter_value/(num_of_terms - num_of_reduced_terms) 
         increase_terms = []
         for key in self.termfreq_doc.keys():
-            if str(key) not in terms_to_reduce:
-                increase_terms.append(str(key))
+            if key not in terms_to_reduce:
+                increase_terms.append(key)
 
         for term in terms_to_reduce:
-            print("reducing from " + str(term) + " with " + str(reduce_value))
+            print("reducing from " + term + " with " + str(reduce_value))
             self.termfreq_doc[term] -= reduce_value
 
         for term in increase_terms:
-            print("adding to " + str(term) + " with " + str(increase_value))
+            print("adding to " + term + " with " + str(increase_value))
             self.termfreq_doc[term] += increase_value
 
     def get_liked_weighting(self, tweet):
@@ -268,7 +268,7 @@ class RecommenderTextual:
                 unhashedword = unhashedword[1:]
             for term in self.termfreq_doc.keys():
                 if unhashedword == term:
-                    terms_to_increase.add(str(term))
+                    terms_to_increase.add(term)
 
         # Only execute this method if there is a term in the tweets text that can be increased.
         # This means that liking a tweet that does not contain a term will have no effect, but
@@ -284,15 +284,15 @@ class RecommenderTextual:
         reduce_value = alter_value/(num_of_terms - num_of_increased_terms) 
         reduce_terms = []
         for key in self.termfreq_doc.keys():
-            if str(key) not in terms_to_increase:
-                reduce_terms.append(str(key))
+            if key not in terms_to_increase:
+                reduce_terms.append(key)
 
         for term in terms_to_increase:
-            print("adding to " + str(term) + " with " + str(increase_value))
+            print("adding to " + term + " with " + str(increase_value))
             self.termfreq_doc[term] += increase_value
 
         for term in reduce_terms:
-            print("reducing from " + str(term) + " with " + str(reduce_value))
+            print("reducing from " + term + " with " + str(reduce_value))
             self.termfreq_doc[term] -= reduce_value
 
 
