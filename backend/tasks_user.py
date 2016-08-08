@@ -78,24 +78,26 @@ def get_user_tweet(self, token):
     # here is an error handling, if the rate limit exceed, the task will be retried after 5 seconds
     try:
         if (token['fetch_status'] is True) or ((token['fetch_status'] is False) and (r.now().to_epoch_time().run() - token['last_logout'] <= 900)):
-            # since_id is the id of the newest tweet of user's home timeline in the database
-            since_id = r.db('lovelace').table('like_user_timeline').filter({'screen_name': screen_name, 'type': 'user'}).max('tweet_id').run()
-            
-            # only fetch the tweets whose ids are greater than the since_id, to avoid fetching duplicate tweets
-            new_user_tweets = [tweet._json for tweet in api.user_timeline(count=200, since_id=since_id['tweet_id'])]
-            print(len(new_user_tweets))
-            # insert each tweet into database
-            for item in new_user_tweets:
-                r.db('lovelace').table('like_user_timeline').insert({
-                    'screen_name': screen_name,
-                    'tweet_id': item['id_str'],
-                    'type': 'user',
-                    'tweet': item
-                }).run()
-            
-            return "user_timeline"
+            if screen_name != u"NoUserNameFound":
+                # since_id is the id of the newest tweet of user's home timeline in the database
+                since_id = r.db('lovelace').table('like_user_timeline').filter({'screen_name': screen_name, 'type': 'user'}).max('tweet_id').run()
+
+                # only fetch the tweets whose ids are greater than the since_id, to avoid fetching duplicate tweets
+                new_user_tweets = [tweet._json for tweet in api.user_timeline(count=200, since_id=since_id['tweet_id'])]
+                print(len(new_user_tweets))
+                # insert each tweet into database
+                for item in new_user_tweets:
+                    r.db('lovelace').table('like_user_timeline').insert({
+                        'screen_name': screen_name,
+                        'tweet_id': item['id_str'],
+                        'type': 'user',
+                        'tweet': item
+                    }).run()
+
+                return "user_timeline"
+
     except tweepy.RateLimitError as exc:
-        print("Rate limit exceeded")
+        logger.warning("Rate limit exceeded. Skipped.")
         # raise self.retry(exc=exc, countdown=5, max_retries=10)
     except r.ReqlNonExistenceError as e:
         logger.exception("Most likely couldn't find a specific user in RethinkDB")
