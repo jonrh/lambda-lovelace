@@ -78,16 +78,16 @@ class RecommenderTextual:
     def set_feedback(self):
         #WORKS
         for feedback in self.single_tweet_feedback:
-            if feedback.get("feedback", None) is "like" and feedback.get("reason", None) is "subject":
+            if feedback.get("feedback", None).lower() is "like" and feedback.get("reason", None).lower() is "subject":
                 self.liked_tweets.append(str(feedback.get("tweetContent", None)))
 
-            elif feedback.get("feedback", None) is "dislike" and feedback.get("reason", None) is "subject":
+            elif feedback.get("feedback", None).lower() is "dislike" and feedback.get("reason", None).lower() is "subject":
                 self.disliked_tweets.append(str(feedback.get("tweetContent", None)))
             
-            elif feedback.get("feedback", None) is "like" and feedback.get("reason", None) is "author":
+            elif feedback.get("feedback", None).lower() is "like" and feedback.get("reason", None).lower() is "author":
                 self.liked_authors.append(str(feedback.get("followerScreenName", None)))
             
-            elif feedback.get("feedback", None) is "dislike" and feedback.get("reason", None) is "author":
+            elif feedback.get("feedback", None).lower() is "dislike" and feedback.get("reason", None).lower() is "author":
                 self.disliked_authors.append(str(feedback.get("followerScreenName", None)))
             
             else:
