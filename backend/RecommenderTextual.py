@@ -340,6 +340,7 @@ class RecommenderTextual:
                 if term in tweet['text'].lower():
                 #if term in tweet.text.lower():
                     tweets_that_contain_tf_terms.append(tweet)
+                    break
 
         for tweet in prelim_results:
             if tweet not in tweets_that_contain_tf_terms:
