@@ -1,5 +1,6 @@
 from celery import Celery
 from celery.signals import task_failure
+from celery.utils.log import get_task_logger
 from datetime import timedelta
 import rethinkdb as r
 import tweepy
@@ -14,13 +15,13 @@ import rollbar
 # https://github.com/rollbar/rollbar-celery-example
 rollbar.init(access_token="9a41d7e8fdbb49cead0cae434765a927", environment="celery-worker")
 
-
 def celery_base_data_hook(request, data):
     data['framework'] = 'celery'
 
 rollbar.BASE_DATA_HOOK = celery_base_data_hook
 # =============================================================================
 
+logger = get_task_logger(__name__)
 
 # Terminal command to run this task file
 # celery -A tasks_user worker -B -c 8 --loglevel=info -Q user_queue -n user
@@ -78,7 +79,7 @@ def get_user_tweet(self, token):
     try:
         if (token['fetch_status'] is True) or ((token['fetch_status'] is False) and (r.now().to_epoch_time().run() - token['last_logout'] <= 900)):
             # since_id is the id of the newest tweet of user's home timeline in the database
-            since_id = r.db('lovelace').table('like_user_timeline').filter({'screen_name':screen_name,'type':'user'}).max('tweet_id').run()
+            since_id = r.db('lovelace').table('like_user_timeline').filter({'screen_name': screen_name, 'type': 'user'}).max('tweet_id').run()
             
             # only fetch the tweets whose ids are greater than the since_id, to avoid fetching duplicate tweets
             new_user_tweets = [tweet._json for tweet in api.user_timeline(count=200, since_id=since_id['tweet_id'])]
@@ -94,12 +95,14 @@ def get_user_tweet(self, token):
             
             return "user_timeline"
     except tweepy.RateLimitError as exc:
-        print("Rate limit exceeds")
-#        raise self.retry(exc=exc, countdown=5, max_retries=10)
+        print("Rate limit exceeded")
+        # raise self.retry(exc=exc, countdown=5, max_retries=10)
+    except r.ReqlNonExistenceError as e:
+        logger.exception("Most likely couldn't find a specific user in RethinkDB")
 
 
-# method to read all tokens of the users from database
 def read_tokens():
+    """Method to read all tokens of the users from database"""
     r.connect(
         host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com',
         port=28015, db='lovelace', password="marcgoestothegym"
