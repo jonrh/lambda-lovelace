@@ -91,6 +91,8 @@ class RecommenderTextual:
                 self.disliked_authors.append(str(feedback.get("followerScreenName", None)))
             
             else:
+                print(feedback.get("reason", None).lower())
+                print(feedback.get("feedback", None).lower())
                 print("ERROR, the following feedback could not be processed: " + str(feedback))
 
     # This method gets the top x terms that a users tweets with
