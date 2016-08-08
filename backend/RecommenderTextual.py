@@ -260,7 +260,7 @@ class RecommenderTextual:
         tweet_text = tweet#['text']#.lower()
         #tweet_text = tweet#.text.lower()
         print("Tweet")
-        print("LIKED" + str(tweet_text))
+#        print("LIKED" + str(tweet_text))
         terms_to_increase = set() # We only want to increase each term once
         for word in tweet_text.replace("\n"," ").split():
             unhashedword = word
