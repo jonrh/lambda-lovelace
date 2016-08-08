@@ -36,8 +36,8 @@ class RecommenderTextual:
         self.disliked_authors = []
         self.termfreq_doc = {}
         self.second_net_termfreq_doc = {}
-        self.more_or_less_from_this_author_multiplier = 2.5
-        self.like_and_dislike_multiplier = 0.125
+        self.more_or_less_from_this_author_multiplier = 5.1#2.5
+        self.like_and_dislike_multiplier = 5.1#0.125
         ###################
         # Method calls, etc#
         ###################
