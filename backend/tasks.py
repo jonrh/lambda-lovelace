@@ -102,7 +102,8 @@ def get_tweet(self, token):
                 limit = api.rate_limit_status()
                 return limit['resources']['statuses']['/statuses/home_timeline']
         except tweepy.RateLimitError as exc:
-            raise self.retry(exc=exc, countdown=5, max_retries=10)
+             print("Rate limit exceeds")
+#            raise self.retry(exc=exc, countdown=5, max_retries=10)
 
 
 # method to read all tokens of the users from database
