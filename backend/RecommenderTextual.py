@@ -220,7 +220,7 @@ class RecommenderTextual:
         tweet_text = tweet#['text']#.lower()
         #tweet_text = tweet#.text.lower()
         print("tweet")
-        print("DISLIKED " + tweet_text)
+        print(u"DISLIKED " + tweet_text)
         terms_to_reduce = set() # We only want to reduce each term once
         for word in tweet_text.replace("\n"," ").split():
             unhashedword = word
