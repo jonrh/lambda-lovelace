@@ -109,16 +109,18 @@ class APIManager {
     
     class func getRecommendTweetsWithPage(page: Int, callback: (JSON)->Void) {
         print("fetch tweets of page:" + String(page))
-        Alamofire.request(Router.RecommendTweets(page))
-            .responseJSON { response in
-                guard response.result.error == nil else {
-                    print(response.result.error)
-                    return
-                }
-                if let value = response.result.value {
-                    let tweets = JSON(value)
-                    callback(tweets)
-                }
+        CurrentUserAccountInfo.getCurrentUser { _ in
+            Alamofire.request(Router.RecommendTweets(page))
+                .responseJSON { response in
+                    guard response.result.error == nil else {
+                        print(response.result.error)
+                        return
+                    }
+                    if let value = response.result.value {
+                        let tweets = JSON(value)
+                        callback(tweets)
+                    }
+            }
         }
     }
     

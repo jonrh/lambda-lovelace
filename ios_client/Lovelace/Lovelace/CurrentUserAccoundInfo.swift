@@ -28,6 +28,7 @@ class CurrentUserAccountInfo {
     class func removeCurrentUserLocalData(){
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey("userInfoAvailable")
+        currentUser = nil
         
     }
     class func getCurrentUser(complete: (CurrentUserAccountInfo) -> Void) {
