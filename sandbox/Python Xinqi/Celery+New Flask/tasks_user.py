@@ -94,7 +94,7 @@ def get_user_tweet(self, token):
             
             return "user_timeline"
     except tweepy.RateLimitError as exc:
-        raise self.retry(exc=exc, countdown=5, max_retries=10)
+        print('Rate Limit Exceeds')
 
 
 # method to read all tokens of the users from database
