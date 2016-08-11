@@ -2,7 +2,7 @@ from RecommenderTextual import RecommenderTextual
 from sklearn.feature_extraction.text import CountVectorizer
 import tweepy 
 
-number_of_recommendations = 3
+number_of_recommendations = 35
 
 consumer_key = "KOUIbWm4VWYzI0uuQLogzGRa0"
 consumer_secret = "r5Ac1fwLmuYFYL6biR4E1iYzS8S78DInUNM3AQ76EeMDBBVSFL"
@@ -18,7 +18,7 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 users_tweets = api.user_timeline()
-followed_tweets = api.home_timeline(count =3)
+followed_tweets = api.home_timeline(count =35)
 
 feedback = [{
 "feedback":  "like" ,
