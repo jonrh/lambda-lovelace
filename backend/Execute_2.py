@@ -79,5 +79,5 @@ print(" Recommended set: ")
 print(" *** ")
 print(" *** ")
 
-#for tweet in recommended_tweets["recommended_tweets"]:#Generate now returns the original tweets AND a counter
-#    print(tweet.text.encode('utf-8'))
+for tweet in recommended_tweets["recommended_tweets"]:#Generate now returns the original tweets AND a counter
+    print(tweet.text.encode('utf-8'))
