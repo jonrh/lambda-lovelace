@@ -645,7 +645,7 @@ class RecommenderTextual:
         print(count)
         return count
 
-    '''def debug_term_frequency_to_rollbar(self):
+    def debug_term_frequency_to_rollbar(self):
         """
         Sends to Rollbar the term frequcny document so we can easily debug
         what terms and weights we work with. This should hopefully allow us to
@@ -660,4 +660,4 @@ class RecommenderTextual:
         for term, weight in sorted_by_weight:
             pretty_termdoc_string += u"{0:.3f}: {1}\n".format(weight, term)
 
-        rollbar.report_message(pretty_termdoc_string, "debug")'''
+        rollbar.report_message(pretty_termdoc_string, "debug")
