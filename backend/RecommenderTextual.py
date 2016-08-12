@@ -32,11 +32,13 @@ from Stopwords import Stopwords
 
    This is due to an inconsistency on getting the Python to work on multiple
    operating systems. In order to run this class stand-alone on Windows, simply
-   comment out the # OSX line and uncomment the # Windows line. Then run the 
-   Execute_2.py file to see textual information from tweet belonging to one of the 
-   Lambda Lovelace test accounts. Several print statements have been commented out
-   for your ease of testing the effect of changing variables for this class to
-   see what effect they have.
+   comment out the # OSX line and uncomment the # Windows line, comment out the rollbar 
+   import, comment out the debug_term_frequency_to_rollbar function on line 653 
+   and comment out "self.debug_term_frequency_to_rollbar()" on line 279. 
+   Then run the Execute_2.py file to see textual information from tweet belonging 
+   to one of the Lambda Lovelace test accounts. Several print statements have been 
+   commented out for your ease of testing the effect of changing variables for this 
+   class to see what effect they have.
 
     Attributes:
         amount_of_tweets_to_gather: The max number of most recent 
@@ -330,7 +332,8 @@ class RecommenderTextual:
             unhashedword = word.lower()
             if word.startswith("#"):
                 unhashedword = unhashedword[1:]
-            if unhashedword in self.termfreq_doc.keys():
+            if self.termfreq_doc.has_key(unhashedword):
+            #if unhashedword in self.termfreq_doc.keys():
                 terms_to_reduce.add(unhashedword)
 
         # Only execute this method if there is a term in the tweets text that can be reduced.
@@ -397,7 +400,8 @@ class RecommenderTextual:
             unhashedword = word.lower()
             if word.startswith("#"):
                 unhashedword = unhashedword[1:]
-            if unhashedword in self.termfreq_doc.keys():
+            if self.termfreq_doc.has_key(unhashedword):
+            #if unhashedword in self.termfreq_doc.keys():
                 terms_to_increase.add(unhashedword)
 
         # Only execute this method if there is a term in the tweets text that can be increased.
@@ -631,7 +635,8 @@ class RecommenderTextual:
                 hashtag = True
             else:
                 text_word = word.lower()
-            if text_word in term_frequency_document.keys():
+            if term_frequency_document.has_key(text_word):
+            #if text_word in term_frequency_document.keys():
                 count += 1
                 print("Found term:" + str(text_word))
                 if hashtag == True:
@@ -643,7 +648,7 @@ class RecommenderTextual:
         count -= self.get_tweet_age_score(tweet)
         if count <= 0.0:
             count = 0.0 
-        #print(count)
+        print(count)
         return count
 
     def debug_term_frequency_to_rollbar(self):
