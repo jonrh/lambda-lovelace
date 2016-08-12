@@ -633,6 +633,7 @@ class RecommenderTextual:
                 text_word = word.lower()
             if text_word in term_frequency_document.keys():
                 count += 1
+                print("Found term:" + str(text_word))
                 if hashtag == True:
                     count += (self.termfreq_doc.get(text_word) * self.hash_tag_multiplier)
                     hashtag = False
@@ -642,7 +643,7 @@ class RecommenderTextual:
         count -= self.get_tweet_age_score(tweet)
         if count <= 0.0:
             count = 0.0 
-        print(count)
+        #print(count)
         return count
 
     def debug_term_frequency_to_rollbar(self):
