@@ -1,7 +1,7 @@
 # λ Lovelace
-A collaborative recommender system for tweets; a more personalised tweet stream. Module: COMP47250, a 30 ECTS group project, summer 2016 at University College Dublin.
+Recommender system for tweets; a more personalised tweet stream. This is a repository for a final project in the 30 ECTS credit module COMP47250 Team Software Project 2016. Submitted to the School of Computer Science \& Informatics in partial fulfilment of the requirements for the degree of Masters of Science in Computer Science (Negotiated Learning) at University College Dublin. Summer 2016.
 
-**Blog**: [http://jonrh.github.io/lambda-lovelace/](http://jonrh.github.io/lambda-lovelace/)
+**Blog**: [https://jonrh.github.io/lambda-lovelace/](http://jonrh.github.io/lambda-lovelace/)
 
 
 ## Getting Started
@@ -31,7 +31,7 @@ git checkout -b gh-pages origin/gh-pages
 ```
 
 ## Project
-**Summary**: A collaborative recommender system for tweets; a more personalised tweet stream.
+**Summary**: A recommender system for tweets; a more personalised tweet stream.
 
 The theme of 2016 for the group project module is *Future Of News*. The premise for our project is the asumption (or observation) that people are experiencing an information overload. Years or decades ago news or content creators were few (print, television, radio) compared to today. Now everyone with a computer or a smartphone can be a content creator. We believe that the future of news is going to be filtering and delivering personalised news to people. We see our project to be a stepping stone in that direction, starting with Twitter.
 
