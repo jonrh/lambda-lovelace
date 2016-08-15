@@ -223,7 +223,8 @@ class RecommenderTextual:
         for term in frequency_doc.keys():
             hashtag = u'#' + term
 
-            # If a hash-tagged term has been added to the frequency_doc list, find it again
+            # If a hash-tagged term has been added to the frequency_doc list, find it again.
+            # This should never happen, but is a "what-if" scenario.
             hashtag_value = float(frequency_doc.get(hashtag)) if frequency_doc.get(hashtag) is not None else 0.0
             
             term_value = float(frequency_doc.get(term))
@@ -640,10 +641,10 @@ class RecommenderTextual:
                 count += 1
                 print("Found term:" + str(text_word))
                 if hashtag == True:
-                    count += (self.termfreq_doc.get(text_word) * self.hash_tag_multiplier)
+                    count += (self.termfreq_doc.get(text_word) * self.hash_tag_multiplier) if self.termfreq_doc.get(text_word) is not None
                     hashtag = False
                 else:
-                    count += self.termfreq_doc.get(text_word)
+                    count += self.termfreq_doc.get(text_word) if self.termfreq_doc.get(text_word) is not None
         
         count -= self.get_tweet_age_score(tweet)
         if count <= 0.0:
