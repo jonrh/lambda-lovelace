@@ -5,6 +5,9 @@
 //  Created by Eazhilarasi Manivannan on 15/06/2016.
 //  Copyright © 2016 lovelaceTeam. All rights reserved.
 //
+/***
+ This is class represents each cell in the table view of home tweets
+ ***/
 
 import UIKit
 import SWTableViewCell
@@ -65,7 +68,7 @@ class FeedTableViewCell: SWTableViewCell {
     }
 
     
-    
+    // Initialise value for each cell.
     func updateCell()
     {
         tweetUserName.text = tweet?.userName
@@ -98,7 +101,7 @@ class FeedTableViewCell: SWTableViewCell {
 
     }
     
-    
+    //Calculation to get colour for the weight of tweet.
     var weight: Int = 0 {
         didSet{
             let weightBarColor = UIColor(hue: 0.725 + CGFloat(weight)/10, saturation: 1, brightness: 0.98, alpha: 1.0) /* #5700f9 */
