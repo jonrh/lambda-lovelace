@@ -5,6 +5,9 @@
 //  Created by Eazhilarasi Manivannan on 19/06/2016.
 //  Copyright © 2016 lovelaceTeam. All rights reserved.
 //
+/***
+ This is controller class for details view of tweet selected from the home timeline
+ ***/
 
 import UIKit
 
