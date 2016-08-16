@@ -641,10 +641,12 @@ class RecommenderTextual:
                 count += 1
                 print("Found term:" + str(text_word))
                 if hashtag == True:
-                    count += (self.termfreq_doc.get(text_word) * self.hash_tag_multiplier) if self.termfreq_doc.get(text_word) is not None
+                    if self.termfreq_doc.get(text_word) is not None:
+                        count += (self.termfreq_doc.get(text_word) * self.hash_tag_multiplier)
                     hashtag = False
                 else:
-                    count += self.termfreq_doc.get(text_word) if self.termfreq_doc.get(text_word) is not None
+                    if self.termfreq_doc.get(text_word) is not None:
+                        count += self.termfreq_doc.get(text_word)
         
         count -= self.get_tweet_age_score(tweet)
         if count <= 0.0:
