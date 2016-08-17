@@ -8,6 +8,7 @@
 
 import Foundation
 
+// this class is userd to store evaluation results
 class EvaluationResult {
     static var results = [ButtonsIdentifier?](count: AppConstant.tweetContentViewCount, repeatedValue: nil)
     class func removeAll(){

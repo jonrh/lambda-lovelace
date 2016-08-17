@@ -31,6 +31,7 @@ protocol APIDataRefreshDelegate: class {
 }
 
 
+// defined helper method to communicate with backend conviniently
 class APIManager {
     
     weak static var apiDataRefreshDelegate: APIDataRefreshDelegate?
@@ -76,7 +77,7 @@ class APIManager {
         return (oauth_token!,oauth_token_secret!)
     }
     
-    
+    // user login first time, redirect user to Twitter official login page
     class func authorize(vcForOpeningWebView vcForOpeningWebView: UIViewController) {
         isRequestingOAuthToken = true
         oauthSwift.authorize_url_handler = SafariURLHandler(viewController: vcForOpeningWebView)
@@ -94,6 +95,7 @@ class APIManager {
         )
     }
     
+    // invoke callback method when user login successfully
     private class func successfullyReceiveAccessToken(credential: OAuthSwiftCredential){
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(credential.oauth_token, forKey: NSUserDefaultKeys.oauthTokenKey)
@@ -106,7 +108,7 @@ class APIManager {
     }
     
     
-    
+    // fetch recommended homeline tweets which will show in main table view
     class func getRecommendTweetsWithPage(page: Int, callback: (JSON)->Void) {
         print("fetch tweets of page:" + String(page))
         CurrentUserAccountInfo.getCurrentUser { _ in
@@ -124,7 +126,7 @@ class APIManager {
         }
     }
     
-    
+    // request data set for generating evaluation test
     class func getEvaluationDataWithPage(page: Int, callback: (JSON)->Void) {
         Alamofire.request(Router.EvaluationData(page))
             .responseJSON { response in
@@ -139,10 +141,12 @@ class APIManager {
         }
     }
     
+    // submit evaluation result to server
     class func postEvaluationResult(resultParams: [String: AnyObject]){
         Alamofire.request(Router.EvaluationResult(resultParams))
     }
     
+    // inform backend when user pressed swipe button such as like, dislike specific account
     class func postSingleTweetFeedback(feedbackParams: [String: String]){
         Alamofire.request(Router.SingleTweetFeedback(feedbackParams))
             .response { (request, _, _, _) in
@@ -150,6 +154,7 @@ class APIManager {
         }
     }
     
+    // request user profile information
     class func getUserProfile(callback: (JSON)->Void) {
         Alamofire.request(Router.UserProfile)
             .responseJSON { response in
@@ -164,6 +169,7 @@ class APIManager {
         }
     }
     
+    // remove user form database while user log out
     class func deleteUser(){
         Alamofire.request(Router.UserLogout)
     }

@@ -83,6 +83,7 @@ class ParentViewController: UIViewController {
     }
     
     
+    // hide buttons when app startup and show them back after test data is prepared
     func hideViewsAtStartup(hide: Bool){
         UIView.animateWithDuration(0.8, delay: 0, options: .CurveEaseInOut, animations: {
             self.containerView.alpha = hide ? 0 : 1
@@ -97,6 +98,8 @@ class ParentViewController: UIViewController {
         }
     }
     
+    // control bottom buttons moving animation; they will move off screen at result page and 
+    // stay at normal possition at other pages
     func toggleBottomComponents(moveDown moveDown: Bool){
         let bottomHeight = bottomComponentView.bounds.height
         let bottomMargin = view.bounds.width / 7 / 2
@@ -109,6 +112,7 @@ class ParentViewController: UIViewController {
             }, completion: nil)
     }
     
+    // change subbmit button image depends on showing page number
     func toggleLogoutSubmitButton(){
         let isResultPage = currentPageNumber == AppConstant.totalPageViewCount - 1
         let scaleRatio:CGFloat = CGFloat(AppConstant.loginSubmitButtonScaleRatio)
@@ -124,6 +128,7 @@ class ParentViewController: UIViewController {
         
     }
     
+    // handle user pressing decision buttons event
     @IBAction func decisionButtonPressed(sender: UIButton) {
         let pressedButtonTag = sender.tag
         let pressedButtonId = ButtonsIdentifier(rawValue: pressedButtonTag)
@@ -169,6 +174,7 @@ class ParentViewController: UIViewController {
         progressView.setNeedsDisplay()
     }
     
+    // it will excute when user pressed logout button, a alert will pop up
     private func logoutHandler(){
         let alertController = UIAlertController(title: "Leave", message: "Do you want logout or restart test?", preferredStyle: .Alert)
         let logoutAction = UIAlertAction(title: "Logout", style: .Destructive) { _ in
@@ -188,6 +194,7 @@ class ParentViewController: UIViewController {
         presentViewController(alertController, animated: true, completion: nil)
     }
     
+    // it will pop up a alert when user pressed submit button
     private func submitHandler(){
         if isSubmitted == false {
             let alertController = UIAlertController(title: "Submit", message: "Do you want submit?", preferredStyle: .Alert)
@@ -230,6 +237,7 @@ class ParentViewController: UIViewController {
     
     }
     
+    // remove user data when user logout app
     private func logoutTest(){
         
         restoreAllButtonsToDefaultState()
@@ -245,6 +253,7 @@ class ParentViewController: UIViewController {
         
     }
     
+    // restore app states when user decide restart test
     private func restartTest(){
         isSubmitted = false
         let submitImage = UIImage(named: "submit")
@@ -252,6 +261,7 @@ class ParentViewController: UIViewController {
         pageViewController.initTestData()
     }
     
+    // user have finished test and the test result will be uploaded to server
     private func postResultDataToServer(){
         var resultParams = [String: AnyObject]()
         
@@ -259,7 +269,7 @@ class ParentViewController: UIViewController {
         resultParams["time"] = currentTime
         
         
-        
+        // resultList is the custom data structure which is used to store test result
         var resultList = Array<[String:String]>()
         for (index, result) in EvaluationResult.results.enumerate(){
             var singleTweetResult = [String : String]()

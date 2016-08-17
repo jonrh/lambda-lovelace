@@ -16,15 +16,23 @@ struct TestTweetsDataKeys{
     static let localDataAvailable = "localDataAvailable"
 }
 
+
+// this class is used to generate test data set; store and restore test data locally.
 class TestTweetsPool {
+    // tweets list generate from recomender system
     static var recommendTweets = [Tweet]()
+    // original tweets list feth from twitter server
     static var originalTweets = [Tweet]()
+    // mixed tweets which is readly for test
     static var mixedTweets = [Tweet]()
+    // record each tweet source
     static var mixedTweetsSource = [String]()
+    
+    // record used tweets index
     static var recommendTweetsIndex = 0
     static var originalTweetsIndex = 0
     
-    
+    // generate test data randomly
     class func generateNewMixedTweetsList(){
         var usedRandom = [Int]()
         
@@ -53,6 +61,7 @@ class TestTweetsPool {
         print("original  index: \(originalTweetsIndex)")
         saveTweetsIndexLocally()
     }
+    
     
     class func initTestTweetsPool(callback : () -> Void){
         
@@ -87,6 +96,7 @@ class TestTweetsPool {
         }
     }
     
+    // load test data locally if it exist
     class func loadLocalData() -> Bool{
         let defaults = NSUserDefaults.standardUserDefaults()
         if defaults.boolForKey(TestTweetsDataKeys.localDataAvailable) {
@@ -103,6 +113,7 @@ class TestTweetsPool {
         }
     }
     
+    // remove local cache when user logout
     class func cleanLocalData(){
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey(TestTweetsDataKeys.recommendTweetsList)
@@ -111,6 +122,7 @@ class TestTweetsPool {
         defaults.removeObjectForKey(TestTweetsDataKeys.originalTweetsIndex)
         defaults.removeObjectForKey(TestTweetsDataKeys.localDataAvailable)
     }
+    
     
     class func saveTweetsListLocally(){
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -125,7 +137,7 @@ class TestTweetsPool {
         defaults.setInteger(originalTweetsIndex, forKey: TestTweetsDataKeys.originalTweetsIndex)
     }
     
-    
+    // clean test data before each time new test starts
     class func removePreviousTestTweetsSet(){
         recommendTweets.removeAll()
         originalTweets.removeAll()

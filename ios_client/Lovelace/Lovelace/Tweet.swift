@@ -9,6 +9,9 @@
 import Foundation
 import SwiftyJSON
 
+// this is custom object to represent subset data of origianl tweet JSON object, 
+// because our app only require a small piece data
+
 class Tweet : NSObject, NSCoding
 {
     var id: String
@@ -70,6 +73,7 @@ class Tweet : NSObject, NSCoding
                              tweetDateTime: tweetDateTime, tweetImageUrl: tweetImageUrl)
     }
     
+    // helper method to convert raw date to human readable format
     class private func getReadableDate(rawDate: String) -> String{
         dataFormatter.dateFormat = "EEE MMM dd HH:mm:ss Z yyyy"
         let tweetDate = dataFormatter.dateFromString(rawDate)

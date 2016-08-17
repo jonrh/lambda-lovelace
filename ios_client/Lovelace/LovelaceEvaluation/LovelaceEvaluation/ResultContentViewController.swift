@@ -52,6 +52,7 @@ class ResultContentViewController: UIViewController, UITableViewDataSource, UITa
         return AppConstant.tweetContentViewCount
     }
     
+    // feed table view with test result
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as! ResultTableViewCell
         

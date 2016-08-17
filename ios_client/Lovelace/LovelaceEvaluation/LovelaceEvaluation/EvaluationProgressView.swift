@@ -8,6 +8,7 @@
 
 import UIKit
 
+// this custom view is used to draw prgress circle
 @IBDesignable
 class EvaluationProgressView: UIView {
     

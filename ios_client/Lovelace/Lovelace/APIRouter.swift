@@ -9,6 +9,8 @@
 import Foundation
 import Alamofire
 
+
+// Router enum is used to generate proper request depends on its value
 enum Router: URLRequestConvertible {
     
     static let baseURLString = "http://csi6220-1-vm1.ucd.ie"
@@ -21,6 +23,7 @@ enum Router: URLRequestConvertible {
     case UserProfile
     case UserLogout
     
+    // define http method for each case
     var method: Alamofire.Method {
         switch self {
         case .RecommendTweets:
@@ -38,6 +41,7 @@ enum Router: URLRequestConvertible {
         }
     }
     
+    // set proper endpoint for each case
     var path: String {
         switch  self {
         case .RecommendTweets:
@@ -60,6 +64,8 @@ enum Router: URLRequestConvertible {
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
         
+        
+        // set parameters for each case
         if APIManager.hasOAuthToken {
             let oauthToken = APIManager.getOAuthTokenAndTokenSecret()
             var parameters:[String: AnyObject] = ["oauth_token" : oauthToken.oauth_token,
