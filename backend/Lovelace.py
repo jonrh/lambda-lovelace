@@ -231,7 +231,7 @@ class RecommendTweets(Resource):
         return jsonify(recommended_tweets)
 
 
-# The original tweet part
+# supply essential data set for Evaluation app to generate tests
 class EvaluationData(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
@@ -242,6 +242,7 @@ class EvaluationData(Resource):
         api_flask = tweepy.API(auth)
 
 
+        # request home tweets, user tweets and user liked tweets from Twitter server
         home_tweets = [tweet._json for tweet in tweepy.Cursor(api_flask.home_timeline, count=200).items(800)]
         user_tweets = [tweet._json for tweet in tweepy.Cursor(api_flask.user_timeline, count=200).items(3200)]
         liked_tweets = [tweet._json for tweet in tweepy.Cursor(api_flask.favorites, count=200).items(3000)]
@@ -255,6 +256,7 @@ class EvaluationData(Resource):
 
         single_feedback = r.db('lovelace').table('single_feedback').filter({"user_name":screen_name}).run()
 
+
         recommender_object = RecommenderTextual(user_tweets, home_tweets, single_feedback)
         recommended_tweets = recommender_object.generate(200, 1)
 
@@ -263,7 +265,7 @@ class EvaluationData(Resource):
             "recommend_tweets": recommended_tweets["recommended_tweets"]
         })
 
-
+# handle the Twitter account OAuth login redirect url
 class IOSAppRedirectHelper(Resource):
     def get(self):
         oauth_token = request.args.get('oauth_token')
@@ -277,6 +279,7 @@ class IOSAppRedirectHelper(Resource):
 
 
 #Evaluation part
+# receive evaluation data which uploaded by Evaluation app and store them in database
 class EvaluationResult(Resource):
     def put(self):
         
@@ -287,13 +290,15 @@ class EvaluationResult(Resource):
         auth.set_access_token(access_token, access_token_secret)
         api_flask = tweepy.API(auth)
 
+
         me = api_flask.me()
 
         screen_name = me._json['screen_name']
         users_following = me._json['friends_count']
         tweets_liked = me._json['favourites_count']
         tweets_of_me = me._json['statuses_count']
-        
+
+        # append essential tester account information at the end of their test results
         jsonData['user_info'] = {'screen_name':screen_name,
                                  'users_following':users_following,
                                  'tweets_liked':tweets_liked,
@@ -311,9 +316,11 @@ class EvaluationResult(Resource):
 
 
 #Single tweet feedback
+# receive user flavor option such as like, dislike specific account and store them in database
 class SingleTweetFeedback(Resource):
     def put(self):
 
+        # extract the uploaded data from request
         jsonData = request.get_json()
 
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
@@ -324,6 +331,7 @@ class SingleTweetFeedback(Resource):
         return jsonData
 
 
+# supply current user profile information
 class UserProfile(Resource):
     def get(self):
         access_token = request.args.get('oauth_token')
@@ -335,6 +343,7 @@ class UserProfile(Resource):
         me = api_flask.me()
         return me._json
 
+# clean cached user information after user logs out our app
 class UserLogout(Resource):
     def delete(self):
         access_token = request.args.get('oauth_token')
@@ -345,6 +354,7 @@ class UserLogout(Resource):
         r.connect(host='ec2-52-51-162-183.eu-west-1.compute.amazonaws.com', port=28015, db='lovelace',
                   password="marcgoestothegym").repl()
 
+        # change user record that this user is logged out
         r.db('lovelace').table('user_tokens').update({'screen_name': screen_name,
                                                       'fetch_status': False,
                                                       'last_logout': r.now().to_epoch_time().run()
@@ -371,7 +381,9 @@ def hello():
     return "<p>Hello λ Lovelace!</p><p>Jenkins build number: " + buildnumber + "<br /> Git hash: " + githash + "</p>"
 
 
-# test
+
+# connect urls with associated route method
+
 # ios twitter authentication callback url redirect helper
 api.add_resource(IOSAppRedirectHelper, '/oauth-callback')
 
