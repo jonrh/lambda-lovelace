@@ -11,7 +11,7 @@ This folder contains our backend code: Python Flask web service and recommender 
 
 **Stopwords.py** *A list of stopwords that should be removed from the term document.*
 
-**Execute_2.py** *An executor for testing recommender system*
+**Execute_2.py** *An executor for testing recommender system. Run this file in your console to run the recommender system separately. You must enter your own Twitter account keys in order to run this file.*
 
 ## Celery
 **tasks.py** *Task for getting home timeline*
