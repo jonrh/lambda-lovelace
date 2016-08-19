@@ -192,7 +192,7 @@ class RecommendTweets(Resource):
             # tweets of the user in the database may be a bit old
             # so we get tweets data from twitter API again
             else:
-                print('put of 15 min, get from twitter api')
+                print('out of 15 min, get from twitter api')
                 home_tweets = [tweet._json for tweet in api_flask.home_timeline(count=50)
                                if tweet._json['user']['screen_name'] != screen_name]
                 for item in home_tweets:
@@ -212,7 +212,7 @@ class RecommendTweets(Resource):
 
                 # get user timeline
                 user_tweets = [user_tweet._json for user_tweet in
-                               tweepy.Cursor(api.user_timeline, count=200).items(1000)]
+                               tweepy.Cursor(api_flask.user_timeline, count=200).items(1000)]
 
                 for item in user_tweets:
                     r.db('lovelace').table('tweets').insert(
