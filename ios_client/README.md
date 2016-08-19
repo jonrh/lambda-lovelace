@@ -9,6 +9,9 @@ This folder contains code for the iOS mobile app. It will be written for iOS 9 a
 - [Alamofire][1]
 - [SwiftyJSON][2]
 - [OAuthSwift][3]
+- [KILable][4]
+- [SWTableViewCell][5]
+- [Rollbar][6]
 
 ## Twitter custom callback url scheme problem and our solution
 Twitter API doesn’t accept custom url scheme (ex: **lovelace://**) into callback URL, only **http://** is allowed. But iOS app need a special url scheme to let iOS system know our app can handle the callback url, because only our app know what **lovelace://** mean.
@@ -24,3 +27,29 @@ To walk around this problem, we use [first solution suggested in OAuthSwift Wiki
 [5]:	https://apps.twitter.com/
 [6]:	https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 [7]:	https://cocoapods.org/
+
+## User Interface
+- [Login Screen - User logs in using Twitter account][1]
+- [Home Screen - User's filtered home timeline of tweets][2]
+- [User Profile Screen - Details of the user like screen name, avatar, number of followers and number of followees and log out option][3]
+- [Tweet Details Screen - Detailed view of each tweet][4]
+
+## Personalised Tweets
+As the user logs in using his/her Twitter account, the Recommender system crunches the users home timeline tweets to output filtered home timeline based on the users likes. The communication between the Twitter client App and Recommender system is delivered by the Flask server.
+The Recommender System filters the tweets using Algorithm based on:
+- [Word frequency count contained in the user's timeline][1]
+- [User's feedback from the Twitter client App][2]
+
+## User Feedback to Recommender System
+User can swipe the tweet right and left to give a 'Like' and 'Dislike' to the tweet respectively.
+A more detailed description about 'Like' and 'Dislike' is given based on 
+- [Author of the tweet - like/dislike more/less from Author][1]
+- [Subject of the tweet - like/dislike more/less from the Subject][2]
+
+## Filtered/Personalised Tweets order
+The filtered tweets from the Recommender System has a weight associated with each tweet, more the weight, the more relevant the tweet is. Based on the weight the tweets are ordered in the timeline.
+The weight are portrayed in the form of color spectrum ranging from  
+- [Red - which is more relevent][1]
+- [Blue - which is least relevent][2]
+- [Shades between red and blue - each having a decreasing weight]
+
