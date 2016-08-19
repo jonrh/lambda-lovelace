@@ -2,67 +2,67 @@
 
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{mdwlist} 
-\usepackage{hyperref} 
-\usepackage{float} 
-\usepackage{listings} 
-\usepackage[super]{nth} 
+\usepackage{mdwlist} % To have compact lists
+\usepackage{hyperref} % To have links to URLs
+\usepackage{float} % To force images to the right place
+\usepackage{listings} % To display source code
+\usepackage[super]{nth} % To display the "th" as superscript. E.g: 16th
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage[export]{adjustbox} 
+\usepackage[export]{adjustbox} % To adjust image position
 
-
+% To include images
 \usepackage{graphicx} 
-\graphicspath{ {images/} } 
+\graphicspath{ {images/} } % location of images
 
+% Disables automatic indents globally
+%\setlength{\parindent}{0pt}
 
-
-
-
+% To add hyperlink
 \usepackage{hyperref}
 
+% Set link color to blue
+%\fhypersetup{
+%    colorlinks=true,
+%    linkcolor=blue,
+%    filecolor=blue,      
+%    urlcolor=blue,
+%    citecolor=blue
+%}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%==============================================================================
+%                 QUALITY OF WRITING & ORGANISATION OF DOCUMENT
+%==============================================================================
+% Weight: 10%
+%
+% Grading:
+%   A+ to B-:
+%	    Very well written document (well organised, good layout, good English, 
+%       and clarity in writing, references).
+%   C+ to D-:
+%       Well organised and written but some issues in language, the flow of 
+%       the document, references, etc.
+%   E+ to G:
+%        Badly prepared document (poor organisation, poor layout, sloppy 
+%       English, and lack of clarity in writing).
+%
+% Feedback from Interim Report: B+
+%   + Writing was generally clear and well presented with a clear layout and 
+%     structure. 
+%   + The text was at times disjointed, however - for example, things 
+%     discussed before being introduced and figures not referred to in text. 
+%   + The diagrams were of high quality. Good use of concrete examples and 
+%     figures.
+%
+%
 
 \begin{document}
 
 
-
-
-
+%==============================================================================
+%                                 FRONT PAGE
+%==============================================================================
 \thispagestyle{empty}
 
 \begin{figure}[H]
@@ -110,31 +110,24 @@
 \begin{center}
     \nth{19} August 2016
 \end{center}
-
-
-
-
-
-
-
+%==============================================================================
 
 
 \newpage
 
 
-
-
-
-
-
-\pagenumbering{arabic} 
+%==============================================================================
+%                                 ABSTRACT
+%==============================================================================
+% 360 words 
+\pagenumbering{arabic} % starts a page counter here
 
 \begin{center}
     {\Large \textbf{Abstract}} \\
     \vspace{2em}
     \parbox{0.85\textwidth}
     {\textsl{
-        A content based recommender system for Twitter tweets. The main goal of the $\lambda$ Lovelace system is to personalise the users' feed based on their interests to combat noise and information overload inherent in traditional chronologically ordered Twitter feeds. Subject preference is sourced from the user’s personal tweets, retweets, and likes. Additional feedback such as \textit{more/less} from \textit{author} or \textit{subject} was collected from our own prototype iOS Twitter client. Tweets were sourced from the Twitter REST API but subject to hefty rate limits. To work around rate limits Celery workers were constructed to collect and persist tweets slowly over time to a RethinkDB database. A Python Flask webservice backend serves the iOS app recommended tweets and collects the additional user feedback. The recommender system employs a two tier term frequency document approach. First a narrow net is cast to catch the highest quality tweets, then a wider more general net is cast on the remaining tweets to obtain a preference order on as many tweets as possible. Evaluation experiments showed promising results for users with narrow subject interests but evaluators were too few to draw firm conclusions.
+        A content based recommender system for Twitter tweets. The main goal of the $\lambda$ Lovelace system is to personalise the user's feed based on their interests to combat noise and information overload inherent in traditional chronologically ordered Twitter feeds. Subject preference is sourced from the user’s personal tweets, retweets, and likes. Additional feedback such as \textit{more/less} from \textit{author} or \textit{subject} was collected from our own prototype iOS Twitter client. Tweets were sourced from the Twitter REST API but were subject to hefty rate limits. To work around rate limits, Celery workers were constructed to collect and persist tweets slowly over time to a RethinkDB database. A Python Flask webservice backend serves the iOS app recommended tweets and collects the additional user feedback. The recommender system employs a two tier term frequency document approach. First a narrow net is cast to catch the highest quality tweets, then a wider more general net is cast on the remaining tweets to obtain a preference order on as many tweets as possible. Evaluation experiments showed promising results for users with narrow subject interests but evaluators were too few to draw firm conclusions.
     }} \\
     \vspace{2em}
     {\scriptsize $\lambda$ $\lambda$ $\lambda$}
@@ -142,9 +135,9 @@
 
 \noindent This is a final report submitted to the School of Computer Science \& Informatics in partial fulfilment of the requirements for the degree of Masters of Science in Computer Science at University College Dublin.
 
-The purpose of the final report is to give an overall picture of the chosen project, to present the solution proposed and to summarise the findings. The report is one of a few deliverables in the 30 ECTS credit module \textit{COMP47250 Team Software Project 2016}. The module spanned 14 weeks, starting on the \nth{16} of May and culminating in a final submission on the \nth{19} of August 2016.
+The purpose of the final report is to give an overall picture of the chosen project, to present the solution proposed, and to summarise the findings. The report is one of a few deliverables in the 30 ECTS credit module \textit{COMP47250 Team Software Project 2016}. The module spanned 14 weeks, starting on the \nth{16} of May and culminating in a final submission on the \nth{19} of August 2016.
 \\\\
-Another major deliverable was the main working source code repository:
+Another major deliverable was the main source code repository:
 \\\\
 \url{https://github.com/jonrh/lambda-lovelace}
 \\\\
@@ -152,40 +145,35 @@ At the time of writing it was private but the team hopes to make it public at a 
 \\\\
 \url{https://github.com/ucd-nlmsc-teamproject/LambdaLovelace-Team}
 \\\\
-The team tracked progress throughout the project at the following blog:
-\\\\
+The team tracked progress throughout the project at the following blog: \\
 \url{https://jonrh.github.io/lambda-lovelace/}
 
 
 \clearpage
 
 
-
-
-
+%==============================================================================
+%                             TABLE OF CONTENTS
+%==============================================================================
 \tableofcontents
 \clearpage
 
 
-
-
-
-
-
-
-
-
-
-
-
-\section{Introduction} 
-The theme for the 2016 final group project was \textit{The Future of News}. The premise for our project is the observation that people are experiencing an information overload in social media \cite{information_overload}. Decades ago news or content creators were few (print, television, radio) compared to today. Now everyone with a computer or a smartphone can be a content creator. We believe that the future of news is going to be filtering and delivering personalised content. We see our project, a recommender system for tweets, as a stepping stone in that direction, starting with Twitter.
+%==============================================================================
+%                                  INTRODUCTION
+%==============================================================================
+% This chapter was not technically requested but I (jónsi) we should include it 
+% to give a high level overview and introduction into our project. If we did 
+% not include it readers that have not been involved with the module may find 
+% themselves without the proper context.
+\section{Introduction} % 360 words
+The theme for the 2016 final group project was \textit{The Future of News}. The premise for our project is the observation that people are experiencing an information overload in social media \cite{information_overload}. Decades ago, news or content creators (print, television, radio) were few compared to today. Now, everyone with a computer or a smartphone can be a content creator. We believe that the future of news is going to be filtering and delivering personalised content. We see our project, a recommender system for tweets, as a stepping stone in that direction, starting with Twitter.
 \\\\
 Keen readers may know that Twitter already employs their own recommender system for tweets so why did we attempt the same? In essence it came down to ``unlucky'' timing and search for the incorrect words. 
 
-The final project took place during the summer of 2016 but teams started formulating project ideas in the spring semester. We conceived our idea in the beginning of March. Unknown to us at the time Twitter announced in a blog post \cite{twitter-opt-in} on the \nth{10} of February tweet recommendations were available as an opt-in feature in the official Twitter mobile app. On the \nth{17} of March Twitter started to silently roll out tweet recommendations as an opt-out feature. None of the team members noticed the change. It was not until in week two of our project (\nth{23} of May) when we started to dig deeper into the literature review that we learned that Twitter had in fact already implemented much of what we intended to build.
+The final project took place during the summer of 2016 but teams started formulating project ideas in the spring semester. We conceived our idea in the beginning of March. Unknown to us, Twitter had announced in a blog post \cite{twitter-opt-in} on the \nth{10} of February that tweet recommendations were available as an opt-in feature in the official Twitter mobile app. On the \nth{17} of March, Twitter started to silently roll out tweet recommendations as an opt-out feature. None of the team members noticed the change. It was not until week two of our project (\nth{23} of May) when we started to dig deeper into the literature review that we learned that Twitter had in fact already implemented much of what we intended to build.
 
-This experience set a bit of a bittersweet tone for the remainder of the project. On one hand we regretted not having done a more thorough research in the early project proposal stage yet on the other hand we felt exhilarated knowing we had the right kind of ideas since Twitter was already heading where we were headed. They just beat us to it.
+This experience set a bittersweet tone for the remainder of the project. On one hand we regretted not having done a more thorough research in the early project proposal stage yet on the other hand we felt exhilarated knowing we had the right kind of ideas since Twitter was already recommending tweets. They just beat us to it.
 \\\\
 The name of our team, $\lambda$ Lovelace, is an homage to lambda calculus invented by Alonzo Church and Ada Lovelace, the first computer programmer.
 
@@ -200,50 +188,47 @@ The name of our team, $\lambda$ Lovelace, is an homage to lambda calculus invent
 \newpage
 
 
+%==============================================================================
+%                                USER SCENARIO
+%==============================================================================
+% Weight: 10%, 500 words
+%
+%	Who is your target user?
+%	Why are they important?
+%	What problem are you solving for them?
+%
+% Grading:
+%   A+ to B-:
+%	    Very well defined user scenario and problem with strong links between 
+%       the two.
+%   C+ to D-:
+%       Well defined user scenario and problem (maybe missing connections 
+%       between the two, or importance of problem not convincing).
+%   E+ to G:
+%        Poorly defined user scenario and problem.
+%
+% Feedback from Interim Report: B+
+%   The problem is fairly well-defined, as are the target users (although this 
+%   could have been clearer - would be helpful to have some justification or 
+%   citation for definition of "power user"). However, the discussion of why 
+%   this is an important problem to solve is a little weak. Good concrete use 
+%   cases, examples are helpful. A little confusion over whether these use 
+%   cases involve recommendation, or rather just filtering/ranking.
+%
+\section{User Scenario: The Characters} % 530 words
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{User Scenario: The Characters} 
-
-
+% 370 words
 Users of the $\lambda$ Lovelace system and the problems it solves.
 
 \subsection{Target Users}
 \begin{itemize*}
-    \item Power users - this is an active Twitter user who follows more than 100 accounts. Their twitter home timeline is populated with approximately 200 tweets per day and they tweet, retweet or like approximately five times daily.
-    \item Regular users - a user who is not very active and tweets roughly once a week. This user follows about 50 accounts.
-    
-    
+    \item \textbf{Power user}: an active Twitter user who follows more than 200 accounts. Their Twitter feed receives more than 200 tweets per day and their past tweets + retweets + likes is over 1000 in total.
+    \item \textbf{Regular user}: not very active and tweets roughly once a week. This user follows less than 200 accounts.
 \end{itemize*} 
 
-
 \subsection{Why are they important?}
-The system mainly targets power users, rather than the latter category. The power user has many tweets passing through their timeline every day and regularly engages in conversations on Twitter. These users compose a significant portion of the Twitter userbase, so it is important that they have the best possible experience when using Twitter. These users are also the most prone to the relevancy issue that plagues Twitter, which the $\lambda$ Lovelace system aims to combat.
-As the recommender system's main focus is on filtering out the users home timeline of irrelevant tweets, the recommender system is most applicable to a power user. A regular user has a Twitter timeline where there is not enough activity to warrant a recommender system. They will see most of the news and tweets that they are interested in, along with irrelevant tweets. 
+The system mainly targets power users, rather than the latter category. The power user has many tweets passing through their timeline every day and regularly engages in conversations on Twitter. These users compose a significant portion of the Twitter userbase, so it is important that they have the best possible experience. These users are also the most prone to the relevancy issue that plagues Twitter, which the $\lambda$ Lovelace system aims to combat.
+As the recommender system's main focus is on filtering out the users home timeline of irrelevant tweets, the recommender system is most applicable to a power user. A regular user has a Twitter timeline where there is not enough activity to warrant a recommender system. They will see most of the news and tweets that they are interested in, despite the irrelevant tweets. 
 
 \subsection{What problem are you solving for them?}
 The main issue that this project will solve arises when there is an overabundance of tweets. Indeed, Evan Williams (former Twitter CEO) stated in 2010 \cite{ceo}:
@@ -252,84 +237,91 @@ The main issue that this project will solve arises when there is an overabundanc
     \emph{\small "With 100 million tweets flowing through the system on a daily basis, there's something for everyone, but the real challenge is finding the most valuable stuff for you,"}  
 \end{quote}
 
+\begin{samepage}
 \noindent The following are two problem scenarios that twitter users currently face:
 
 \begin{itemize*}
 	 \item The users Twitter timeline showing irrelevant tweets.
-	 \item The users relevant tweets being lost in the bulk of irrelevant tweets.
+	 \item The users relevant tweets getting lost in the bulk of irrelevant tweets.
 \end{itemize*}
 
-\begin{figure}
+\subsubsection*{Problem One Scenario/Solution} % 90 words
+In this scenario, there is an active twitter user "Robert" who works for a software development company using Microsoft Technology. He follows Scott Hanselman, a principal program manager from Microsoft, for interesting updates in Microsoft Technology. Scott Hanselman is also diabetic and posts tweets related to diabetes. Robert, who is not diabetic, may not be interested in Scott's diabetes related tweets. The recommender system will personalise Robert's timeline by prioritising relevant tweets, such as Scott Hanselmans technology related tweets, and filtering out his diabetes related tweets. 
+
+\subsubsection*{Problem Two Scenario/Solution} % 60 words
+Robert may follow many others who tweet on myriad topics. Due to the issues described in scenario one, the user must sift through many irrelevant tweets before reaching an occasional tweet that they are interested in. As the recommender system orders tweets by relevancy, there is far less of a chance that Robert will miss out on tweets in which he has a strong interest.
+\end{samepage}
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.95\textwidth]{explaining}
     \caption{The aim of the $\lambda$ Lovelace system. The Twitter API feed is ordered chronologically (newest first). Our aim is to create a feed where the most interesting/relevant tweets are shown first.}
 \end{figure}
 
-\subsubsection*{Problem One Scenario/Solution} 
-In this scenario, there is an active twitter user "Robert" who works for a software development company using Microsoft Technology. He follows Scott Hanselman, a principal program manager from Microsoft, for interesting updates in Microsoft Technology. Scott Hanselman is also diabetic and posts tweets related to diabetes. Robert, who is not diabetic, may not be interested in Scott's diabetes related tweets. The recommender system will personalise Robert's timeline by prioritising relevant tweets, such as Scott Hanselmans technology related tweets, and filtering out his diabetes related tweets. 
 
-\subsubsection*{Problem Two Scenario/Solution} 
-Robert may follow many others who tweet on myriad topics. Due to the issues described in scenario one, the user must sift through many irrelevant tweets before reaching an occasional tweet that they are interested in. As the recommender system orders tweets by relevancy, there is far less of a chance that Robert will miss out on tweets in which he has a strong interest.
+\newpage
+
+
+%==============================================================================
+%                               TECHNICAL PROBLEM
+%==============================================================================
+% Weight: 20%, 1000 words
+%
+%   + Why does your system exist?
+%	+ What is the core technical problem?
+%	+ Can you describe the problem graphically? 
+%   + Can you review other existing systems or products that address this 
+%     problem? (how do they meet or fail to meet the needs of your target users)
+%
+% Grading:
+%   A+ to B-:
+%	    Very clear definition of the key technical challenges involved in 
+%       building the proposed system, tightly linked to the user scenario 
+%       described. Also good assessment of existing similar systems.
+%   C+ to D-:
+%       Reasonable description of technical problem and current state of the 
+%       art, but lacking in some ways. Perhaps the technical problems are 
+%       described at much too low a level (“writing this function will be 
+%       hard”), technical problems do not relate to the user scenario 
+%       described or coverage of existing systems is limited.
+%   E+ to G:
+%       Inability to identify the technical challenges in addressing the user 
+%       problem described in the previous section
+%
+% Feedback from Interim Report: B-
+%   The core technical problem of how to make good recommendations is 
+%   ignored, and instead this section focused on issues with rate limits in 
+%   the Twitter API. While this is interesting (and demonstrates a  clear 
+%   understanding of the operation and limitations of the Twitter REST API), 
+%   it is not the core issue at the heart of the project. Reasonable coverage 
+%   of existing apps such as Flipboard.
+
+
+\section{Technical Problem} % 770 words
+
+\subsection{Purpose} % 210 words
+The $\lambda$ Lovelace project was created in order to tackle the issue of irrelevant tweets being shown in the timeline, and relevant tweets being overshadowed by irrelevant tweets. Twitter is not a segmented source of information and news, but is comprised of people with a multitude of opinions from many diverse backgrounds. As a form of social media, its users are encouraged to give their opinions on current events, aspects of their background and their profession. Twitter stirs up discussion on current events with the use of hashtags, further promoting diverse conversations. All of this activity creates a very noisy environment, which makes it difficult for the user to access the tweets that are the most relevant to their interests. For example, the User Scenario section describes how Scott Hanselman discusses and promotes news on diabetes, but his account also discusses his home life, children and other personal matters. This is likely due to the social media aspect of Twitter. 
+
+However, the average user may not always be interested in reading tweets that are not directly related to their interests. For example, Andrew Clark recently tweeted the following \cite{clark1}:
+
+\begin{figure}[H]
+    \includegraphics[width=0.85\textwidth, center]{clark11}
+\end{figure}
+
+\noindent Then shortly followed up with a political tweet, a subject completely unrelated to programming \cite{clark2}:
+
+\begin{figure}[H]
+    \includegraphics[width=0.85\textwidth, center]{clark22}
+\end{figure}
+
+\noindent The average power user may only be interested in one of these tweets.
 
 
 \newpage
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Technical Problem} 
-
-\subsection{Purpose} 
-The $\lambda$ Lovelace project was created in order to tackle the issue of irrelevant tweets being shown in the timeline, and relevant tweets being overshadowed by irrelevant tweets. Twitter is not a segmented source of information and news, but comprises of people with a multitude of opinions from many diverse backgrounds. As a form of social media, its users are encouraged to give their opinions on current events, aspects of their background and their profession. Twitter itself stirs up discussion on current events with the use of hashtags, further promoting diverse conversations. All of this activity creates a very noisy environment, which makes it difficult for the user to access the tweets that are the most relevant to their interests. For example, the User Scenario section describes how Scott Hanselman discusses and promotes news on diabetes. His account also discusses his home life, children and other personal matters. This is likely due to the social media aspect of Twitter. 
-
-However, the average user may not always be interested in reading tweets that are not directly related to their interests. For example, Andrew Clark recently tweeted the following\cite{clark1}:
-
-\begin{figure}[H]
-    \includegraphics[width=0.6\textwidth, center]{clark1}
-\end{figure}
-
-Then shortly followed up with a political tweet, a subject completely unrelated to programming\cite{clark2}:
-
-\begin{figure}[H]
-    \includegraphics[width=0.6\textwidth, center]{clark2}
-\end{figure}
-
-
-\subsection{Core Technical Problem} 
-The core technical problem for this project is recommending more relevant tweets to the user first, while demoting the least relevant tweets to appearing later. This is based entirely on the user's own interests on Twitter. The Andrew Clark tweets shown above are an example of how divided a Twitter account's content can be. Only software developers, or those with an interest in technology, should see the former tweet.
+\subsection{Core Technical Problem} % 220 words, used to be 470
+The core technical problem for this project is recommending more relevant tweets to the user first, while demoting the least relevant tweets to appearing later. This is based entirely on the user's own interests on Twitter. The Andrew Clark tweets shown above are an example of how divided a Twitter account's content can be. Software developers, or those with an interest in technology but no interest in Andrew's politics, should only see the former tweet.
 In order to create a system that provides such recommendations, this project must use the Twitter REST API \cite{twitter-rest-api}. However, there are rate limits placed on how many tweets can be extracted from the REST API at a time. Specifically, a user of the REST API may make 180 requests for a maximum of 3200 tweets every fifteen minutes for the user timeline. For the home timeline, a user of the API may only make fifteen requests for a maximum of 800 tweets every fifteen minutes. 
 
 \begin{figure}[H]
@@ -341,121 +333,116 @@ In order to create a system that provides such recommendations, this project mus
 \end{figure}
 
 
-The issue of providing good quality recommendations was another problem that required work, as the system as a whole could be deemed lacklustre if the recommended tweets were not of value to the user. 
+%Initially, the API can only return 800 tweets for the user. Once the user logs back in, a request is made to the document database for a list of recommended tweets, which are obtained through automated Celery\cite{celery} jobs.
+The issue of providing good quality recommendations was another problem that required work, as the system as a whole would not be a success if the recommended tweets were not of value to the user. 
 
+%In order to tackle this issue, we created a recommender system to take in a variety of data from the users personal timeline, their $\lambda$ Lovelace iOS client feedback and the attributes of the recommended tweets themselves.
 
+%The personal timeline of a user consists of their own tweets/retweets and tweets that the user has liked, a clear source of the most relevant topics for each user. 
 
-\subsection{Competitors} 
-
-
-\subsubsection*{The Official Twitter mobile app}
-
-\begin{figure}[H]
-    \includegraphics[width=0.35\textwidth, center]{twitter_logo}
-\end{figure}
-This app is the official mobile offering from Twitter for their system, which includes recommendations. This was discovered by the team in week two. It is seemingly allowed to access the Twitter API without the same restrictions as third-party apps. This app also has access to a set of personalised recommendations, which it is assumed comes from the API. Bearing all of this in mind, the Official Twitter mobile app is currently this project's main competitor. 
-
-
-\subsubsection*{Flipboard}
-
-\begin{figure}[H]
-    \includegraphics[width=0.35\textwidth, center]{flipboard_logo}
-\end{figure}
-
-Flipboard is a social news aggregator that provides personalised news article recommendations to the user, but is not a direct competitor to $\lambda$ Lovelace as it is not solely reliant on twitter for its content. It does however, still provide personalised recommendations on the iOS platform, albeit mainly for news articles. Flipboard provides a novel solution to the cold-start problem by suggesting a broad topic preference to the user when they first log in. When selected, these topics  are in-turn used to suggest more narrow-focused aspects of that topic as a new topic. This process allows Flipboard to eventually narrow down the users interests to very specific aspects of a broad subject. For example, research for this app has shown that it is possible to narrow down from the broad category of “technology”, to the more specific term “agile development” upon initial setup of the app. Once the app was running, it shortly suggested “JavaScript”.
-
-\subsubsection*{News360}
-
-\begin{figure}[H]
-    \includegraphics[width=0.35\textwidth, center]{news360_logo}
-\end{figure}
-
-News360 is another social news aggregator, very similar to Flipboard that also focuses on news articles from large publishers. However, where Flipboard asks for general topics to indicate preference,  News360 requires users to vote with a thumbs up/down option. This is somewhat similar to $\lambda$ Lovelace's like/dislike functionality for tweets. News360 also provides summaries of their articles, although this summarisation of news does not apply to the $\lambda$ Lovelace project. Its cold-start solution also allows users to “love” topics, as well as like them. This allows for further emphasis on topics that strongly interest the user.
+%We use a variety of methods to “weigh” tweets in the recommended set, and therefore sort them by preference based on the contents of their personal timeline. A basic example is the occurrence of particular words in both the home and personal timeline of a user. The more a word appears in a users personal timeline, the higher a tweet containing that word in the recommended set will rank. This approach also pushes down tweets in the timeline that are not about content that interests the user (See Hanselman example above). 
+%Despite the connection that “If user X is always tweeting about topic Y, then the implication is that they are interested in subject Y”, we believed that testing was necessary to highlight any possible flaws in our logic. For example, what if a user hated the subjects they tweeted about? Testing was required to ensure the quality and preference of our system over Twitter’s official timeline offering, so that we had solid proof that users would adopt $\lambda$ Lovelace.
 
 
 \newpage
 
 
+\subsection{Competitors} % 340 words
+
+\begin{figure}[H]
+    \includegraphics[width=0.35\textwidth]{twitter_logo}
+\end{figure}
+The Official Twitter mobile app is the mobile offering from Twitter for their system, which includes recommendations. It seems to be allowed to access the Twitter API without the same restrictions as third-party apps. This app also has access to a set of personalised recommendations, which likely comes from the API. With this access, the Official Twitter mobile app is currently this project's main competitor.
+
+\begin{figure}[H]
+    \includegraphics[width=0.35\textwidth,trim={0.3cm 2cm 0 1cm},clip]{flipboard_logo}
+\end{figure}
+
+\noindent Flipboard is a social news aggregator that provides personalised news article recommendations to the user but is not a direct competitor to $\lambda$ Lovelace as it is not solely reliant on twitter for its content. It does, however, still provide personalised recommendations on the iOS platform, albeit mainly for news articles. Flipboard provides a novel solution to the cold-start problem (Where a system requires traction before it can be used) by suggesting a broad topic preference to the user when they first log in. When selected, these topics  are in-turn used to suggest more narrow-focused aspects of that topic as a new topic. This process allows Flipboard to eventually narrow down the users interests to very specific aspects of a broad subject. For example, research for this app has shown that it is possible to narrow down from the broad category of “technology”, to the more specific term “agile development” upon initial setup of the app. Once the app was running, it shortly suggested “JavaScript”.
 
 
+\begin{figure}[H]
+    \includegraphics[width=0.33\textwidth,trim={1.2cm 1.3cm 0 0},clip]{news360_logo}
+\end{figure}
+
+\noindent News360 is another social news aggregator, very similar to Flipboard that also focuses on news articles from large publishers. However, where Flipboard asks for general topics to indicate preference,  News360 requires users to vote with a thumbs up/down option. This is somewhat similar to $\lambda$ Lovelace's like/dislike functionality for tweets. News360 also provides summaries of their articles, although this summarisation of news does not apply to the $\lambda$ Lovelace project. Its cold-start solution also allows users to “love” topics, as well as like them. This allows for further emphasis on topics that strongly interest the user.
 
 
+\newpage
 
 
+%==============================================================================
+%                              TECHNICAL SOLUTION
+%==============================================================================
+% Weight: 30%, 2500 words
+%
+%   + What does your system do?
+%   + How does it work?  (System diagram)
+%   + Front-end: Technologies, User interface components including interface 
+%     mock-ups
+%   + Back-end: Technical components
+%   + Data: What data resources are you using and how do you access, collect, 
+%     and store them? What bottlenecks do you face related to data, what 
+%     choices have you made to address them?
+%   + What are the key technical contributions of your solution?
+%
+% Grading:
+%   A+ to B-:
+%	    Clear description of overall system architecture with all key 
+%       components identified. Good descriptions of key front-end and back-end 
+%       technologies, and justification of these choices. Clear identification 
+%       of key data sources and description of how they are accessed, collected 
+%       and stored. Clear presentation of the key technical contributions of 
+%       the project.
+%   C+ to D-:
+%       Reasonable description of system architecture but missing detail in 
+%       some key areas – e.g. missing data sources, no justification of likely 
+%       front-end or back-end technologies etc.
+%   E+ to G:
+%       Very limited description of the overall system architecture missing 
+%       some key components.
+%
+% Feedback from Interim Report: B-
+%   There is good detail on the overall architecture of the system, the 
+%   technologies used, and why these technologies were selected. Good 
+%   description of front-end components and communications with back-end. 
+%   There is, however, not enough information about the recommender part of 
+%   the project. A "bag-of-words approach" doesn't mean anything. More detail 
+%   on how this works was needed. Ideally database solution would be 
+%   identified at this stage. The choice of JSON store will have implications 
+%   for the filtering/recommendation process. For tweet filtering, are only 
+%   raw term frequencies used, or are these values weighted (e.g. using 
+%   inverse document frequency relative to a larger set of tweets). Also, will 
+%   recency be taken into account for filtering? How are filtered and 
+%   recommended tweets merged into the same timeline?
 
+\section{Technical Solution} % 2800 words total
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Technical Solution} 
-
-\subsection{What does the system do?} 
-
-The system consists of an iOS client for the front-end and a Flask\cite{flask} web server for the back-end, which houses a recommender system. Upon logging in, the iOS client displays the filtered user's tweets. This filtering is performed by the recommender system. Uninteresting or irrelevant tweets are deferred while interesting tweets are prioritised for primary visibility. Rollbar is used to report errors in production, while Jenkins provides continuous deployment and RethinkDB is used to store tweets. Celery is used to automate the task of storing tweets in the database.
-
-
-
-
-\subsection{How does it work?} 
-
+\subsection{What does the system do?} % 90 words
+The system consists of an iOS client for the front-end and a Flask\cite{flask} web server for the back-end, which houses a recommender system. Upon logging in, the iOS client displays the users filtered tweets. This filtering is performed by the recommender system. Uninteresting or irrelevant tweets are deferred while interesting tweets are prioritised for primary visibility. Rollbar is used to report errors in production, while Jenkins provides continuous deployment and RethinkDB is used to store tweets. Celery is used to automate the task of storing tweets in the database.
+%==============================================================================
+\subsection{How does it work?} % 130 words
 \begin{figure}[H] 
     \centering
     \includegraphics[width=\textwidth]{system_overview}  
     \caption{System Overview}
 \end{figure}
 
-First, the user must give the app permission to access their Twitter data. After that, the iOS client makes a request to the server. When the server first receives an iOS API request, it gets the users access token which enables the server to make authorised calls to the Twitter API. The server then uses this token to communicate with the Twitter API and fetch the users data. Following this, the raw data is stored in the database and sent to the recommender system to generate recommendations. 
-Lastly, the server will return the generated recommendations from the recommender system to the iOS client so that the user can see their personalised tweet feed. The coloured dots on the left of the users screen indicate the relevance of tweets based on the user's interests.
+First, the user must give the app permission to access their Twitter data. After that, the iOS client makes a request to the server. When the server first receives an iOS API request, it gets the user's access token which enables the server to make authorised calls to the Twitter API. The server then uses this token to communicate with the Twitter API and fetch the user's data. Following this, the raw data is stored in the database and sent to the recommender system to generate recommendations. 
+Lastly, the server will return the generated recommendations from the recommender system to the iOS client so that the user can see their personalised tweet feed. The coloured dots on the left of the user's screen indicate the relevance of tweets based on the user's interests.
 
+%==============================================================================
+\subsection{Front-End} % 380 words total, 50 words
+The Swift programming language was chosen to develop the iOS client due to the teams familiarity with the language and the lack of a Twitter app on the platform. The iOS client currently implements the following functions: \hyperlink{oauth}{OAuth login}, communication with the Flask API, author/tweet feedback, and Tweet data presentation.
 
-\subsection{Front-End} 
+\subsubsection*{OAuth login} % 110 words
+Because Twitter's REST API requires each request to be authorised, the system needs the user's login details for their Twitter account to grant it access to the user's Twitter data. OAuth login is a complex process, so the third party library OAuthSwift \cite{oauthswift} was chosen to handle the user's login function. It only requires the system to configure a few parameters, such as \textit{consumerKey} and \textit{consumerSecret}. OAuthSwift then performs the login process, opening Twitter's website and sending a request to the Twitter authorisation API. Lastly, it returns the OAuth access token which is then stored on the iOS client to avoid requiring repeated logins when using the app.
 
-The Swift programming language was chosen to develop the iOS client due to the teams familiarity with the language and the lack of Twitter app on the platform. The iOS client currently implements the following functions: \hyperlink{oauth}{OAuth login}, communication with the Flask API, author/tweet feedback, and Tweet data presentation.
+\subsubsection*{Communication with Flask} % 50 words
+Alamofire \cite{alamofire} is a popular Swift library which provides an elegant and concise way to handle HTTP network requests. The system uses Alamofire to compose dynamic HTTP requests and to append the OAuth access token to URLs. It is also used to decode JSON responses returned from the Flask server.
 
-\subsubsection*{OAuth login} 
-
-Because Twitter's REST API requires each request to be authorised, the system needs the users login details for their Twitter account to grant it access to the users Twitter data. OAuth login is a complex process, so the third party library OAuthSwift \cite{oauthswift} was chosen to handle the users login function. It only requires the system to configure a few parameters, such as \textit{consumerKey} and \textit{consumerSecret}. OAuthSwift then performs the login process, opening Twitter's website and sending a request to the Twitter authorisation API. Lastly, it returns the OAuth access token which is then stored on the iOS client to avoid requiring repeated logins when using the app.
-
-\subsubsection*{Communication with Flask} 
-Alamofire \cite{alamofire} is a popular Swift library which provides an elegant and concise way to handle HTTP network requests. The system uses it to compose dynamic HTTP requests and to append the OAuth access token to URLs. It is also used to decode JSON responses returned from the Flask server.
-
-\subsubsection*{Tweet data presentation} 
-After the raw JSON data is received, it needs to be converted from JSON data to a Swift primary object, like a list or dictionary. The SwiftyJSON \cite{swiftyjson} library is used to accomplish this. Then, the tweet list is hooked up to an iOS \textit{UITableView} which is a powerful iOS UI component that is suitable for displaying a list with data. The Flask server also sends weight values for each tweet, which is calculated by the recommender system to represent how much the user may like a tweet. The iOS client calculates the colour hue for the the associated weight value, which is used to set the background colour of the dot to the left of each tweet.
+\subsubsection*{Tweet data presentation} % 170 words
+After the raw JSON data is received, they need to be converted from JSON data to a Swift primary object, like a list or dictionary. The SwiftyJSON \cite{swiftyjson} library is used to accomplish this. Then, the tweet list is hooked up to an iOS \textit{UITableView} which is a powerful iOS UI component that is suitable for displaying a list with data. The Flask server also sends weight values for each tweet, which is calculated by the recommender system to represent how much the user may like a tweet. The iOS client calculates the colour hue for the the associated weight value, which is used to set the background colour of the dot to the left of each tweet.
 
 
 \newpage
@@ -470,7 +457,75 @@ After the raw JSON data is received, it needs to be converted from JSON data to 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.78\textwidth]{ios_wireframe_2}  
-    \caption{Wireframe of a Tweet in feed and detail view}
+    \caption{Wireframe from an early design}
+\end{figure}
+
+
+\newpage
+
+
+\begin{figure}[H]
+    \vspace{-8em}
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_1_home}
+        \caption{Home}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_2_login}
+        \caption{Login}
+    \end{subfigure}
+    
+    \vspace{1em}
+    
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_3_login_filled}
+        \caption{Login}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_4_profile}
+        \caption{Profile}
+    \end{subfigure}
+    
+    \vspace{1em}
+    
+    \caption{Screenshots from the iOS app 1/3}
+\end{figure}
+
+
+\newpage
+
+
+\begin{figure}[H]
+    \vspace{-8em}
+    \centering
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_5_detail}
+        \caption{Tweet detail view}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_6_feed}
+        \caption{Feed view}
+    \end{subfigure}
+    
+    \vspace{1em}
+    
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_7_like1}
+        \caption{Swipe left to like}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_8_like2}
+        \caption{Select what you liked}
+    \end{subfigure}
+    
+    \vspace{1em}
+    
+    \caption{Screenshots from the iOS app 2/3}
 \end{figure}
 
 
@@ -479,24 +534,30 @@ After the raw JSON data is received, it needs to be converted from JSON data to 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.6\textwidth]{like_dislike}  
-    \caption{Screenshots of Like/dislike function}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_9_dislike1}
+        \caption{Swipe right to dislike}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}[b]{0.48\textwidth}
+        \includegraphics[width=\textwidth]{iphone_10_dislike2}
+        \caption{Select what you disliked}
+    \end{subfigure}
+    
+    \vspace{1em}
+    
+    \caption{Screenshots from the iOS app 3/3}
 \end{figure}
-
-A user can choose either like/dislike on a single tweet along with a reasons. These events will be recorded and used to optimise the recommender system for that user.
 
 
 \newpage
 
 
+%==============================================================================
+\subsection{Back-End} % 610 words total, 90 words
+Our back-end consists of the following: Flask web server, RethinkDB database, Celery, Jenkins, Rollbar and our recommender system. Originally, Python 3.5 was used but due to compatibility issues between libraries we downgraded to Python 2.7.
 
-\subsection{Back-End} 
-
-Our back-end consists of the following: Flask web server, RethinkDB database, Celery, Jenkins, Rollbar and our recommender system. Originally Python 3.5 was used but due to compatibility issues between libraries we downgraded to Python 2.7.
-
-
-
-\subsubsection*{Docker} 
+\subsubsection*{Docker} % 70 words
 To standardise deployments we maintained a single Docker image with Ubuntu 14.04, Python 2.7, third party libraries and our source code. This image was used to run 4 separate containers:
 
 \begin{figure}[H]
@@ -507,7 +568,11 @@ To standardise deployments we maintained a single Docker image with Ubuntu 14.04
 
 \noindent This was possible by overwriting the execution command when a container was started, a neat little re-use trick. An additional Redis container was used as a task queue for Celery (see \ref{celery}).
 
-\subsubsection*{Development Workflow} 
+
+\newpage
+
+
+\subsubsection*{Development Workflow} % 100 words
 Originally the backend was hosted on Heroku \cite{heroku} but due to monorepository requirements \cite{ll-blog-week9} we switched to our own continuous deployment (CD) workflow. After unsuccessful attempts\footnote{The SaaS providers used Docker v1.9.1 with a known race condition bug resulting in unstoppable containers for us. Jenkins and Docker v1.12 worked. See \cite{ll-blog-week9}\cite{ll-blog-week10}\cite{ll-blog-week11}.} with CircleCI \cite{circleci}, Distelli \cite{distelli}, and DockerCloud \cite{dockercloud} we settled on Jenkins \cite{jenkins}:
 
 \begin{figure}[H]
@@ -516,37 +581,38 @@ Originally the backend was hosted on Heroku \cite{heroku} but due to monoreposit
     \caption{Automatic CD cycle on every Git push to the \textit{master} branch}
 \end{figure}
 
-\noindent Docker containers were built on every change and if tests passed the new version was automatically deployed and pushed to DockerHub. Just over 100 stable Docker images (deployable artifacts) were created during the project.
+\noindent Docker containers were built on every change and if tests passed, the new version was automatically deployed and pushed to DockerHub. Just over 100 stable Docker images (deployable artifacts) were created during the project.
 
-\subsubsection*{Web Server} 
-For this project, three web frameworks were evaluated for the server: Django \cite{django}, Flask, and Bottle \cite{bottle}. Flask was chosen because it is more lightweight than Django and more popular and better supported (online resources, support, etc) than Bottle. Tweepy is used to interact with Twitter's APIs \cite{tweepy}.
+\subsubsection*{Web Server} % 350 words
+For this project, three web frameworks were evaluated for the server: Django \cite{django}, Flask, and Bottle \cite{bottle}. Flask was chosen because it is more lightweight than Django, more popular and better supported (online resources, support, etc) than Bottle. Tweepy is used to interact with Twitter's APIs \cite{tweepy}.
 
-The Flask Server is used to connect the iOS app, recommender system and the database with Twitters API. It handles requests from the iOS client and fetches the users personal timeline (Tweets posted by the user), their home timeline (Tweets posted by the user and the accounts they follow), their favourites (Tweets the user liked) and their profile from the Twitter API. This data is then stored in our RethinkDB database, and ultimately used in the recommender system to create tweet recommendations. The server also receives iOS client feedback from the user, stores it in the database, and retrieves it for use in the recommender system. The workflow of Flask is shown as below:
+The Flask Server is used to connect the iOS app, recommender system and the database with Twitters API. It handles requests from the iOS client and fetches the users personal timeline (tweets posted by the user), their home timeline (tweets posted by the user and the accounts they follow), their favourites (tweets the user liked) and their profile from the Twitter API. These data are then stored in our RethinkDB database, and ultimately used in the recommender system to create tweet recommendations. The server also receives iOS client feedback from the user, stores it in the database, and retrieves it for use in the recommender system. The workflow of Flask is shown in Figure \ref{lab:flask-server}.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=1.0\textwidth]{flask_workflow}  
-    \caption{Workflow of Flask server}
+    \caption{Workflow of the Flask server}
+    \label{lab:flask-server}
 \end{figure}
 
-As we can see, there are two situations when a user logs in. First, if the user is a new user or the user has logged out for more than 15 minutes, there will be either no record and tweets data of the user in the database or the tweets data is out of date, as Celery will stop fetching tweets if the user has logged out for 15 minutes. So the purple lines in the figure above will be executed. Flask will directly talk to the Twitter API acquiring for user’s home timeline, user timeline and liked tweets. After getting the data, the user’s token along with tweets data will be saved into database. Also, the running Celery works will start fetching tweets data for this user. The tweets data acquired from Twitter API in Flask will then be delivered to the recommender system for processing. Recommended tweets will be returned to the iOS client by Flask and the like/dislike data will also be recorded. 
+There are two possible situations when a user logs in. First, if the user were a new user or the user had logged out for more than 15 minutes, there would be either no record or tweet data for the user in the database, or the tweet data would out of date, as Celery would stop fetching tweets if the user had logged out for 15 minutes. So the purple lines in the figure above would be executed. Flask would directly talk to the Twitter API acquiring the user’s home timeline, user timeline and liked tweets. After getting the data, the user’s token along with their tweet data would be saved into the database. Also, the running Celery workers would start fetching tweet data for the user. The tweet data acquired from the Twitter API in Flask would then be delivered to the recommender system for processing. Recommended tweets would be returned to the iOS client by Flask and the like/dislike data would also be recorded. 
 
-However, if the user has logged out but it is still within 15 minutes, the blue lines in the figure will be executed. Flask will use the user detail to query the data in the database instead of Twitter API. This will avoid causing the rate limit error by sending too many requests to Twitter API.
+However, if the user had logged out and back in within 15 minutes, the blue lines in the figure would be executed. Flask would use the user detail to query the data in the database instead of the Twitter API. This would avoid causing the rate limit error by sending too many requests to the Twitter API.
 
 
+%==============================================================================
+\subsection{Data Sources, Collection \& Storage} % 820 words total, 60 words
+There are two main data sources: the Twitter REST API and user feedback collected from the iOS client. We used the convenient third party library Tweepy to access the Twitter API. For example, the \textit{Cursor} \cite{cursor} object in Tweepy can implement the pagination of tweets in a single line of code, rather than manually using an iteration loop.
 
-\subsection{Data Sources, Collection \& Storage} 
-There are two main data sources: the Twitter REST API and user feedback collected from the iOS client. We use the convenient third party library Tweepy to access the Twitter API. For example, the \textit{Cursor} \cite{cursor} object in Tweepy can implement the pagination of tweets in a single line of code, rather than manually using an iteration loop.
-
-\subsubsection*{Rate Limits} 
-To solve the rate limit challenge, we tried to find a way, which would continuously fetch data from the Twitter API without hitting the limits and persist it to a database. We came up with two potential solutions:
+\subsubsection*{Rate Limits} % 50 words
+To solve the rate limit challenge, we tried to find a way that would continuously fetch data from the Twitter API without hitting the limits and persist it to a database. We came up with two potential solutions:
 
 \begin{itemize*}
     \item Twitter Streaming API
     \item Twitter REST API + Celery
 \end{itemize*}
 
-\subsubsection*{Twitter Streaming API} 
+\subsubsection*{Twitter Streaming API} % 240 words
 The Streaming API gives developers low latency access to a stream of tweets. It provides three streams: 
 
 \begin{itemize*}
@@ -557,19 +623,18 @@ The Streaming API gives developers low latency access to a stream of tweets. It 
 
 \noindent For this project, \textit{site stream} would have been the most suitable option. Unfortunately at the time it was only available in a closed beta, which meant our only streaming option was the \textit{user stream}.
 
-The \textit{user stream} contains roughly all of the data corresponding with a single user’s view of Twitter. We could then set up a stream for each of our users and collect our required data 24/7. Although the \textit{user stream} sounds like a very good choice, we found that the Streaming API also has rate limit. According to Twitter \cite{streaming}:
+The \textit{user stream} contains roughly all of the data corresponding with a single user’s view of Twitter. We could then set up a stream for each of our users and collect our required data 24/7. Although the \textit{user stream} sounds like a very good choice, we found that the Streaming API also has a rate limit. According to Twitter \cite{streaming}:
 
 \begin{quote}
     \emph{\small Each Twitter account is limited to only a few simultaneous User Streams connections per OAuth application, regardless of IP. Once the per-application limit is exceeded, the oldest connection will be terminated.}  
 \end{quote} 
 
-Twitter didn’t specify the maximum number of connections allowed. However on the on Twitter's Developer Forum we learned that in practice each application is limited to about 10 - 20 simultaneous \textit{user streams} \cite{max}. If our application was ever to grow beyond a few users the \textit{user streams} would be completely inappropriate.
+Twitter did not specify the maximum number of connections allowed. However on Twitter's Developer Forum, we learned that in practice each application is limited to about 10 - 20 simultaneous \textit{user streams} \cite{max}. If our application were ever to grow beyond a few users the \textit{user streams} would be completely inappropriate.
 \\\\
-We didn't want to introduce a new rate limit while trying to solve the first one. So we came up with the second solution -- Celery.	
+We did not want to introduce a new rate limit while trying to solve the first one. So we came up with the second solution -- Celery.	
 
-\subsubsection*{Celery -- Distributed Task Queue} \label{celery} 
+\subsubsection*{Celery -- Distributed Task Queue} \label{celery} % 410 words
 Celery is an asynchronous task queue based on distributed message passing. It is focused on real-time operation, but supports scheduling as well. We used Celery to set up a background task without affecting other requests of our app. As it supports scheduling, we can set up multiple periodic tasks, which keeps fetching data 24/7. The basic scenario is described in the figure below:
-
 
 \begin{figure}[H]
     \centering
@@ -604,7 +669,7 @@ Celery is an asynchronous task queue based on distributed message passing. It is
 \end{verbatim}
 \end{samepage}
 
-\noindent Each task is executed asynchronously, so they won’t affect each other. When a user logs out, his \texttt{"fetch\_status"} in the table will be set to \textit{false} and the \texttt{"last\_logout"} time will also be updated. Therefore, Celery can check if the user logged out more than 15 minutes ago, if so, Celery will stop fetching data for the user, which can save a lot storage space. Tweet data collected is preprocessed then saved into the database. Each tweet collected will be saved as such:
+\noindent Each task is executed asynchronously, so they will not affect each other. When a user logs out, his \texttt{"fetch\_status"} in the table will be set to \textit{false} and the \texttt{"last\_logout"} time will also be updated. Therefore, Celery can check if the user logged out more than 15 minutes ago, if so, Celery will stop fetching data for the user, which can save storage space. Tweet data collected is preprocessed then saved into the database. Each tweet collected will be saved as such:
 
 \begin{samepage}
 \begin{verbatim}
@@ -626,9 +691,9 @@ Celery is an asynchronous task queue based on distributed message passing. It is
 \texttt{"screen\_name"}: indicates whose timeline does this tweet belong to. \\
 \texttt{"tweet"}: the tweet JSON object acquired from Twitter API
 \\\\
-With this Celery solution we have essentially manually constructed the \textit{site stream}. However there are some limitations. For example tweet delivery may be delayed by up to a minute. One workaround for that would be to have our iOS app make a direct User Stream connection to Twitter. However after a team discussion we decided not to do that because we believe that that the main purpose of our app is providing a better recommendation for the users, so one-minute latency is acceptable.
+With this Celery solution we have essentially manually constructed the \textit{site stream}. However there are some limitations. For example, tweet delivery may be delayed by up to a minute. One workaround would be to have our iOS app make a direct User Stream connection to Twitter. However, after a team discussion, we decided that the main purpose of our app is providing a better recommendation for the users, so one-minute latency is acceptable.
 
-\subsubsection*{User Feedback Data} 
+\subsubsection*{User Feedback Data} % 60 words
 Whenever a user clicks the like/dislike button in the mobile app, the feedback will be sent to Flask and then be persisted into the database. Feedback is stored as JSON:
 
 \begin{samepage}
@@ -646,25 +711,23 @@ Whenever a user clicks the like/dislike button in the mobile app, the feedback w
 \end{samepage}
 
 
-
-\subsection{Recommender System} 
-The recommender system is used to provide the personalised tweet home timeline for the iOS app. It performs filtering/personalisation on the users home timeline using a term frequency document created from the users personal timeline, feedback from the iOS client, and a variety of minor sources. Ultimately, tweets with higher overall ratings will appear first. This functionality is used by calling it's "generate" method. After filtering, the re-ordered timeline of tweets will be returned to the server and sent to the iOS client. The recommender system performs several minor functionalities in addition to it's main functions. For example, the age of a tweet is taken into account and slowly lowered as time passes, and the option to trim tweets that are X days old exists in the generate function. These minor functions are not covered in this section.
+\newpage
 
 
+%==============================================================================
+\subsection{Recommender System} % 770 words total, 140 words intro
+The recommender system is used to provide the personalised tweet home timeline for the iOS app. It performs filtering/personalisation on the users home timeline using a term frequency document created from the users personal timeline, feedback from the iOS client, and a variety of minor sources. Ultimately, tweets with higher overall ratings will appear first. This functionality is used by calling its "generate" method. After filtering, the re-ordered timeline of tweets will be returned to the server and sent to the iOS client. The recommender system performs several minor functionalities in addition to its main functions. For example, the age of a tweet is taken into account and slowly lowered as time passes and the option to trim tweets that are X days old exists in the generate function. These minor functions are not covered in this section.
 
+\subsubsection*{Twitter API} % 110 words
+From the Twitter API, the recommender system uses both the user's personal feed and their home timeline. That is to say, that the recommender system is fed this data through the Flask web server. We decided to prevent the recommender system from making API calls about midway through project development, as this would create inconsistencies in where data are stored and how they are accessed. The main use of the personal timeline is in the creation of the Term Frequency document and the "second net" Term Frequency document. The main use of the users home timeline is to provide a set of tweets to perform recommendations upon.
 
-
-
-\subsubsection*{Twitter API} 
-From the Twitter API, the recommender system uses both the users personal feed and their home timeline. That is to say, that the recommender system is fed this data through the Flask web server. It was decided to prevent the recommender system from making API calls about midway through the project development, as this would create inconsistencies in where data is stored and how it is accessed. The main use of the personal timeline is in the creation of the Term Frequency document and the "second net" Term Frequency document. The main use of the users home timeline is to provide a set of tweets to perform recommendations upon.
-
-\subsubsection*{iOS client feedback} 
-iOS client feedback consists of tweet data that allows users to indicate whether they like or dislike the content of the tweet or the tweets author. The effect that content feedback has on the users preferences essentially works by “balancing” the term frequency document. By this, we mean that if a tweet containing a term frequency document term is liked for it’s content, the weighting of that term will go up while the rest of the terms take a minor decrease (Combined, all decreases are proportionate to the increase). 
+\subsubsection*{iOS client feedback} % 150 words
+iOS client feedback consists of tweet data that allow users to indicate whether they like or dislike the content of the tweet or the tweet's author. The effect that content feedback has on the user's preferences essentially works by “balancing” the term frequency document. By this, we mean that if a tweet containing a term frequency document term is liked for its content, the weighting of that term will go up while the rest of the terms take a minor decrease (combined, all decreases are proportionate to the increase). 
 \\\\
-Author sentiment is totalled up by the number of likes or dislikes they were given, and the overall sentiment is used when weighing a tweet. For example, if the overall sentiment is bad for an author, the tweet weight will be negatively affected. If it is mixed, then tweet weight will be either positively or negatively affected, but in a minor manner.
+Author sentiment is totalled up by the number of likes or dislikes they were given and the overall sentiment is used when weighing a tweet. For example, if the overall sentiment is bad for an author, the tweet weight will be negatively affected. If it is mixed, then tweet weight will be either positively or negatively affected, but in a minor manner.
 
-\subsubsection*{Term Frequency Document} 
-The term frequency document is derived from the users personal timeline. Using a Counter object, a cut-off point for the number of terms and an exhaustive list of English stop-words, the term frequency document creates a list of the most occurring words that appear in a users personal timeline, excluding stop-words. A cut-off point is used (Roughly twenty is ideal, based on trial and error) to prevent the term frequency document from holding all the non-stop-word terms in the user personal timeline. For example, if the cut-off point was three and the term frequency document preliminary list contained five terms, the cut-off point would ensure that the term frequency document only held the top three terms from the preliminary list. A numeric scale value (10.0) provides the total “chunk” that each term takes up. This means that each term takes up a value out of a total (10.0). This approach allowed us to value terms relative to each other.
+\subsubsection*{Term Frequency Document} % 170 words
+The term frequency document is derived from the users personal timeline. Using a Counter object, a cut-off point for the number of terms and an exhaustive list of English stop-words, the term frequency document creates a list of the most occurring words that appear in a users personal timeline, excluding stop-words. A cut-off point is used (roughly twenty is ideal, based on trial and error) to prevent the term frequency document from holding all the non-stop-word terms in the user personal timeline. For example, if the cut-off point was three and the term frequency document preliminary list contained five terms, the cut-off point would ensure that the term frequency document only held the top three terms from the preliminary list. A numeric scale value (10.0) provides the total “chunk” that each term takes up. This means that each term takes up a value out of a total (10.0). This approach allowed us to value terms relative to each other.
 
 \begin{figure}[H]
 \centering
@@ -686,9 +749,8 @@ The term frequency document is derived from the users personal timeline. Using a
 \end{figure}
 
 
-\subsubsection*{Second Net} 
-
-The recommender systems Second Net feature largely performs the same functionality as the term frequency document. It is essentially a term frequency document that has a cut-off point twice the size of the original term frequency document. The purpose of this "secondary" term frequency document is to attempt recommendations on tweets that did not contain any of the original term frequency documents terms. This works by separating the recommendation list into two sets, those that contain terms from the original term frequency document, and those that do not. Sorting is performed on the former using the original term frequency document, and on the latter using the second net term frequency document. The results of the second net sorted list are appended onto the end of the list containing terms from the original term frequency document. This gives us a list containing firstly the higher quality recommendations using the original term frequency document, followed by progressively lower quality tweets that use the second net term frequency document.
+\subsubsection*{Second Net} % 200 words
+The recommender system's Second Net feature largely performs the same functionality as the term frequency document. It is essentially a term frequency document that has a cut-off point twice the size of the original term frequency document. The purpose of this "secondary" term frequency document is to attempt recommendations on tweets that did not contain any of the original term frequency documents terms. This works by separating the recommendation list into two sets, those that contain terms from the original term frequency document, and those that do not. Sorting is performed on the former using the original term frequency document, and on the latter using the second net term frequency document. The results of the second net sorted list are appended onto the end of the list from the original term frequency document. This gives us a list containing the higher quality recommendations using the original term frequency document, followed by progressively lower quality tweets that use the second net term frequency document.
 
 \begin{figure}[H]
 \centering
@@ -721,68 +783,84 @@ The recommender systems Second Net feature largely performs the same functionali
     
 
 
+%The main data source is Twitter's API, which the system uses Tweepy to access. Tweepy is easy to use and has a variety of machine learning features. For example, the Cursor object can implement the pagination of tweets in a single line of code, rather than manually using an iteration loop.
+
+%In future builds of this project, data will be required from the mobile app to refine recommendations. For example, if the user clicks a link in a tweet, likes a tweet, retweets, or otherwise engages in conversations, these events should be recorded and used to optimise the recommender system for that user. 
+
+%Further plans include having the client measure the amount of time a tweet is visible as another, more passive, observation mechanism. This will capture interest in a particular tweet, as extended time spent focusing on a single tweet likely means that the user is reading it. This could also mean that the user is simply pre-occupied elsewhere, however, and is no longer using the app. To accommodate this, different amounts of time should imply different situations. In other words, several minutes on a single tweet likely means that the user is no longer paying attention to the app, while more than a few seconds would indicate interest.
+%\\\\
+%For the MVP it was not necessary to store data, however it is one of the upcoming tasks after completion of the interim report. 
+
+%For general relational data storage PostgreSQL will probably be used. Preliminary solutions being considered to store a cache of tweets are so called document databases. Document databases are non-relational databases ideally suited to store JSON data. Since the Twitter REST API returns all data as JSON the team has confidence in that such databases will be a good fit. Databases such as Couchbase \cite{couchbase}, RethinkDB \cite{rethinkdb}, CouchDB \cite{couchdb}, and MongoDB \cite{mongodb} have been listed for further evaluation. On top of those document databases there are plans to evaluate ElasticSearch \cite{elasticsearch} to gain realtime insights into the available data.%
+
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics[width=\textwidth]{data_flow_white}  
+%     \caption{System Overview}
+% \end{figure}
+
 
 \newpage
 
 
+%==============================================================================
+%                                  EVALUATION
+%==============================================================================
+% Weight: 20%, 2000 words
+%
+%   + What components of your system are you evaluating and why?
+%	+ How are you evaluating them (data, users, evaluation metrics)?
+%	+ What have you learned from the evaluation?
+%
+% Grading:
+%   A+ to B-:
+%	    Well thought out, realistic evaluation, including evaluation of 
+%       different aspects of the system as well as the system as a whole. 
+%       Thorough discussion of the outcome of the evaluation.
+%   C+ to D-:
+%       Somewhat clear evaluation, but some aspects not convincing.
+%   E+ to G:
+%       No evaluation done or very poorly thought and executed evaluation.
+%
+% Feedback from Interim Report: B+
+%   + The key question is not entirely clear, what does "interesting" mean
+%     in this context? Try to provide some definition or example when giving
+%     instructions to participants.
+%   + Good justification of related approaches, although not entirely
+%     clear what are the useful ideas for developing the user evaluation and
+%     how does the related work do the evaluation, e.g, setup, data,
+%     metrics.
+%   + The evaluation setup and data collected is reasonably clear.
+%   + The evaluation interface itself is well designed. Makes sense to
+%     that participants use team member phones, so no need for the
+%     participants to install the software.
+%   + 15 minutes is probably a high estimate for time required to read 20
+%     tweets. Indicating that the task takes 10 minutes might make it easier
+%     to attract participants.
+%   + The setup, users and metrics are clear. Could be useful to test 2
+%     different versions of the recommender, time permitting. Could be
+%     useful to have an option for users to provide qualitative or other
+%     feedback for the app.
+%   + While counting the total number of likes/dislikes across all users
+%     is one way of summarising the results, the results could summarised on
+%     a user basis (i.e. how many users liked more tweets from Lambda
+%     Lovelace’s feed, as opposed to the Twitter feed)."
+%   + Overall the report is well written, but there is unnecessarily often
+%     repetition of "team lambda Lovelace" - you can use we, or us or our.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Evaluation} 
+\section{Evaluation} % total 2020
 
 \subsection{Hypothesis}
-
-
-
-
-
-
-
-
-For the experiment the main question is: 
+% 500 words
+%
+% Explain the questions you are asking in your experiment and why they are 
+% important. Also provide an overview of some interesting, important, and 
+% relevant existing work in relation to evaluating such hypothesis (e.g., how 
+% is this hypothesis typically evaluated, do previous evaluations, if any, have 
+% any flaws?). For existing work provide appropriate citations and screenshots.
+%
+For the experiment the main question is: % 130 words
 
 \begin{center}
     ``\textit{Is $\lambda$ Lovelace's personalised tweet feed \\
@@ -790,74 +868,72 @@ For the experiment the main question is:
     default chronologically ordered tweet feed from Twitter?}''
 \end{center}
 
-Our goal was to show that it can be preferable for the user to have short-term recommendations. In essence, we want to provide users with a personalised timeline that, when compared to the Twitter home timeline, will be chosen over twitters offering. We believe that the hypothesis is an important question to ask, due to both the ubiquitous nature of Twitter and the powerful effect of recommender systems. Entire businesses revolve around the strength of their recommender systems, so we want to attempt to marry the popular platform of Twitter with the personalisation of recommendation.
+Our goal was to show that it can be preferable for the user to have short-term recommendations. In essence, we want to provide users with a personalised timeline that, when compared to the Twitter home timeline, will be chosen over Twitter's offering. We believe that our hypothesis is an important question, due to both the ubiquitous nature of Twitter and the powerful effect of recommender systems. Entire businesses revolve around the strength of their recommender systems, so we want to attempt to marry the popular platform of Twitter with the personalisation of recommendation.
 
-\subsubsection*{Related Work} 
-In the course of the creation of this experiment, we identified three particularly interesting examples of similar experiments, relevant to the experiment that we performed. In \textit{Towards a Followee Recommender System for Information Seeking Users in Twitter} \cite{paper1} the authors perform a very similar experiment to ours, with the exception of the data collection section, and found success. The authors asked twenty-six users the following question: "Would you have followed this recommended user in the first place (when selecting which users to follow in the first part of the experiment), if you had know this account?", while tracking their answers. While both us and the authors take a quantitative approach to our experiments, Marcelo G. Armentano et. al required users to perform these tests on a desktop computer. This approach is much easier to implement than our use of multiple mobile devices. 
+\subsubsection*{Related Work} % 590 words
+In the course of the creating this experiment, we identified three particularly interesting examples of similar experiments, relevant to the experiment that we performed. In \textit{Towards a Followee Recommender System for Information Seeking Users in Twitter} \cite{paper1} the authors successfully performed a very similar experiment to ours, with the exception of the data collection section. The authors asked twenty-six users the following question: "Would you have followed this recommended user in the first place (when selecting which users to follow in the first part of the experiment), if you had know this account?", while tracking their answers. While both we and the authors take a quantitative approach to our experiments, Marcelo G. Armentano et. al required users to perform these tests on a desktop computer. This approach is much easier to implement than our use of multiple mobile devices. 
 
-This paper also describes how the authors requested that users create new accounts with fresh data. This approach, although not applicable to our system, would have been more convenient for testing purposes if our system did not require power users. "Power users" being regular Twitter users that generally follow hundreds of accounts and have hundreds of tweets, retweets and likes. This type of user account us completely different from the accounts used in the previously mentioned experiment. Overall this is a very similar testing approach to ours, as the system tested also provided somewhat similar functionality, that of twitter recommendations.
+This paper also describes how the authors requested that users create new accounts with fresh data. This approach, although not applicable to our system, would have been more convenient for testing purposes if our system did not require power users. This type of user account is completely different from the accounts used in the previously mentioned experiment. Overall, this is a very similar testing approach to ours, as the system tested also provided somewhat similar functionality, that of twitter recommendations.
 \\\\
-This paper provided us with a rough idea of how we should proceed with this experiment and generated several ideas for the experiment. Most of which were ultimately not used.
+This paper provided us with a rough idea of how we should proceed with this experiment and generated several ideas, most of which were ultimately not used.
 \\\\
 In \textit{Recommending Twitter Users to Follow Using Content and
-Collaborative Filtering Approaches} \cite{paper2}, the authors perform two forms of testing, a preliminary offline experiment and a live user trial experiment. This allowed the authors to make initial assumptions on their project before beginning the live user trials, which would be more difficult to organise and take more effort. It was a much "safer" choice to hold a preliminary experiment before the main experiment. Similarly to the previous paper, the authors of this paper simply had users perform actions (based on questions) with their system and record the results. This paper highlighted the need for us to hold preliminary trials for our experiment, so that the main experiment would not be "wasted".
+Collaborative Filtering Approaches} \cite{paper2}, the authors perform two forms of testing, a preliminary offline experiment and a live user trial experiment. This allowed the authors to make initial assumptions on their project before beginning the live user trials, which would be more difficult to organise and require more effort. It was a much "safer" choice to hold a preliminary experiment before the main experiment. Similar to the previous paper, the authors of this paper simply had users perform actions (based on questions) with their system and record the results. This paper highlighted the need for us to hold preliminary trials for our experiment, so that the main experiment would not be "wasted".
 \\\\
-In \textit{Using Twitter to Recommend Real-Time Topical News} \cite{paper3}, the authors tackle a similar topic to \textit{Towards a Followee Recommender System for Information Seeking Users in Twitter}, but perform user testing over a period of five days. This setup allowed the authors to gain data outside of a testing environment. Authors basically requested that users used their system as their default RSS reader while they went about their day-to-day activities, and based their metrics on user click-throughs. This means that the authors based success on how much more users used their system than their original RSS reader.Although this environment would be much more difficult to enforce upon participants, it gave the authors more data in a more natural environment for the user. 
+In \textit{Using Twitter to Recommend Real-Time Topical News} \cite{paper3}, the authors tackle a similar topic to \textit{Towards a Followee Recommender System for Information Seeking Users in Twitter}, but perform user testing over a period of five days. This setup allowed the authors to gain data outside of a testing environment. Authors requested that users used their system as their default RSS reader while they went about their day-to-day activities and based their metrics on user click-throughs. This means that the authors based success on how much more users used their system than their original RSS reader. Although this environment would be much more difficult to enforce upon participants, it gave the authors more data in a more natural environment for the user. 
 
-We incorporated an aspect of this open style of testing by allowing participants to come and test over a period of several hours, rather than a scheduled approach. This paper also highlighted a discrepancy between what the participants say they prefer, and what they actually prefer when dealing with content recommended from twitter or content that is followed by their twitter friends. This influenced us to use more objective methods when testing.
+We incorporated an aspect of this open style of testing by allowing participants to test over a period of several hours, rather than a scheduled approach. This paper also highlighted a discrepancy between what the participants say they prefer, and what they actually prefer when dealing with content recommended from twitter or content that is followed by their twitter friends. This influenced us to use more objective methods when testing.
 
-
-
-
+%==============================================================================
 \subsection{Experimental Method}
-\subsubsection*{Overview} 
+\subsubsection*{Overview} % 310 words
+% 250 words
+%
+% How will you run your experiment? What will the experimental conditions be? 
+% What is your overall experimental design? What are the baselines you compare 
+% against and the evaluation metrics?
+%
 
-
-
-
-
-
-
-For this experiment, we prepared an evaluation-specific version of our mobile app. The app allowed participants to rate individual tweets if they were interesting or relevant to them: thumbs up, neutral or thumbs down.
-
-\begin{figure}[H]
-    \includegraphics[width=0.4\textwidth, center]{eval1}
-    \caption{Screenshot from the evaluation iOS app}
-\end{figure}
-
-Each evaluation run had the user rate two batches of 50 tweets at a time, that is each user rated 100 tweets in total. Each batch of 50 tweets was sourced from two feeds. The 25 newest tweets are taken from Twitter's chronologically ordered feed\footnote{in the Twitter API this is referred to as the \textit{homeline}} and the other 25 tweets are taken from $\lambda$ Lovelace's feed. The order was then randomised so the evaluator did not know from which feed the tweet came.
-
+For this experiment, we prepared an evaluation-specific version of our mobile app. The app allowed participants to rate individual tweets on their interest or relevancy to them: thumbs up, neutral or thumbs down.
 
 \begin{figure}[H]
     \includegraphics[width=0.6\textwidth, center]{evaluations_1}
 \end{figure}
 
-From the data gained from this experiment, we hoped to draw conclusions on the quality of our recommended tweets. For these purposes, participants had to log into the the evaluation app with their personal Twitter account.
+
+\newpage
+
+
+\noindent Each evaluation run had the user rate two batches of 50 tweets at a time for a total of 100 tweets. Each batch of 50 tweets was sourced from two feeds. The 25 newest tweets are taken from Twitter's chronologically ordered feed\footnote{in the Twitter API this is referred to as the \textit{homeline}} and the other 25 tweets are taken from $\lambda$ Lovelace's feed. The order was then randomised so the evaluator did not know from which feed the tweet came.
+
+\begin{figure}[H]
+    %\includegraphics[width=0.4\textwidth, center]{eval1}
+    \includegraphics[width=0.6\textwidth, center]{iphone_11_eval}
+    \caption{The evaluation iOS app}
+\end{figure}
+
+\noindent With the data gained from this experiment, we hoped to draw conclusions on the quality of our recommended tweets. For these purposes, participants had to log into the the evaluation app with their personal Twitter account.
 \\\\
-Participating subjects were largely drawn from college-aged students who are familiar with Twitter, allowing us closer access to the power users that this system is aimed at. This experiment took place in B0.02 of the Computer Science and Informatics building on University College Dublins Belfield campus, allowing for a short travelling distance, ample room for potentially large numbers of participants and an organised environment. The expriment took place on August 5th, from 11AM to 4PM, although it is worth noting that the actual participants appeared only on August 8th.
+Participating subjects were largely drawn from college-aged students who are familiar with Twitter, allowing us closer access to the power users at which this system is aimed. This experiment took place in the Computer Science and Informatics building on University College Dublin's Belfield campus, allowing for a short travelling distance and an organised environment. The expriment took place on August 5th, from 11AM to 4PM, although it is worth noting that the actual participants appeared only on August 8th.
 \\\\
-Metrics used for this experiment were drawn from the results of the evaluation app. These metrics reflect sentiment for batches of tweets from both the original timeline and our recommender system. Tweets either have positive(liked), negative(disliked) or neutral(neither) sentiment. The score of both the recommender system and the original timeline is tallied up to discern the more well-received system.
+Metrics used for this experiment were drawn from the results of the evaluation app. These metrics reflect sentiment for batches of tweets from both the original timeline and our recommender system. Tweets either have positive (liked), negative (disliked) or neutral (neither) sentiment. The score of both the recommender system and the original timeline is tallied up to discern the more well-received system.
 
-\subsubsection*{Data Collection} 
+\subsubsection*{Data Collection} % 150 words
+% 250 words
+%
+% What data will you collect during the experiment about participants’ performance 
+% and why? Will there be a mix between subjective (qualitative) and objective 
+% (quantitative) measurements? How does the data you will collect relate directly 
+% to your experimental hypothesis?
+%
 
-
-
-
-
-
-
-
-
-Data collected by the participants is of a quantitative nature, where we can view the results of each evaluation and infer preference for either the official Twitter timeline, or our feed. The metrics used are numerical, with each like adding to the "score" of either the official Twitter timeline or our evaluation app. We intended to capture the users interests with the recommendations provided, so should be scored higher than the default Twitter timeline.
+Quantitative data were collected by the participants, allowing us to view the results of each evaluation and infer preference for either the official Twitter timeline or our feed. The metrics used were numerical, with each like adding to the "score" of either the official Twitter timeline or our evaluation app. We intended to capture the users interests with the recommendations provided, so our tweets should be scored higher than the default Twitter timeline.
 \\\\
-
-From this data, we were able to compare our recommendations with Twitter's chronological tweet feed. Finally, from this comparison it was somewhat determined which form of Twitter feed provides more value to the user. 
-
+From these data, we were able to compare our recommendations with Twitter's chronological tweet feed. Finally, from this comparison it was somewhat determined which form of Twitter feed provides more value to the user. 
 \\\\
-
-
+%Taking out as we need more space
+%Qualitative data did not play a significant part in this experiment, as we did not have the time or resources to filter good qualitative data from unintentionally dishonest data from the participants. This allowed us to focus more on the evaluation app as the main strength of the experiment, rather than requesting participants to perform several different forms of testing. This could have tired out or otherwise bored participants, which could have in turn affected the resulting dataset.
 The collected data was stored in RethinkDB\footnote{a document database where each "row" is a JSON object} so that it was accessible in the same manner as both the live and test tweet data sets.
-
 
 \begin{samepage}
 \noindent Here is a pseudo example JSON data submitted for an evaluation run:
@@ -897,22 +973,22 @@ The collected data was stored in RethinkDB\footnote{a document database where ea
 \end{verbatim}
 \end{samepage}
 
-\subsubsection*{Selected Subjects} 
-
-
-
-
-
+\subsubsection*{Selected Subjects} % 340 words
+% 250 words
+%
+% Who will you use as subjects in your experiment. Why are these a representative 
+% sample? How will you source these subjects?
+%
 Subjects for the pilot evaluations were chosen from amongst team $\lambda$ Lovelace's family, friends and acquaintances. This was not a part of the main experiment for this project, due to the bias present in this group and the relative lack of good-quality participants.
 \\\\
 This preliminary experiment served as a filter for the main experiment. In this first experiment it was hoped that outsider perspectives would reveal issues with the software that we did not initially notice. As there was a limited amount of time left for this project, we were constrained in how many of the main experiments we could hold, so the preliminary was vital to preventing fundamental error in the main experiment. 
-
-
+%Taken out as we need more space
+%As the results of this experiment could have revealed untrue assumptions about this entire project, it was vital that any errors were revealed before the main experiment, as fundamental errors could have resulted in useless data. It could have been possible to hold another main experiment if the first attempt at one was botched through fundamental error, but due to a lack of time, it was unwise at the time to assume so. 
 \\\\
 Participants were obtained through fliers distributed throughout the University grounds that advertised the experiment for August \nth{5}. 
 
-
-
+%Taken out as we need space
+%It was made clear on the fliers that the user must be an active Twitter user that often likes/retweets/tweets on the platform. We also confirmed that the participants were power users to prevent dishonest participants from attending, where they simply created a twitter account and created multiple fake tweets/retweets to give the impression of a genuine regular Twitter user.
 
 \begin{figure}[H]
     \centering
@@ -920,77 +996,71 @@ Participants were obtained through fliers distributed throughout the University 
     \caption{The evaluation flier we posted on noticeboards outside James Joyce library on the UCD campus. For a full size please see Appendix \ref{full-size-poster}.}
 \end{figure}
 
+%Taken out as we need space
+%We also attempted to reach out to the Computer Science: Negotiated Learning and Conversion MSc students, believing that they could be the easiest group of students to access. This proved untrue as most, if not all, were preoccupied with their final semester projects and very few students actually satisfied our power user requirements.
 
-
-
-\subsubsection*{Data Analysis} 
-
-
-
-
-
-We brainstormed upon this several times and ultimately decided to take the simplest approach. That is, we compared our version of the Twitter feed to the default home timeline. The version that gained more "likes" and less "dislikes" in the evaluation app was judged the better version with concerns to relevancy. Thus answering this papers original question of "\textit{Is $\lambda$ Lovelace's personalised tweet feed more interesting than the default chronologically ordered tweet feed from Twitter?}" with hard data.
+\subsubsection*{Data Analysis} %2 270 words
+% 250 words
+%
+% How will you analyse the data you collect during the experiment? How will this 
+% analysis answer the question you originally proposed?
+%
+We ultimately decided to take the simplest approach; we compared our version of the Twitter feed to the default home timeline. The version that gained more "likes" and less "dislikes" in the evaluation app was judged the better version with concerns to relevancy. Thus answering this project's original question of "\textit{Is $\lambda$ Lovelace's personalised tweet feed more interesting than the default chronologically ordered tweet feed from Twitter?}" with hard data.
 \\\\
-
-
+%Taken out/rephrased below so we can save space
+%It was not left to the participant to critically think about whether one whole offering (our app or the official Twitter website) was better. Rather, this form of experimentation requests only the most basic of preference (this tweet or that tweet) and allowed us to analyse the results. 
 
 Tasks were intentionally left simple, as requesting more complex tasks from participants can lead to pitfalls in experimentation, as seen in \textit{Using Twitter to Recommend Real-Time Topical News} \cite{paper3}, where participants voiced an opinion that later revealed to be entirely untrue.
 \\\\
 This form of analysis, due to its numerical data, also allowed us to graph the resulting dataset for comprehension purposes. 
+%Taken out because we need space
+%This data can be used with a variety of methods to extract information, but is limited in how much it allows the user to express. For example the user could not, with this method, explain why they preferred one tweet over another. The user could not, likewise, explain why they disliked one tweet over another. However extracting such information would be a time-consuming task, beyond the resources at our disposal at that time of experimentation.
 
-
-
-
-
-
-
-
-
-\subsubsection*{Practical Setup} 
-
-
-
-
-
-
-
+\subsubsection*{Practical Setup} % 400 words
+% 250 words
+%
+% In practical terms how will you run your experiment? Will it be online or 
+% offline? What instructions will participants be given? What type of 
+% room/environment will the experiment be in? Will questions/surveys be displayed 
+% on-screen or on printed paper?
+%
 The experiment was run within room B0.02 in the Computer Science building at University College Dublin. The purpose of this setup was to allow participants ease of access for the duration of the experiment. Believing that fewer barriers for participation will yield higher turnout, we allowed participants to show up at their convenience to prevent the discouragement that presents itself in strict scheduling for an experiment. 
 
-
-
+%Second line of previous paragraph, taken out because we need space
+%This was straight-forward to book with the Computer Science and Informatics building secretary. The experiment ran from 11PM to 4AM on August \nth{5}, but extra time was allowed for friends and family of the team to perform additional testing. 
 
 The choice of room was both a convenient choice and an appropriate one. The rooms in the ground floor of the Computer Science and Informatics building have been used before for University College Dublin's end-of-semester exams. 
-
-
+%Taken out because we need space
+%So these rooms have proven capable of holding large numbers of students and providing a sterile and organised environment for the purpose of testing, as they have been used for examination-test purposes before. 
 \\\\
-The app was ready to run on three of team $\lambda$ Lovelace's iPhone devices, so that there was no need for the participants to install the software. This was intended to speed up the experimentation process, and further remove barriers to entry for the user. The only thing the user was required to do was sign in with their own Twitter credentials and perform runs with the evaluation app.
+The app was ready to run on three of team $\lambda$ Lovelace's iPhone devices, so there was no need for the participants to install the software. This was intended to speed up the experimentation process and further remove barriers to entry for the user. The only thing the user was required to do was sign in with their own Twitter credentials and perform runs with the evaluation app.
 \\\\
 In addition to running the experiment in person, we published the evaluation app via the beta mobile app distribution platform HockeyApp \cite{hockeyapp}. The team got it running successfully but the pilot evaluation revealed the process was too cumbersome and time-consuming to be practical for the experiment.
-
-
+%Taken out because we need space
+%The process of actually getting the app into the hands of the user was troublesome throughout the user evaluation, but using our own iPhone devices seems to have been one of the best options.
 \\\\
 As a result of the pilot experiments amongst friends and family, we found that one-hundred tweets was the ideal number for the user to evaluate. From beginning to finish, the users took about fifteen minutes to complete the experiment. This consisted of our explanation of the app and what was expected of the participant, logging the user in and rating the tweets themselves. 
+%Taken out because we need space
+%Rating the tweets themselves took less than ten minutes, but overall the process took roughly fifteen minutes.
 
-
-
-\subsection{Evaluation Conclusion} 
-
-
-
-
-
-
-
+\subsection{Evaluation Conclusion} % 350 words
+% 250 words
+%
+% What can you conclude after running this evaluation study (have you learned 
+% anything useful about the quality of your solution)? What could be done better 
+% in a future evaluation study (e.g., would you ask different questions or use 
+% different evaluation metrics)?
+%
 Unfortunately, on the day of the experiment we found that no-one was interested in attending. Fortunately, students were interested enough in the experiment that we could schedule two participants on the \nth{8} of August in the same setting. 
-
-
+%Taken out to save space
+%If we performed the experiment again, simply scheduling experiments would have yielded a better turnout as most of our team were on University College Dublin's campus for the duration of this project. 
 \\\\
-We were able to answer the question in this sections hypothesis with a resounding "yes", but with a caveat. Almost all users (Friends and family included) found our recommended tweets preferable. However, we identified a type of user that uses twitter for a singular purpose/topic and found that they had an overwhelmingly positive preference for our recommendations instead.
+We were able to answer the question in this sections hypothesis with a resounding "yes", but with a caveat. Almost all users (friends and family included) found our recommended tweets preferable. However, we identified a type of user that uses twitter for a singular purpose/topic and found that they had an overwhelmingly positive preference for our recommendations instead.
 \\\\
-
-
-
-Given more time, an ideal experiment setting would involve allowing the participants to use our app over the course of several days. Our app could have temporarily replaced the participants use of the official Twitter website and the users could respond at the end of a week with their level of satisfaction with the app. Further testing could involve requesting participants to give their level of satisfaction on a daily basis, with us tweaking several of the attributes of the recommender system (Number of terms in the term frequency document, values given to hashtags and liked/disliked tweets, etc) and observing the effect on participants satisfaction levels. This form of testing is not without its disadvantages, as participants can give inaccurate feedback when critical thinking is involved. However this could be circumvented, resources permitting.
+%Taken out because we need space
+%\\\\
+%If given more time to organise and gather resources, it may have been possible to conduct several higher quality tests with more participants. With enough time, it would have been possible to test for qualitative data, which could possibly reveal more information about the participants reasoning behind liking or disliking a tweet, or even overall feedback about our app itself.
+Given more time, an ideal experiment setting would involve allowing the participants to use our app over the course of several days. Our app could have temporarily replaced the participants use of the official Twitter website and the users could respond at the end of a week with their level of satisfaction with the app. Further testing could involve requesting participants to give their level of satisfaction on a daily basis, with us tweaking several of the attributes of the recommender system (number of terms in the term frequency document, values given to hashtags and liked/disliked tweets, etc) and observing the effect on participants satisfaction levels. This form of testing is not without its disadvantages, as participants can give inaccurate feedback. However this could be circumvented, resources permitting.
 \\\\
 Overall, this experiment was useful for the purposes of evaluating our application. However like most endeavours, there will always be space for improvement. 
 
@@ -1008,8 +1078,8 @@ Overall, this experiment was useful for the purposes of evaluating our applicati
         \caption{participant \#1}
         \label{fig:participant1}
     \end{subfigure}
-    ~ 
-      
+    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
+      %(or a blank line to force the subfigure onto a new line)
     \begin{subfigure}[b]{0.48\textwidth}
         \includegraphics[page=2,width=\textwidth]{evaluation_charts}
         \caption{participant \#2}
@@ -1049,44 +1119,39 @@ Overall, this experiment was useful for the purposes of evaluating our applicati
 \newpage
 
 
+%==============================================================================
+%                                  CONCLUSION
+%==============================================================================
+% Weight: 10%, 1000 words
+%
+%   + What was your project management strategy?
+%	+ What were the biggest challenges you faced as a team during the project 
+%     and how did you address them?
+%	+ What is the key contribution of your project and what future extensions 
+%     do you envision for improving your system?
+%
+% Grading:
+%   A+ to B-:
+%	    Clear reflections on team work process, learning process and updating
+%       future strategy to improve project execution. Thorough discussion on 
+%       strengths and weaknesses of proposed solution and important future 
+%       extensions.
+%   C+ to D-:
+%       Some reflections, but not very deep.
+%   E+ to G:
+%       Not much reflection on team work and project management process.
+%
+% Feedback from Interim Report: B+
+%   + Decent description of project management methodology. 
+%   + The list of core issues is good, as is the discussion of them. 
+%   + Reasonable plan for the remainder of the project. However, the plan 
+%     appears to underestimate the time it might take to ensure that both 
+%     filtering and recommendation are working correctly, and how the outputs 
+%     of the process might be integrated into a single timeline.
 
+\section{Conclusion} % 960 words
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Conclusion} 
-
-\subsection{Project management strategy} 
+\subsection{Project management strategy} % 140 words
 Team members were roughly split in two groups: back-end and front-end. We met nearly every workday at the UCD campus in rooms B1.06 and B0.02 in the Computer Science building. Working hours were flexible but core hours were from 10:00 to 17:00. Facebook Messenger \cite{messenger} was used extensively for remote coordination.
 
 \begin{figure}[H]
@@ -1095,7 +1160,7 @@ Team members were roughly split in two groups: back-end and front-end. We met ne
     \caption{Progress was also tracked on a whiteboard}
 \end{figure}
 
-For project management the team wanted to keep things light. After reviewing few solutions \cite{ll-blog-week2} we went with ZenHub \cite{zenhub}. It's basically a Chrome extension that hijacks the GitHub repository website and augments it with extra features.
+For project management the team wanted to keep things light. After reviewing a few solutions \cite{ll-blog-week2} we went with ZenHub \cite{zenhub}, which is a Chrome extension that hijacks the GitHub repository website and augments it with extra features.
 
 \begin{figure}[H]
     \centering
@@ -1105,97 +1170,85 @@ For project management the team wanted to keep things light. After reviewing few
 
 In the beginning of the project we utilised story points, milestones and burndown charts. However since we met and collaborated closely in person nearly every day we found the management overhead not worth it. Task progress was tracked in about 90 GitHub issues and the Kanban board view gave a good overview.
 
-\subsection{Key Challenges} 
+\subsection{Key Challenges} % 430 words
 
-\subsubsection*{Language} 
+\subsubsection*{Language} % 40 words
 Tweets can be in many languages. This is a challenge for our recommender system because a stopword in one language might be a legitimate word in another. Hence, the $\lambda$ Lovelace system is geared towards English speaking users.
 
+%Cut to save space
+%It would add an unnecessarily large amount of work to this project if we were to accomodate all languages, as the purpose of this project is to provide recommendations rather than accommodate all people. 
 
-
-
-\subsubsection*{Twitter API rate limits} 
-
+\subsubsection*{Twitter API rate limits} % 100 words
 Twitter has imposed rate limits on access to their API. Each form of accessing the API, such as accessing the users home-timeline or their likes, has different rate limits. There is a 15 minute window that the limits apply to. So for a user home-timeline API call, only 15 requests are allowed in a window of 15 minutes or for a search API call only 180 requests every 15 minutes is allowed. To work around this, the project uses a database to store tweets by sending requests during these windows and Celery to automate this process.
     
-\subsubsection*{Home timeline limit} 
+\subsubsection*{Home timeline limit} % 70 words
+Only the latest 800 tweets can be requested. This poses a problem for users that follow many accounts, or for users that check Twitter very infrequently. For example, user \textit{Y} who follows twice as many accounts as user \textit{X} will see 800 tweets in half the time that user \textit{X} will. This is the projects primary motivator to periodically collect and cache tweets in the database.
+%Removed to save space
+%If user \textit{X} can see 800 fresh tweets in their timeline in thirty minutes, then user \textit{Y} who follows twice as many accounts will see 800 tweets in roughly fifteen minutes.
 
-Only the latest 800 tweets can be requested. This poses a problem for users that follow a lot of accounts, or for users that check Twitter very infrequently. For example, user \textit{Y} who follows twice as many accounts as user \textit{X} will see 800 tweets in half the time that user \textit{X} will. This is the projects primary motivator to periodically collect and cache tweets in the database.
 
-
-
-
-\subsubsection*{Evaluations in iOS client} 
+\subsubsection*{Evaluations in iOS client} % 50 words
 Reusing our Swift code for an iOS evaluation app seemed logical at the time. However distribution hurdles greatly limited our reach. In retrospect going for a JavaScript website with embedded tweets \cite{embed-tweet} might have been better. This was a challenge we were unfortunately not able to overcome due to time constraints.
 
-\subsubsection*{Selection of a document database} 
+\subsubsection*{Selection of a document database} % 50 words
 Storage was an issue for us, as the nature of data from Twitter's API was in a very basic JSON format. Rather than using a relational database, we used the document database RethinkDB to circumvent this issue entirely as RethinkDB is aimed at storing JSON data.
 
-\subsubsection*{Combining recommender system data} 
+\subsubsection*{Combining recommender system data} % 50 words
 The need to concretely tie together all factors when recommending tweets was solved by the use of a decimal ranking system. Tweets are weighted according to the various inputs given to the recommender system, then sorted based on the output that results from the input provided.
+%Removed to save space
+%(author/tweet feedback from the iOS client, tweet content, the user personal timeline, etc)
 
 
-
-
-\subsection{Strengths And Weaknesses} 
+\subsection{Strengths And Weaknesses} % 180 words
 The $\lambda$ Lovelace system holds a powerful recommender system that has proven to give users higher quality tweets, based on our experiments. The use of an approach that utilises the users interests was vital to our approach and resulted in the main strength of our system - the quality of recommendations.
 
 However, there are a few weaknesses with the system. For example, if a user likes a tweet for its content, but there are no term frequency document terms in that tweet, the like will have no immediate effect. The like will only come into effect once the user has engaged in enough activity on their personal timeline with that term to place the term into their term frequency document, similar to a "cold start". 
-
-
+%Removed to save space
+%This is a kind of "cold start" for new terms that there is no straight-forward solution to, although several possible solutions are described below.
 
 $\lambda$ Lovelace also competes with several other mobile clients for the market share of Twitter users. We could have spent the entirety of this project replicating the functionality of other Twitter clients, but this would not have yielded a system with our niche of recommendation. Despite this, it is still a weakness in the system.
 
 
-\subsection{Key Contributions} 
+\subsection{Key Contributions} % 80 words
+$\lambda$ Lovelace takes up a very niche area in the app store. We could not find another iPhone app Twitter client that provides recommendations on tweets themselves. The fact that Twitter itself is attempting recommendations speaks volumes of the importance of recommender systems to the Twitter ecosystem. That there are not more offerings for Twitter recommender systems on either the Android or Apple platforms is astounding and lends merit to the novelty of the $\lambda$ Lovelace system.
+%Removed to save space
+%although several regular clients exist
+%The ability to filter out the vast tweet-noise present in a Twitter power users feed is very valuable, enough so that Twitter has pushed their own recommender system on both the user of their website and mobile client.
 
+\subsection{Future Work} % 220 words combined
 
-$\lambda$ Lovelace takes up a very niche area in the app store. We could not find another iPhone app Twitter client that provides recommendations on tweet themselves. The fact that Twitter itself is attempting recommendations speaks volumes of the importance of recommender systems to the Twitter ecosystem. That there are not more offering for Twitter recommender systems on either the Android or Apple platforms is astounding and lends merit to the novelty of the $\lambda$ Lovelace system. 
+\subsubsection*{Search API} % 80 words
+Tweets from accounts that the user is not following did not make it into the current iteration of the $\lambda$ Lovelace system. We attempted to add this functionality, but did not have the time to filter out obscene/useless tweets. As the recommender system is the main appeal of this project, it was decided to shelve the Search API. Future work would involve placing tweets from the search API (found through popular term frequency document terms) in the list of recommendations.
 
+\subsubsection*{"Cold Start" For New Terms} % 90 words
+Adding non-stop-words from the users liked tweets to the term frequency document is possible, but this could easily be overkill. Disliking tweets that do not contain terms has little effect however, as these tweets will appear lower in the list of recommendations regardless. Adding non-stop-words from liked tweets that do not have term frequency document terms to the second net functionality would be an ideal solution to this problem. It would not strongly affect the good quality recommendations set, but would provide immediate minor results to the user. 
+%Removed to save space
+%That is, until the term appears more frequently in their personal timeline and ultimately appears in the term frequency document.
 
-
-
-
-\subsection{Future Work} 
-
-\subsubsection*{Search API} 
-Tweets from accounts that the user is not following did not make it into the current iteration of the $\lambda$ Lovelace system. We attempted to add this functionality, but did not have the time to filter out obscene/useless tweets. As the recommender system is the main appeal of this project, it was decided to shelve the Search API. Future work would involve placing tweets from the search API (Found through popular term frequency document terms) in the list of recommendations.
-
-\subsubsection*{"Cold Start" For New Terms} 
-Adding non-stop-words from the liked tweet to the term frequency document is possible, but this could easily be overkill. Disliking tweets that do not contain terms has little effect however, as these tweets will appear lower in the list of recommendations regardless. Adding non-stop-words from liked tweets that do not have term frequency document terms to the second net functionality would be an ideal solution to this problem. It would not strongly affect the good quality recommendations, but would provide immediate minor results to the user. 
-
-
-
-\subsubsection*{iOS App Basic Twitter Functionality} 
-In order to enhance user adoption, the iOS app requires the full capabilities (composing tweets, retweeting, following, etc) so that it is not ignored in favour of other apps that already provide this functionality.
+\subsubsection*{iOS App Basic Twitter Functionality} % 30 words
+In order to enhance user adoption, the iOS app requires the full capabilities (composing tweets, retweeting, following, etc) of a client, so that it is not ignored in favour of other apps that already provide this functionality.
 
 
 \newpage
 
 
-
+%==============================================================================
 \section{Appenix}
-
-
+% This appendix contains information for a historical perspective such as what Twitter is and who the students and professors are. 
 
 \subsection{Twitter Intro}
-Twitter is a microblogging social network where each post or \textit{tweet} is no more than 140 characters in length. A typical Twitter user \textit{follows} multiple other users (followees) and get followed by other users (followers). By following other users they subscribe to all of their tweets and re-tweets (rebroadcast of other user's tweets). The \textit{timeline} is a chronological feed of those tweets.
+Twitter is a microblogging social network where each post or \textit{tweet} is no more than 140 characters in length. A typical Twitter user \textit{follows} multiple other users (followees) and get followed by other users (followers). By following other users they subscribe to all of their tweets and re-tweets (rebroadcast of other user's tweets). The \textit{timeline} is a chronological feed of those tweets and the user timeline is a chronological feed of both the users tweets and retweets. A chonological feed also exists for liked tweets for the user. Hashtags can be used to emphasize a topic that a tweet is about, and allow that tweet to appear under trending hashtags, when a particular hashtag becomes trending due to a high number of people tweeting about that topic. Twitter has 313 million active users per month, with 82\% of those users using the Twitter mobile client \cite{twitterabout}. There are one billion unique monthly visits to sites with embedded Tweets \cite{twitterabout}.
 
-
-\subsection{OAuth login}
-\hypertarget{oauth}
-OAuth is a popular form of authentication which is used for identifying application's identity and for allowing users to grant applications access permissions. The OAuth protocol does not reveal a user's username nor password to third party applications, making it more secure than traditional authentication schemes.
+"A Survey of Recommender Systems in Twitter" provides an overview of current recommender systems for the Twitter platform \cite{paper4}.
 
 \subsection{Resources}
 Below are summarised lists of the resources we've utilised while working on the project: software, libraries, frameworks, tutorials, etc.
 
+% Let's try to keep the descriptions very short, ideally the name, citation and description
+% should fit on one line. It's okay to go over but this is intended to be a very high-level
+% overview of what we use and for what purpose.
 
-
-
-
-
-
-
-\subsubsection*{Front-End Swift Libraries \& Frameworks}
+\subsubsection*{Front-End Libraries \& Frameworks}
 \begin{itemize*}
     \item \textbf{Swift} \cite{swift}: Programming language developed by Apple
     \item \textbf{iOS} \cite{ios}: Mobile operating system for the Apple iPhone and iPad
@@ -1204,7 +1257,7 @@ Below are summarised lists of the resources we've utilised while working on the 
     \item \textbf{OAuthSwift} \cite{oauthswift}: Swift based OAuth library for iOS
 \end{itemize*}
 
-\subsubsection*{Back-End Python Libraries \& Frameworks}
+\subsubsection*{Back-End Libraries \& Frameworks}
 \begin{itemize*}
     \item \textbf{Flask} \cite{flask}: Micro web development framework for Python
     \item \textbf{Tweepy} \cite{tweepy}: Easy-to-use Python library for accessing the Twitter API
@@ -1222,6 +1275,15 @@ Below are summarised lists of the resources we've utilised while working on the 
      \item \textbf{Pixlr} \cite{pixlr}: Online image editor
      \item \textbf{ShareLaTeX} \cite{sharelatex}: Collaborative LaTeX environment
      \item \textbf{Celery} \cite{celery}: Asynchronous job queuing software
+     \item \textbf{Rollbar} \cite{rollbar}: Error reporting software
+     \item \textbf{Hockey App} \cite{hockeyapp}: Beta app distribution platform
+     \item \textbf{Anaconda} \cite{conda}: Data science platform offering in Python
+     \item \textbf{Docker} \cite{docker}: Automated container deployment software
+     \item \textbf{RethinkDB} \cite{rethinkdb}: JSON-focused document database
+     \item \textbf{Ubuntu 14.04} \cite{ubuntu}: Debian-based Linux operating system
+     \item \textbf{Jenkins} \cite{jenkins}: Continuous integration tool
+     \item \textbf{Git Kraken} \cite{kraken}: Git client
+     
 \end{itemize*}
 
 \subsubsection*{Learning Resources}
@@ -1242,12 +1304,12 @@ Below are summarised lists of the resources we've utilised while working on the 
 \newpage
 
 
-
-
-
-
-
-
+%==============================================================================
+%                                  REFERENCES
+%==============================================================================
+% List of resources: software, papers, tutorials, books. 
+%
+% Note: the "\phantom{ } " in front of the second line is a dirty hack to create space so that the second line is flush with the first one on double digit references. If it's not done the second line will be skewed. Couldn't find any better way around it. The Bibliography environment doesn't listen to any manually set horizontal spacing like \ or \quad. It does however listen to non-visible characters. FML.
 \begin{thebibliography}{9} 
 
 \bibitem {information_overload}
@@ -1261,6 +1323,9 @@ Below are summarised lists of the resources we've utilised while working on the 
     
 \bibitem {paper3}
     O. Phelan, K. McCarthy, and B. Smyth. Using Twitter to recommend real-time topical news. In \textit{Proceedings of the third ACM Conference on Recommender Systems}, pages 385–388. ACM, 2009.
+    
+\bibitem {paper4}
+    S.M. Kywe, Ee. Lim and F Zhu.  A Survey of Recommender Systems in Twitter. Pages 1-14. 
     
 \bibitem {gitrepo}
 	$\lambda$ Lovelace main code repository on GitHub \\
@@ -1278,11 +1343,11 @@ Below are summarised lists of the resources we've utilised while working on the 
 	
 \bibitem {ll-blog-week9}
 	$\lambda$ Lovelace blog, Week 9: DB, Docker, CI/CD \\ 
-	\url{https://goo.gl/HzoLH7}
+	\phantom{ } \url{https://goo.gl/HzoLH7}
 	
 \bibitem {ll-blog-week10}
 	$\lambda$ Lovelace blog, Week 10: Caching Data \\ 
-	\url{https://goo.gl/8f6eLV}
+	\phantom{ } \url{https://goo.gl/8f6eLV}
 	
 \bibitem {ll-blog-week11}
 	$\lambda$ Lovelace blog, Week 11: Recommender System \& CD \\ 
@@ -1317,6 +1382,9 @@ Below are summarised lists of the resources we've utilised while working on the 
 
 \bibitem {github}
     GitHub, \url{https://github.com/}
+
+\bibitem {kraken}
+    Git Kraken, \url{https://www.gitkraken.com/}
 
 \bibitem {messenger}
     Facebook Messenger \url{https://www.messenger.com/}
@@ -1375,6 +1443,10 @@ Below are summarised lists of the resources we've utilised while working on the 
     Cio.com, Twitter's Challenge: Personalization, Co-Founder Says \\
     \phantom{ } \url{http://goo.gl/gt2fSs}
 
+\bibitem {twitterabout}
+    Twitter Usage/Company Facts \\
+    \phantom{ } \url{https://about.twitter.com/company}
+
 \bibitem {embed-tweet}
     Twitter API Documenation, Embed a Single Tweet in a Webpage \\
     \phantom{ } \url{https://dev.twitter.com/web/embedded-tweets}
@@ -1425,8 +1497,23 @@ Below are summarised lists of the resources we've utilised while working on the 
 \bibitem {dockercloud}
     DockerCloud, \url{https://cloud.docker.com/}
     
+\bibitem {docker}
+    Docker, \url{https://www.docker.com/}
+
+\bibitem {conda}
+    Anaconda, \url{https://www.continuum.io/downloads}
+
 \bibitem {jenkins}
     Jenkins, \url{https://jenkins.io/}
+
+\bibitem {rollbar}
+    Rollbar, \url{https://rollbar.com/}  
+    
+\bibitem {ubuntu}
+    Ubuntu 14.04, \url{http://releases.ubuntu.com/14.04/}    
+
+
+    
 
 
 \end{thebibliography}
