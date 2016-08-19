@@ -639,7 +639,6 @@ class RecommenderTextual:
             if term_frequency_document.has_key(text_word):
             #if text_word in term_frequency_document.keys():
                 count += 1
-                print("Found term:" + str(text_word))
                 if hashtag == True:
                     if self.termfreq_doc.get(text_word) is not None:
                         count += (self.termfreq_doc.get(text_word) * self.hash_tag_multiplier)
