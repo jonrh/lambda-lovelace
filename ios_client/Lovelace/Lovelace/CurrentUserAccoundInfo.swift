@@ -26,12 +26,15 @@ class CurrentUserAccountInfo {
         self.followerNumber = followerNumber
     }
     
+    //remove the local data of current logged in user, such as screen name etc.
     class func removeCurrentUserLocalData(){
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.removeObjectForKey("userInfoAvailable")
         currentUser = nil
         
     }
+    
+    //get information of current logged in user
     class func getCurrentUser(complete: (CurrentUserAccountInfo) -> Void) {
         if currentUser == nil {
             let defaults = NSUserDefaults.standardUserDefaults()

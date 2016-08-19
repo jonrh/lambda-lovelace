@@ -13,14 +13,20 @@ import OAuthSwift
 import SafariServices
 
 struct APIConstents{
+    
+    //keys that we used for our twitter app
     static let consumerKey = "BbTvs8T7CZguiloHMIVeRdKUO"
     static let consumerSecret = "Ji9JyeCKRrY9DUhE0ry0wWpYcVxJMHyOheqGc62VJOB4UsBXZy"
+    
+    //urls for authentication
     static let requestTokenUrl = "https://api.twitter.com/oauth/request_token"
     static let authorizeUrl = "https://api.twitter.com/oauth/authenticate"
     static let accessTokenUrl = "https://api.twitter.com/oauth/access_token"
     static let callbackUrl = NSURL(string:"http://csi6220-1-vm1.ucd.ie/oauth-callback")!
 }
 
+//keys for saving the user's token locally
+//also used for getting the tokens from the NSUserDefaults
 struct NSUserDefaultKeys{
     static let oauthTokenKey = "oauthToken"
     static let oauthTokenSecretKey = "oauthSecretToken"
@@ -32,6 +38,8 @@ protocol APIDataRefreshDelegate: class {
 
 
 // defined helper method to communicate with backend conviniently
+//Basically this class is used to handle the communication between iOS and flask server.
+//For example, sending requests to flask, acquire the data returned by flask server etc.
 class APIManager {
     
     weak static var apiDataRefreshDelegate: APIDataRefreshDelegate?
@@ -42,9 +50,11 @@ class APIManager {
     
     static var isRequestingOAuthToken = false
     
+    //check if OAuth Tokens are empty
     class var hasOAuthToken: Bool {
         return oauth_token != nil && oauth_token_secret != nil
     }
+    
     
     static let oauthSwift = OAuth1Swift(
             consumerKey: APIConstents.consumerKey,
@@ -53,7 +63,7 @@ class APIManager {
             authorizeUrl: APIConstents.authorizeUrl,
             accessTokenUrl: APIConstents.accessTokenUrl)
     
-    
+    //load tokens that are saved locally
     class func LoadLocalOAuthToken() -> Bool{
         
         let defaults = NSUserDefaults.standardUserDefaults()

@@ -5,9 +5,7 @@
 //  Created by Eazhilarasi Manivannan on 18/06/2016.
 //  Copyright © 2016 lovelaceTeam. All rights reserved.
 
-/***  
-  This is controller class for the home screen that displays the filtered tweets
- ***/
+
 
 import UIKit
 import Alamofire
@@ -15,27 +13,43 @@ import SwiftyJSON
 import SWTableViewCell
 import Rollbar
 
+/***
+ This is controller class for the home screen that displays the filtered tweets
+ which is the main view of our app
+ ***/
+
+//this the number of items left in the feed to trigger loading the new page
+//when there are only 5 tweets left in the current page, a new page will be loaded
 struct FeedTableViewConstants {
     static let numberOfItemsLeftTriggerLoadNewPage = 5
 }
 
+//identifier of segue
 struct FeedVCStoryboard{
     static let loginViewSegue = "login"
 }
 
 class FeedViewController: UIViewController {
     
+    
     var isURLorHashtagSelected = false
+    
+    //this is the UI component that displays the tweets
+    //tweets are dispalyed as table view
     @IBOutlet weak var feedTableView: UITableView! {
         didSet{
+            //configure the height of each cell in the table view
             feedTableView.rowHeight = UITableViewAutomaticDimension
             feedTableView.estimatedRowHeight = 300
         }
     }
     
+    //a list which contains the tweet objects returned from flask
     var tweetList = [Tweet]()
+    //a list of the weighing of each tweet which indicates the relevance of the tweet
     var countList = [Int]()
     
+    // a refresh control indicates refreshing
     let feedTableViewRefreshControl = UIRefreshControl()
     
     private var feedPage = 1
@@ -46,6 +60,7 @@ class FeedViewController: UIViewController {
     // call to get filtered tweets from the server
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
         
         if needReloadTable == true {
             needReloadTable = false
@@ -62,6 +77,7 @@ class FeedViewController: UIViewController {
     
     }
     
+    //intialise the refresh control
     private func initRefreshControl(){
         feedTableViewRefreshControl.addTarget(self, action:#selector(refreshFeedTableView) ,
                                               forControlEvents: .ValueChanged)
@@ -69,7 +85,7 @@ class FeedViewController: UIViewController {
         self.feedTableViewRefreshControl.beginRefreshing()
     }
     
-    
+    //load the data got from the flask server into the lists: tweetList and countList
     private func loadTweetWithPage(page: Int = 1){
         APIManager.getRecommendTweetsWithPage(page)
         {   result in
@@ -89,6 +105,7 @@ class FeedViewController: UIViewController {
         }
     }
     
+    //refresh the whole feed
     @objc private func refreshFeedTableView(reloadData: Bool = false){
         cleanTableView(reloadData)
         feedPage = 1

@@ -13,9 +13,13 @@ import Alamofire
 // Router enum is used to generate proper request depends on its value
 enum Router: URLRequestConvertible {
     
+    //url where our flask server runs
     static let baseURLString = "http://csi6220-1-vm1.ucd.ie"
+    
+    //this url is just for testing our flask server locally on our machine
 //    static let baseURLString = "http://127.0.0.1:5000"
     
+    //here are different cases of different requests
     case RecommendTweets(Int)
     case EvaluationData(Int)
     case EvaluationResult([String:AnyObject])
@@ -59,13 +63,15 @@ enum Router: URLRequestConvertible {
         }
     }
     
+    
     var URLRequest: NSMutableURLRequest{
         let URL = NSURL(string: Router.baseURLString)!
         let mutableURLRequest = NSMutableURLRequest(URL: URL.URLByAppendingPathComponent(path))
         mutableURLRequest.HTTPMethod = method.rawValue
         
         
-        // set parameters for each case
+        // set parameters for each case, these parameters will be sent to flask along with the url
+        //so our flask server can use
         if APIManager.hasOAuthToken {
             let oauthToken = APIManager.getOAuthTokenAndTokenSecret()
             var parameters:[String: AnyObject] = ["oauth_token" : oauthToken.oauth_token,

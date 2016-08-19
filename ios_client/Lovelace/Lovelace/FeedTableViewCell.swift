@@ -15,6 +15,7 @@ import KILabel
 
 class FeedTableViewCell: SWTableViewCell {
     
+    //when a value is set to this var, update the cell
     var tweet: Tweet? {
         didSet {
             updateCell()
@@ -22,7 +23,7 @@ class FeedTableViewCell: SWTableViewCell {
     }
     
    
-
+    //configure how the image view in the cell looks like
     @IBOutlet weak var tweetUserImage: UIImageView! {
         didSet{
             tweetUserImage.layer.cornerRadius = 8
@@ -30,29 +31,33 @@ class FeedTableViewCell: SWTableViewCell {
         }
     }
     
-    
+    //image view that displays the user image of the tweet
     @IBOutlet weak var tweetImage: UIImageView! {
         didSet{
             tweetImage.clipsToBounds = true
         }
     }
+    
+    //label that displays the user name
     @IBOutlet weak var tweetUserName: UILabel!
     
-  
+    //label that displays the date of the tweet
     @IBOutlet weak var tweetDateTime: UILabel!
     
-    
+    //label that displays the user's screen name
     @IBOutlet weak var tweetUserDisplayName: UILabel!
     
-    
+    //label that displays the text of the tweets
     @IBOutlet weak var tweetText: KILabel!
     
+    //the view that indicates the weighting of the tweet, in different colors
     @IBOutlet weak var weightBar: UIView!{
         didSet{
             weightBar.layer.cornerRadius = 6
             weightBar.clipsToBounds = true
         }
     }
+    
     @IBOutlet weak var shadowView: UIView! {
         didSet{
             shadowView.layer.shadowColor = UIColor.blackColor().CGColor
@@ -68,7 +73,7 @@ class FeedTableViewCell: SWTableViewCell {
     }
 
     
-    // Initialise value for each cell.
+    // Initialise value for each cell. So each cell will display different tweet
     func updateCell()
     {
         tweetUserName.text = tweet?.userName
