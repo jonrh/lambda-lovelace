@@ -57,6 +57,7 @@ class PageViewController: UIPageViewController {
     }
     
     
+    // configure page contemts
     private func configurePageVC(){
         for i in 0 ..< AppConstant.tweetContentViewCount{
             let hasImage = TestTweetsPool.mixedTweets[i].tweetImageUrl != ""
@@ -72,6 +73,7 @@ class PageViewController: UIPageViewController {
         setViewControllers([contentVCs[0]], direction: .Reverse , animated: true, completion: nil)
     }
     
+    // generate test data
     func initTestData(){
         TestTweetsPool.removePreviousTestTweetsSet()
         EvaluationResult.removeAll()
@@ -100,6 +102,7 @@ extension PageViewController:APIDataRefreshDelegate{
 }
 
 extension PageViewController: UIPageViewControllerDelegate{
+    // invoked when user change page where ui eleements are updated based on current page number
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if completed {
             parentVC.updataeButtonsStates()
@@ -123,6 +126,7 @@ extension PageViewController: UIPageViewControllerDelegate{
     }
 }
 
+// feed page content
 extension PageViewController: UIPageViewControllerDataSource{
     private func getPageNumberFromChildViewController(viewController: UIViewController) -> Int{
         let dataSource = viewController as! PageNumberDataSource

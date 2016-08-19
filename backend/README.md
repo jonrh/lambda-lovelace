@@ -1,7 +1,30 @@
 # λ Lovelace - Backend
 This folder contains our backend code: Python Flask web service and recommender system that communicate with our iOS mobile client.
 
+## Flask server
+
+**Lovelace.py** *The actual Flask server*
+
+## Recommender System
+
+**RecommenderTextual.py** *The code of Recommender System*
+
+**Stopwords.py** *A list of stopwords that should be removed from the term document.*
+
+**Execute_2.py** *An executor for testing recommender system*
+
+## Celery
+**tasks.py** *Task for getting home timeline*
+
+**tasks_liked.py** *Task for getting user's liked tweets*
+
+**tasks_user.py** *Task for getting user's personal timeline*
+
+**celeryconfig.py** *Configuration file of Celery*
+
 ## Docker
+**Dockerfile** *recipie for building a Docker image*
+
 Here is how to build our Docker backend image and name it *lovelace*. This assumes we are in a terminal located in the root *lambda-lovelace/* folder.
 
 ```
@@ -14,6 +37,21 @@ To run our *lovelace* image (assuming we're in the *backend/* folder):
 ```
 docker run -it -p 5000:5000 lovelace
 ```
+## Jenkins and Testing
+
+**build_ test_deploy.sh** *bash script that Jenkins executes on every push to master*
+
+**requirements.txt** *Specifies the python libraries needed*
+
+**test_locally.sh** *runs Docker containers on a local computer for development*
+
+**tests.py** *Test after every push to master*
+
+
+
+
+
+
 
 ## Setup instructions on OSX
 Homebrew:

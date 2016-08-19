@@ -8,6 +8,7 @@
 
 import Foundation
 
+// this class is used to download, update and stored loggined user account information
 class CurrentUserAccountInfo {
     private static var currentUser: CurrentUserAccountInfo!
     
@@ -35,6 +36,7 @@ class CurrentUserAccountInfo {
         if currentUser == nil {
             let defaults = NSUserDefaults.standardUserDefaults()
             if defaults.boolForKey("userInfoAvailable") {
+                // user account information is stored locally, thuts it can restored from local data
                 let userName = defaults.stringForKey("userName")!
                 let screenName = defaults.stringForKey("screenName")!
                 let avatarImageData = defaults.dataForKey("avatarImageData")!
@@ -44,6 +46,7 @@ class CurrentUserAccountInfo {
                 complete(currentUser)
             }
             else {
+                // there's no user account data locally, thuts it need to download from server
                 APIManager.getUserProfile { profileJson in
                     let userName = profileJson["name"].stringValue
                     let screenName = profileJson["screen_name"].stringValue
@@ -55,6 +58,7 @@ class CurrentUserAccountInfo {
                     let followingNumber = profileJson["friends_count"].intValue
                     let followerNumber = profileJson["followers_count"].intValue
                     
+                    // save account data locally
                     let defaults = NSUserDefaults.standardUserDefaults()
                     defaults.setBool(true, forKey: "userInfoAvailable")
                     defaults.setObject(userName, forKey: "userName")

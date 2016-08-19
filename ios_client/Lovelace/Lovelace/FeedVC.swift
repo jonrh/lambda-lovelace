@@ -4,7 +4,10 @@
 //
 //  Created by Eazhilarasi Manivannan on 18/06/2016.
 //  Copyright © 2016 lovelaceTeam. All rights reserved.
-//
+
+/***  
+  This is controller class for the home screen that displays the filtered tweets
+ ***/
 
 import UIKit
 import Alamofire
@@ -40,7 +43,7 @@ class FeedViewController: UIViewController {
     
     var needReloadTable = true
     
-    
+    // call to get filtered tweets from the server
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -157,12 +160,14 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
                 loadTweetWithPage(feedPage)
             }
         }
+        // Setting up the left and right buttons on swipe of the tableview cell
         tweetCell.rightUtilityButtons = getRightSwipeButtonsToCell() as [AnyObject]
         tweetCell.leftUtilityButtons = getLeftSwipeButtonsToCell() as [AnyObject]
         tweetCell.delegate = self
         return tweetCell
     }
     
+    //Navigate to web view when URL in the tweet is selected by the user
     func prepareToURLWebViewSegue(url:String)
     {
         performSegueWithIdentifier("webViewSegue", sender: url)
@@ -191,18 +196,20 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         isURLorHashtagSelected = false
     }
     
+    //Set up the button image and name for the right swipe button
     func getRightSwipeButtonsToCell()-> NSMutableArray{
         let utilityButtons: NSMutableArray = NSMutableArray()
         utilityButtons.sw_addUtilityButtonWithColor(UIColor.clearColor(), icon: UIImage(named: "like icon"))
         return utilityButtons
     }
-    
+    //Set up the button image and name for the left swipe button
     func getLeftSwipeButtonsToCell()-> NSMutableArray{
         let utilityButtons: NSMutableArray = NSMutableArray()
         utilityButtons.sw_addUtilityButtonWithColor(UIColor.clearColor(), icon: UIImage(named: "dislike icon"))
         return utilityButtons
     }
     
+    //Event when table cell is swiped right to open up the menu to give feedback about what they liked/disliked abou the tweet.
     func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerRightUtilityButtonWithIndex index: Int) {
         
         let index = self.feedTableView.indexPathForCell(cell)
@@ -236,6 +243,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         
     }
     
+    //Event when table cell is swiped left to open up the menu to give feedback about what they liked/disliked abou the tweet.
     func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerLeftUtilityButtonWithIndex index: Int) {
         let index = self.feedTableView.indexPathForCell(cell)
         let tweetCell = self.feedTableView.cellForRowAtIndexPath(index!) as! FeedTableViewCell
@@ -269,6 +277,7 @@ extension FeedViewController: UITableViewDataSource, UITableViewDelegate , SWTab
         cell.hideUtilityButtonsAnimated(true)
     }
     
+    //Network call to send feedback to the flask server.
     private func postSingleTweetFeedbackToServer(followerName followerName: String, feedback: String, tweetContent: String, reason: String){
         var feedbackParams = ["followerScreenName":followerName,
                               "feedback":feedback,

@@ -5,6 +5,8 @@
 //  Created by Eazhilarasi Manivannan on 14/07/2016.
 //  Copyright © 2016 lovelaceTeam. All rights reserved.
 //
+/***
+ This is controller class used for displaying the web page of the URL selected in the tweet ***/
 
 import UIKit
 
