@@ -4,36 +4,32 @@ Recommender system for tweets; a more personalised tweet stream. This is a repos
 **Blog**: [https://jonrh.github.io/lambda-lovelace/](http://jonrh.github.io/lambda-lovelace/)
 
 
-## Getting Started
-Here are instructions on how to get started developing for the project.
+## Team members
 
-**Quick Start**:
+- Jón Rúnar Helgason, [jonrh](https://github.com/jonrh)
+- Xinqi Li, [XinqiLi1992](https://github.com/XinqiLi1992)
+- Marc Laffan, [Marc5690](https://github.com/Marc5690)
+- Junyang Ma, [specter4mjy](https://github.com/specter4mjy)
+- Eazhilarasi Manivannan, [Eazhilarasi](https://github.com/Eazhilarasi)
 
-1. Install the [ZenHub Chrome extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). See [Project Managment](#project-managmnent) for more details.
-2. Clone `master` and `gh-pages` brances into seperate local repositories (folders)
+Project roles:
 
-There are two main branches: `master` (code & docs) and `gh-pages` (blog). It's best to clone both branches in a seperate folder because they do not share any common code.
+* **Backend**: Xinxqi & Marc Laffan
+* **Frontend**: Junyang Ma, Eazhilarasi, Xinxqi
+* **Evaluation**: Junyang Ma
+* **User Experience**: Eazhilarasi
+* **Project Management & Communications**: Jón Rúnar
 
-```
-// Go to the folder you want to keep the GitHubCode/ folder
-
-mkdir GitHubCode
-cd GitHubCode/
-
-// Clone the master branch into the folder lambda-lovelace/
-git clone https://github.com/jonrh/lambda-lovelace.git
-
-// If you're not going to be working with the blow the blow can be skipped
-// Clone the gh-pages branch into the folder ll-blog/
-git clone https://github.com/jonrh/lambda-lovelace.git ll-blog/
-cd ll-blog
-git checkout -b gh-pages origin/gh-pages
-```
 
 ## Project
 **Summary**: A recommender system for tweets; a more personalised tweet stream.
 
 The theme of 2016 for the group project module is *Future Of News*. The premise for our project is the asumption (or observation) that people are experiencing an information overload. Years or decades ago news or content creators were few (print, television, radio) compared to today. Now everyone with a computer or a smartphone can be a content creator. We believe that the future of news is going to be filtering and delivering personalised news to people. We see our project to be a stepping stone in that direction, starting with Twitter.
+
+### Retrospective note
+Today Twitter already employs their own recommender system for tweets so why did we attempt to do the same? In essence it came down to *unlucky* timing and search for the incorrect words in the project proposal phase. The final project took place during the summer of 2016 but teams started formulating project ideas in the spring semester. We conceived our idea in the beginning of March 2016. Unknown to us, Twitter had announced in a [blog post](https://goo.gl/UqTIRz) on the 10th of February that tweet recommendations were available as an opt-in feature in the official Twitter mobile app. On the 17th of March, Twitter started to silently roll out tweet recommendations as an opt-out feature. None of the team members noticed the change. It was not until week two of our project (23rd of May) when we started to dig deeper into the literature review that we learned that Twitter had in fact already implemented much of what we intended to build.
+
+This experience set a bittersweet tone for the remainder of the project. On one hand we regretted not having done a more thorough research in the early project proposal stage yet on the other hand we felt exhilarated knowing we had the right kind of ideas since Twitter was already recommending tweets. They just beat us to it by a few weeks.
 
 ### Scope
 On a very high level there are two main components to the project:
@@ -41,9 +37,9 @@ On a very high level there are two main components to the project:
 * **Front-end**: iOS Twitter mobile app
 * **Back-end**: Collaborative recommender system
 
-A Twitter user uses our iOS mobile client and grants us API access. Uninteresting tweets are filtered out (or deferred to later) while interesting tweets are prioritised in the timeline. Tweets from non-followers may be suggested as well. Essentially we hope to create a better, more personalised timeline of tweets than what Twitter provides by default. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
+A Twitter user uses our iOS mobile client and grants us API access. Uninteresting tweets are filtered out (or deferred to later) while interesting tweets are prioritised in the timeline. Tweets from non-followers may be suggested as well. Essentially we hope to create a better, more personalised timeline of tweets than what chronologically ordered feed provides. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
 
-The mobile app is required in order to collect additional user preference information to refine the recommendations. For example, if a user clicks a link in a tweet, likes a tweet, retweets, or engages in conversations. Another potential passive observation mechanishm would be to have the client measure the amount of time a tweet is visible. Thinking being if a tweet is in focus for longer it might be of more interest than a tweet that is scrolled past quickly.
+The mobile app is required in order to collect additional user preference information to refine the recommendations. For example, if a user clicks a link in a tweet, likes a tweet, retweets, or engages in conversations. Another potential passive observation mechanism would be to have the client measure the amount of time a tweet is visible. Thinking being if a tweet is in focus for longer it might be of more interest than a tweet that is scrolled past quickly.
 
 Our contributions or novelty if you will are as follows:
 
@@ -53,32 +49,21 @@ Our contributions or novelty if you will are as follows:
 
 These are ordered by priority, that is we will first strive to implement tweet filtering, then data collection in the mobile app and if things go well we will try to introduce outsider tweets that might be of interest to the user.
 
-In the beginning our project scope was to create a general recommendation system for all sorts of media: news, tweets, blogs, videos, etc. However given professor's feedback we decided to focus the idea on Twitter. We believe that doing so will allow us to deliver a more refined and complete solution. However if things go exceedingly well we may revisit this idea for further expansion.
+In the beginning our project scope was to create a general recommendation system for all sorts of media: news, tweets, blogs, videos, etc. However given professor's feedback we decided to focus the idea on Twitter. We believe that doing so will allow us to deliver a more refined and complete solution. In retrospect this turned out to be a very good suggestion.
 
 
 ## Technical Decisions
-Here below are some of the technical descisions we've made so far. Please note that we do not consider them binding. That is, we are fully prepared to switch languages, stacks mid project if we believe it will suit us better.
+Here below are some of the technical decisions we made:
 
 - **Mobile**: iOS 9 + Swift 2.2
 - **Recommender System**: Python 2.7, 
 - **Back-end web service**: Python 2.7 and [Flask](http://flask.pocoo.org/) 
-- **Database**: Undecided. Maybe [PostGres](https://www.postgresql.org/) for general storage, and a document database to store a cache of tweets.
+- **Database**: RethinkDB
 
 
-## Project Managment
+## Project Management
 
-For project managment we keep it loose & lean. We use [ZenHub](https://www.zenhub.io/) to augment GitHub so we get a Kanban style board for issues and burndown charts to track milestone progresses. To use it you will have to install a [Chrome extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). After the extension is installed you simply go to the GitHub [repository](https://github.com/jonrh/lambda-lovelace) and the extra features will be there on the page.
-
-For issues we use the following story point estimations:
-
-| Story Points | Description |
-|:------------:|:------------|
-| **1**        | ~30m easy work, e.g. testing for the other team |
-| **2**        | 1 - 2 hours of work, simple but requires effort |
-| **3**        | half a day of work |
-| **5**        | full day of work |
-| **8**        | 2 days of work, not easy |
-| **13**       | 3 - 5 days of work, very complex may require multiple people | 
+For project management we keep it loose & lean. We used [ZenHub](https://www.zenhub.io/) to augment GitHub so we get a Kanban style board for issues and burndown charts to track milestone progresses. To use it we installed a [Chrome extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). After the extension was installed we simply went to the GitHub [repository](https://github.com/jonrh/lambda-lovelace) and the extra features were there on the page. It should be noted that this functionality has since been added natively in a limited capacity with GitHub Projects.
 
 
 ### Schedule & Deliverables
@@ -149,17 +134,28 @@ A tally of past jobs as well as scheduled ones:
 | Eazhilarasi | 1          | 1           |
 
 
-## Team members
+## Getting Started
+Here are the instructions we used when developing for the project.
 
-- Jón Rúnar Helgason, [jonrh](https://github.com/jonrh), <jonrh@jonrh.is>
-- Xinqi Li, [XinqiLi1992](https://github.com/XinqiLi1992), <xinqi.li@ucdconnect.ie>
-- Marc Laffan, [Marc5690](https://github.com/Marc5690), <marclaffan@gmail.com>
-- Junyang Ma, [specter4mjy](https://github.com/specter4mjy), <specter4mjy@gmail.com>
-- Eazhilarasi Manivannan, [Eazhilarasi](https://github.com/Eazhilarasi), <eazhilarasi.manivannan@ucdconnect.ie>
+**Quick Start**:
 
-Project roles:
+1. Install the [ZenHub Chrome extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). See [Project Managment](#project-managmnent) for more details.
+2. Clone `master` and `gh-pages` brances into seperate local repositories (folders)
 
-* **Project Managment**: Marc
-* **User Experience**: Eazhilarasi
-* **Software Development**: Specter & Xinxqi
-* **Evaluation & Communications**: Jón Rúnar
+There are two main branches: `master` (code & docs) and `gh-pages` (blog). It's best to clone both branches in a seperate folder because they do not share any common code.
+
+```
+// Go to the folder you want to keep the GitHubCode/ folder
+
+mkdir GitHubCode
+cd GitHubCode/
+
+// Clone the master branch into the folder lambda-lovelace/
+git clone https://github.com/jonrh/lambda-lovelace.git
+
+// If you're not going to be working with the blow the blow can be skipped
+// Clone the gh-pages branch into the folder ll-blog/
+git clone https://github.com/jonrh/lambda-lovelace.git ll-blog/
+cd ll-blog
+git checkout -b gh-pages origin/gh-pages
+```

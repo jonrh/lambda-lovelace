@@ -33,23 +33,6 @@
     citecolor=blue
 }
 
-%
-% Quality of Writing & Organisation of Document
-% 
-% Weight: 20/90 = 22%
-%
-% Grades:
-%   A+ to B-:
-%		Very well written document (well organised, good layout, good English, 
-%		and clarity in writing).
-%   C+ to D-:
-%		Well organised and written but some issues in language, the flow of the 
-%		document, references, etc.
-%   E+ to G:
-%		Badly prepared document (poor organisation, poor layout, sloppy English, 
-%		and lack of clarity in writing).
-%
-
 \begin{document}
 
 % - - - - Header Begins - - - -
@@ -92,22 +75,6 @@ The purpose of this report is:
 
 %==============================================================================
 \section{User Scenario: The Characters}
-% 500 words, weight: 10/90 = 11%
-%
-% * Who is your target user?
-% * Why are they important?
-% * What problem are you solving for them?
-%
-% Grades:
-%   A+ to B-:
-%		Very well defined user scenario and problem with strong links between 
-%		the two.
-%   C+ to D-:
-%		Well defined user scenario and problem (maybe missing connections 
-%		between the two, or importance of problem not convincing).
-%    E+ to G:
-%		Poorly defined user scenario and problem.
-%
 Users of the $\lambda$ Lovelace system and the problems it solves.
 
 \subsection{Who are your potential users?}
@@ -142,33 +109,8 @@ Robert may follow many others who tweet on myriad topics. Due to the issues desc
 
 %==============================================================================
 \section{Technical Problem}
-% 1000 words, weight: 20/90 = 22%
-%
-% * Why does your system exist?
-% * What is the core technical problem?
-% * Can you describe the problem graphically?
-% * Can you review other existing systems or products that address this 
-%   problem? (how do they meet or fail to meet the needs of your target 
-%   users)
-%
-% Grades:
-%   A+ to B-:
-%		Very clear definition of the key technical challenges involved in 
-%		building the proposed system, tightly linked to the user scenario 
-%		described. Also good assessment of existing similar systems.
-%   C+ to D-:
-%		Reasonable description of technical problem and current state of the 
-%		art, but lacking in some ways. Perhaps the technical problems are 
-%		described at much too low a level (“writing this function will be 
-%		hard”), technical problems do not relate to the user scenario described 
-%		or coverage of existing systems is limited.
-%    E+ to G:
-%		Inability to identify the technical challenges in addressing the user 
-%		problem described in the previous section.
-%
 
 \subsection{Purpose}
-% Sophie: instead of saying "the issues brought up in the User Scenario section",  I would quickly restate what those issues are. It would read: "to tackle ______".
 The $\lambda$ Lovelace project was created in order to tackle the issue of irrelevant tweets being shown in the timeline, and relevant tweets being overshadowed by irrelevant tweets. Twitter is not a segmented source of information and news, but comprises of people with a multitude of opinions from many diverse backgrounds. As a form of social media, its users are encouraged to give their opinions on current events, aspects of their background and their profession. Twitter itself stirs up discussion on current events with the use of hashtags, further promoting diverse conversations. All of this activity creates a very noisy environment, which makes it difficult for the user to access the tweets that are the most relevant to their interests. For example, the User Scenario section describes how Scott Hanselman discusses and promotes news on diabetes. His account also discusses his home life, children and other personal matters. This is likely due to the social media aspect of Twitter. 
 
 However, the average user may not always be interested in reading tweets that are not directly related to their interests. For example, Andrew Clark recently tweeted the following\cite{clark1}:
@@ -187,7 +129,6 @@ Then shortly followed up with a political tweet, a subject completely unrelated 
 
 The core technical problem for this project is recommending more relevant tweets to the user first, while demoting the least relevant tweets to appearing later. This is based entirely on the user's own interests on Twitter. The Andrew Clark tweets shown above are an example of how divided a Twitter account's content can be. Only software developers, or those with an interest in technology, should see the former tweet.
 
-% Sophie: as a non-technical person, I don't really follow this, especially why it's necessary to use the Twitter API, which seems like an important thing to understand.
 In order to create a system that provides such recommendations, this project must use the Twitter REST API. However, there are rate limits placed on how many tweets can be extracted from the REST API at a time. Specifically, a user of the REST API may make 180 requests for a maximum of 3200 tweets every fifteen minutes for the user timeline. For the home timeline, a user of the API may only make fifteen requests for a maximum of 800 tweets every fifteen minutes. 
 
 \includegraphics[width=0.6\textwidth,center]{rate_limit_1}
@@ -200,8 +141,6 @@ These limitations will also require the system to store tweets as it requires a 
 
 \subsection{Competitors}
 
-% Sophie: I think you're missing some information on what your competitors don't provide that Lamda Lovelace can.
-
 \subsubsection*{The Official Twitter mobile app}
 This app is the official mobile offering from Twitter for their system. It performs similarly to the main website, but includes the option of providing tweet recommendations. This was discovered by the team in week two. It is seemingly allowed to access the Twitter API without the same restrictions as third-party apps. This app also has access to a set of personalised recommendations, which it is assumed comes from the API. Bearing all of this in mind, the Official Twitter mobile app is currently this project's main competitor. While it is a strong competitor, it also suggests many irrelevant tweets to the user as well as advertisements.
 
@@ -213,42 +152,8 @@ News360 is another social news aggregator, very similar to Flipboard that also f
 
 %==============================================================================
 \section{Technical Solution}
-% 1000 words, weight: 20/90 = 22%
-%
-% * What does your system do?
-% * How does it work?  (System diagram)
-% * Front-end: Technologies, User interface components including interface 
-%   mock-ups.
-% * Back-end: Technical components
-% * Data: What data resources are you going to use and how will you access, 
-%   collect, and store them.
-%
-% Grades:
-%   A+ to B-:
-%		Good clear description of overall proposed system architecture with all 
-%		key components identified. Good descriptions on likely key front-end 
-%		and back-end technologies, and justification of these choices. Clear 
-%		identification of key data sources and description of how they will be 
-%		access, stored and collected.
-%   C+ to D-:
-%		Reasonable description of likely system architecture but missing detail 
-%		in some key areas – e.g. missing data sources, no justification of 
-%		likely front-end or back-end technologies etc.
-%    E+ to G:
-%		Very limited description of the overall system architecture missing 
-%		some key components.
-%
 \subsection{What does your system do?}
 
-% Comments jónsi:
-% 
-% + "tweets from non-followers are suggested as well". 
-%   But that's not what it currently does? We may need to be more explicit about 
-%   what the current state of the MVP is as opposed to what we hope it'll
-%   eventually do.
-% + Before this paragraph we may want to mention a very high level overview first,
-%   for example by mentioning we have a recommender system on the back-end and a 
-%   iOS app on the front-end.
 At the moment, the system consists of an iOS client for the front-end and a Flask\cite{flask} web server for the back-end, which houses a recommender system. Upon logging in, the iOS client will display the filtered user's tweets with their details. This filtering is performed by the recommender system. Uninteresting or irrelevant tweets are deferred while interesting tweets are prioritised for primary visibility. 
 
 In future builds, tweets from non-followed accounts will be recommended as well. Our next priorities are implementing gesture-feedback functionality for the iOS app (swipe left/right to indicate interest), implementing time-focus functionality (how long the user spends looking at a tweet should indicate that they are reading it) and sending this information to the recommender system to improve recommendations.
@@ -264,10 +169,6 @@ In future builds, tweets from non-followed accounts will be recommended as well.
 
 First, the user must give the app permission to access their Twitter data. After that, the iOS client sends a request to the server.
 
-% Comment jónsi: We may need to describe what an access token is. A non-technical
-% reader is supposed to be able to follow along as he/she reads.
-% This is the first time Flask is mentioned. The reader may not be familiar with 
-% it or know it's a Python micro web framework.
 When the server receives an iOS API request, it gets the access token which enables the server to make authorised calls to the Twitter API. Then the server uses this token to communicate with the Twitter API and fetches the user's data. Following this, the raw data is sent to the recommender system for filtering and creating recommendations. 
 Lastly, the server will return the personalised tweet feed from the recommender system to the iOS client so that the user can see the personalised tweets. The colour bars on the left indicate the relevance of tweets based on the user's interests.
 
@@ -276,7 +177,7 @@ Lastly, the server will return the personalised tweet feed from the recommender 
 
 
 \subsection{Front-End}
-% Sophie: is it necessary to say when Swift was announced?
+
 The Swift programming language was chosen as the technology used to develop the iOS client. The iOS client currently implements three functions: \hyperlink{oauth}{OAuth login}, communication with the Flask API, and Tweet data presentation.
 
 
@@ -318,7 +219,6 @@ Our back-end consists of two parts: a web server and a recommender system. Origi
 
 For this project, three web frameworks were evaluated for the server: Django \cite{django}, Flask, and Bottle \cite{bottle}. Flask was chosen because it is more lightweight than Django and more popular and better supported (online resources, support, etc) than Bottle. Tweepy is used to interact with Twitter's APIs \cite{tweepy}.
 
-% Maybe: a figure of the back-end components
 
 \subsubsection*{Web Server}
 
@@ -343,7 +243,6 @@ The recommender system is used to provide the personalised tweet home timeline f
 
 \end{itemize}
 
-% Sophie: "unfollowed-account tweets" confused me for a while...maybe find a clearer term.
 After filtering and performing recommendations, the re-ordered timeline, weighting document of tweets, and recommended tweets from non-followers will be sent to the server and returned to the iOS client. In its current build, the recommender system uses the bag-of-words approach to list the users home timeline, based on the contents of their own tweets.
 
 \subsection{Data}
@@ -370,22 +269,7 @@ For general relational data storage PostgreSQL will probably be used. Preliminar
 
 %==============================================================================
 \section{Evaluation}
-% 500 words, weight: 10/90 = 11%
-%
-% * What does success look like for your system?
-% * How will you evaluate the system that you build?
-%
-% Grades:
-%   A+ to B-: 
-%		Well thought out, realistic plan for evaluation including evaluation of 
-%		different aspects of the system as well as the system as a whole.
-%   C+ to D-: 
-%		Some thoughts on evaluation but perhaps limited to “we will ask people 
-%		to use the system and tell us what they think” or very limited coverage 
-%		of the system’s key components.
-%    E+ to G:
-%		No real evaluation plan.
-%
+
 Early observations of the MVP seemed promising when tweets from the top and bottom were compared at a glance. Although entirely subjective, it was inspiring for the team.
 \\
 
@@ -449,25 +333,7 @@ We define success for this system if users will vote tweets promoted by $\lambda
 
 %==============================================================================
 \section{Conclusion: The Plan}
-% 500 words, weight: 10/90 = 11%
-%
-% * What is your project management strategy?
-% * What are the biggest challenges you are currently facing?
-% * How will you use the time remaining to achieve a successful outcome?
-%
-% Grades:
-%   A+ to B-:
-%		Full description of project management plan and how this will be used 
-%		to drive a successful project in the time remaining. Also clear 
-%		identification of major challenges facing the project.
-%  C+ to D-:
-%		A plan in place for completing the project, but missing evidence of 
-%		good project management or and identification of major challenges for 
-%		the project.
-%   E+ to G:
-%		No plan in place for completing the project and little evidence of an 
-%		understanding of what will be involved.
-%
+
 \subsection{Project management strategy}
 The team is divided into two groups where each group is responsible for the front-end and back-end of the system. The team has has a stand-up meeting each day to encourage communication amongst members where they discuss the tasks they are currently working on, and if they are facing any "blocker" problems.
 
@@ -481,7 +347,6 @@ ZenHub\cite{zenhub} is used to keep track of each team members' tasks and milest
     
     \item \textbf{Home timeline limit}
     
-    % Sophie: first-person "us" used here.
     Only the latest 800 tweets can be requested. This poses a problem for users that follow a lot of accounts, or for users that check Twitter very infrequently. This is the projects primary motivator to periodically collect and cache tweets in the database.
     
     \item \textbf{Evaluations in iOS client}

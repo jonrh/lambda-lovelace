@@ -30,33 +30,6 @@
 %    citecolor=blue
 %}
 
-
-%==============================================================================
-%                 QUALITY OF WRITING & ORGANISATION OF DOCUMENT
-%==============================================================================
-% Weight: 10%
-%
-% Grading:
-%   A+ to B-:
-%	    Very well written document (well organised, good layout, good English, 
-%       and clarity in writing, references).
-%   C+ to D-:
-%       Well organised and written but some issues in language, the flow of 
-%       the document, references, etc.
-%   E+ to G:
-%        Badly prepared document (poor organisation, poor layout, sloppy 
-%       English, and lack of clarity in writing).
-%
-% Feedback from Interim Report: B+
-%   + Writing was generally clear and well presented with a clear layout and 
-%     structure. 
-%   + The text was at times disjointed, however - for example, things 
-%     discussed before being introduced and figures not referred to in text. 
-%   + The diagrams were of high quality. Good use of concrete examples and 
-%     figures.
-%
-%
-
 \begin{document}
 
 
@@ -162,7 +135,7 @@ The team tracked progress throughout the project at the following blog: \\
 %==============================================================================
 %                                  INTRODUCTION
 %==============================================================================
-% This chapter was not technically requested but I (jónsi) we should include it 
+% This chapter was not technically requested but I (jónsi) think we should include it 
 % to give a high level overview and introduction into our project. If we did 
 % not include it readers that have not been involved with the module may find 
 % themselves without the proper context.
@@ -191,30 +164,6 @@ The name of our team, $\lambda$ Lovelace, is an homage to lambda calculus invent
 %==============================================================================
 %                                USER SCENARIO
 %==============================================================================
-% Weight: 10%, 500 words
-%
-%	Who is your target user?
-%	Why are they important?
-%	What problem are you solving for them?
-%
-% Grading:
-%   A+ to B-:
-%	    Very well defined user scenario and problem with strong links between 
-%       the two.
-%   C+ to D-:
-%       Well defined user scenario and problem (maybe missing connections 
-%       between the two, or importance of problem not convincing).
-%   E+ to G:
-%        Poorly defined user scenario and problem.
-%
-% Feedback from Interim Report: B+
-%   The problem is fairly well-defined, as are the target users (although this 
-%   could have been clearer - would be helpful to have some justification or 
-%   citation for definition of "power user"). However, the discussion of why 
-%   this is an important problem to solve is a little weak. Good concrete use 
-%   cases, examples are helpful. A little confusion over whether these use 
-%   cases involve recommendation, or rather just filtering/ranking.
-%
 \section{User Scenario: The Characters} % 530 words
 
 % 370 words
@@ -265,38 +214,6 @@ Robert may follow many others who tweet on myriad topics. Due to the issues desc
 %==============================================================================
 %                               TECHNICAL PROBLEM
 %==============================================================================
-% Weight: 20%, 1000 words
-%
-%   + Why does your system exist?
-%	+ What is the core technical problem?
-%	+ Can you describe the problem graphically? 
-%   + Can you review other existing systems or products that address this 
-%     problem? (how do they meet or fail to meet the needs of your target users)
-%
-% Grading:
-%   A+ to B-:
-%	    Very clear definition of the key technical challenges involved in 
-%       building the proposed system, tightly linked to the user scenario 
-%       described. Also good assessment of existing similar systems.
-%   C+ to D-:
-%       Reasonable description of technical problem and current state of the 
-%       art, but lacking in some ways. Perhaps the technical problems are 
-%       described at much too low a level (“writing this function will be 
-%       hard”), technical problems do not relate to the user scenario 
-%       described or coverage of existing systems is limited.
-%   E+ to G:
-%       Inability to identify the technical challenges in addressing the user 
-%       problem described in the previous section
-%
-% Feedback from Interim Report: B-
-%   The core technical problem of how to make good recommendations is 
-%   ignored, and instead this section focused on issues with rate limits in 
-%   the Twitter API. While this is interesting (and demonstrates a  clear 
-%   understanding of the operation and limitations of the Twitter REST API), 
-%   it is not the core issue at the heart of the project. Reasonable coverage 
-%   of existing apps such as Flipboard.
-
-
 \section{Technical Problem} % 770 words
 
 \subsection{Purpose} % 210 words
@@ -374,48 +291,6 @@ The Official Twitter mobile app is the mobile offering from Twitter for their sy
 %==============================================================================
 %                              TECHNICAL SOLUTION
 %==============================================================================
-% Weight: 30%, 2500 words
-%
-%   + What does your system do?
-%   + How does it work?  (System diagram)
-%   + Front-end: Technologies, User interface components including interface 
-%     mock-ups
-%   + Back-end: Technical components
-%   + Data: What data resources are you using and how do you access, collect, 
-%     and store them? What bottlenecks do you face related to data, what 
-%     choices have you made to address them?
-%   + What are the key technical contributions of your solution?
-%
-% Grading:
-%   A+ to B-:
-%	    Clear description of overall system architecture with all key 
-%       components identified. Good descriptions of key front-end and back-end 
-%       technologies, and justification of these choices. Clear identification 
-%       of key data sources and description of how they are accessed, collected 
-%       and stored. Clear presentation of the key technical contributions of 
-%       the project.
-%   C+ to D-:
-%       Reasonable description of system architecture but missing detail in 
-%       some key areas – e.g. missing data sources, no justification of likely 
-%       front-end or back-end technologies etc.
-%   E+ to G:
-%       Very limited description of the overall system architecture missing 
-%       some key components.
-%
-% Feedback from Interim Report: B-
-%   There is good detail on the overall architecture of the system, the 
-%   technologies used, and why these technologies were selected. Good 
-%   description of front-end components and communications with back-end. 
-%   There is, however, not enough information about the recommender part of 
-%   the project. A "bag-of-words approach" doesn't mean anything. More detail 
-%   on how this works was needed. Ideally database solution would be 
-%   identified at this stage. The choice of JSON store will have implications 
-%   for the filtering/recommendation process. For tweet filtering, are only 
-%   raw term frequencies used, or are these values weighted (e.g. using 
-%   inverse document frequency relative to a larger set of tweets). Also, will 
-%   recency be taken into account for filtering? How are filtered and 
-%   recommended tweets merged into the same timeline?
-
 \section{Technical Solution} % 2800 words total
 
 \subsection{What does the system do?} % 90 words
@@ -807,59 +682,9 @@ The recommender system's Second Net feature largely performs the same functional
 %==============================================================================
 %                                  EVALUATION
 %==============================================================================
-% Weight: 20%, 2000 words
-%
-%   + What components of your system are you evaluating and why?
-%	+ How are you evaluating them (data, users, evaluation metrics)?
-%	+ What have you learned from the evaluation?
-%
-% Grading:
-%   A+ to B-:
-%	    Well thought out, realistic evaluation, including evaluation of 
-%       different aspects of the system as well as the system as a whole. 
-%       Thorough discussion of the outcome of the evaluation.
-%   C+ to D-:
-%       Somewhat clear evaluation, but some aspects not convincing.
-%   E+ to G:
-%       No evaluation done or very poorly thought and executed evaluation.
-%
-% Feedback from Interim Report: B+
-%   + The key question is not entirely clear, what does "interesting" mean
-%     in this context? Try to provide some definition or example when giving
-%     instructions to participants.
-%   + Good justification of related approaches, although not entirely
-%     clear what are the useful ideas for developing the user evaluation and
-%     how does the related work do the evaluation, e.g, setup, data,
-%     metrics.
-%   + The evaluation setup and data collected is reasonably clear.
-%   + The evaluation interface itself is well designed. Makes sense to
-%     that participants use team member phones, so no need for the
-%     participants to install the software.
-%   + 15 minutes is probably a high estimate for time required to read 20
-%     tweets. Indicating that the task takes 10 minutes might make it easier
-%     to attract participants.
-%   + The setup, users and metrics are clear. Could be useful to test 2
-%     different versions of the recommender, time permitting. Could be
-%     useful to have an option for users to provide qualitative or other
-%     feedback for the app.
-%   + While counting the total number of likes/dislikes across all users
-%     is one way of summarising the results, the results could summarised on
-%     a user basis (i.e. how many users liked more tweets from Lambda
-%     Lovelace’s feed, as opposed to the Twitter feed)."
-%   + Overall the report is well written, but there is unnecessarily often
-%     repetition of "team lambda Lovelace" - you can use we, or us or our.
-
 \section{Evaluation} % total 2020
 
 \subsection{Hypothesis}
-% 500 words
-%
-% Explain the questions you are asking in your experiment and why they are 
-% important. Also provide an overview of some interesting, important, and 
-% relevant existing work in relation to evaluating such hypothesis (e.g., how 
-% is this hypothesis typically evaluated, do previous evaluations, if any, have 
-% any flaws?). For existing work provide appropriate citations and screenshots.
-%
 For the experiment the main question is: % 130 words
 
 \begin{center}
@@ -887,13 +712,6 @@ We incorporated an aspect of this open style of testing by allowing participants
 %==============================================================================
 \subsection{Experimental Method}
 \subsubsection*{Overview} % 310 words
-% 250 words
-%
-% How will you run your experiment? What will the experimental conditions be? 
-% What is your overall experimental design? What are the baselines you compare 
-% against and the evaluation metrics?
-%
-
 For this experiment, we prepared an evaluation-specific version of our mobile app. The app allowed participants to rate individual tweets on their interest or relevancy to them: thumbs up, neutral or thumbs down.
 
 \begin{figure}[H]
@@ -919,14 +737,6 @@ Participating subjects were largely drawn from college-aged students who are fam
 Metrics used for this experiment were drawn from the results of the evaluation app. These metrics reflect sentiment for batches of tweets from both the original timeline and our recommender system. Tweets either have positive (liked), negative (disliked) or neutral (neither) sentiment. The score of both the recommender system and the original timeline is tallied up to discern the more well-received system.
 
 \subsubsection*{Data Collection} % 150 words
-% 250 words
-%
-% What data will you collect during the experiment about participants’ performance 
-% and why? Will there be a mix between subjective (qualitative) and objective 
-% (quantitative) measurements? How does the data you will collect relate directly 
-% to your experimental hypothesis?
-%
-
 Quantitative data were collected by the participants, allowing us to view the results of each evaluation and infer preference for either the official Twitter timeline or our feed. The metrics used were numerical, with each like adding to the "score" of either the official Twitter timeline or our evaluation app. We intended to capture the users interests with the recommendations provided, so our tweets should be scored higher than the default Twitter timeline.
 \\\\
 From these data, we were able to compare our recommendations with Twitter's chronological tweet feed. Finally, from this comparison it was somewhat determined which form of Twitter feed provides more value to the user. 
@@ -974,11 +784,6 @@ The collected data was stored in RethinkDB\footnote{a document database where ea
 \end{samepage}
 
 \subsubsection*{Selected Subjects} % 340 words
-% 250 words
-%
-% Who will you use as subjects in your experiment. Why are these a representative 
-% sample? How will you source these subjects?
-%
 Subjects for the pilot evaluations were chosen from amongst team $\lambda$ Lovelace's family, friends and acquaintances. This was not a part of the main experiment for this project, due to the bias present in this group and the relative lack of good-quality participants.
 \\\\
 This preliminary experiment served as a filter for the main experiment. In this first experiment it was hoped that outsider perspectives would reveal issues with the software that we did not initially notice. As there was a limited amount of time left for this project, we were constrained in how many of the main experiments we could hold, so the preliminary was vital to preventing fundamental error in the main experiment. 
@@ -1000,11 +805,6 @@ Participants were obtained through fliers distributed throughout the University 
 %We also attempted to reach out to the Computer Science: Negotiated Learning and Conversion MSc students, believing that they could be the easiest group of students to access. This proved untrue as most, if not all, were preoccupied with their final semester projects and very few students actually satisfied our power user requirements.
 
 \subsubsection*{Data Analysis} %2 270 words
-% 250 words
-%
-% How will you analyse the data you collect during the experiment? How will this 
-% analysis answer the question you originally proposed?
-%
 We ultimately decided to take the simplest approach; we compared our version of the Twitter feed to the default home timeline. The version that gained more "likes" and less "dislikes" in the evaluation app was judged the better version with concerns to relevancy. Thus answering this project's original question of "\textit{Is $\lambda$ Lovelace's personalised tweet feed more interesting than the default chronologically ordered tweet feed from Twitter?}" with hard data.
 \\\\
 %Taken out/rephrased below so we can save space
@@ -1017,13 +817,6 @@ This form of analysis, due to its numerical data, also allowed us to graph the r
 %This data can be used with a variety of methods to extract information, but is limited in how much it allows the user to express. For example the user could not, with this method, explain why they preferred one tweet over another. The user could not, likewise, explain why they disliked one tweet over another. However extracting such information would be a time-consuming task, beyond the resources at our disposal at that time of experimentation.
 
 \subsubsection*{Practical Setup} % 400 words
-% 250 words
-%
-% In practical terms how will you run your experiment? Will it be online or 
-% offline? What instructions will participants be given? What type of 
-% room/environment will the experiment be in? Will questions/surveys be displayed 
-% on-screen or on printed paper?
-%
 The experiment was run within room B0.02 in the Computer Science building at University College Dublin. The purpose of this setup was to allow participants ease of access for the duration of the experiment. Believing that fewer barriers for participation will yield higher turnout, we allowed participants to show up at their convenience to prevent the discouragement that presents itself in strict scheduling for an experiment. 
 
 %Second line of previous paragraph, taken out because we need space
@@ -1044,13 +837,6 @@ As a result of the pilot experiments amongst friends and family, we found that o
 %Rating the tweets themselves took less than ten minutes, but overall the process took roughly fifteen minutes.
 
 \subsection{Evaluation Conclusion} % 350 words
-% 250 words
-%
-% What can you conclude after running this evaluation study (have you learned 
-% anything useful about the quality of your solution)? What could be done better 
-% in a future evaluation study (e.g., would you ask different questions or use 
-% different evaluation metrics)?
-%
 Unfortunately, on the day of the experiment we found that no-one was interested in attending. Fortunately, students were interested enough in the experiment that we could schedule two participants on the \nth{8} of August in the same setting. 
 %Taken out to save space
 %If we performed the experiment again, simply scheduling experiments would have yielded a better turnout as most of our team were on University College Dublin's campus for the duration of this project. 
@@ -1122,33 +908,6 @@ Overall, this experiment was useful for the purposes of evaluating our applicati
 %==============================================================================
 %                                  CONCLUSION
 %==============================================================================
-% Weight: 10%, 1000 words
-%
-%   + What was your project management strategy?
-%	+ What were the biggest challenges you faced as a team during the project 
-%     and how did you address them?
-%	+ What is the key contribution of your project and what future extensions 
-%     do you envision for improving your system?
-%
-% Grading:
-%   A+ to B-:
-%	    Clear reflections on team work process, learning process and updating
-%       future strategy to improve project execution. Thorough discussion on 
-%       strengths and weaknesses of proposed solution and important future 
-%       extensions.
-%   C+ to D-:
-%       Some reflections, but not very deep.
-%   E+ to G:
-%       Not much reflection on team work and project management process.
-%
-% Feedback from Interim Report: B+
-%   + Decent description of project management methodology. 
-%   + The list of core issues is good, as is the discussion of them. 
-%   + Reasonable plan for the remainder of the project. However, the plan 
-%     appears to underestimate the time it might take to ensure that both 
-%     filtering and recommendation are working correctly, and how the outputs 
-%     of the process might be integrated into a single timeline.
-
 \section{Conclusion} % 960 words
 
 \subsection{Project management strategy} % 140 words
