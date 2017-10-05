@@ -1,29 +1,27 @@
 # λ Lovelace
 This is a repository for a final project in the 30 ECTS credit module COMP47250 Team Software Project 2016. Submitted to the School of Computer Science \& Informatics in partial fulfilment of the requirements for the degree of Masters of Science in Computer Science (Negotiated Learning) at [University College Dublin](http://www.ucd.ie/). Summer 2016.
 
-<table align="center">
+<table>
   <tr>
-  	<th>Links:</th>
-  	<th>Team members:</th>
+    <th>Links:</th>
+    <th>Team members:</th>
   </tr>
-  
   <tr>
     <td>		
-		<ul align="left">
-			<li><a href="./documentation/final_report/Lambda-Lovelace_Final-Report-UCD-2016.pdf">Final report</a></li>
-			<li><a href="./documentation/final_presentation/lambda-lovelace_final-presintation.pdf">Presentation slides</a></li>
-			<li><a href="http://jonrh.github.io/lambda-lovelace/">Project blog diary</a></li>
-		<ul>
+      <ul align="left">
+        <li><a href="./documentation/final_report/Lambda-Lovelace_Final-Report-UCD-2016.pdf">Final report</a></li>
+        <li><a href="./documentation/final_presentation/lambda-lovelace_final-presintation.pdf">Presentation slides</a></li>
+        <li><a href="http://jonrh.github.io/lambda-lovelace/">Project blog diary</a></li>
+      </ul>
     </td>
-    
     <td>
-    	<ul align="left">
-			<li>Jón Rúnar Helgason, <a href="https://github.com/jonrh">jonrh</a></li>
-			<li>Xinqi Li, <a href="https://github.com/XinqiLi1992">XinqiLi1992</a></li>
-			<li>Marc Laffan, <a href="https://github.com/Marc5690">Marc5690</a></li>
-			<li>Junyang Ma, <a href="https://github.com/specter4mjy">specter4mjy</a></li>
-			<li>Eazhilarasi Manivannan, <a href="https://github.com/Eazhilarasi">Eazhilarasi</a></li>
-		<ul>
+      <ul align="left">
+        <li>Jón Rúnar Helgason, <a href="https://github.com/jonrh">jonrh</a></li>
+        <li>Xinqi Li, <a href="https://github.com/XinqiLi1992">XinqiLi1992</a></li>
+        <li>Marc Laffan, <a href="https://github.com/Marc5690">Marc5690</a></li>
+        <li>Junyang Ma, <a href="https://github.com/specter4mjy">specter4mjy</a></li>
+        <li>Eazhilarasi Manivannan, <a href="https://github.com/Eazhilarasi">Eazhilarasi</a></li>
+      </ul>
     </td>
   </tr>
 </table>
