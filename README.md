@@ -3,6 +3,8 @@ Recommender system for tweets; a more personalised tweet stream. This is a repos
 
 **Blog**: [https://jonrh.github.io/lambda-lovelace/](http://jonrh.github.io/lambda-lovelace/)
 
+![Lambda Lovelace](./documentation/images/docker_containers.gif)
+
 
 ## Team members
 
@@ -24,7 +26,7 @@ Project roles:
 ## Project
 **Summary**: A recommender system for tweets; a more personalised tweet stream.
 
-The theme of 2016 for the group project module is *Future Of News*. The premise for our project is the asumption (or observation) that people are experiencing an information overload. Years or decades ago news or content creators were few (print, television, radio) compared to today. Now everyone with a computer or a smartphone can be a content creator. We believe that the future of news is going to be filtering and delivering personalised news to people. We see our project to be a stepping stone in that direction, starting with Twitter.
+The theme of 2016 for the group project module is *Future Of News*. The premise for our project is the assumption (or observation) that people are experiencing an information overload. Years or decades ago news or content creators were few (print, television, radio) compared to today. Now everyone with a computer or a smartphone can be a content creator. We believe that the future of news is going to be filtering and delivering personalised news to people. We see our project to be a stepping stone in that direction, starting with Twitter.
 
 ### Retrospective note
 Today Twitter already employs their own recommender system for tweets so why did we attempt to do the same? In essence it came down to *unlucky* timing and search for the incorrect words in the project proposal phase. The final project took place during the summer of 2016 but teams started formulating project ideas in the spring semester. We conceived our idea in the beginning of March 2016. Unknown to us, Twitter had announced in a [blog post](https://goo.gl/UqTIRz) on the 10th of February that tweet recommendations were available as an opt-in feature in the official Twitter mobile app. On the 17th of March, Twitter started to silently roll out tweet recommendations as an opt-out feature. None of the team members noticed the change. It was not until week two of our project (23rd of May) when we started to dig deeper into the literature review that we learned that Twitter had in fact already implemented much of what we intended to build.
@@ -37,7 +39,7 @@ On a very high level there are two main components to the project:
 * **Front-end**: iOS Twitter mobile app
 * **Back-end**: Collaborative recommender system
 
-A Twitter user uses our iOS mobile client and grants us API access. Uninteresting tweets are filtered out (or deferred to later) while interesting tweets are prioritised in the timeline. Tweets from non-followers may be suggested as well. Essentially we hope to create a better, more personalised timeline of tweets than what chronologically ordered feed provides. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
+A Twitter user uses our iOS mobile client and grants us API access. Uninteresting tweets are filtered out (or deferred to later) while interesting tweets are prioritised in the timeline. Tweets from non-followers may be suggested as well. Essentially we hoped to create a better, more personalised timeline of tweets than what chronologically ordered feed provides. Our iOS app will make observations of the users engagements (opening, liking, time in focus, etc) and sends the information to the recommender back-end for further recommendations.
 
 The mobile app is required in order to collect additional user preference information to refine the recommendations. For example, if a user clicks a link in a tweet, likes a tweet, retweets, or engages in conversations. Another potential passive observation mechanism would be to have the client measure the amount of time a tweet is visible. Thinking being if a tweet is in focus for longer it might be of more interest than a tweet that is scrolled past quickly.
 
@@ -63,7 +65,7 @@ Here below are some of the technical decisions we made:
 
 ## Project Management
 
-For project management we keep it loose & lean. We used [ZenHub](https://www.zenhub.io/) to augment GitHub so we get a Kanban style board for issues and burndown charts to track milestone progresses. To use it we installed a [Chrome extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). After the extension was installed we simply went to the GitHub [repository](https://github.com/jonrh/lambda-lovelace) and the extra features were there on the page. It should be noted that this functionality has since been added natively in a limited capacity with GitHub Projects.
+For project management we keept it loose & lean. We used [ZenHub](https://www.zenhub.io/) to augment GitHub so we got a Kanban style board for issues and burndown charts to track milestone progresses. To use it we installed a [Chrome extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). After the extension was installed we simply went to the GitHub [repository](https://github.com/jonrh/lambda-lovelace) and the extra features were there on the page. It should be noted that this functionality has since been added natively in a limited capacity with GitHub Projects.
 
 
 ### Schedule & Deliverables
@@ -122,16 +124,6 @@ Moodle Deadlines:
 | **Week 10** | Junyang     | Junyang           |
 | **Week 11** | Marc        |                   |
 | **Week 12** | Xinqi       | Xinqi             |
-
-A tally of past jobs as well as scheduled ones:
-
-|             | Blog posts | Show & Tell |
-|:-----------:|:----------:|:-----------:|
-| Xinqi       | 2          | 1           |
-| Marc        | 2          | 1           |
-| Junyang     | 1          | 1           |
-| Jón Rúnar   | 2          | 1           |
-| Eazhilarasi | 1          | 1           |
 
 
 ## Getting Started
