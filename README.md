@@ -1,27 +1,47 @@
 # λ Lovelace
-Recommender system for tweets; a more personalised tweet stream. This is a repository for a final project in the 30 ECTS credit module COMP47250 Team Software Project 2016. Submitted to the School of Computer Science \& Informatics in partial fulfilment of the requirements for the degree of Masters of Science in Computer Science (Negotiated Learning) at University College Dublin. Summer 2016.
+This is a repository for a final project in the 30 ECTS credit module COMP47250 Team Software Project 2016. Submitted to the School of Computer Science \& Informatics in partial fulfilment of the requirements for the degree of Masters of Science in Computer Science (Negotiated Learning) at [University College Dublin](http://www.ucd.ie/). Summer 2016.
 
-**Blog**: [https://jonrh.github.io/lambda-lovelace/](http://jonrh.github.io/lambda-lovelace/)
+<table align="center">
+  <tr>
+  	<th>Links:</th>
+  	<th>Team members:</th>
+  </tr>
+  
+  <tr>
+    <td>		
+		<ul align="left">
+			<li><a href="./documentation/final_report/Lambda-Lovelace_Final-Report-UCD-2016.pdf">Final report</a></li>
+			<li><a href="./documentation/final_presentation/lambda-lovelace_final-presintation.pdf">Presentation slides</a></li>
+			<li><a href="http://jonrh.github.io/lambda-lovelace/">Project blog diary</a></li>
+		<ul>
+    </td>
+    
+    <td>
+    	<ul align="left">
+			<li>Jón Rúnar Helgason, <a href="https://github.com/jonrh">jonrh</a></li>
+			<li>Xinqi Li, <a href="https://github.com/XinqiLi1992">XinqiLi1992</a></li>
+			<li>Marc Laffan, <a href="https://github.com/Marc5690">Marc5690</a></li>
+			<li>Junyang Ma, <a href="https://github.com/specter4mjy">specter4mjy</a></li>
+			<li>Eazhilarasi Manivannan, <a href="https://github.com/Eazhilarasi">Eazhilarasi</a></li>
+		<ul>
+    </td>
+  </tr>
+</table>
 
-![Lambda Lovelace](./documentation/images/docker_containers.gif)
 
+## Introduction
+Lambda Lovelace is a content based recommender system for [tweets](https://twitter.com). The main goal of the λ Lovelace system is to personalise the user’s feed based on their interests to combat noise and information overload inherent in traditional chronologically ordered Twitter feeds. Subject preference is sourced from the user’s personal tweets, retweets, and likes. Additional feedback such as more/less from author or subject was collected from our own prototype iOS Twitter client. 
 
-## Team members
+Tweets were sourced from the Twitter REST API but were subject to hefty rate limits. To work around rate limits, Celery workers were constructed to collect and persist tweets slowly over time to a RethinkDB database. A Python Flask webservice backend serves the iOS app recommended tweets and collects the additional user feedback. The recommender system employs a two tier term frequency document approach. First a narrow net is cast to catch the highest quality tweets, then a wider more general net is cast on the remaining tweets to obtain a preference order on as many tweets as possible. 
 
-- Jón Rúnar Helgason, [jonrh](https://github.com/jonrh)
-- Xinqi Li, [XinqiLi1992](https://github.com/XinqiLi1992)
-- Marc Laffan, [Marc5690](https://github.com/Marc5690)
-- Junyang Ma, [specter4mjy](https://github.com/specter4mjy)
-- Eazhilarasi Manivannan, [Eazhilarasi](https://github.com/Eazhilarasi)
+We constructed a separate iOS app to perform A/B tests on Twitter power users. Evaluation experiments showed promising results for users with narrow subject interests but unfortunately evaluators were too few to draw firm conclusions.
 
-Project roles:
-
-* **Backend**: Xinxqi & Marc Laffan
-* **Frontend**: Junyang Ma, Eazhilarasi, Xinxqi
-* **Evaluation**: Junyang Ma
-* **User Experience**: Eazhilarasi
-* **Project Management & Communications**: Jón Rúnar
-
+![Image: the problem with Twitter](./documentation/images/the_problem.png)
+![Image: the idea](./documentation/images/the_idea.png)
+![Image: system overview](./documentation/images/system_overview.png)
+![Image: devops/CI/CD setup](./documentation/images/devops_setup.png)
+![Image: live Docker containers in production](./documentation/images/docker_containers.gif)
+![Image: evaluation results favouring Lambda Lovelace](./documentation/images/evaluation_results.png)
 
 ## Project
 **Summary**: A recommender system for tweets; a more personalised tweet stream.
@@ -66,6 +86,13 @@ Here below are some of the technical decisions we made:
 ## Project Management
 
 For project management we keept it loose & lean. We used [ZenHub](https://www.zenhub.io/) to augment GitHub so we got a Kanban style board for issues and burndown charts to track milestone progresses. To use it we installed a [Chrome extension](https://chrome.google.com/webstore/detail/zenhub-for-github/ogcgkffhplmphkaahpmffcafajaocjbd). After the extension was installed we simply went to the GitHub [repository](https://github.com/jonrh/lambda-lovelace) and the extra features were there on the page. It should be noted that this functionality has since been added natively in a limited capacity with GitHub Projects.
+
+### Roles
+* **Backend**: Xinxqi & Marc Laffan
+* **Frontend**: Junyang Ma, Eazhilarasi, Xinxqi
+* **Evaluation**: Junyang Ma
+* **User Experience**: Eazhilarasi
+* **Project Management & Communications**: Jón Rúnar
 
 
 ### Schedule & Deliverables
@@ -151,3 +178,5 @@ git clone https://github.com/jonrh/lambda-lovelace.git ll-blog/
 cd ll-blog
 git checkout -b gh-pages origin/gh-pages
 ```
+
+**Note**: All usernames, passwords, server URLs, tokens and secrets have been revoked/changed. The repository contains these items in clear text in the code. Hardly an ideal production practice but an acceptable compromise we made given the short amount of time we had for the project. We could have replaced these strings but we wanted to maintain an untouched Git history. That way issues that link to specific commits will remain in tact.
